@@ -1,0 +1,37 @@
+from __future__ import annotations
+
+from functools import partial
+from typing import Callable, Iterable, Mapping
+
+from .nary_operators.intersection import Intersection
+from .nary_operators.nary_operator import NAryOperator
+from .nary_operators.union import Union
+from .negation import Negation
+from .substitution import Substitution
+
+
+def difference(x: object, y: object):
+    return Intersection(x, Negation(y))
+
+
+def symmetric_difference(x: object, y: object):
+    return difference(Union(x, y), Intersection(x, y))
+
+
+def multiplication(argument: object, operator: Callable[[Iterable], NAryOperator],
+                   replacements: Iterable[Mapping[object, object]]):
+    if not isinstance(replacements, Iterable):
+        raise TypeError('Replacements must be iterable')
+    try:
+        return operator(map(partial(Substitution, argument=argument), replacements))
+    except TypeError:
+        raise TypeError(
+            'Multiplication must take more than one replacement. For only one replacement use Substitution instead')
+
+
+# def left_multiplication(argument: object, operator: Callable[[Iterable], NAryOperator],
+#                         replacements: Iterable[Mapping[object, object]]):
+#     pass
+
+
+__all__ = ['difference', 'symmetric_difference']

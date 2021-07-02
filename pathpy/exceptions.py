@@ -1,0 +1,2 @@
+class ReificationError(Exception):
+    pass
