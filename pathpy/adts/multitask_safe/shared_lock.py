@@ -1,7 +1,39 @@
-from functools import wraps
+from functools import partial, wraps
+
+OPERATION_NOT_EFFECTED = object
+
+
+def _do_operation(lock_instance, acquire, release, l_kwargs, f, f_args, f_kwargs):
+    """This method is meant to be a wrapper to an operation.
+
+    The method just call `f` function after effecting an acquire. If the acquire is successful, release is called and the result of the call of `f` is returned. If the acquire was not successful then OPERATION_NOT_EFFECTED is returned.
+
+    Acquire and release operations must be in accord to `lock_instance` class. Currently, it is expected the acquire and release operations to be only those of `threading` and `multiprocessing` Lock. #TODO: Investigate asyncio lock
+
+    Args:
+        lock_instance (threading.Lock | multiprocessing.Lock): a lock instance to be call acquire and release on.
+        acquire (threading.Lock.acquire | multiprocessing.Lock.acquire): An acquire operation.
+        release (threading.Lock.release | multiprocessing.Lock.release): A release operation.
+        l_kwargs (Mapping): additional keyword arguments to be passed to acquire operation
+        f (Callable[..., Any]): a function to be executed.
+        f_args (Sequence): additional positional arguments to be passed to the function `f`
+        f_kwargs (Mapping): additional keyword arguments to be passed to the function `f`
+
+    Returns:
+        Any: Returns the same as `f` if acquire operation is success, else OPERATION_NOT_EFFECTED is returned.
+    """
+    acquired = acquire(lock_instance, **l_kwargs)
+    if acquired:
+        x = f(*f_args, **f_kwargs)
+        release(lock_instance)
+        return x  # <- only return when acquired is successful
+    return OPERATION_NOT_EFFECTED
 
 
 class _Operation:
+    """This class represents object operations to be synchronized.
+    It acts as a context manager and as a decorator.
+    """
     def __init__(self, instance, acquire, release):
         self.acquire = acquire
         self.release = release
@@ -11,11 +43,8 @@ class _Operation:
         def wrapper(f):
             @wraps(f)
             def wrapped(*f_args, **f_kwargs):
-                acquired = self.acquire(self.instance, **kwargs)
-                if acquired:
-                    x = f(*f_args, **f_kwargs)
-                    self.release(self.instance)
-                    return x  # <- only return when acquired is successful
+                return _do_operation(self.instance, self.acquire, self.release, kwargs,
+                                     f, f_args, f_kwargs)
 
             return wrapped
 
@@ -33,6 +62,9 @@ class _Operation:
 
 
 class _OperationDescriptor:
+    """This class represents class operations to be synchronized.
+    It acts as a descriptor and as a decorator.
+    """
     def __init__(self, acquire, release):
         self.acquire = acquire
         self.release = release
@@ -47,11 +79,8 @@ class _OperationDescriptor:
         def wrapper(f):
             @wraps(f)
             def wrapped(instance, *f_args, **f_kwargs):
-                acquired = self.acquire(instance, **kwargs)
-                if acquired:
-                    x = f(instance, *f_args, **f_kwargs)
-                    self.release(instance)
-                    return x  # <- only return when acquired is successful
+                return _do_operation(instance, self.acquire, self.release, kwargs,
+                                     partial(f, instance), f_args, f_kwargs)
 
             return wrapped
 
@@ -107,7 +136,7 @@ class SharedLock:
         >>> execute(get_value, append)
 
 
-    You can also use `write_operation` and `read_operator` context managers:
+    You can also use `write_operation` and `read_operation` context managers:
 
         >>> def append(l, x):
         ...     with lock.write_operation:
@@ -122,7 +151,7 @@ class SharedLock:
         >>> execute(get_value, append)
 
 
-    As a better alternative you can use `write_operation` and `read_operator` as decorators:
+    As an alternative you can use `write_operation` and `read_operator` as decorators:
 
         >>> @lock.write_operation
         ... def append(l, x):
@@ -136,11 +165,12 @@ class SharedLock:
 
         >>> execute(get_value, append)
 
-    Also, you can also use method annotations to achieve the same result.
-    In this case the subclassing must be used
+
+    Also, you can use method decorators to achieve the same result.
+    In this case subclassing must be used.
 
         >>> class A(SharedLock): # <-- Don't forget to subclass from SharedLock
-        ...     # SharedLock.__init__ must be called implícitly if not directly inherited.
+        ...     # SharedLock.__init__ must be called explícitly if overwritten
         ...
         ...     @SharedLock.write_operation
         ...     def append(self, l, x):
@@ -161,7 +191,7 @@ class SharedLock:
 
         Args:
             lock_class (LockType): The underlying locks type.
-            *args, **kwargs: Additional arguments to be passed to the underlying locks constructors.
+            *args, **kwargs: Additional arguments to be passed to the underlying lock constructor.
         """
         # Used to ensure no priority between reads and writes
         self._read_write_lock = lock_class(*args, **kwargs)
@@ -174,6 +204,8 @@ class SharedLock:
 
         self._writers_counter_lock = lock_class(*args, **kwargs)
         self._waiting_writers = 0
+
+        self._lock_class = lock_class
 
     def acquire_read(self, *args, **kwargs) -> bool:
         """Acquires the lock for a read operation.

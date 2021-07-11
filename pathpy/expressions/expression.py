@@ -28,16 +28,22 @@ class Expression(ABC):  # (Hashable)
     This class represents an abstract Expression. An Expression represents
     a set of tuples of letters, also called strings or words.
     """
+    #TODO: Put default arguments as constant.
+    def as_set_of_str(self, symbols_table=None, lock_class=None,
+              adt_creator=list, adt_get_op=list.pop, adt_put_op=list.append, cached=False, complete_word=True, ignore_reification_errors=False):
+        from pathpy.generators.word_generator import WordGenerator
+        return self.reify(symbols_table=symbols_table, lock_class=lock_class, adt_creator=adt_creator, adt_get_op=adt_get_op, adt_put_op=adt_put_op, cached=cached, word_reifier=WordGenerator.as_str, complete_word=complete_word, ignore_reification_errors=ignore_reification_errors)
 
     def reify(self, symbols_table=None, lock_class=None,
               adt_creator=list, adt_get_op=list.pop, adt_put_op=list.append,
-              cached=False, initial=frozenset(), converter=lambda x: {x},
-              add_op=lambda x, y: x | y, word_reifier=None, complete=True):
+              cached=False, initial=set(), converter=lambda x: {x},
+              add_op=lambda x, y: x | y, word_reifier=None, complete_word=True,
+              ignore_reification_errors=False):
         if word_reifier is None:
             from pathpy.generators.word_generator import WordGenerator
             word_reifier = WordGenerator.reify
         return self.as_language(symbols_table, lock_class, adt_creator, adt_get_op, adt_put_op,
-                                cached).reify(initial, converter, add_op, word_reifier, complete)
+                                cached).reify(initial, converter, add_op, word_reifier, complete_word, ignore_reification_errors)
 
     def as_language(self, symbols_table=None, lock_class=None,
                     adt_creator=list, adt_get_op=list.pop, adt_put_op=list.append,
@@ -75,8 +81,8 @@ class Expression(ABC):  # (Hashable)
     # self|interable
     @__or__.register(list)
     def __(self, iterable):
-        from pathpy import Multiplication, Union
-        return Multiplication(self, Union, iterable)
+        from pathpy import multiplication, Union
+        return multiplication(self, Union, iterable)
 
     # other | self
     # iterable|self
@@ -91,8 +97,8 @@ class Expression(ABC):  # (Hashable)
     # self&iterable
     @__and__.register(list)
     def __(self, iterable):
-        from pathpy import Intersection, Multiplication
-        return Multiplication(self, Intersection, iterable)
+        from pathpy import Intersection, multiplication
+        return multiplication(self, Intersection, iterable)
 
     # other & self
     # iterable&self
@@ -107,8 +113,8 @@ class Expression(ABC):  # (Hashable)
     # self@iterable
     @__matmul__.register(list)
     def __(self, iterable):
-        from pathpy import Multiplication, Synchronization
-        return Multiplication(self, Synchronization, iterable)
+        from pathpy import multiplication, Synchronization
+        return multiplication(self, Synchronization, iterable)
 
     # other @ self
     # iterable@self
@@ -123,8 +129,8 @@ class Expression(ABC):  # (Hashable)
     # self^iterable
     @__xor__.register(list)
     def __(self, iterable):
-        from pathpy import Multiplication, symmetric_difference
-        return Multiplication(self, symmetric_difference, iterable)
+        from pathpy import multiplication, symmetric_difference
+        return multiplication(self, symmetric_difference, iterable)
 
     # other ^ self
     # iterable^self
@@ -139,8 +145,8 @@ class Expression(ABC):  # (Hashable)
     # self-iterable
     @__sub__.register(list)
     def __(self, iterable):
-        from pathpy import Multiplication, difference
-        return Multiplication(self, difference, iterable, False)
+        from pathpy import multiplication, difference
+        return multiplication(self, difference, iterable)
 
     # other - self
     @singledispatchmethod
@@ -151,8 +157,8 @@ class Expression(ABC):  # (Hashable)
     # iterable-self
     @__rsub__.register(list)
     def __rsub__(self, iterable):
-        from pathpy import Multiplication, difference
-        return Multiplication(self, difference, iterable)
+        from pathpy import multiplication, difference
+        return multiplication(self, difference, iterable) # #TODO: replace by left multiplication
 
     # -self
     def __neg__(self):
@@ -184,8 +190,8 @@ class Expression(ABC):  # (Hashable)
     # self+iterable
     @__add__.register(list)
     def __(self, iterable):
-        from pathpy import Concatenation, Multiplication
-        return Multiplication(self, Concatenation, iterable, False)
+        from pathpy import Concatenation, multiplication
+        return multiplication(self, Concatenation, iterable)
 
     # other + self
     @singledispatchmethod
@@ -199,10 +205,7 @@ class Expression(ABC):  # (Hashable)
     __radd__.register(type(...), __add__.dispatcher.dispatch(type(...)))
 
     # iterable+self
-    @__radd__.register(list)
-    def __(self, iterable):
-        from pathpy import Concatenation, Multiplication
-        return Multiplication(self, Concatenation, iterable)
+    __radd__.register(list, __add__.dispatcher.dispatch(list))
 
     # +self
     def __pos__(self):
@@ -264,10 +267,12 @@ class Expression(ABC):  # (Hashable)
     # self//iterable
     @__floordiv__.register(list)
     def __(self, iterable):
-        from pathpy import Multiplication, Shuffle
-        return Multiplication(self, Shuffle, iterable)
+        from pathpy import multiplication, Shuffle
+        return multiplication(self, Shuffle, iterable)
 
     # other // self
+    # number//self
+    # iterable//other
     __rfloordiv__ = __floordiv__
 
     # self % other

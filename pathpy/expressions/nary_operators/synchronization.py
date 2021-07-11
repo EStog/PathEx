@@ -17,38 +17,38 @@ class Synchronization(NAryOperator):
         >>> from pathpy import Union as U, WILDCARD as _, Concatenation as C
 
         >>> exp = ( 'a' + U('xy') ) @ ( 'a' + U('yz') )
-        >>> assert exp.reify() == {
+        >>> assert exp.as_set_of_str() == {
         ...     'axy', 'ayx', 'axz', 'azx', 'ay', 'ayz', 'azy'}
 
         >>> exp = ( 'a' + U('xy') ) @ ( 'a' + U('yz') + 'w' )
-        >>> assert exp.reify() == {
+        >>> assert exp.as_set_of_str() == {
         ...     'axyw', 'ayxw', 'axzw', 'azxw', 'ayw', 'ayzw', 'azyw'}
 
         >>> exp = ( _ + U('xy') ) @ ( 'a' + U('yz') )
-        >>> assert exp.reify() == {
+        >>> assert exp.as_set_of_str(ignore_reification_errors=True) == {
         ...     'axy', 'ayx', 'axz', 'azx', 'ay', 'ayz', 'azy'}
 
         >>> exp = ( _ + U('xy') ) @ ( 'a' + (_|'z') )
-        >>> assert exp.reify() == {'ax', 'ay', 'ayz', 'axz', 'azy', 'azx'}
+        >>> assert exp.as_set_of_str(ignore_reification_errors=True) == {'ax', 'ay', 'ayz', 'axz', 'azy', 'azx'}
 
         >>> exp = C('xabx')['x':_] @ ( C('a', _, _, 'a') | C(*'bab', _) )
-        >>> assert exp.reify() == {'aaba', 'babb'}
+        >>> assert exp.as_set_of_str(ignore_reification_errors=True) == {'aaba', 'babb'}
 
         >>> exp = C('xab')['x':_] @ C('yby')['y':_]
-        >>> assert exp.reify() == {'babb', 'bbab'}
+        >>> assert exp.as_set_of_str(ignore_reification_errors=True) == {'babb', 'bbab'}
 
         >>> from pathpy import LettersNegativeUnion as NL
 
         In the case of the presence of a negation there is an error in the case of a reification to a set of strings, because there are words that can not be determined.
 
         >>> exp = (NL('abc') + C('xyz')) @ C('qxyz')
-        >>> assert exp.reify() == {'qxyz'}
+        >>> assert exp.as_set_of_str(ignore_reification_errors=True) == {'qxyz'}
 
         >>> exp = (NL('abc') + C('xyz')) @ C('axyz')
-        >>> print(exp.reify())
+        >>> assert exp.as_set_of_str(ignore_reification_errors=True) == set()
 
-        >>> exp = (NL('abc') + C('xyz')) @ C('xyzxyz')
-        >>> assert exp.reify() == {'xxyyzzxyz', 'xyxzyzxyz', 'xxyzyxzyz', 'xxyzyzxyz', 'xyxyzxzyz', 'xyxyzzxyz', 'xyxzyxzyz', 'xxyyzxzyz'}
+        >>> exp = (NL('abc') + C('xyz')) @ C('qxyz')
+        >>> assert exp.as_set_of_str(ignore_reification_errors=True) == {'qxyz'}
     """
 
 

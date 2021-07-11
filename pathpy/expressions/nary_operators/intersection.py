@@ -15,23 +15,23 @@ class Intersection(NAryOperator):
         >>> from pathpy import Union as U, LettersPossitiveUnion as L, Concatenation as C, LettersNegativeUnion as NL
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz')
-        >>> assert exp.reify() == {'ay'}
+        >>> assert exp.as_set_of_str() == {'ay'}
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz') + 'w'
-        >>> assert exp.reify() == set()
-        >>> assert exp.reify(complete=False) == {'ay'}
+        >>> assert exp.as_set_of_str() == set()
+        >>> assert exp.as_set_of_str(complete_word=False) == {'ay'}
 
         >>> exp1 = L('a')*... & C('aaa') | C('aa')
         >>> exp2 = C('aaa') | C('aa') & L('a')*...
-        >>> assert exp1.reify() == exp2.reify()
+        >>> assert exp1.as_set_of_str() == exp2.as_set_of_str()
 
         >>> exp1 = L('abc') + C('xyz')
         >>> exp2 = L('axy') + C('xyz')
-        >>> assert (exp1 & exp2).reify() == {'axyz'}
+        >>> assert (exp1 & exp2).as_set_of_str() == {'axyz'}
 
         >>> exp1 = NL('abc') + C('xyz')
         >>> exp2 = L('axy') + C('xyz')
-        >>> assert (exp1 & exp2).reify() == {'xxyz', 'yxyz'}
+        >>> assert (exp1 & exp2).as_set_of_str() == {'xxyz', 'yxyz'}
 
     """
 

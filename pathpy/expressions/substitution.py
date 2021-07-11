@@ -43,13 +43,13 @@ class Substitution(Expression):
         >>> from pathpy import Concatenation as C, Union as U, EMPTY_STRING as e, WILDCARD as _
 
         >>> exp = C('abc')[{'a':'c', 'c':'a'}]
-        >>> assert exp.reify() == {'cba'}
+        >>> assert exp.as_set_of_str() == {'cba'}
 
         >>> exp = C('abc')['a':'xy', 'c':e]
-        >>> assert exp.reify() == {'xyb'}
+        >>> assert exp.as_set_of_str() == {'xyb'}
 
         >>> exp = C(U('ax'), 'c')['a':'b', 'c':'y']
-        >>> assert exp.reify() == {'by', 'xy'}
+        >>> assert exp.as_set_of_str() == {'by', 'xy'}
 
         >>> from pathpy.generators.word_generator import WordGenerator
         >>> from pathpy.generators._expressions._named_wildcard import NamedWildcard
@@ -60,7 +60,7 @@ class Substitution(Expression):
         ...         return str(x)
 
         >>> from functools import partial
-        >>> word_reifier = partial(WordGenerator.reify, converter=term_converter)
+        >>> word_reifier = partial(WordGenerator.reify, initial='', converter=term_converter)
 
         >>> exp = C('abca')['a':_]
         >>> assert exp.reify(word_reifier=word_reifier) == {'_0bc_0'}

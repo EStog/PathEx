@@ -22,13 +22,13 @@ class Concatenation(NAryOperator):
     Examples:
        >>> from pathpy import Union as U, Concatenation as C, Intersection as I, EMPTY_STRING
 
-       >>> assert ( U('ab') + C('xy') ).reify() == {'axy', 'bxy'}
+       >>> assert ( U('ab') + C('xy') ).as_set_of_str() == {'axy', 'bxy'}
 
-       >>> assert ( 'a' + I('xy') ).reify() == set()
+       >>> assert ( 'a' + I('xy') ).as_set_of_str() == set()
 
-       >>> assert ( I('xy') + 'a' ).reify() == set()
+       >>> assert ( I('xy') + 'a' ).as_set_of_str() == set()
 
-       >>> assert EMPTY_STRING.reify() == {''}
+       >>> assert EMPTY_STRING.as_set_of_str() == {''}
     """
 
 

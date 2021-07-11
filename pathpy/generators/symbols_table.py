@@ -23,7 +23,7 @@ class SymbolsTable:
     _group_of: dict[NamedWildcard, int] = \
         field(default_factory=dict)
 
-    _value_of: dict[int, LettersUnion | NamedWildcard] = \
+    _value_of: dict[int, object] = \
         field(default_factory=dict)
 
     _wilds_cache: dict[int, tuple[NamedWildcard, ...]] = \
@@ -58,7 +58,7 @@ class SymbolsTable:
             else Union(value) if length > 1 \
             else None
 
-    def intersect(self, a1, a2) -> tuple[Term | None, SymbolsTable]:
+    def intersect(self, a1, a2) -> tuple[object, SymbolsTable]:
         a1_type, a2_type = type(a1), type(a2)
 
         if a1_type == a2_type == NamedWildcard:
@@ -70,7 +70,7 @@ class SymbolsTable:
         else:
             return self._get_intersect_values(a1, a2), self
 
-    def bi_difference(self, a1, a2) -> tuple[Term | None, Term | None, SymbolsTable]:
+    def difference(self, a1, a2) -> tuple[object, SymbolsTable, object, SymbolsTable]:
         a1_type, a2_type = type(a1), type(a2)
 
         if a1_type == a2_type == NamedWildcard:
@@ -80,9 +80,10 @@ class SymbolsTable:
         elif a2_type == NamedWildcard and a1_type != EmptyString:
             return self._bi_difference_named__term(a2, a1)
         else:
-            return *self._get_bi_difference_values(a1, a2), self
+            a1, a2 = self._get_bi_difference_values(a1, a2)
+            return a1, self, a2, self
 
-    def _get_intersect_values(self, a1, a2) -> Term | None:
+    def _get_intersect_values(self, a1, a2) -> object:
         a1_type, a2_type = type(a1), type(a2)
 
         if a1_type == a2_type == EmptyString:
@@ -104,8 +105,8 @@ class SymbolsTable:
         else:
             return a1 if a1 == a2 else None
 
-    def _get_bi_difference_values(self, a1, a2) -> tuple[Term | None, Term | None]:
-        def _get_bi_difference_wildcard_value(t: type[Term], v) -> Term | None:
+    def _get_bi_difference_values(self, a1, a2) -> tuple[object, object]:
+        def _get_bi_difference_wildcard_value(t: type[Term], v) -> LettersUnion | None:
             if t == LettersPossitiveUnion:
                 return v.as_negative()
             elif t == LettersNegativeUnion:
@@ -140,18 +141,21 @@ class SymbolsTable:
         else:
             return (a1, a2) if a1 != a2 else (None, None)
 
+    def _get_more_concrete(self, group, value, v) -> tuple[object, SymbolsTable]:
+        if value:
+            return v, replace(self, _value_of=self._value_of | {group: value})
+        else:
+            return None, self
+
     def _intersect_named__term(
         self, a1: NamedWildcard,
-        a2: Term  # <- but not EmptyString
+        a2: object  # <- but not EmptyString
     ):
         group1 = self._group_of[a1]
         value1 = self._value_of.get(group1, WILDCARD)
 
         match = self._get_intersect_values(value1, a2)
-        if match:
-            return match, replace(self, _value_of=self._value_of | {group1: match})
-        else:
-            return None, self
+        return self._get_more_concrete(group1, match, a1)
 
     def _bi_difference_named__term(
         self, a1: NamedWildcard,
@@ -161,10 +165,8 @@ class SymbolsTable:
         value1 = self._value_of.get(group1, WILDCARD)
 
         value1, value2 = self._get_bi_difference_values(value1, a2)
-        if value1 and value2:
-            return value1, value2, replace(self, _value_of=self._value_of | {group1: value1})
-        else:
-            return None, None, self
+
+        return *self._get_more_concrete(group1, value1, a1), value2, self
 
     def _intersect_nameds(self, a1: NamedWildcard, a2: NamedWildcard):
         group1, group2 = self._group_of[a1], self._group_of[a2]
@@ -172,26 +174,25 @@ class SymbolsTable:
             group1, WILDCARD), self._value_of.get(group2, WILDCARD)
 
         match = self._get_intersect_values(value1, value2)
-        if match == WILDCARD:
+        if match is WILDCARD:
             updated_groups, wilds_of = self._bound_to(group1, group2)
-            return WILDCARD, replace(self, _wilds_of=wilds_of, _group_of=self._group_of | updated_groups)
+            return a1, replace(self, _wilds_of=wilds_of, _group_of=self._group_of | updated_groups)
         elif match:
             updated_groups, wilds_of = self._bound_to(group1, group2)
-            return match, replace(self, _wilds_of=wilds_of, _group_of=self._group_of |
+            return a1, replace(self, _wilds_of=wilds_of, _group_of=self._group_of |
                                   updated_groups, _value_of=self._value_of | {group1: match})
         else:
             return None, self
 
-    def _bi_difference_nameds(self, a1: NamedWildcard, a2: NamedWildcard):
+    def _bi_difference_nameds(self, a1: NamedWildcard, a2: NamedWildcard) -> tuple[object, SymbolsTable, object, SymbolsTable]:
         group1, group2 = self._group_of[a1], self._group_of[a2]
         value1, value2 = self._value_of.get(
             group1, WILDCARD), self._value_of.get(group2, WILDCARD)
 
         diff1, diff2 = self._get_bi_difference_values(value1, value2)
-        if value1 and value2:
-            return diff1, diff2, replace(self, _value_of=self._value_of | {group1: diff1, group2: diff2})
-        else:
-            return None, None, self
+        r1, table1 = self._get_more_concrete(group1, diff1, a1)
+        r2, table2 = self._get_more_concrete(group2, diff2, a2)
+        return r1, table1, r2, table2
 
     def _bound_to(self, group1, group2):
         wilds2 = self._wilds_of[group2]

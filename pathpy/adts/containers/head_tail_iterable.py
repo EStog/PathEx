@@ -37,9 +37,9 @@ class HeadTailIterable(Iterable[_E]):
     >>> assert [1, 2, 3, 4] == [e for e in x]
 
     >>> x = HeadTailIterable([1])
-    >>> assert not hasattr(x, 'tail')
+    >>> assert not x.has_tail
     >>> x = HeadTailIterable([])
-    >>> assert not hasattr(x, 'head') and not hasattr(x, 'tail')
+    >>> assert not x.has_head and not x.has_tail
     """
     _iterable: Iterable[_E]
 
@@ -83,6 +83,14 @@ class HeadTailIterable(Iterable[_E]):
                 return x
             else:
                 return self.__class__(self._tail.restarted())
+
+    @cached_property
+    def has_tail(self):
+        return hasattr(self, 'tail')
+
+    @cached_property
+    def has_head(self):
+        return hasattr(self, 'head')
 
     def __iter__(self) -> Iterator:
         if hasattr(self, 'head'):

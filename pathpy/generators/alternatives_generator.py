@@ -5,6 +5,7 @@ from math import inf
 from typing import Generator
 
 from pathpy.adts.cached_generators import CachedGenerator
+from pathpy.adts.containers.head_tail_iterable import HeadTailIterable
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.nary_operators.concatenation import Concatenation
 from pathpy.expressions.nary_operators.intersection import Intersection
@@ -35,7 +36,7 @@ if __debug__:
 
 @singledispatch
 def alts_generator(expression: object, table: SymbolsTable) -> \
-        Generator[tuple[Term, Expression, SymbolsTable], None, None]:
+        Generator[tuple[object, Expression, SymbolsTable], None, None]:
     yield LettersPossitiveUnion({expression}), EMPTY_STRING, table
 
 
@@ -57,6 +58,16 @@ def visit_union(exp: Union, table: SymbolsTable):
 
 @alts_generator.register
 def visit_negation(exp: Negation, table: SymbolsTable):
+    def negations_generator():
+        nonlocal exp, table
+        for head, tail, table in alts_generator(exp.argument, table):
+            if tail:
+                yield Union(
+                    Concatenation(Negation(head), tail),
+                    Concatenation(head, Negation(tail)),
+                    Concatenation(Negation(head), Negation(tail)))
+            else:
+                yield Negation(head)
     argument_type = type(exp.argument)
     if argument_type is LettersPossitiveUnion:
         yield exp.argument.as_negative(), EMPTY_STRING, table
@@ -65,19 +76,11 @@ def visit_negation(exp: Negation, table: SymbolsTable):
     elif exp.argument is EMPTY_STRING:
         yield from alts_generator(ConcatenationRepetition(WILDCARD, 1, inf), table)
     elif isinstance(exp.argument, NAryOperator):
-        negations = []
-        for head, tail, table in alts_generator(exp.argument, table):
-            if tail:
-                negations.append(Union(
-                    Concatenation(Negation(head), Negation(tail)),
-                    Concatenation(Negation(head), tail),
-                    Concatenation(head, Negation(tail))))
-            else:
-                negations.append(Negation(head))
-        if len(negations) > 1:
+        negations = HeadTailIterable(negations_generator())
+        if negations.has_tail:
             yield from alts_generator(Intersection(negations), table)
-        else:
-            yield from alts_generator(negations[0], table)
+        elif negations.has_head:
+            yield from alts_generator(negations.head, table)
 
 
 @alts_generator.register
@@ -110,8 +113,11 @@ def visit_synchronization(exp: Synchronization, table: SymbolsTable):
             if head:
                 yield head, tail, table
             # `a @ b = a // b`                if `a != b`
-            else:
-                yield from alts_generator(Concatenation(Shuffle(head1, head2), tail), table)
+            h1, t1, h2, t2 = table.difference(head1, head2)
+            if h1:
+                yield from alts_generator(Concatenation(Shuffle(h1, head2), tail), t1)
+            if h2:
+                yield from alts_generator(Concatenation(Shuffle(head1, h2), tail), t2)
 
 
 @alts_generator.register

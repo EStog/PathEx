@@ -30,11 +30,11 @@ class ConcatenationRepetition(Repetition):
     Examples:
         >>> from pathpy import Concatenation as C, LettersPossitiveUnion as L
 
-        >>> assert ( (L('a')+2)*[1,2] ).reify() == {'aaaa', 'aa'}
+        >>> assert ( (L('a')+2)*[1,2] ).as_set_of_str() == {'aaaa', 'aa'}
 
-        >>> assert ( C('ab')*... & C('ab')*2 ).reify() == {'', 'ab', 'abab'}
+        >>> assert ( C('ab')*... & C('ab')*2 ).as_set_of_str() == {'', 'ab', 'abab'}
 
-        >>> assert ( C('ab')*2 & C('ab')*... ).reify() == {'', 'ab', 'abab'}
+        >>> assert ( C('ab')*2 & C('ab')*... ).as_set_of_str() == {'', 'ab', 'abab'}
     """
 
 

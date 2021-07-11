@@ -18,7 +18,7 @@ def symmetric_difference(x: object, y: object):
     return difference(Union(x, y), Intersection(x, y))
 
 
-def multiplication(argument: object, operator: Callable[[Iterable], NAryOperator],
+def multiplication(argument: object, operator: Callable[..., NAryOperator],
                    replacements: Iterable[Mapping[object, object]]):
     if not isinstance(replacements, Iterable):
         raise TypeError('Replacements must be iterable')
@@ -34,4 +34,4 @@ def multiplication(argument: object, operator: Callable[[Iterable], NAryOperator
 #     pass
 
 
-__all__ = ['difference', 'symmetric_difference']
+__all__ = ['difference', 'symmetric_difference', 'multiplication']

@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-from functools import partial, singledispatchmethod
+from functools import partial
 
 from pathpy.adts.extensible_iterator import ExtensibleIterator
-from pathpy.adts.singleton import singleton
-from pathpy.exceptions import ReificationError
-from pathpy.expressions.expression import Expression
+from pathpy.exceptions import IncompleteMatch, ReificationError
 from pathpy.expressions.terms.empty_string import EMPTY_STRING
+from pathpy.expressions.terms.letters_unions.letters_negative_union import \
+    LettersNegativeUnion
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
+from pathpy.expressions.terms.wildcard import Wildcard
 
 from ._expressions._named_wildcard import NamedWildcard
 from .alternatives_generator import alts_generator
@@ -18,25 +19,14 @@ from .symbols_table import SymbolsTable
 # and make sets `delivered` and `to_deliver` parallel-safe.
 
 
-@singleton
-class NoCompleteMatch:
-    @singledispatchmethod
-    def __add__(self, other: str):
-        return ''
-
-    @__add__.register
-    def __(self, other: tuple):
-        return ()
-
-
-NO_COMPLETE_MATCH = NoCompleteMatch()
-
-
-def _converter(x):
-    if x is not EMPTY_STRING and isinstance(x, Expression):
+def convert_to_str(x):
+    if x is not EMPTY_STRING and isinstance(x, (Wildcard, LettersNegativeUnion)):
         raise ReificationError(f'{x.__class__.__name__} is undeterminable')
     else:
         return str(x)
+
+
+INCOMPLETE_MATCH = object()
 
 
 class WordGenerator:
@@ -46,52 +36,36 @@ class WordGenerator:
     """
 
     def __init__(self,
-                 prefix: tuple[object, ...],
-                 h: object, suffix: tuple[object, ...],
+                 prefix: list[object],
                  tail: object, table: SymbolsTable,
-                 alternatives, adt_put_op,  words: ExtensibleIterator, ):
+                 alternatives, adt_put_op, words: ExtensibleIterator):
+        self._prefix = prefix
         self._tail = tail
         self._table = table
         self._alternatives = alternatives
         self._adt_put_op = adt_put_op
         self._words = words
         self._pointer = 0
-        self._update_prefix(prefix, h, suffix)
 
     def __iter__(self):
         return self
 
     def __next__(self):
         if self._pointer == len(self._prefix):
-            self.expand_head()
-
-        if (isinstance(x := self._prefix[self._pointer], NamedWildcard) and
-                self._table.get_value(x) is x):
-            try:
-                self.expand_head()
-            except StopIteration:
-                pass
-
+            self._expand_once()
         x = self._prefix[self._pointer]
-        if isinstance(x, NamedWildcard):
-            x = self._table.get_value(x)
-        self._pointer += 1
-        return x
-
-    def expand_head(self):
-        self._expand_once()
-        x = self._prefix[self._pointer]
-        y = None
         if isinstance(x, NamedWildcard):
             while (y := self._table.get_value(x)) is x:
                 try:
                     self._expand_once()
                 except StopIteration:
                     break
-        if y:
-            prefix = self._prefix[:self._pointer]
-            suffix = self._prefix[self._pointer+1:]
-            self._update_prefix(prefix, y, suffix)
+            if y is not x:
+                x = self._decompose_current(y)
+        else:
+            x = self._decompose_current(x)
+        self._pointer += 1
+        return x
 
     def _expand_once(self):
         if self._tail is EMPTY_STRING:
@@ -100,45 +74,51 @@ class WordGenerator:
         try:
             head, tail, table = next(alts_gen)
         except StopIteration:
-            x = NO_COMPLETE_MATCH
-            self._prefix += (x,)
+            head = INCOMPLETE_MATCH
             self._tail = EMPTY_STRING
+            raise IncompleteMatch
         else:
-            self._adt_put_op(self._alternatives, (self._prefix, alts_gen))
+            self._adt_put_op(self._alternatives, (self._prefix.copy(), alts_gen))
             self._tail = tail
             self._table = table
-            self._update_prefix(self._prefix, head, ())
+        finally:
+            self._prefix.append(head)
 
-    def _update_prefix(self, prefix, head, suffix):
-        if isinstance(head, LettersPossitiveUnion):
-            x = next(iter(head.letters))
+    def _decompose_current(self, e):
+        if isinstance(e, LettersPossitiveUnion):
+            x = next(iter(e.letters))
+            prefix = self._prefix[:self._pointer]
 
             def word_generator_constructor(h, tail, table):
-                return WordGenerator(prefix, h, suffix,
+                return WordGenerator(prefix+[h],
                                      tail, table,
                                      self._alternatives,
                                      self._adt_put_op,
                                      self._words)
 
-            if heads := head.letters - {x}:
+            if heads := e.letters - {x}:
                 self._words.expand(map(
                     partial(word_generator_constructor, tail=self._tail, table=self._table), heads))
+            self._prefix[self._pointer] = x
+            return x
         else:
-            x = head
-        self._prefix = prefix + (x,) + suffix
+            return e
 
-    def reify(self, initial='', converter=_converter,
+    def reify(self, initial=[], converter=lambda x: [x],
               add_op=lambda x, y: x + y, complete=True):
         s = initial
-        for x in self:
-            if x is NO_COMPLETE_MATCH:
-                return NO_COMPLETE_MATCH if complete else s
-            else:
+        try:
+            for x in self:
                 s = add_op(s, converter(x))
+        except IncompleteMatch:
+            if complete:
+                raise
         return s
 
-    def as_tuple(self, complete=True):
-        return self.reify((), lambda x: (x,), complete=complete)
+    def as_str(self, complete=True):
+        return ''.join(convert_to_str(x) for x in self.reify(complete=complete))
+
+    __str__ = as_str
 
     def __repr__(self):
         return (f'{self.__class__.__name__}({self._prefix!r}, '
