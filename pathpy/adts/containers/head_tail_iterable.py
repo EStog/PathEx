@@ -58,17 +58,33 @@ class HeadTailIterable(Iterable[_E]):
         # if __new__ does not return an already existing object.
         if not hasattr(self, '_interable'):
             object.__setattr__(self, '_iterable', iterable)
-            it = iter(iterable)
-            self.head: _E
-            self._tail: CachedIterator[_E]
             try:
-                head = next(it)
-            except StopIteration:
+                self.head # <-- This is for initialization
+            except AttributeError:
                 pass
-            else:
-                object.__setattr__(self, 'head', head)
-                object.__setattr__(
-                    self, '_tail', CachedIterator([], it, list.append))
+            # it = iter(iterable)
+            # self.head: _E
+            self._tail: CachedIterator[_E]
+            # try:
+            #     head = next(it)
+            # except StopIteration:
+            #     pass
+            # else:
+            #     object.__setattr__(self, 'head', head)
+            #     object.__setattr__(
+            #         self, '_tail', CachedIterator([], it, list.append))
+
+    @cached_property
+    def head(self) -> _E:
+        it = iter(self._iterable)
+        try:
+            head = next(it)
+        except StopIteration:
+            raise AttributeError
+        else:
+            object.__setattr__(
+                self, '_tail', CachedIterator([], it, list.append))
+            return head
 
     @cached_property
     def tail(self) -> HeadTailIterable[_E] | _E:
