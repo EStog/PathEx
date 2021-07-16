@@ -6,6 +6,7 @@ from pathpy.exceptions import IncompleteMatch, ReificationError
 from .alternatives_generator import alts_generator
 from .symbols_table import SymbolsTable
 from .word_generator import WordGenerator
+from collections import deque
 
 # TODO: Parallel-safe version: put a lock for iter-object exclusivity in `__next__`
 # and make set `alternatives` parallel-safe.
@@ -17,7 +18,7 @@ def reify_word_as_tuple(x, complete_word):
 
 class LanguageGenerator:
     def __init__(self, expression, symbols_table=None, lock_class=None,
-                 adt_creator=list, adt_get_op=list.pop, adt_put_op=list.append):
+                 adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append):
         if symbols_table is None:
             symbols_table = SymbolsTable()
         self._adt_creator = adt_creator

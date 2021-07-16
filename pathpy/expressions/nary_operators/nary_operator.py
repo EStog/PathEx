@@ -17,10 +17,10 @@ class NAryOperator(HeadTailIterable, Expression):
         if len(args) == 1:
             args = args[0]
         HeadTailIterable.__init__(self, args)
-        if not hasattr(self, 'head'):
+        if not self.has_head:
             raise TypeError(
                 'Iterable must have at least two elements. Cero found')
-        if not hasattr(self, 'tail'):
+        if not self.has_tail:
             raise TypeError(
                 'Iterable must have at least two elements. Only one found')
 

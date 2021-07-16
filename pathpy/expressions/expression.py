@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC
+from collections import deque
 from functools import singledispatchmethod
 from itertools import chain
 from math import inf
@@ -30,12 +31,12 @@ class Expression(ABC):  # (Hashable)
     """
     #TODO: Put default arguments as constant.
     def as_set_of_str(self, symbols_table=None, lock_class=None,
-              adt_creator=list, adt_get_op=list.pop, adt_put_op=list.append, cached=False, complete_word=True, ignore_reification_errors=False):
+              adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append, cached=False, complete_word=True, ignore_reification_errors=False):
         from pathpy.generators.word_generator import WordGenerator
         return self.reify(symbols_table=symbols_table, lock_class=lock_class, adt_creator=adt_creator, adt_get_op=adt_get_op, adt_put_op=adt_put_op, cached=cached, word_reifier=WordGenerator.as_str, complete_word=complete_word, ignore_reification_errors=ignore_reification_errors)
 
     def reify(self, symbols_table=None, lock_class=None,
-              adt_creator=list, adt_get_op=list.pop, adt_put_op=list.append,
+              adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append,
               cached=False, initial=set(), converter=lambda x: {x},
               add_op=lambda x, y: x | y, word_reifier=None, complete_word=True,
               ignore_reification_errors=False):
@@ -46,7 +47,7 @@ class Expression(ABC):  # (Hashable)
                                 cached).reify(initial, converter, add_op, word_reifier, complete_word, ignore_reification_errors)
 
     def as_language(self, symbols_table=None, lock_class=None,
-                    adt_creator=list, adt_get_op=list.pop, adt_put_op=list.append,
+                    adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append,
                     cached=False):
         from pathpy.generators.language_generator import LanguageGenerator
         if cached:
@@ -57,13 +58,6 @@ class Expression(ABC):  # (Hashable)
         else:
             return LanguageGenerator(self, symbols_table, lock_class,
                                      adt_creator, adt_get_op, adt_put_op)
-
-    # @staticmethod
-    # def _unwrap(obj):
-    #     from pathpy import Letter
-    #     while isinstance(obj, Letter):
-    #         obj = obj.value
-    #     return obj
 
     @staticmethod
     def flatten(a, b, type_expression):
