@@ -1,14 +1,14 @@
 from __future__ import annotations
 
 from collections.abc import Iterator, Set
-from typing import Any, Callable, Collection, Generic, TypeVar
+from typing import Any, Callable, Collection, TypeVar
 
 from pathpy.adts.containers.queue_set import QueueSet
 
 _T_co = TypeVar('_T_co', covariant=True)
 
 
-class CachedIterator(Iterator[_T_co], Generic[_T_co]):
+class CachedIterator(Iterator[_T_co]):
     def __init__(self, cached_values: Collection[_T_co],
                  iterator: Iterator[_T_co],
                  cache_add_op: Callable[[Collection, object], Any],
@@ -63,10 +63,6 @@ class CachedIterator(Iterator[_T_co], Generic[_T_co]):
                             self._cache_add_op, self._non_repeated)
         it._next = it._next_from_generator
         return it
-
-    def restarted(self):
-        return CachedIterator(self._cached_values, self._iterator,
-                              self._cache_add_op, self._non_repeated)
 
 
 __all__ = ['CachedIterator']
