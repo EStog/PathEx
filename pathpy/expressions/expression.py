@@ -62,7 +62,7 @@ class Expression(ABC):  # (Hashable)
     @staticmethod
     def flatten(a, b, type_expression):
         if isinstance(a, type_expression) and isinstance(b, type_expression):
-            return type_expression(chain(a.iterable, b.iterable))
+            return type_expression(chain(iter(a), iter(b)))
         else:
             return type_expression(a, b)
 

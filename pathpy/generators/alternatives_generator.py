@@ -68,6 +68,7 @@ def visit_negation(exp: Negation, table: SymbolsTable):
                     Concatenation(Negation(head), Negation(tail)))
             else:
                 yield Negation(head)
+
     argument_type = type(exp.argument)
     if argument_type is LettersPossitiveUnion:
         yield exp.argument.as_negative(), EMPTY_STRING, table
@@ -77,61 +78,76 @@ def visit_negation(exp: Negation, table: SymbolsTable):
         yield from alts_generator(ConcatenationRepetition(WILDCARD, 1, inf), table)
     elif isinstance(exp.argument, NAryOperator):
         negations = HeadTailIterable(negations_generator())
-        if negations.has_tail:
+        if negations.tail.head is not None:
             yield from alts_generator(Intersection(negations), table)
-        elif negations.has_head:
+        elif negations.head is not None:
             yield from alts_generator(negations.head, table)
 
 
 @alts_generator.register
 def visit_intersection(exp: Intersection, table: SymbolsTable):
-    cached_alts_generator = CachedGenerator(alts_generator)
+    if exp.head is not None:
+        if exp.tail.head is None:
+            yield from alts_generator(exp.head, table)
+            return
 
-    for head1, tail1, table in alts_generator(exp.head, table):
-        for head2, tail2, table in cached_alts_generator(exp.tail, table):
-            # `aA & bB = (a & b) + (A & B)`
-            tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
-                else Intersection(tail1, tail2)
-            # `a & b = a`                 if `a == b`
-            head, table = table.intersect(head1, head2)
-            if head:
-                yield head, tail, table
-            # `a & b = {}`                if `a != b`
+        cached_alts_generator = CachedGenerator(alts_generator)
+
+        for head1, tail1, table in alts_generator(exp.head, table):
+            for head2, tail2, table in cached_alts_generator(exp.tail, table):
+                # `aA & bB = (a & b) + (A & B)`
+                tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
+                    else Intersection(tail1, tail2)
+                # `a & b = a`                 if `a == b`
+                head, table = table.intersect(head1, head2)
+                if head:
+                    yield head, tail, table
+                # `a & b = {}`                if `a != b`
 
 
 @alts_generator.register
 def visit_synchronization(exp: Synchronization, table: SymbolsTable):
-    cached_alts_generator = CachedGenerator(alts_generator)
+    if exp.head is not None:
+        if exp.tail.head is None:
+            yield from alts_generator(exp.head, table)
+            return
 
-    for head1, tail1, table in alts_generator(exp.head, table):
-        for head2, tail2, table in cached_alts_generator(exp.tail, table):
-            # `aA @ bB = (a @ b) + (A @ B)`
-            tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
-                else Synchronization(tail1, tail2)
-            # `a @ b = a`                     if `a == b`
-            head, table = table.intersect(head1, head2)
-            if head:
-                yield head, tail, table
-            # `a @ b = a // b`                if `a != b`
-            h1, t1, h2, t2 = table.difference(head1, head2)
-            if h1:
-                yield from alts_generator(Concatenation(Shuffle(h1, head2), tail), t1)
-            if h2:
-                yield from alts_generator(Concatenation(Shuffle(head1, h2), tail), t2)
+        cached_alts_generator = CachedGenerator(alts_generator)
+
+        for head1, tail1, table in alts_generator(exp.head, table):
+            for head2, tail2, table in cached_alts_generator(exp.tail, table):
+                # `aA @ bB = (a @ b) + (A @ B)`
+                tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
+                    else Synchronization(tail1, tail2)
+                # `a @ b = a`                     if `a == b`
+                head, table = table.intersect(head1, head2)
+                if head:
+                    yield head, tail, table
+                # `a @ b = a // b`                if `a != b`
+                h1, t1, h2, t2 = table.difference(head1, head2)
+                if h1:
+                    yield from alts_generator(Concatenation(Shuffle(h1, head2), tail), t1)
+                if h2:
+                    yield from alts_generator(Concatenation(Shuffle(head1, h2), tail), t2)
 
 
 @alts_generator.register
 def visit_concatenation(exp: Concatenation, table: SymbolsTable):
-    if exp.head is EMPTY_STRING:
-        yield from alts_generator(exp.tail, table)
-    else:
-        for head, tail, table in alts_generator(exp.head, table):
-            tail = exp.tail if tail is EMPTY_STRING \
-                else Concatenation(tail, exp.tail)
-            if head is EMPTY_STRING:
-                yield from alts_generator(tail, table)
-            else:
-                yield head, tail, table
+    if exp.head is not None:
+        if exp.tail.head is None:
+            yield from alts_generator(exp.head, table)
+            return
+
+        if exp.head is EMPTY_STRING:
+            yield from alts_generator(exp.tail, table)
+        else:
+            for head, tail, table in alts_generator(exp.head, table):
+                tail = exp.tail if tail is EMPTY_STRING \
+                    else Concatenation(tail, exp.tail)
+                if head is EMPTY_STRING:
+                    yield from alts_generator(tail, table)
+                else:
+                    yield head, tail, table
 
 
 @alts_generator.register
@@ -162,17 +178,22 @@ def visit_concatenation_repetition(exp: ConcatenationRepetition, table: SymbolsT
 
 @alts_generator.register
 def visit_shuffle(exp: Shuffle, table: SymbolsTable):
-    def shuffle(x, y, table):
-        for head, tail, table in alts_generator(x, table):
-            # aA // B = a + (A // B) | ...
-            if tail is not EMPTY_STRING:
-                yield head, Shuffle(tail, y), table
-            else:
-                # a // B = a + B | ...
-                yield head, y, table
+    if exp.head is not None:
+        if exp.tail.head is None:
+            yield from alts_generator(exp.head, table)
+            return
 
-    yield from shuffle(exp.head, exp.tail, table)
-    yield from shuffle(exp.tail, exp.head, table)
+        def shuffle(x, y, table):
+            for head, tail, table in alts_generator(x, table):
+                # aA // B = a + (A // B) | ...
+                if tail is not EMPTY_STRING:
+                    yield head, Shuffle(tail, y), table
+                else:
+                    # a // B = a + B | ...
+                    yield head, y, table
+
+        yield from shuffle(exp.head, exp.tail, table)
+        yield from shuffle(exp.tail, exp.head, table)
 
 
 @alts_generator.register

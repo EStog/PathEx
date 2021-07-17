@@ -16,14 +16,14 @@ _E = TypeVar('_E')
 class HeadTailIterable(Iterable[_E]):
     """An iterable with head and tail.
 
-    >>> x = HeadTailIterable.new([2, 3, 4, 5])
+    >>> x = HeadTailIterable([2, 3, 4, 5])
     >>> assert x.head == 2
     >>> assert list(x.tail) == [3, 4, 5]
     >>> assert [2, 3, 4, 5] == [e for e in x]
     >>> assert [2, 3, 4, 5] == [e for e in x]
 
     >>> s = {2, 3, 4}
-    >>> x = HeadTailIterable.new(s)
+    >>> x = HeadTailIterable(s)
     >>> first = next(iter(s))
     >>> rest = s - {first}
     >>> assert x.head == first
@@ -32,19 +32,19 @@ class HeadTailIterable(Iterable[_E]):
     >>> assert s == {2, 3, 4}
 
     >>> it = iter([1, 2, 3, 4])
-    >>> x = HeadTailIterable.new(it)
+    >>> x = HeadTailIterable(it)
     >>> assert x.head == 1
     >>> assert [e for e in x.tail] == [2, 3, 4]
     >>> assert [1, 2, 3, 4] == [e for e in x]
 
-    >>> x = HeadTailIterable.new([1])
+    >>> x = HeadTailIterable([1])
     >>> assert x.tail.head is None
-    >>> x = HeadTailIterable.new([])
+    >>> x = HeadTailIterable([])
     >>> assert x.head is None and x.tail.head is None
 
     An interable of this type may be expanded.
 
-    >>> h = HeadTailIterable.new([])
+    >>> h = HeadTailIterable([])
     >>> assert h.head is None
     >>> assert list(h.tail) == []
     >>> h.append(2)
@@ -72,8 +72,7 @@ class HeadTailIterable(Iterable[_E]):
     head: _E | None
     _tail: ExtensibleTail
 
-    @classmethod
-    def new(cls, iterable) -> HeadTailIterable[_E]:
+    def __new__(cls, iterable: Iterable[_E]) -> HeadTailIterable[_E]:
         if isinstance(iterable, HeadTailIterable):
             return iterable
         _tail = cls.ExtensibleTail(deque(), iter(iterable), deque.append)
@@ -81,18 +80,14 @@ class HeadTailIterable(Iterable[_E]):
             head = next(_tail)
         except StopIteration:
             head = None
-        obj = HeadTailIterable.__new__(cls)
+        obj = object.__new__(cls)
         object.__setattr__(obj, 'head', head)
         object.__setattr__(obj, '_tail', _tail)
         return obj
 
-    def __init__(self, *args, **kwargs) -> None:
-        raise TypeError('Do not use FunctionalIterable.__init__ directly.'
-                        'Use FunctionalIterable.new instead')
-
     @cached_property
-    def tail(self):
-        return self.new(self._tail)
+    def tail(self) -> HeadTailIterable[_E]:
+        return self.__class__(self._tail)
 
     def append(self, x: _E):
         self._tail.append(x)
