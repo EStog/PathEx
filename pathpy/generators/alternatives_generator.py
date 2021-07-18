@@ -99,6 +99,7 @@ def visit_intersection(exp: Intersection, table: SymbolsTable):
                 tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
                     else Intersection(tail1, tail2)
                 # `a & b = a`                 if `a == b`
+                # TODO: Table should not be the same
                 head, table = table.intersect(head1, head2)
                 if head:
                     yield head, tail, table
@@ -120,10 +121,12 @@ def visit_synchronization(exp: Synchronization, table: SymbolsTable):
                 tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
                     else Synchronization(tail1, tail2)
                 # `a @ b = a`                     if `a == b`
+                # TODO: Table should not be the same
                 head, table = table.intersect(head1, head2)
                 if head:
                     yield head, tail, table
                 # `a @ b = a // b`                if `a != b`
+                # TODO: Table should not be the same
                 h1, t1, h2, t2 = table.difference(head1, head2)
                 if h1:
                     yield from alts_generator(Concatenation(Shuffle(h1, head2), tail), t1)
@@ -138,16 +141,16 @@ def visit_concatenation(exp: Concatenation, table: SymbolsTable):
             yield from alts_generator(exp.head, table)
             return
 
-        if exp.head is EMPTY_STRING:
-            yield from alts_generator(exp.tail, table)
-        else:
-            for head, tail, table in alts_generator(exp.head, table):
-                tail = exp.tail if tail is EMPTY_STRING \
-                    else Concatenation(tail, exp.tail)
-                if head is EMPTY_STRING:
-                    yield from alts_generator(tail, table)
-                else:
-                    yield head, tail, table
+        # if exp.head is EMPTY_STRING:
+        #     yield exp.head, exp.tail, table
+        # else:
+        for head, tail, table in alts_generator(exp.head, table):
+            tail = exp.tail if tail is EMPTY_STRING \
+                else Concatenation(tail, exp.tail)
+            # if head is EMPTY_STRING:
+            #     yield from alts_generator(tail, table)
+            # else:
+            yield head, tail, table
 
 
 @alts_generator.register

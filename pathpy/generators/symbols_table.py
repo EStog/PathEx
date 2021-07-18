@@ -13,6 +13,8 @@ from pathpy.expressions.terms.wildcard import WILDCARD, Wildcard
 
 from ._expressions._named_wildcard import NamedWildcard
 
+# TODO: Change type signatures from object to Term.
+#TODO: always return from a match a Term, never an non-term object.
 
 @dataclass(frozen=True, eq=False)
 class SymbolsTable:
@@ -100,10 +102,10 @@ class SymbolsTable:
             return self._get_letters_union(a1.letters | a2.letters, LettersNegativeUnion)
         elif a1_type == Wildcard and a2_type != Wildcard:
             return a2
-        elif a2_type == Wildcard:
+        else:  # if a2_type == Wildcard:
             return a1
-        else:
-            return a1 if a1 == a2 else None
+        # else:
+        #     return a1 if a1 == a2 else None
 
     def _get_bi_difference_values(self, a1, a2) -> tuple[object, object]:
         def _get_bi_difference_wildcard_value(t: type[Term], v) -> LettersUnion | None:
@@ -136,10 +138,10 @@ class SymbolsTable:
                     self._get_letters_union(a1.letters - a2.letters, LettersPossitiveUnion))
         elif a1_type == Wildcard and a2_type != Wildcard:
             return _get_bi_difference_wildcard_value(a2_type, a2), None
-        elif a2_type == Wildcard:
+        else:  # if a2_type == Wildcard:
             return None, _get_bi_difference_wildcard_value(a1_type, a1)
-        else:
-            return (a1, a2) if a1 != a2 else (None, None)
+        # else:
+        #     return (a1, a2) if a1 != a2 else (None, None)
 
     def _get_more_concrete(self, group, value, v) -> tuple[object, SymbolsTable]:
         if value:
@@ -180,7 +182,7 @@ class SymbolsTable:
         elif match:
             updated_groups, wilds_of = self._bound_to(group1, group2)
             return a1, replace(self, _wilds_of=wilds_of, _group_of=self._group_of |
-                                  updated_groups, _value_of=self._value_of | {group1: match})
+                               updated_groups, _value_of=self._value_of | {group1: match})
         else:
             return None, self
 
