@@ -1,11 +1,17 @@
 import threading
+from contextlib import contextmanager
 from enum import Enum
+from functools import wraps
 
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
 from pathpy.generators._expressions._named_wildcard import NamedWildcard
 from pathpy.generators.alternatives_generator import alts_generator
 from pathpy.generators.symbols_table import SymbolsTable
+
+from .tag import Tag
+
+__all__ = ['Synchronizer']
 
 
 class ConcurrencyType(Enum):
@@ -31,6 +37,8 @@ class Synchronizer:
     >>> sync.register(writer)
     >>> def pop_last():
     ...     return l.pop()
+
+
     """
 
     def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
@@ -41,7 +49,7 @@ class Synchronizer:
         self._alternatives_lock = self._sync_module.Lock()
         self._alternatives.add((exp, SymbolsTable()))
 
-    def record(self, label):
+    def wait_until_allowed(self, label):
         label = LettersPossitiveUnion({label})
         with self._labels_lock:
             lock = self._labels.setdefault(label, self._sync_module.Lock())
@@ -86,5 +94,25 @@ class Synchronizer:
                         with self._alternatives_lock:
                             self._alternatives = new_alternatives
 
+    def register(self, tag: Tag, func=None):
+        def wrapper(wrapped):
+            @wraps(wrapped)
+            def f(*args, **kwargs):
+                self.wait_until_allowed(tag.enter)
+                x = wrapped(*args, **kwargs)
+                self.wait_until_allowed(tag.exit)
+                return x
+            return f
 
-__all__ = ['Synchronizer']
+        if func is None:
+            return wrapper
+        else:
+            return wrapper(func)
+
+    @contextmanager
+    def region(self, tag: Tag):
+        self.wait_until_allowed(tag.enter)
+        try:
+            yield self
+        finally:
+            self.wait_until_allowed(tag.exit)
