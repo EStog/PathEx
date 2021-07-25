@@ -13,25 +13,27 @@ class Intersection(NAryOperator):
 
     Example:
         >>> from pathpy import Union as U, LettersPossitiveUnion as L, Concatenation as C, LettersNegativeUnion as NL
+        >>> from pathpy.generators.word_generator import WordGenerator
+        >>> from functools import partial
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz')
-        >>> assert exp.as_set_of_str() == {'ay'}
+        >>> assert exp.as_(set) == {'ay'}
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz') + 'w'
-        >>> assert exp.as_set_of_str() == set()
-        >>> assert exp.as_set_of_str(complete_word=False) == {'ay'}
+        >>> assert exp.as_(set) == set()
+        >>> assert exp.as_(set, word_reifier=partial(WordGenerator.as_, complete=False)) == {'ay'}
 
         >>> exp1 = L('a')*... & C('aaa') | C('aa')
         >>> exp2 = C('aaa') | C('aa') & L('a')*...
-        >>> assert exp1.as_set_of_str() == exp2.as_set_of_str()
+        >>> assert exp1.as_(set) == exp2.as_(set)
 
         >>> exp1 = L('abc') + C('xyz')
         >>> exp2 = L('axy') + C('xyz')
-        >>> assert (exp1 & exp2).as_set_of_str() == {'axyz'}
+        >>> assert (exp1 & exp2).as_(set) == {'axyz'}
 
         >>> exp1 = NL('abc') + C('xyz')
         >>> exp2 = L('axy') + C('xyz')
-        >>> assert (exp1 & exp2).as_set_of_str() == {'xxyz', 'yxyz'}
+        >>> assert (exp1 & exp2).as_(set) == {'xxyz', 'yxyz'}
 
     """
 

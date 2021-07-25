@@ -14,8 +14,8 @@ from pathpy.expressions.terms.wildcard import WILDCARD, Wildcard
 from ._expressions._named_wildcard import NamedWildcard
 
 # TODO: Change type signatures from object to Term.
-#TODO: always return from a match a Term, never an non-term object.
-
+# TODO: Always return from a match a Term, never an non-term object.
+# TODO: See if it is possible to use weakref
 @dataclass(frozen=True, eq=False)
 class SymbolsTable:
 

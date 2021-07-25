@@ -1,15 +1,18 @@
+from __future__ import annotations
+
 import threading
 from contextlib import contextmanager
+from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
+from typing import Iterator
 
+from pathpy.expressions.nary_operators.concatenation import Concatenation
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
 from pathpy.generators._expressions._named_wildcard import NamedWildcard
 from pathpy.generators.alternatives_generator import alts_generator
 from pathpy.generators.symbols_table import SymbolsTable
-
-from .tag import Tag
 
 __all__ = ['Synchronizer']
 
@@ -40,6 +43,30 @@ class Synchronizer:
 
 
     """
+    class _Label:
+        __slots__ = ()
+
+        def __repr__(self) -> str:
+            return f'<{self.__class__.__name__} at {id(self)}>'
+
+    @dataclass(frozen=True, init=False)
+    class _Tag(Concatenation):
+
+        enter: Synchronizer._Label
+        exit: Synchronizer._Label
+
+        def __new__(cls, *args):
+            if args:
+                return super().__new__(cls, *args)
+            enter = Synchronizer._Label()
+            exit = Synchronizer._Label()
+            self = super().__new__(cls, enter, exit)
+            object.__setattr__(self, 'enter', enter)
+            object.__setattr__(self, 'exit', exit)
+            return self
+
+        def __repr__(self) -> str:
+            return f'<{self.__class__.__name__} at {id(self)}>'
 
     def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
         self._sync_module = concurrency_type.value
@@ -94,7 +121,7 @@ class Synchronizer:
                         with self._alternatives_lock:
                             self._alternatives = new_alternatives
 
-    def register(self, tag: Tag, func=None):
+    def register(self, tag: Synchronizer._Tag, func=None):
         def wrapper(wrapped):
             @wraps(wrapped)
             def f(*args, **kwargs):
@@ -110,9 +137,13 @@ class Synchronizer:
             return wrapper(func)
 
     @contextmanager
-    def region(self, tag: Tag):
+    def region(self, tag: Synchronizer._Tag):
         self.wait_until_allowed(tag.enter)
         try:
             yield self
         finally:
             self.wait_until_allowed(tag.exit)
+
+    @classmethod
+    def tags(cls, n: int):
+        return (Synchronizer._Tag() for _ in range(n))

@@ -43,33 +43,33 @@ class Substitution(Expression):
         >>> from pathpy import Concatenation as C, Union as U, EMPTY_STRING as e, WILDCARD as _
 
         >>> exp = C('abc')[{'a':'c', 'c':'a'}]
-        >>> assert exp.as_set_of_str() == {'cba'}
+        >>> assert exp.as_(set) == {'cba'}
 
         >>> exp = C('abc')['a':'xy', 'c':e]
-        >>> assert exp.as_set_of_str() == {'xyb'}
+        >>> assert exp.as_(set) == {'xyb'}
 
         >>> exp = C(U('ax'), 'c')['a':'b', 'c':'y']
-        >>> assert exp.as_set_of_str() == {'by', 'xy'}
+        >>> assert exp.as_(set) == {'by', 'xy'}
 
         >>> from pathpy.generators.word_generator import WordGenerator
         >>> from pathpy.generators._expressions._named_wildcard import NamedWildcard
-        >>> def term_converter(x):
-        ...     if isinstance(x, NamedWildcard):
-        ...         return f'_{x.name}'
-        ...     else:
-        ...         return str(x)
-
-        >>> from functools import partial
-        >>> word_reifier = partial(WordGenerator.reify, initial='', converter=term_converter)
+        >>> def word_reifier(word):
+        ...     s = ''
+        ...     for x in word.reification(complete=True):
+        ...         if isinstance(x, NamedWildcard):
+        ...             s += f'_{x.name}'
+        ...         else:
+        ...             s += str(x)
+        ...     return s
 
         >>> exp = C('abca')['a':_]
-        >>> assert exp.reify(word_reifier=word_reifier) == {'_0bc_0'}
+        >>> assert set(exp.reification(word_reifier=word_reifier)) == {'_0bc_0'}
 
         >>> exp = C('abcacd')['c':_, 'a':'x'+_+'y']
-        >>> assert exp.reify(word_reifier=word_reifier) == {'x_0yb_1x_0y_1d'}
+        >>> assert set(exp.reification(word_reifier=word_reifier)) == {'x_0yb_1x_0y_1d'}
 
         >>> exp = C(U('xyz'), *'abc')['x':_, 'y':'w'+_, 'z':'t', 'b':C('r',_,'s')]
-        >>> assert exp.reify(word_reifier=word_reifier) == {'_0ar_1sc', 'w_0ar_1sc', 'tar_0sc'}
+        >>> assert set(exp.reification(word_reifier=word_reifier)) == {'_0ar_1sc', 'w_0ar_1sc', 'tar_0sc'}
     """
     argument: object
     replacements: dict[object, object]

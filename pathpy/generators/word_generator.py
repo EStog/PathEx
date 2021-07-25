@@ -19,11 +19,15 @@ from .symbols_table import SymbolsTable
 # and make sets `delivered` and `to_deliver` parallel-safe.
 
 
-def convert_to_str(x):
+def check_if_reification_possible(x):
     if x is not EMPTY_STRING and isinstance(x, (Wildcard, LettersNegativeUnion)):
         raise ReificationError(f'{x.__class__.__name__} is undeterminable')
     else:
-        return str(x)
+        return x
+
+
+def to_str_from_iter(iter):
+    return ''.join(str(check_if_reification_possible(x)) for x in iter)
 
 
 INCOMPLETE_MATCH = object()
@@ -78,7 +82,8 @@ class WordGenerator:
             self._tail = EMPTY_STRING
             raise IncompleteMatch
         else:
-            self._adt_put_op(self._alternatives, (self._prefix.copy(), alts_gen))
+            self._adt_put_op(self._alternatives,
+                             (self._prefix.copy(), alts_gen))
             self._tail = tail
             self._table = table
         finally:
@@ -97,28 +102,26 @@ class WordGenerator:
                                      self._words)
 
             if heads := e.letters - {x}:
-                self._words.expand(map(
-                    partial(word_generator_constructor, tail=self._tail, table=self._table), heads))
+                self._words.expand(
+                    map(partial(word_generator_constructor,
+                                tail=self._tail, table=self._table), heads))
             self._prefix[self._pointer] = x
             return x
         else:
             return e
 
-    def reify(self, initial=[], converter=lambda x: [x],
-              add_op=lambda x, y: x + y, complete=True):
-        s = initial
+    def reification(self, complete=True):
         try:
             for x in self:
-                s = add_op(s, converter(x))
+                yield x
         except IncompleteMatch:
             if complete:
                 raise
-        return s
 
-    def as_str(self, complete=True):
-        return ''.join(convert_to_str(x) for x in self.reify(complete=complete))
+    def as_(self, container=to_str_from_iter, complete=True):
+        return container(check_if_reification_possible(x) for x in self.reification(complete=complete))
 
-    __str__ = as_str
+    __str__ = as_
 
     def __repr__(self):
         return (f'{self.__class__.__name__}({self._prefix!r}, '

@@ -1,23 +1,23 @@
 from __future__ import annotations
 
+from collections import deque
+from functools import partial
+
 from pathpy.adts.extensible_iterator import ExtensibleIterator
 from pathpy.exceptions import IncompleteMatch, ReificationError
 
 from .alternatives_generator import alts_generator
 from .symbols_table import SymbolsTable
-from .word_generator import WordGenerator
-from collections import deque
+from .word_generator import WordGenerator, check_if_reification_possible
 
 # TODO: Parallel-safe version: put a lock for iter-object exclusivity in `__next__`
 # and make set `alternatives` parallel-safe.
 
-
-def reify_word_as_tuple(x, complete_word):
-    return tuple(WordGenerator.reify(x, complete=complete_word))
+__all__ = ['LanguageGenerator']
 
 
 class LanguageGenerator:
-    def __init__(self, expression, symbols_table=None, lock_class=None,
+    def __init__(self, expression, symbols_table=None,
                  adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append):
         if symbols_table is None:
             symbols_table = SymbolsTable()
@@ -49,13 +49,10 @@ class LanguageGenerator:
             else:
                 raise StopIteration
 
-    def reify(self, initial=set(), converter=lambda x: {x},
-              add_op=lambda x, y: x | y, word_reifier=reify_word_as_tuple,
-              complete_word=True, ignore_reification_errors=False):
-        s = initial
+    def reification(self, word_reifier=WordGenerator.reification, ignore_reification_errors=False):
         for x in self:
             try:
-                x = word_reifier(x, complete=complete_word)
+                yield word_reifier(x)
             except IncompleteMatch:
                 continue
             except ReificationError:
@@ -63,22 +60,6 @@ class LanguageGenerator:
                     continue
                 else:
                     raise
-            s = add_op(s, converter(x))
-        return s
 
-    def as_set_of_str(self, complete_word=True, ignore_reification_errors=True):
-        return self.reify(word_reifier=WordGenerator.as_str, complete_word=complete_word,
-                          ignore_reification_errors=ignore_reification_errors)
-
-    def as_list_of_strs(self, complete_word=True, ignore_reification_errors=True):
-        return self.reify(initial=[], converter=lambda x: [x], add_op=lambda x, y: x+y,
-                          word_reifier=WordGenerator.as_str, complete_word=complete_word,
-                          ignore_reification_errors=ignore_reification_errors)
-
-    def as_list_of_lists(self, complete_word, ignore_reification_errors=True):
-        return self.reify(initial=[], converter=lambda x: [x], add_op=lambda x, y: x+y,
-                          word_reifier=WordGenerator.reify, complete_word=complete_word,
-                          ignore_reification_errors=ignore_reification_errors)
-
-
-__all__ = ['LanguageGenerator']
+    def as_(self, container, word_reifier=partial(WordGenerator.as_, complete_word=True), ignore_reification_errors=True):
+        return container(self.reification(word_reifier, ignore_reification_errors))

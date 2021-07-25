@@ -10,7 +10,6 @@ class NamedWildcard(Term):
     not necessary in the theoretical model from the semantic point of
     view. The class is inmutable.
     """
-
     name: int
 
     def __repr__(self) -> str:

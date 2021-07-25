@@ -29,35 +29,37 @@ class Expression(ABC):  # (Hashable)
     This class represents an abstract Expression. An Expression represents
     a set of tuples of letters, also called strings or words.
     """
-    #TODO: Put default arguments as constant.
-    def as_set_of_str(self, symbols_table=None, lock_class=None,
-              adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append, cached=False, complete_word=True, ignore_reification_errors=False):
-        from pathpy.generators.word_generator import WordGenerator
-        return self.reify(symbols_table=symbols_table, lock_class=lock_class, adt_creator=adt_creator, adt_get_op=adt_get_op, adt_put_op=adt_put_op, cached=cached, word_reifier=WordGenerator.as_str, complete_word=complete_word, ignore_reification_errors=ignore_reification_errors)
+    # TODO: Put default arguments as constant.
 
-    def reify(self, symbols_table=None, lock_class=None,
-              adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append,
-              cached=False, initial=set(), converter=lambda x: {x},
-              add_op=lambda x, y: x | y, word_reifier=None, complete_word=True,
-              ignore_reification_errors=False):
+    def as_(self, container, word_reifier=None, symbols_table=None, adt_creator=deque,
+           adt_get_op=deque.pop, adt_put_op=deque.append,
+           cached=False, ignore_reification_errors=False):
         if word_reifier is None:
             from pathpy.generators.word_generator import WordGenerator
-            word_reifier = WordGenerator.reify
-        return self.as_language(symbols_table, lock_class, adt_creator, adt_get_op, adt_put_op,
-                                cached).reify(initial, converter, add_op, word_reifier, complete_word, ignore_reification_errors)
+            word_reifier = WordGenerator.as_
+        return self.as_language(symbols_table, adt_creator, adt_get_op, adt_put_op,
+                                cached).as_(container, word_reifier, ignore_reification_errors)
 
-    def as_language(self, symbols_table=None, lock_class=None,
-                    adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append,
-                    cached=False):
+    def reification(self, symbols_table=None, adt_creator=deque,
+                    adt_get_op=deque.pop, adt_put_op=deque.append,
+                    cached=False, word_reifier=None,
+                    ignore_reification_errors=False):
+        if word_reifier is None:
+            from pathpy.generators.word_generator import WordGenerator
+            word_reifier = WordGenerator.reification
+        return self.as_language(symbols_table, adt_creator, adt_get_op, adt_put_op,
+                                cached).reification(word_reifier, ignore_reification_errors)
+
+    def as_language(self, symbols_table=None, adt_creator=deque,
+                    adt_get_op=deque.pop, adt_put_op=deque.append, cached=False):
         from pathpy.generators.language_generator import LanguageGenerator
         if cached:
             if not hasattr(self, 'language_generator'):
                 self.language_generator = CachedGenerator(LanguageGenerator)(
-                    self, symbols_table, lock_class, adt_creator, adt_get_op, adt_put_op)
+                    self, symbols_table, adt_creator, adt_get_op, adt_put_op)
             return cast(LanguageGenerator, self.language_generator)
         else:
-            return LanguageGenerator(self, symbols_table, lock_class,
-                                     adt_creator, adt_get_op, adt_put_op)
+            return LanguageGenerator(self, symbols_table, adt_creator, adt_get_op, adt_put_op)
 
     @staticmethod
     def flatten(a, b, type_expression):
@@ -75,7 +77,7 @@ class Expression(ABC):  # (Hashable)
     # self|interable
     @__or__.register(list)
     def __(self, iterable):
-        from pathpy import multiplication, Union
+        from pathpy import Union, multiplication
         return multiplication(self, Union, iterable)
 
     # other | self
@@ -107,7 +109,7 @@ class Expression(ABC):  # (Hashable)
     # self@iterable
     @__matmul__.register(list)
     def __(self, iterable):
-        from pathpy import multiplication, Synchronization
+        from pathpy import Synchronization, multiplication
         return multiplication(self, Synchronization, iterable)
 
     # other @ self
@@ -139,7 +141,7 @@ class Expression(ABC):  # (Hashable)
     # self-iterable
     @__sub__.register(list)
     def __(self, iterable):
-        from pathpy import multiplication, difference
+        from pathpy import difference, multiplication
         return multiplication(self, difference, iterable)
 
     # other - self
@@ -151,8 +153,10 @@ class Expression(ABC):  # (Hashable)
     # iterable-self
     @__rsub__.register(list)
     def __rsub__(self, iterable):
-        from pathpy import multiplication, difference
-        return multiplication(self, difference, iterable) # #TODO: replace by left multiplication
+        from pathpy import difference, multiplication
+
+        # TODO: replace by left multiplication
+        return multiplication(self, difference, iterable)
 
     # -self
     def __neg__(self):
@@ -261,7 +265,7 @@ class Expression(ABC):  # (Hashable)
     # self//iterable
     @__floordiv__.register(list)
     def __(self, iterable):
-        from pathpy import multiplication, Shuffle
+        from pathpy import Shuffle, multiplication
         return multiplication(self, Shuffle, iterable)
 
     # other // self
