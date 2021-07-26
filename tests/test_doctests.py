@@ -26,8 +26,6 @@ def load_tests(loader, tests, ignore):
         'pathpy.expressions.nary_operators.synchronization'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.nary_operators.union'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.expressions.terms.letter'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.terms.letters_unions.letters_negative_union'))
     tests.addTests(doctest.DocTestSuite(
@@ -38,22 +36,6 @@ def load_tests(loader, tests, ignore):
         'pathpy.expressions.repetitions.shuffle_repetition'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.substitution'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.expressions.empty_string'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.visitor.visitor'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.visitor._visit_difference'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.visitor._visit_intersection'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.visitor._visit_multiplication'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.visitor._visit_letter_object'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.visitor._visit_shuffle'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.visitor._visit_synchronization'))
-    # tests.addTests(doctest.DocTestSuite(
-    #     'pathpy.core.visitor._visit_wildcard'))
+    tests.addTests(doctest.DocTestSuite(
+        'pathpy.managers.synchronizer'))
     return tests

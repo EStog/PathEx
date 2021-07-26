@@ -8,7 +8,7 @@ from pathpy.exceptions import IncompleteMatch, ReificationError
 
 from .alternatives_generator import alts_generator
 from .symbols_table import SymbolsTable
-from .word_generator import WordGenerator, check_if_reification_possible
+from .word_generator import WordGenerator
 
 # TODO: Parallel-safe version: put a lock for iter-object exclusivity in `__next__`
 # and make set `alternatives` parallel-safe.
@@ -63,3 +63,6 @@ class LanguageGenerator:
 
     def as_(self, container, word_reifier=partial(WordGenerator.as_, complete_word=True), ignore_reification_errors=True):
         return container(self.reification(word_reifier, ignore_reification_errors))
+
+    def as_set_of_tuples(self, complete_words=True, ignore_reification_errors=True):
+        return set(self.reification(partial(WordGenerator.as_, container=tuple, complete=complete_words), ignore_reification_errors))

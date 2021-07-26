@@ -19,7 +19,7 @@ class NAryOperator(Expression, HeadTailIterable[Expression]):
     def __add__(self, other):
         if isinstance(other, self.__class__):
             return self.__class__(HeadTailIterable.__add__(self, other))
-        return Expression.__add__(self, other)
+        return super().__add__(other)
 
 
 __all__ = ['NAryOperator']

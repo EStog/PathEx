@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC
 from collections import deque
-from functools import singledispatchmethod
+from functools import partial, singledispatchmethod
 from itertools import chain
 from math import inf
 from typing import cast
@@ -31,9 +31,14 @@ class Expression(ABC):  # (Hashable)
     """
     # TODO: Put default arguments as constant.
 
+    def as_set_of_tuples(self, symbols_table=None, adt_creator=deque,
+                         adt_get_op=deque.pop, adt_put_op=deque.append, cached=False, complete_words=True, ignore_reification_errors=True):
+        return self.as_language(symbols_table, adt_creator,
+                                adt_get_op, adt_put_op, cached).as_set_of_tuples(complete_words, ignore_reification_errors)
+
     def as_(self, container, word_reifier=None, symbols_table=None, adt_creator=deque,
-           adt_get_op=deque.pop, adt_put_op=deque.append,
-           cached=False, ignore_reification_errors=False):
+            adt_get_op=deque.pop, adt_put_op=deque.append,
+            cached=False, ignore_reification_errors=False):
         if word_reifier is None:
             from pathpy.generators.word_generator import WordGenerator
             word_reifier = WordGenerator.as_
