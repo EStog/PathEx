@@ -136,7 +136,7 @@ class SharedLock:
         >>> execute(get_value, append)
 
 
-    You can also use `write_operation` and `read_operation` context managers:
+    `write_operation` and `read_operation` can also be used as context managers:
 
         >>> def append(l, x):
         ...     with lock.write_operation:
@@ -151,7 +151,7 @@ class SharedLock:
         >>> execute(get_value, append)
 
 
-    As an alternative you can use `write_operation` and `read_operator` as decorators:
+    As an alternative, `write_operation` and `read_operator` can be used as decorators:
 
         >>> @lock.write_operation
         ... def append(l, x):
@@ -166,7 +166,7 @@ class SharedLock:
         >>> execute(get_value, append)
 
 
-    Also, you can use method decorators to achieve the same result.
+    Also, method decorators can be used to achieve the same result.
     In this case subclassing must be used.
 
         >>> class A(SharedLock): # <-- Don't forget to subclass from SharedLock

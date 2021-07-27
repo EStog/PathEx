@@ -13,7 +13,9 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multifunction_by_equality'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.multitask_safe.shared_lock'))
+        'pathpy.adts.multitask.pseudo_acquired_lock'))
+    tests.addTests(doctest.DocTestSuite(
+        'pathpy.adts.multitask.shared_lock'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.singleton'))
     tests.addTests(doctest.DocTestSuite(
