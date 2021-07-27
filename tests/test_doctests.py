@@ -13,6 +13,8 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multifunction_by_equality'))
     tests.addTests(doctest.DocTestSuite(
+        'pathpy.adts.multitask.atomic'))
+    tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multitask.pseudo_acquired_lock'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multitask.shared_lock'))

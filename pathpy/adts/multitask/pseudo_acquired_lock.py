@@ -3,7 +3,6 @@ class PseudoAcquiredLock:
 
     Instances of this class are not concurrent-safe, since the waiting state is not protected in this respect. This means that calls to `acquire`, `release` and `waiting` must be protected form outside. Instances of this class are intended just as wrapper of a lock and the associated waiting state. For a concurrent-safe version see class `AcquiredLock`.
 
-    >>> from pathpy.adts.multitask.pseudo_acquired_lock import PseudoAcquiredLock
     >>> from threading import Lock, Thread
     >>> from time import sleep
     >>> lock = PseudoAcquiredLock(Lock)
