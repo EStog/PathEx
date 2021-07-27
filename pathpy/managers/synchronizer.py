@@ -34,6 +34,7 @@ class _Label:
     def __hash__(self) -> int:
         return id(self)
 
+
 class _Enter(_Label):
     pass
 
@@ -41,8 +42,6 @@ class _Enter(_Label):
 class _Exit(_Label):
     pass
 
-
-print_lock = threading.Lock()
 
 @dataclass(frozen=True, init=False, eq=False)
 class _Tag(Concatenation):
@@ -74,12 +73,15 @@ class _Tag(Concatenation):
 
     def __hash__(self) -> int:
         return id(hash)
+
+
 class Synchronizer:
     """This class is a manager that controls the execution of its registered threads.
     """
 
     def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
         self._sync_module = concurrency_type.value
+        self._sync_lock = self._sync_module.Lock()
         self._labels = {}
         self._labels_lock = self._sync_module.Lock()
         self._alternatives = set()
@@ -129,19 +131,39 @@ class Synchronizer:
             label (object): The label to wait for.
         """
         label = LettersPossitiveUnion({label})
-        with self._labels_lock:
+
+        self._sync_lock.acquire()  # protect the entire procedure
+
+        if not (new_alternatives := self._get_new_alternatives(label)):
             lock = self._labels.setdefault(label, self._sync_module.Lock())
-        lock.acquire()
-        if new_alternatives := self._get_new_alternatives(label):
-            lock.release()
-            with self._alternatives_lock:
-                self._alternatives = new_alternatives
-            self._release_labels()
-        else:
-            with print_lock:
-                print('Waiting label')
+
+            # release the procedure's protection lock in order to block in the following lines, so the blocking will be because this task being waiting for some other task, not because of the procedure's protection lock
+            self._sync_lock.release()
+
+            # two lock.acquire in order to block.
+            # One lock.release is done by this task whilst the other must be done by another task.
+            lock.acquire()
             lock.acquire()
             lock.release()
+        else:
+            self._alternatives = new_alternatives
+            # release one label waiting that match some of the current alternatives.
+            self._release_label()
+            self._sync_lock.release()
+
+    def _release_label(self):
+        while True:
+            for label in self._labels:
+                if new_alternatives := self._get_new_alternatives(label):
+                    try:
+                        self._labels[label].release()
+                    except RuntimeError:
+                        pass  # there is no task associated with this label
+                    else:
+                        self._alternatives = new_alternatives
+                        break
+            else:
+                break
 
     def _get_new_alternatives(self, label):
         def _assert_right_match(label, match, table):
@@ -151,28 +173,14 @@ class Synchronizer:
                 return LettersPossitiveUnion({match}) == label
 
         new_alternatives = set()
-        with self._alternatives_lock:
-            for exp, table in self._alternatives:
-                for head, tail, table in alts_generator(exp, table):
-                    match, table = table.intersect(head, label)
-                    if match is not None:
-                        assert _assert_right_match(label, match, table), \
-                            f'Match is {match} instead of label "{label}"'
-                        new_alternatives.add((tail, table))
+        for exp, table in self._alternatives:
+            for head, tail, table in alts_generator(exp, table):
+                match, table = table.intersect(head, label)
+                if match is not None:
+                    assert _assert_right_match(label, match, table), \
+                        f'Match is {match} instead of label "{label}"'
+                    new_alternatives.add((tail, table))
         return new_alternatives
-
-    def _release_labels(self):
-        with self._labels_lock:
-            for label in self._labels:
-                if new_alternatives := self._get_new_alternatives(label):
-                    lock = self._labels[label]
-                    try:
-                        lock.release()
-                    except RuntimeError:
-                        pass
-                    else:
-                        with self._alternatives_lock:
-                            self._alternatives = new_alternatives
 
     def register(self, tag: _Tag, func=None):
         """
