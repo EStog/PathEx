@@ -1,11 +1,11 @@
 from __future__ import annotations
-from itertools import islice, zip_longest
 
 import threading
 from contextlib import contextmanager
 from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
+from itertools import islice, zip_longest
 
 from pathpy.expressions.nary_operators.concatenation import Concatenation
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
@@ -42,6 +42,8 @@ class _Exit(_Label):
     pass
 
 
+print_lock = threading.Lock()
+
 @dataclass(frozen=True, init=False, eq=False)
 class _Tag(Concatenation):
 
@@ -74,47 +76,6 @@ class _Tag(Concatenation):
         return id(hash)
 class Synchronizer:
     """This class is a manager that controls the execution of its registered threads.
-
-    >>> from concurrent.futures import ThreadPoolExecutor
-    >>> from functools import partial
-    >>> from pathpy import Synchronizer
-    >>> from pathpy.generators.word_generator import WordGenerator
-
-    >>> a, b, c = Synchronizer.tags(3)
-
-    >>> exp = ( a + (b|c) )+2
-
-    >>> shared_list = []
-
-    >>> sync = Synchronizer(exp)
-
-    >>> @sync.register(a)
-    ... def func_a():
-    ...     shared_list.append(a.enter)
-    ...     # print('Func a')
-    ...     shared_list.append(a.exit)
-
-    >>> @sync.register(b)
-    ... def func_b():
-    ...     shared_list.append(b.enter)
-    ...     # print('Func b')
-    ...     shared_list.append(b.exit)
-
-    >>> @sync.register(c)
-    ... def func_c():
-    ...     shared_list.append(c.enter)
-    ...     # print('Func c')
-    ...     shared_list.append(c.exit)
-
-    >>> with ThreadPoolExecutor(max_workers=4) as executor:
-    ...     _ = executor.submit(func_c)
-    ...     _ = executor.submit(func_a)
-    ...     _ = executor.submit(func_b)
-    ...     _ = executor.submit(func_a)
-
-    >>> allowed_paths = exp.as_set_of_tuples()
-
-    >>> assert tuple(shared_list) in allowed_paths
     """
 
     def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
@@ -125,7 +86,48 @@ class Synchronizer:
         self._alternatives_lock = self._sync_module.Lock()
         self._alternatives.add((exp, SymbolsTable()))
 
-    def wait_until_allowed(self, label):
+    def emit(self, label: object):
+        """This method is used to wait for the availability of a single label.
+
+        The label may be any comparable object. If the expression of the synchronizer is not able to generate the given object then the execution is blocked until the presence of another label in another task advances the associated expression's automata, so it can generate the label given in this method.
+
+        The direct use of this method should be exercised with caution, because it leads to non structured code. In fact, in an object oriented design, its use should be discouraged. This method is public just because it might be usefull in a very specific and extraordinary use case where an structured approach may be too expensive, harder to design or to maintain.
+
+        For an structured approach use the decorator `Synchronizer.register` or the context manager `Synchronizer.region`.
+
+        Example:
+
+            >>> from concurrent.futures import ThreadPoolExecutor
+            >>> from pathpy import Synchronizer, Concatenation as C
+
+            The following expression generates 'PiPfCiCf' | 'PiPfCiCfPiPfCiCf' | ...
+            >>> exp = +C('Pi','Pf','Ci','Cf')
+            >>> sync = Synchronizer(exp)
+            >>> produced = []
+            >>> consumed = []
+
+            >>> def producer(x):
+            ...     sync.emit('Pi')
+            ...     produced.append(x)
+            ...     sync.emit('Pf')
+
+            >>> def consumer():
+            ...     sync.emit('Ci')
+            ...     consumed.append(produced.pop())
+            ...     sync.emit('Cf')
+
+            >>> with ThreadPoolExecutor(max_workers=8) as executor:
+            ...     for _ in range(4):
+            ...         _ = executor.submit(consumer)
+            ...     for i in range(4):
+            ...         _ = executor.submit(producer, i)
+
+            >>> assert produced == []
+            >>> assert consumed == [1, 2, 3, 4]
+
+        Args:
+            label (object): The label to wait for.
+        """
         label = LettersPossitiveUnion({label})
         with self._labels_lock:
             lock = self._labels.setdefault(label, self._sync_module.Lock())
@@ -136,6 +138,8 @@ class Synchronizer:
                 self._alternatives = new_alternatives
             self._release_labels()
         else:
+            with print_lock:
+                print('Waiting label')
             lock.acquire()
             lock.release()
 
@@ -171,12 +175,54 @@ class Synchronizer:
                             self._alternatives = new_alternatives
 
     def register(self, tag: _Tag, func=None):
+        """
+        >>> from concurrent.futures import ThreadPoolExecutor
+        >>> from functools import partial
+        >>> from pathpy import Synchronizer
+        >>> from pathpy.generators.word_generator import WordGenerator
+
+        >>> a, b, c = Synchronizer.tags(3)
+
+        >>> exp = ( a + (b|c) )+2
+
+        >>> shared_list = []
+
+        >>> sync = Synchronizer(exp)
+
+        >>> @sync.register(a)
+        ... def func_a():
+        ...     shared_list.append(a.enter)
+        ...     # print('Func a')
+        ...     shared_list.append(a.exit)
+
+        >>> @sync.register(b)
+        ... def func_b():
+        ...     shared_list.append(b.enter)
+        ...     # print('Func b')
+        ...     shared_list.append(b.exit)
+
+        >>> @sync.register(c)
+        ... def func_c():
+        ...     shared_list.append(c.enter)
+        ...     # print('Func c')
+        ...     shared_list.append(c.exit)
+
+        >>> with ThreadPoolExecutor(max_workers=4) as executor:
+        ...     _ = executor.submit(func_c)
+        ...     _ = executor.submit(func_a)
+        ...     _ = executor.submit(func_b)
+        ...     _ = executor.submit(func_a)
+
+        >>> allowed_paths = exp.as_set_of_tuples()
+
+        >>> assert tuple(shared_list) in allowed_paths
+        """
         def wrapper(wrapped):
             @wraps(wrapped)
             def f(*args, **kwargs):
-                self.wait_until_allowed(tag.enter)
+                self.emit(tag.enter)
                 x = wrapped(*args, **kwargs)
-                self.wait_until_allowed(tag.exit)
+                self.emit(tag.exit)
                 return x
             return f
 
@@ -187,11 +233,11 @@ class Synchronizer:
 
     @contextmanager
     def region(self, tag: _Tag):
-        self.wait_until_allowed(tag.enter)
+        self.emit(tag.enter)
         try:
             yield self
         finally:
-            self.wait_until_allowed(tag.exit)
+            self.emit(tag.exit)
 
     @classmethod
     def tags(cls, n: int, *names):
