@@ -34,22 +34,33 @@ class AtomicAttribute:
     >>> del a.atomic_attr
     >>> assert not 'atomic_attr' in vars(a)
     >>> assert a.atomic_attr == 5
+
+    If lock_class is a string X, then the attribute of the instance of the owner class with name X will be used as lock_class
+
+    >>> class A:
+    ...     atomic_attr = AtomicAttribute('instance_lock_class', 7)
+    ...
+    ...     def __init__(self, instance_lock_class):
+    ...         self.instance_lock_class = instance_lock_class
+
+    >>> a = A(Lock)
+    >>> assert a.atomic_attr == 7
+    >>> assert type(a.__dict__['atomic_attr']._lock) == type(Lock())
     """
 
     def __init__(self, lock_class, default=None):
         self._lock_class = lock_class
         self._default = default
 
-    def _get_default_object(self):
-        if callable(self._default):
-            default = self._default()
-        else:
-            default = self._default
-        return Atomic(self._lock_class, default)
+    def _get_default_object(self, instance):
+        default = self._default() if callable(self._default) else self._default
+        lock_class = getattr(instance, self._lock_class) \
+            if isinstance(self._lock_class, str) else self._lock_class
+        return Atomic(lock_class, default)
 
     def _get_object(self, instance):
         return instance.__dict__.setdefault(
-            self._attribute_name, self._get_default_object())
+            self._attribute_name, self._get_default_object(instance))
 
     def __set_name__(self, owner, name):
         self._attribute_name = name
