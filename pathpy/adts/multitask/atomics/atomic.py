@@ -1,5 +1,5 @@
 class Atomic:
-    """This is an object that holds a variable whose value can be changed in concurrent-safe manner.
+    """An object that holds a variable whose value can be changed in concurrent-safe manner.
 
     >>> from threading import Lock, Thread
     >>> a = Atomic(Lock, 1)
@@ -13,13 +13,17 @@ class Atomic:
     >>> def g():
     ...     return a.value
 
-    >>> t = Thread(target=f)
-    >>> t1 = Thread(target=g)
-    >>> t.start()
-    >>> t1.start()
-    >>> t.join()
-    >>> t1.join()
+    >>> t, t1 = Thread(target=f), Thread(target=g)
+    >>> t.start(); t1.start()
+    >>> t.join(); t1.join()
     >>> assert a.value == [3, 4, 5]
+
+    >>> try:
+    ...     del a.value
+    ... except AttributeError:
+    ...     pass # Right!
+    ... else:
+    ...     print('Wrong!')
     """
 
     def __init__(self, lock_class, value=None):

@@ -13,7 +13,9 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multifunction_by_equality'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.multitask.atomic'))
+        'pathpy.adts.multitask.atomics.atomic'))
+    tests.addTests(doctest.DocTestSuite(
+        'pathpy.adts.multitask.atomics.atomic_attribute'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multitask.pseudo_acquired_lock'))
     tests.addTests(doctest.DocTestSuite(
