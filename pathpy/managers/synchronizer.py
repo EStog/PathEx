@@ -1,4 +1,5 @@
 from __future__ import annotations
+from pathpy.adts.multitask.acquired_lock import AcquiredLock
 
 import threading
 from contextlib import contextmanager
@@ -82,7 +83,7 @@ class Synchronizer:
     def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
         self._sync_module = concurrency_type.value
         self._sync_lock = self._sync_module.Lock()
-        self._labels = {}
+        self._labels: dict[object, AcquiredLock] = {}
         self._labels_lock = self._sync_module.Lock()
         self._alternatives = set()
         self._alternatives_lock = self._sync_module.Lock()
@@ -125,7 +126,7 @@ class Synchronizer:
             ...         _ = executor.submit(producer, i)
 
             >>> assert produced == []
-            >>> assert consumed == [1, 2, 3, 4]
+            >>> assert consumed == [0, 1, 2, 3]
 
         Args:
             label (object): The label to wait for.
@@ -134,32 +135,28 @@ class Synchronizer:
 
         self._sync_lock.acquire()  # protect the entire procedure
 
-        if not (new_alternatives := self._get_new_alternatives(label)):
-            lock = self._labels.setdefault(label, self._sync_module.Lock())
-
-            # release the procedure's protection lock in order to block in the following lines, so the blocking will be because this task being waiting for some other task, not because of the procedure's protection lock
-            self._sync_lock.release()
-
-            # two lock.acquire in order to block.
-            # One lock.release is done by this task whilst the other must be done by another task.
-            lock.acquire()
-            lock.acquire()
-            lock.release()
-        else:
+        if new_alternatives := self._get_new_alternatives(label):
             self._alternatives = new_alternatives
-            # release one label waiting that match some of the current alternatives.
-            self._release_label()
+            self._chained_release()
+            self._sync_lock.release()
+        else:
+            lock = self._labels.setdefault(
+                label, AcquiredLock(self._sync_module.Lock))
+
+            # release the procedure's protection lock in order to get blocked in the following line, so the blocking will be because this task being waiting for some other task, not because of the procedure's protection lock
             self._sync_lock.release()
 
-    def _release_label(self):
+            # lock.acquire in order to block.
+            # lock.release must be done by another task.
+            lock.acquire()
+
+    def _chained_release(self):
         while True:
             for label in self._labels:
-                if new_alternatives := self._get_new_alternatives(label):
-                    try:
-                        self._labels[label].release()
-                    except RuntimeError:
-                        pass  # there is no task associated with this label
-                    else:
+                lock = self._labels[label]
+                if lock.waiting_amount > 0:
+                    if new_alternatives := self._get_new_alternatives(label):
+                        lock.release()
                         self._alternatives = new_alternatives
                         break
             else:

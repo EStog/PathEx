@@ -46,6 +46,9 @@ class AcquiredLock:
 
     @property
     def waiting_amount(self):
+        """Just returns the amount of task waiting for a realease operation.
+        This method may not reflect the actual current amount of waiting tasks.
+        """
         return self._waiting_amount
 
     def acquire(self, *args, **kwargs):
