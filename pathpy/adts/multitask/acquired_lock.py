@@ -1,28 +1,30 @@
-class PseudoAcquiredLock:
-    """This class represents a lock which is created locked and only makes a ``release`` operation if some ``acquire`` operation is waiting for a ``release`` operation.
+from pathpy.adts.multitask.atomics.atomic_integer import AtomicInteger
 
-    Instances of this class are not concurrent-safe, since the waiting state is not protected in this respect. This means that calls to `acquire`, `release` and `waiting` must be protected form outside. Instances of this class are intended just as wrapper of a lock and the associated waiting state. For a concurrent-safe version see class `AcquiredLock`.
+
+class AcquiredLock:
+    """This class represents a lock which is created locked and only makes a ``release`` operation if some ``acquire`` operation is waiting for a ``release`` operation.
 
     >>> from threading import Lock, Thread
     >>> from time import sleep
-    >>> lock = PseudoAcquiredLock(Lock)
+    >>> lock = AcquiredLock(Lock)
     >>> assert lock.acquire(blocking=False) == False
-    >>> assert lock.waiting == False
+    >>> assert lock.waiting_amount == 0
 
+    >>> s = ''
     >>> def f():
+    ...     global s
     ...     lock.acquire()
-    ...     print('Ok!')
+    ...     s = 'Ok!'
 
     >>> def g():
-    ...     sleep(1)
-    ...     assert lock.waiting == True
+    ...     assert lock.waiting_amount == 1
     ...     lock.release()
 
     >>> t = Thread(target=f)
     >>> t.start()
     >>> Thread(target=g).start()
     >>> t.join()
-    Ok!
+    >>> assert s == 'Ok!'
 
     >>> try:
     ...     lock.release()
@@ -39,11 +41,12 @@ class PseudoAcquiredLock:
         """
         self._lock = lock_class()
         self._lock.acquire()
-        self._waiting = False
+        self._sync_lock = lock_class()
+        self._waiting_amount = AtomicInteger()
 
     @property
-    def waiting(self):
-        return self._waiting
+    def waiting_amount(self):
+        return self._waiting_amount
 
     def acquire(self, *args, **kwargs):
         """Acquires the lock and sets the waiting state properly.
@@ -53,9 +56,9 @@ class PseudoAcquiredLock:
         Returns:
             bool: True if acquired, False otherwise.
         """
-        self._waiting = True
+        self._waiting_amount += 1
         r = self._lock.acquire(*args, **kwargs)
-        self._waiting = False
+        self._waiting_amount -= 1
         return r
 
     def release(self):
@@ -63,7 +66,8 @@ class PseudoAcquiredLock:
 
         Raises `RuntimeError` if the lock is not waiting.
         """
-        if self._waiting:
-            self._lock.release()
-        else:
-            raise RuntimeError('There is not acquire operation waiting')
+        with self._waiting_amount:
+            if self._waiting_amount > 0:
+                self._lock.release()
+            else:
+                raise RuntimeError('There is not acquire operation waiting')

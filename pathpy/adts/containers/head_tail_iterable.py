@@ -81,13 +81,13 @@ class HeadTailIterable(Iterable[_E]):
             raise TypeError(
                 f'can only concatenate {self.__class__.__name__} (not "{type(other)}") to {self.__class__.__name__}')
         if self.head and other.head:
-            return HeadTailIterable(chain([self.head], self._tail, [other.head], other._tail))
+            return self.__class__(chain([self.head], self._tail, [other.head], other._tail))
         elif self.head:
-            return HeadTailIterable(chain([self.head], self._tail, other._tail))
+            return self.__class__(chain([self.head], self._tail, other._tail))
         elif other.head:
-            return HeadTailIterable(chain(self._tail, [other.head], other._tail))
+            return self.__class__(chain(self._tail, [other.head], other._tail))
         else:
-            return HeadTailIterable(chain(self._tail, other._tail))
+            return self.__class__(chain(self._tail, other._tail))
 
     @cached_property
     def tail(self) -> HeadTailIterable[_E]:

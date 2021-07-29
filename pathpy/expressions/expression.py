@@ -66,18 +66,18 @@ class Expression(ABC):  # (Hashable)
         else:
             return LanguageGenerator(self, symbols_table, adt_creator, adt_get_op, adt_put_op)
 
-    @staticmethod
-    def flatten(a, b, type_expression):
-        if isinstance(a, type_expression) and isinstance(b, type_expression):
-            return type_expression(chain(iter(a), iter(b)))
-        else:
-            return type_expression(a, b)
+    # @staticmethod
+    # def flatten(a, b, type_expression):
+    #     if isinstance(a, type_expression) and isinstance(b, type_expression):
+    #         return type_expression(chain(iter(a), iter(b)))
+    #     else:
+    #         return type_expression(a, b)
 
     # self | other
     @singledispatchmethod
     def __or__(self, other: object) -> Expression:
         from pathpy import Union
-        return self.flatten(self, other, Union)
+        return Union(self, other)
 
     # self|interable
     @__or__.register(list)
@@ -93,7 +93,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __and__(self, other: object) -> Expression:
         from pathpy import Intersection
-        return self.flatten(self, other, Intersection)
+        return Intersection(self, other)
 
     # self&iterable
     @__and__.register(list)
@@ -109,7 +109,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __matmul__(self, other: object) -> Expression:
         from pathpy import Synchronization
-        return self.flatten(self, other, Synchronization)
+        return Synchronization(self, other)
 
     # self@iterable
     @__matmul__.register(list)
@@ -178,7 +178,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __add__(self, other: object) -> Expression:
         from pathpy import Concatenation
-        return self.flatten(self, other, Concatenation)
+        return Concatenation(self, other)
 
     # self+number
     @__add__.register(int)
@@ -200,7 +200,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __radd__(self, other: object) -> Expression:
         from pathpy import Concatenation
-        return self.flatten(other, self, Concatenation)
+        return Concatenation(other, self)
 
     # number+self
     __radd__.register(int, __add__.dispatcher.dispatch(int))
@@ -255,7 +255,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __floordiv__(self, other: object) -> Expression:
         from pathpy import Shuffle
-        return self.flatten(self, other, Shuffle)
+        return Shuffle(self, other)
 
     # self//number
     @__floordiv__.register(int)
