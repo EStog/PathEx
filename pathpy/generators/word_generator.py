@@ -10,13 +10,13 @@ from pathpy.expressions.terms.letters_unions.letters_negative_union import \
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
 from pathpy.expressions.terms.wildcard import Wildcard
+from pathpy.generators.defaults import COMPLETE_WORD
 
 from ._expressions._named_wildcard import NamedWildcard
 from .alternatives_generator import alts_generator
 from .symbols_table import SymbolsTable
 
-# TODO: Parallel-safe version: put a lock for iter-object exclusivity in `__next__`
-# and make sets `delivered` and `to_deliver` parallel-safe.
+# TODO: concurrent-safe version.
 
 
 def check_if_reification_possible(x):
@@ -27,7 +27,7 @@ def check_if_reification_possible(x):
 
 
 def to_str_from_iter(iter):
-    return ''.join(str(check_if_reification_possible(x)) for x in iter)
+    return ''.join(str(x) for x in iter)
 
 
 INCOMPLETE_MATCH = object()
@@ -36,7 +36,7 @@ INCOMPLETE_MATCH = object()
 class WordGenerator:
     """This class is used to generate a string.
 
-    The instances of this class work closely with its parent `LanguageGenerator` instance. The interactions are concurrent-free.
+    The instances of this class work closely with its parent `LanguageGenerator` instance.
     """
 
     def __init__(self,
@@ -110,7 +110,7 @@ class WordGenerator:
         else:
             return e
 
-    def reification(self, complete=True):
+    def reification(self, complete=COMPLETE_WORD):
         try:
             for x in self:
                 yield x
@@ -118,7 +118,7 @@ class WordGenerator:
             if complete:
                 raise
 
-    def as_(self, container=to_str_from_iter, complete=True):
+    def as_(self, container=to_str_from_iter, complete=COMPLETE_WORD):
         return container(check_if_reification_possible(x) for x in self.reification(complete=complete))
 
     __str__ = as_

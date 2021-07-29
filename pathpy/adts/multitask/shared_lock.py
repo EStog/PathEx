@@ -8,7 +8,7 @@ def _do_operation(lock_instance, acquire, release, l_kwargs, f, f_args, f_kwargs
 
     The method just call `f` function after effecting an acquire. If the acquire is successful, release is called and the result of the call of `f` is returned. If the acquire was not successful then OPERATION_NOT_EFFECTED is returned.
 
-    Acquire and release operations must be in accord to `lock_instance` class. Currently, it is expected the acquire and release operations to be only those of `threading` and `multiprocessing` Lock. #TODO: Investigate asyncio lock
+    Acquire and release operations must be in accord to `lock_instance` class. Currently, it is expected the acquire and release operations to be only those of `threading` and `multiprocessing` Lock. Note: `multiprocessing` is in process.
 
     Args:
         lock_instance (threading.Lock | multiprocessing.Lock): a lock instance to be call acquire and release on.

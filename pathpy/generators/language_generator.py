@@ -1,24 +1,24 @@
 from __future__ import annotations
-
-from collections import deque
 from functools import partial
 
 from pathpy.adts.extensible_iterator import ExtensibleIterator
 from pathpy.exceptions import IncompleteMatch, ReificationError
+from pathpy.generators.defaults import (ADT_CREATOR, ADT_GET_OP, ADT_PUT_OP,
+                                        COMPLETE_WORD,
+                                        IGNORE_REIFICATION_ERRORS)
 
 from .alternatives_generator import alts_generator
 from .symbols_table import SymbolsTable
 from .word_generator import WordGenerator
 
-# TODO: Parallel-safe version: put a lock for iter-object exclusivity in `__next__`
-# and make set `alternatives` parallel-safe.
+# TODO: Concurrent-safe version.
 
 __all__ = ['LanguageGenerator']
 
 
 class LanguageGenerator:
     def __init__(self, expression, symbols_table=None,
-                 adt_creator=deque, adt_get_op=deque.pop, adt_put_op=deque.append):
+                 adt_creator=ADT_CREATOR, adt_get_op=ADT_GET_OP, adt_put_op=ADT_PUT_OP):
         if symbols_table is None:
             symbols_table = SymbolsTable()
         self._adt_creator = adt_creator
@@ -49,7 +49,7 @@ class LanguageGenerator:
             else:
                 raise StopIteration
 
-    def reification(self, word_reifier=WordGenerator.reification, ignore_reification_errors=False):
+    def reification(self, word_reifier=WordGenerator.reification, ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
         for x in self:
             try:
                 yield word_reifier(x)
@@ -61,8 +61,8 @@ class LanguageGenerator:
                 else:
                     raise
 
-    def as_(self, container, word_reifier=partial(WordGenerator.as_, complete_word=True), ignore_reification_errors=True):
+    def as_(self, container, word_reifier=partial(WordGenerator.as_, complete_word=COMPLETE_WORD), ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
         return container(self.reification(word_reifier, ignore_reification_errors))
 
-    def as_set_of_tuples(self, complete_words=True, ignore_reification_errors=True):
+    def as_set_of_tuples(self, complete_words=COMPLETE_WORD, ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
         return set(self.reification(partial(WordGenerator.as_, container=tuple, complete=complete_words), ignore_reification_errors))

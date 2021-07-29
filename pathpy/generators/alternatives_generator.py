@@ -33,6 +33,8 @@ from .symbols_table import SymbolsTable
 if __debug__:
     from .misc import NOT_EMPTY_STRING_MESSAGE
 
+__all__ = ['alts_generator']
+
 
 @singledispatch
 def alts_generator(expression: object, table: SymbolsTable) -> \
@@ -99,7 +101,6 @@ def visit_intersection(exp: Intersection, table: SymbolsTable):
                 tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
                     else Intersection(tail1, tail2)
                 # `a & b = a`                 if `a == b`
-                # TODO: Table should not be the same
                 head, table = table.intersect(head1, head2)
                 if head:
                     yield head, tail, table
@@ -121,12 +122,10 @@ def visit_synchronization(exp: Synchronization, table: SymbolsTable):
                 tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
                     else Synchronization(tail1, tail2)
                 # `a @ b = a`                     if `a == b`
-                # TODO: Table should not be the same
                 head, table = table.intersect(head1, head2)
                 if head:
                     yield head, tail, table
                 # `a @ b = a // b`                if `a != b`
-                # TODO: Table should not be the same
                 h1, t1, h2, t2 = table.difference(head1, head2)
                 if h1:
                     yield from alts_generator(Concatenation(Shuffle(h1, head2), tail), t1)
@@ -289,6 +288,3 @@ def visit_substitution(exp: Substitution, table: SymbolsTable):
                                     table
         else:
             yield get_gen_alt(exp_head, exp.replacements)
-
-
-__all__ = ['alternatives_generator']

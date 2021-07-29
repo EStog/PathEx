@@ -13,9 +13,9 @@ from pathpy.expressions.terms.wildcard import WILDCARD, Wildcard
 
 from ._expressions._named_wildcard import NamedWildcard
 
+
 # TODO: Change type signatures from object to Term.
-# TODO: Always return from a match a Term, never an non-term object.
-# TODO: See if it is possible to use weakref
+# TODO: Check copy of inmutables for efficiency reasons
 @dataclass(frozen=True, eq=False)
 class SymbolsTable:
 
@@ -104,8 +104,6 @@ class SymbolsTable:
             return a2
         else:  # if a2_type == Wildcard:
             return a1
-        # else:
-        #     return a1 if a1 == a2 else None
 
     def _get_bi_difference_values(self, a1, a2) -> tuple[object, object]:
         def _get_bi_difference_wildcard_value(t: type[Term], v) -> LettersUnion | None:
@@ -140,8 +138,6 @@ class SymbolsTable:
             return _get_bi_difference_wildcard_value(a2_type, a2), None
         else:  # if a2_type == Wildcard:
             return None, _get_bi_difference_wildcard_value(a1_type, a1)
-        # else:
-        #     return (a1, a2) if a1 != a2 else (None, None)
 
     def _get_more_concrete(self, group, value, v) -> tuple[object, SymbolsTable]:
         if value:

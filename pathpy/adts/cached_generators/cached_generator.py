@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from enum import Enum
 from functools import partial, update_wrapper
 from typing import (Any, Callable, Collection, Generic, NamedTuple, Optional,
                     TypeVar)
@@ -10,6 +9,9 @@ from pathpy.adts.containers.queue_set import QueueSet
 from .cached_iterator import CachedIterator
 from .type_defs import TCacheType, TDecorableGenerator
 
+__all__ = ['CachedGenerator', 'CacheType',
+           'new_cached_generator', 'cached_generator']
+
 _E_co = TypeVar('_E_co', covariant=True)
 _E = TypeVar('_E')
 
@@ -17,8 +19,6 @@ _E = TypeVar('_E')
 class CacheType(NamedTuple):
     kind: type = QueueSet
     cache_add_op: Callable[[Collection, object], Any] = QueueSet.append
-
-# TODO: Cache taking into account only some arguments.
 
 
 class CachedGenerator(Generic[_E_co]):
@@ -104,7 +104,3 @@ def cached_generator(
         cache_type: CacheType = CacheType(), non_repeated=None
 ) -> CachedGenerator[_E] | partial:
     return new_cached_generator(CachedGenerator, function, cache_type, non_repeated)
-
-
-__all__ = ['CachedGenerator', 'CacheType',
-           'new_cached_generator', 'cached_generator']

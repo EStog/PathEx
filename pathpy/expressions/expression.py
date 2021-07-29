@@ -2,26 +2,21 @@ from __future__ import annotations
 
 from abc import ABC
 from collections import deque
-from functools import partial, singledispatchmethod
-from itertools import chain
+from functools import singledispatchmethod
 from math import inf
 from typing import cast
 
 from pathpy.adts.cached_generators.cached_generator import CachedGenerator
+from pathpy.generators.defaults import (ADT_CREATOR, ADT_GET_OP, ADT_PUT_OP,
+                                        COMPLETE_WORD,
+                                        IGNORE_REIFICATION_ERRORS)
 
 # from collections.abc import Hashable
 
 # TODO: __str__ y __repr__ de todas las expresiones
-# TODO: Poner en los docstrings de las expresiones el
-#       significado semántico de las mismas y cómo pueden
-#       ser escritas. Habrá que copiar parte del docstring
-#       de los visits correspondientes.
-
-# TODO: Agregar el bounded wildcard que sirve para especificar una  disyunción de letras. Esta opción es para optimizar a la hora del  matching. También se puede cambiar el algoritmo de matching, para que tenga en cuenta disyunciones en general.
 
 # TODO: implementar igualdad estructural en __eq__
-# TODO: construir el hash una sola vez en tiempo de
-# construcción de los objetos
+# TODO: construir el hash una sola vez en tiempo de construcción de los objetos
 
 
 class Expression(ABC):  # (Hashable)
@@ -31,24 +26,24 @@ class Expression(ABC):  # (Hashable)
     """
     # TODO: Put default arguments as constant.
 
-    def as_set_of_tuples(self, symbols_table=None, adt_creator=deque,
-                         adt_get_op=deque.pop, adt_put_op=deque.append, cached=False, complete_words=True, ignore_reification_errors=True):
+    def as_set_of_tuples(self, symbols_table=None, adt_creator=ADT_CREATOR,
+                         adt_get_op=ADT_GET_OP, adt_put_op=ADT_PUT_OP, cached=False, complete_words=COMPLETE_WORD, ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
         return self.as_language(symbols_table, adt_creator,
                                 adt_get_op, adt_put_op, cached).as_set_of_tuples(complete_words, ignore_reification_errors)
 
-    def as_(self, container, word_reifier=None, symbols_table=None, adt_creator=deque,
-            adt_get_op=deque.pop, adt_put_op=deque.append,
-            cached=False, ignore_reification_errors=False):
+    def as_(self, container, word_reifier=None, symbols_table=None, adt_creator=ADT_CREATOR,
+            adt_get_op=ADT_GET_OP, adt_put_op=ADT_PUT_OP,
+            cached=False, ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
         if word_reifier is None:
             from pathpy.generators.word_generator import WordGenerator
             word_reifier = WordGenerator.as_
         return self.as_language(symbols_table, adt_creator, adt_get_op, adt_put_op,
                                 cached).as_(container, word_reifier, ignore_reification_errors)
 
-    def reification(self, symbols_table=None, adt_creator=deque,
-                    adt_get_op=deque.pop, adt_put_op=deque.append,
+    def reification(self, symbols_table=None, adt_creator=ADT_CREATOR,
+                    adt_get_op=ADT_GET_OP, adt_put_op=ADT_PUT_OP,
                     cached=False, word_reifier=None,
-                    ignore_reification_errors=False):
+                    ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
         if word_reifier is None:
             from pathpy.generators.word_generator import WordGenerator
             word_reifier = WordGenerator.reification
