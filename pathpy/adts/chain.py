@@ -1,36 +1,60 @@
-from copy import copy
+from collections import deque
+from collections.abc import Iterable, Iterator
+from typing import TypeVar
+
+_T = TypeVar('_T')
 
 
-class Chain:
+class Chain(Iterator[_T]):
+    """A chain that can be expanded to the right and to the left.
+    Chains behave like Python iterators. That means that they support `next` operation and can not be restarted once they are exhausted.
+
+    >>> c = Chain()
+    >>> c.expand_right([1, 2, 3])
+    >>> c.expand_left(['a', 'b', 'c'])
+
+    Single elements may be appended too.
+
+    >>> c.put_left('x')
+    >>> c.put_right('y')
+    >>> c.expand_left([1, 2])
+    >>> c.expand_right(['w', 'e'])
+    >>> next(c)
+    1
+    >>> c.expand_left([3, 4])
+
+    >>> assert list(c) == [3, 4, 2, 'x', 'a', 'b', 'c', 1, 2, 3, 'y', 'w', 'e']
+    >>> try:
+    ...     next(c)
+    ... except StopIteration:
+    ...     pass # Right!
+    ... else:
+    ...     print('Wrong!')
+
     """
-    This class was necessary because of an issue with the `itertools.chain` function when using `copy.copy`.
-    """
+    def __init__(self) -> None:
+        self._elements = deque()
 
-    def __init__(self, *iterables):
-        self.__iterables = iterables
-        self.__consume()
+    def put_right(self, obj: object) -> None:
+        self._elements.append(iter([obj]))
 
-    def __consume(self):
-        self.__current, self.__iterables = iter(
-            self.__iterables[0]), self.__iterables[1:]
+    def put_left(self, obj: object) -> None:
+        self._elements.appendleft(iter([obj]))
 
-    def __iter__(self):
-        return self
+    def expand_right(self, iterable: Iterable[_T]) -> None:
+        self._elements.append(iter(iterable))
 
-    def __next__(self):
+    def expand_left(self, iterable: Iterable[_T]) -> None:
+        self._elements.appendleft(iter(iterable))
+
+    def __next__(self) -> _T:
         while True:
             try:
-                return next(self.__current)
+                x = next(self._elements[0])
             except StopIteration:
-                if self.__iterables:
-                    self.__consume()
-                else:
-                    raise
+                self._elements.popleft()
+            except IndexError:
+                raise StopIteration
             else:
                 break
-
-    def __copy__(self):
-        x = Chain.__new__(Chain)
-        x.__iterables = copy(self.__iterables)
-        x.__current = copy(self.__current)
         return x
