@@ -1,24 +1,22 @@
 from __future__ import annotations
 
 from functools import partial, update_wrapper
-from typing import (Any, Callable, Collection, Generic, NamedTuple, Optional,
-                    TypeVar)
+from typing import Callable, Generic, Optional, TypeVar
 
+from pathpy.adts.collection_wrapper import (CollectionWrapper,
+                                            get_collection_wrapper)
 from pathpy.adts.containers.queue_set import QueueSet
 
 from .cached_iterator import CachedIterator
 from .type_defs import TCacheType, TDecorableGenerator
 
-__all__ = ['CachedGenerator', 'CacheType',
+__all__ = ['CachedGenerator',
            'new_cached_generator', 'cached_generator']
 
 _E_co = TypeVar('_E_co', covariant=True)
 _E = TypeVar('_E')
 
-
-class CacheType(NamedTuple):
-    kind: type = QueueSet
-    cache_add_op: Callable[[Collection, object], Any] = QueueSet.append
+_T = TypeVar('_T')
 
 
 class CachedGenerator(Generic[_E_co]):
@@ -65,8 +63,7 @@ class CachedGenerator(Generic[_E_co]):
     """
 
     def __init__(self, function: TDecorableGenerator[_E_co],
-                 cache_type: CacheType = CacheType(),
-                 non_repeated=None):
+                 cache_type: CollectionWrapper = get_collection_wrapper(QueueSet, put=QueueSet.append), non_repeated=None):
         self._cache_type = cache_type
         self._cache: TCacheType[_E_co] = dict()
         self._non_repeated = non_repeated
@@ -80,27 +77,27 @@ class CachedGenerator(Generic[_E_co]):
     def __call__(self, *args, **kwargs) -> CachedIterator[_E_co]:
         cache_entry = self._cache.get((self._cache_type, args), None)
         if cache_entry is None:
-            cache_entry = (self._cache_type.kind(),
+            cache_entry = (self._cache_type(),
                            self.__wrapped__(*args, **kwargs))
             self._cache[(self._cache_type, args)] = cache_entry
-        return CachedIterator(*cache_entry, self._cache_type.cache_add_op, self._non_repeated)
+        return CachedIterator(*cache_entry, self._cache_type.put, self._non_repeated)
 
 
 def new_cached_generator(
         cached_generator_type: type[CachedGenerator],
         function: Optional[TDecorableGenerator[_E]],
-        cache_type: CacheType, non_repeated: bool) -> CachedGenerator[_E] | partial:
+        cache_type: CollectionWrapper, non_repeated: bool | None) -> CachedGenerator[_E] | partial:
     if function is None:
         return partial(cached_generator_type, cache_type=cache_type, non_repeated=non_repeated)
     else:
         assert isinstance(function, Callable), 'function must be callable'
-        assert isinstance(cache_type, CacheType), \
-            'collection_type must be a creator of an instance of Sequence or Set'
+        assert hasattr(cache_type, 'pop'), \
+            'collection_type must pop method'
         return cached_generator_type(function, cache_type, non_repeated)
 
 
 def cached_generator(
         function: Optional[TDecorableGenerator[_E]] = None, /, *,
-        cache_type: CacheType = CacheType(), non_repeated=None
+        cache_type: CollectionWrapper = get_collection_wrapper(QueueSet, put=QueueSet.append), non_repeated=None
 ) -> CachedGenerator[_E] | partial:
     return new_cached_generator(CachedGenerator, function, cache_type, non_repeated)

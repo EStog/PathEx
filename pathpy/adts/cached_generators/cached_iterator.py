@@ -1,17 +1,19 @@
 from __future__ import annotations
 
 from collections.abc import Iterator, Set
-from typing import Any, Callable, Collection, TypeVar
+from typing import Callable, Collection, TypeVar
 
 from pathpy.adts.containers.queue_set import QueueSet
 
 _T_co = TypeVar('_T_co', covariant=True)
 
+__all__ = ['CachedIterator']
 
 class CachedIterator(Iterator[_T_co]):
     def __init__(self, cached_values: Collection[_T_co],
                  iterator: Iterator[_T_co],
-                 cache_add_op: Callable[[Collection, object], Any],
+                 cache_add_op: Callable[[Collection[_T_co], _T_co], None],
+                 # TODO: eliminate `non_repeated` argument.
                  non_repeated=None):
         self._cached_values = cached_values
         self._iterator = iterator
@@ -20,9 +22,9 @@ class CachedIterator(Iterator[_T_co]):
         self._cache_add_op = cache_add_op
         self._non_repeated = non_repeated
         if non_repeated or (non_repeated is None and isinstance(cached_values, (Set, QueueSet))):
-            self._get_next = self._get_while_not_in_cache
-        else:
-            self._get_next = next
+            self._generate_next = self._get_while_not_in_cache
+        else:  # if non_repeated is False
+            self._generate_next = next
 
     @property
     def cached_values(self) -> tuple[_T_co, ...]:
@@ -54,7 +56,7 @@ class CachedIterator(Iterator[_T_co]):
         return x
 
     def _next_from_generator(self):
-        x = self._get_next(self._iterator)
+        x = self._generate_next(self._iterator)
         self._cache_add_op(self._cached_values, x)
         return x
 
@@ -64,5 +66,6 @@ class CachedIterator(Iterator[_T_co]):
         it._next = it._next_from_generator
         return it
 
-
-__all__ = ['CachedIterator']
+    def restarted(self):
+        return CachedIterator(self._cached_values, self._iterator,
+                              self._cache_add_op, self._non_repeated)

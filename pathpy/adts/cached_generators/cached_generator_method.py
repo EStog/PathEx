@@ -1,10 +1,14 @@
 from __future__ import annotations
 
 from functools import partial, wraps
+from pathpy.adts.containers.queue_set import QueueSet
+from pathpy.adts.collection_wrapper import CollectionWrapper, get_collection_wrapper
 from typing import Optional, TypeVar
 
-from .cached_generator import CachedGenerator, CacheType, new_cached_generator
+from .cached_generator import CachedGenerator, new_cached_generator
 from .type_defs import TDecorableDescriptorGenerator, TDecorableGenerator
+
+__all__ = ['CachedGeneratorMethod', 'cached_generator_method']
 
 _E_co = TypeVar('_E_co', covariant=True)
 _E = TypeVar('_E')
@@ -13,7 +17,7 @@ _E = TypeVar('_E')
 class CachedGeneratorMethod(CachedGenerator[_E_co]):
     """
     >>> class A:
-    ...     @cached_generator_method(cache_type=CacheType(list, list.append))
+    ...     @cached_generator_method(cache_type= get_collection_wrapper(list, put=list.append))
     ...     def f(self, o):
     ...         for x in o:
     ...             yield x
@@ -30,7 +34,7 @@ class CachedGeneratorMethod(CachedGenerator[_E_co]):
     """
 
     def __init__(self, function: TDecorableDescriptorGenerator[_E_co],
-                 cache_type: CacheType = CacheType(), non_repeated=None):
+                 cache_type: CollectionWrapper = get_collection_wrapper(QueueSet, put=QueueSet.append), non_repeated=None):
         super().__init__(function, cache_type, non_repeated)
         self.__isabstractmethod__ = \
             getattr(function, '__isabstractmethod__', False)
@@ -48,8 +52,5 @@ class CachedGeneratorMethod(CachedGenerator[_E_co]):
 
 def cached_generator_method(
         function: Optional[TDecorableGenerator[_E]] = None, /, *,
-        cache_type: CacheType = CacheType(), non_repeated=None) -> CachedGenerator[_E] | partial:
+        cache_type: CollectionWrapper = get_collection_wrapper(QueueSet, put=QueueSet.append), non_repeated=None) -> CachedGenerator[_E] | partial:
     return new_cached_generator(CachedGeneratorMethod, function, cache_type, non_repeated)
-
-
-__all__ = ['CachedGeneratorMethod', 'cached_generator_method']

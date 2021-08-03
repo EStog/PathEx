@@ -7,9 +7,13 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.cached_generators.cached_generator_method'))
     tests.addTests(doctest.DocTestSuite(
+        'pathpy.adts.chain'))
+    tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.containers.head_tail_iterable'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.containers.queue_set'))
+    tests.addTests(doctest.DocTestSuite(
+        'pathpy.adts.collection_wrapper'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multifunction_by_equality'))
     tests.addTests(doctest.DocTestSuite(
