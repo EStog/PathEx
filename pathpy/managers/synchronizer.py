@@ -17,6 +17,7 @@ from pathpy.generators.symbols_table import SymbolsTable
 
 __all__ = ['Synchronizer']
 
+# TODO: refactor by using Shuffle and Intersection, and generalize to any kind of synchronizer
 
 class ConcurrencyType(Enum):
     THREADING = threading
