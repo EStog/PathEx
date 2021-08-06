@@ -1,6 +1,7 @@
 from collections import deque
 from collections.abc import Iterable, Iterator
 from typing import TypeVar
+from copy import copy
 
 _T = TypeVar('_T')
 
@@ -22,7 +23,8 @@ class Chain(Iterator[_T]):
     >>> next(c)
     1
     >>> c.expand_left([3, 4])
-
+    >>> from copy import copy
+    >>> d = copy(c)
     >>> assert list(c) == [3, 4, 2, 'x', 'a', 'b', 'c', 1, 2, 3, 'y', 'w', 'e']
     >>> try:
     ...     next(c)
@@ -30,8 +32,11 @@ class Chain(Iterator[_T]):
     ...     pass # Right!
     ... else:
     ...     print('Wrong!')
-
+    >>> c.put_right(4)
+    >>> assert list(c) == [4]
+    >>> assert str(d) == '342xabc123ywe'
     """
+
     def __init__(self) -> None:
         self._elements = deque()
 
@@ -58,3 +63,11 @@ class Chain(Iterator[_T]):
             else:
                 break
         return x
+
+    def __str__(self) -> str:
+        return ''.join(str(x) for x in self)
+
+    def __copy__(self):
+        chain = Chain()
+        chain._elements = deque(copy(x) for x in self._elements)
+        return chain

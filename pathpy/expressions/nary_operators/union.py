@@ -7,11 +7,11 @@ class Union(NAryOperator):
     A union of languages is equivalent to the union of the sets.
 
     >>> from pathpy import Union as U
-    >>> assert U('abcd').as_(set) == {'a', 'b', 'c', 'd'}
+    >>> assert U('abcd').language() == {'a', 'b', 'c', 'd'}
 
     A union may also be constructed by using the | operator.
 
-    >>> assert (U('ab') | U('cd')).as_(set) == {'a', 'b', 'c', 'd'}
+    >>> assert (U('ab') | U('cd')).language() == {'a', 'b', 'c', 'd'}
     """
     pass
 

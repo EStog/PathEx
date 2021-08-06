@@ -1,15 +1,10 @@
 from __future__ import annotations
 
 from abc import ABC
-from collections import deque
 from functools import singledispatchmethod
 from math import inf
-from typing import cast
 
-from pathpy.adts.cached_generators.cached_generator import CachedGenerator
-from pathpy.generators.defaults import (ADT_CREATOR, ADT_GET_OP, ADT_PUT_OP,
-                                        COMPLETE_WORD,
-                                        IGNORE_REIFICATION_ERRORS)
+from pathpy.generators.misc import MAX_LOOKAHEAD
 
 # from collections.abc import Hashable
 
@@ -24,49 +19,17 @@ class Expression(ABC):  # (Hashable)
     This class represents an abstract Expression. An Expression represents
     a set of tuples of letters, also called strings or words.
     """
-    # TODO: Put default arguments as constant.
 
-    def as_set_of_tuples(self, symbols_table=None, adt_creator=ADT_CREATOR,
-                         adt_get_op=ADT_GET_OP, adt_put_op=ADT_PUT_OP, cached=False, complete_words=COMPLETE_WORD, ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
-        return self.as_language(symbols_table, adt_creator,
-                                adt_get_op, adt_put_op, cached).as_set_of_tuples(complete_words, ignore_reification_errors)
+    def words_generator(self, max_lookahead: int = MAX_LOOKAHEAD):
+        from pathpy.generators.words_generator import WordsGenerator
+        return WordsGenerator(self, max_lookahead=max_lookahead)
 
-    def as_(self, container, word_reifier=None, symbols_table=None, adt_creator=ADT_CREATOR,
-            adt_get_op=ADT_GET_OP, adt_put_op=ADT_PUT_OP,
-            cached=False, ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
-        if word_reifier is None:
-            from pathpy.generators.word_generator import WordGenerator
-            word_reifier = WordGenerator.as_
-        return self.as_language(symbols_table, adt_creator, adt_get_op, adt_put_op,
-                                cached).as_(container, word_reifier, ignore_reification_errors)
+    def language(self, collection=set, word_type=lambda w: ''.join(str(l) for l in w), only_complete_words=True):
+        from pathpy.generators.eager import get_language
+        return collection(collection(get_language(self, word_type=word_type, only_complete_words=only_complete_words)))
 
-    def reification(self, symbols_table=None, adt_creator=ADT_CREATOR,
-                    adt_get_op=ADT_GET_OP, adt_put_op=ADT_PUT_OP,
-                    cached=False, word_reifier=None,
-                    ignore_reification_errors=IGNORE_REIFICATION_ERRORS):
-        if word_reifier is None:
-            from pathpy.generators.word_generator import WordGenerator
-            word_reifier = WordGenerator.reification
-        return self.as_language(symbols_table, adt_creator, adt_get_op, adt_put_op,
-                                cached).reification(word_reifier, ignore_reification_errors)
-
-    def as_language(self, symbols_table=None, adt_creator=deque,
-                    adt_get_op=deque.pop, adt_put_op=deque.append, cached=False):
-        from pathpy.generators.language_generator import LanguageGenerator
-        if cached:
-            if not hasattr(self, 'language_generator'):
-                self.language_generator = CachedGenerator(LanguageGenerator)(
-                    self, symbols_table, adt_creator, adt_get_op, adt_put_op)
-            return cast(LanguageGenerator, self.language_generator)
-        else:
-            return LanguageGenerator(self, symbols_table, adt_creator, adt_get_op, adt_put_op)
-
-    # @staticmethod
-    # def flatten(a, b, type_expression):
-    #     if isinstance(a, type_expression) and isinstance(b, type_expression):
-    #         return type_expression(chain(iter(a), iter(b)))
-    #     else:
-    #         return type_expression(a, b)
+    def generation_trace(self, collection=set, word_converter=lambda w: ''.join(str(l) for l in w)):
+        return collection(map(word_converter, self.words_generator()))
 
     # self | other
     @singledispatchmethod

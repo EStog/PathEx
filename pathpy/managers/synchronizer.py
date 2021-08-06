@@ -1,5 +1,4 @@
 from __future__ import annotations
-from pathpy.adts.multitask.acquired_lock import AcquiredLock
 
 import threading
 from contextlib import contextmanager
@@ -8,11 +7,12 @@ from enum import Enum
 from functools import wraps
 from itertools import islice, zip_longest
 
+from pathpy.adts.multitask.acquired_lock import AcquiredLock
 from pathpy.expressions.nary_operators.concatenation import Concatenation
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
 from pathpy.generators._expressions._named_wildcard import NamedWildcard
-from pathpy.generators.alternatives_generator import alts_generator
+from pathpy.generators.alternatives_generator import AlternativesGenerator
 from pathpy.generators.symbols_table import SymbolsTable
 
 __all__ = ['Synchronizer']
@@ -165,13 +165,15 @@ class Synchronizer:
     def _get_new_alternatives(self, label):
         def _assert_right_match(label, match, table):
             if isinstance(match, NamedWildcard):
-                match = table.get_value(match)
-            else:  # isinstance(match, LettersPossitiveUnion):
-                return LettersPossitiveUnion({match}) == label
+                return match == table.get_value(match)
+            elif isinstance(match, LettersPossitiveUnion):
+                return match == label
+            else:
+                return False
 
         new_alternatives = set()
         for exp, table in self._alternatives:
-            for head, tail, table in alts_generator(exp, table):
+            for head, tail, table in AlternativesGenerator(exp, table, not_normal=True):
                 match, table = table.intersect(head, label)
                 if match is not None:
                     assert _assert_right_match(label, match, table), \
@@ -182,9 +184,7 @@ class Synchronizer:
     def register(self, tag: _Tag, func=None):
         """
         >>> from concurrent.futures import ThreadPoolExecutor
-        >>> from functools import partial
         >>> from pathpy import Synchronizer
-        >>> from pathpy.generators.word_generator import WordGenerator
 
         >>> a, b, c = Synchronizer.tags(3)
 
@@ -218,7 +218,7 @@ class Synchronizer:
         ...     _ = executor.submit(func_b)
         ...     _ = executor.submit(func_a)
 
-        >>> allowed_paths = exp.as_set_of_tuples()
+        >>> allowed_paths = exp.language(word_type=tuple)
 
         >>> assert tuple(shared_list) in allowed_paths
         """

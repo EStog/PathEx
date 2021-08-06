@@ -21,13 +21,5 @@ class LettersUnion(Term):
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({set(self.letters)!r})'
 
-    def as_possitive(self):
-        from .letters_possitive_union import LettersPossitiveUnion
-        return LettersPossitiveUnion(self.letters)
-
-    def as_negative(self):
-        from .letters_negative_union import LettersNegativeUnion
-        return LettersNegativeUnion(self.letters)
-
 
 __all__ = ['LettersUnion']

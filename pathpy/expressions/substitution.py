@@ -43,33 +43,22 @@ class Substitution(Expression):
         >>> from pathpy import Concatenation as C, Union as U, EMPTY_STRING as e, WILDCARD as _
 
         >>> exp = C('abc')[{'a':'c', 'c':'a'}]
-        >>> assert exp.as_(set) == {'cba'}
+        >>> assert exp.language() == {'cba'}
 
         >>> exp = C('abc')['a':'xy', 'c':e]
-        >>> assert exp.as_(set) == {'xyb'}
+        >>> assert exp.language() == {'xyb'}
 
         >>> exp = C(U('ax'), 'c')['a':'b', 'c':'y']
-        >>> assert exp.as_(set) == {'by', 'xy'}
-
-        >>> from pathpy.generators.word_generator import WordGenerator
-        >>> from pathpy.generators._expressions._named_wildcard import NamedWildcard
-        >>> def word_reifier(word):
-        ...     s = ''
-        ...     for x in word.reification(complete=True):
-        ...         if isinstance(x, NamedWildcard):
-        ...             s += f'_{x.name}'
-        ...         else:
-        ...             s += str(x)
-        ...     return s
+        >>> assert exp.language() == {'by', 'xy'}
 
         >>> exp = C('abca')['a':_]
-        >>> assert set(exp.reification(word_reifier=word_reifier)) == {'_0bc_0'}
+        >>> assert set(exp.language()) == {'_0bc_0'}
 
         >>> exp = C('abcacd')['c':_, 'a':'x'+_+'y']
-        >>> assert set(exp.reification(word_reifier=word_reifier)) == {'x_0yb_1x_0y_1d'}
+        >>> assert set(exp.language()) == {'x_0yb_1x_0y_1d'}
 
         >>> exp = C(U('xyz'), *'abc')['x':_, 'y':'w'+_, 'z':'t', 'b':C('r',_,'s')]
-        >>> assert set(exp.reification(word_reifier=word_reifier)) == {'_0ar_1sc', 'w_0ar_1sc', 'tar_0sc'}
+        >>> assert set(exp.language()) == {'_0ar_1sc', 'w_0ar_1sc', 'tar_0sc'}
     """
     argument: object
     replacements: dict[object, object]

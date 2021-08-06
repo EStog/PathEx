@@ -7,5 +7,12 @@ class LettersNegativeUnion(LettersUnion):
 
     See other expressions classes for examples.
     """
+    def as_possitive(self):
+        from .letters_possitive_union import LettersPossitiveUnion
+        return LettersPossitiveUnion(self.letters)
+
+    def __str__(self):
+        s = ''.join(f'{x}|' for x in self.letters)
+        return f'-({s[:-1]})' if len(self.letters) > 1 else f'-{s[:-1]}'
 
 __all__ = ['LettersNegativeUnion']

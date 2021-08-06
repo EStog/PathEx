@@ -17,38 +17,32 @@ class Synchronization(NAryOperator):
         >>> from pathpy import Union as U, WILDCARD as _, Concatenation as C
 
         >>> exp = ( 'a' + U('xy') ) @ ( 'a' + U('yz') )
-        >>> assert exp.as_(set) == {
+        >>> assert exp.language() == {
         ...     'axy', 'ayx', 'axz', 'azx', 'ay', 'ayz', 'azy'}
 
         >>> exp = ( 'a' + U('xy') ) @ ( 'a' + U('yz') + 'w' )
-        >>> assert exp.as_(set) == {
+        >>> assert exp.language() == {
         ...     'axyw', 'ayxw', 'axzw', 'azxw', 'ayw', 'ayzw', 'azyw'}
 
         >>> exp = ( _ + U('xy') ) @ ( 'a' + U('yz') )
-        >>> assert exp.as_(set, ignore_reification_errors=True) == {
-        ...     'axy', 'ayx', 'axz', 'azx', 'ay', 'ayz', 'azy'}
+        >>> assert exp.language() == { 'azx', '-aayx', 'a-azy', 'a-axy', 'axz', '-aaxz', 'ayz', 'a-axz', 'azy', 'axy', '-aaxy', '-aazy', '-aazx', '-aayz', 'a-azx', 'a-ayz', 'a-ayx', 'ay', 'a-ay', '-aay', 'ayx' }
 
         >>> exp = ( _ + U('xy') ) @ ( 'a' + (_|'z') )
-        >>> assert exp.as_(set, ignore_reification_errors=True) == {'ax', 'ay', 'ayz', 'axz', 'azy', 'azx'}
+        >>> assert exp.language() == {'a-xx', 'ax-x', 'a-azx', 'a-axz', '-aay-y', '-aazx', 'a-a-xx', 'a-ay', '-aax', 'axz', 'a-ax-x', 'a-azy', '-aa-xx', 'a-ax', 'a-yy', '-aay', 'a-a-yy', '-aax-x', '-aa-yy', '-aaxz', 'a-ayz', 'a-ay-y', 'azx', 'ay', 'ax', '-aazy', 'ay-y', '-aayz', 'ayz', 'azy'}
 
         >>> exp = C('xabx')['x':_] @ ( C('a', _, _, 'a') | C(*'bab', _) )
-        >>> assert exp.as_(set, ignore_reification_errors=True) == {'aaba', 'babb'}
+        >>> assert exp.language() == {'a-aab-ba', 'aa-aba', 'a-aaba', 'aab-ba', 'aaba', 'aa-bba', 'babb', 'bab-bb', 'aa-a-bba', 'a-aa-bba', 'aa-ab-ba', 'babb-b'}
 
         >>> exp = C('xab')['x':_] @ C('yby')['y':_]
-        >>> assert exp.as_(set, ignore_reification_errors=True) == {'babb', 'bbab'}
+        >>> assert exp.language() == {'babb', 'bbab'}
 
         >>> from pathpy import LettersNegativeUnion as NL
 
-        In the case of the presence of a negation there is an error in the case of a reification to a set of strings, because there are words that can not be determined.
-
         >>> exp = (NL('abc') + C('xyz')) @ C('qxyz')
-        >>> assert exp.as_(set, ignore_reification_errors=True) == {'qxyz'}
+        >>> assert exp.language(word_type=tuple) == {('q', NL('a', 'c', 'q', 'b'), 'x', 'y', 'z'), (NL('a', 'c', 'q', 'b'), 'q', 'x', 'y', 'z'), ('q', 'x', 'y', 'z')}
 
         >>> exp = (NL('abc') + C('xyz')) @ C('axyz')
-        >>> assert exp.as_(set, ignore_reification_errors=True) == set()
-
-        >>> exp = (NL('abc') + C('xyz')) @ C('qxyz')
-        >>> assert exp.as_(set, ignore_reification_errors=True) == {'qxyz'}
+        >>> assert exp.language(word_type=tuple) == {(NL('b', 'a', 'c'), 'a', 'x', 'y', 'z'), ('a', NL('b', 'a', 'c'), 'x', 'y', 'z')}
     """
 
 

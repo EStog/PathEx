@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 import types
-from collections import UserList
-from typing import Callable, Iterable, Protocol, TypeVar, runtime_checkable
+from typing import Callable, Iterable, Protocol, TypeVar
 
 _T = TypeVar('_T')
 _O = TypeVar('_O')
 
 
-@runtime_checkable
 class CollectionWrapper(Protocol[_T, _O]):
     PopException: type[Exception]
     def __init__(self: CollectionWrapper[_T, _O]) -> None: ...

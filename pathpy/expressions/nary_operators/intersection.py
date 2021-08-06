@@ -13,27 +13,28 @@ class Intersection(NAryOperator):
 
     Example:
         >>> from pathpy import Union as U, LettersPossitiveUnion as L, Concatenation as C, LettersNegativeUnion as NL
-        >>> from pathpy.generators.word_generator import WordGenerator
         >>> from functools import partial
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz')
-        >>> assert exp.as_(set) == {'ay'}
+        >>> assert exp.language() == {'ay'}
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz') + 'w'
-        >>> assert exp.as_(set) == set()
-        >>> assert exp.as_(set, word_reifier=partial(WordGenerator.as_, complete=False)) == {'ay'}
+        >>> assert exp.language() == set()
+        >>> assert exp.language(only_complete_words=False) == {'ay'}
+
+        # >>> assert exp.generation_trace() == {'ay<INCOMPLETE_WORD>', 'a<INCOMPLETE_WORD>', '<INCOMPLETE_WORD>'}
 
         >>> exp1 = L('a')*... & C('aaa') | C('aa')
         >>> exp2 = C('aaa') | C('aa') & L('a')*...
-        >>> assert exp1.as_(set) == exp2.as_(set)
+        >>> assert exp1.language() == exp2.language()
 
         >>> exp1 = L('abc') + C('xyz')
         >>> exp2 = L('axy') + C('xyz')
-        >>> assert (exp1 & exp2).as_(set) == {'axyz'}
+        >>> assert (exp1 & exp2).language() == {'axyz'}
 
         >>> exp1 = NL('abc') + C('xyz')
         >>> exp2 = L('axy') + C('xyz')
-        >>> assert (exp1 & exp2).as_(set) == {'xxyz', 'yxyz'}
+        >>> assert (exp1 & exp2).language() == {'xxyz', 'yxyz'}
 
     """
 

@@ -3,6 +3,7 @@ from typing import TypeVar
 _T = TypeVar('_T')
 
 import threading
+import re
 
 def singleton(wrapped_class: type[_T]) -> type[_T]:
     """Makes a class singleton
@@ -90,7 +91,9 @@ def singleton(wrapped_class: type[_T]) -> type[_T]:
         raise TypeError('Singleton class can not be subclassed')
 
     def __repr__(self):
-        return self.__class__.__name__.upper()
+        name = self.__class__.__name__
+        s = re.sub(r'[A-Z]', r'_\g<0>', name[1:])
+        return f"<{name[0]}{s}>".upper()
 
     if '__new__' in wrapped_class.__dict__:
         wrapped_class.__old_new__ = wrapped_class.__new__

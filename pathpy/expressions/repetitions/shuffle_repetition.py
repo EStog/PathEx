@@ -34,11 +34,10 @@ class ShuffleRepetition(Repetition):
         >>> from pathpy import Shuffle as S, Concatenation as C
 
         >>> exp = S('ab')%[1,2]
-        >>> assert exp.as_(set) == {
-        ...     'ab', 'ba', 'abab', 'abba', 'baba', 'aabb', 'baab', 'bbaa'}
+        >>> assert exp.language() == {'ab', 'ba', 'abab', 'abba', 'baba', 'aabb', 'baab', 'bbaa'}
 
         >>> exp &= C('ab')%...
-        >>> assert exp.as_(set) == {'ab', 'abab', 'aabb'}
+        >>> assert exp.language() == {'ab', 'abab', 'aabb'}
     """
 
 
