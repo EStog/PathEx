@@ -4,6 +4,11 @@ from abc import ABC
 from functools import singledispatchmethod
 from math import inf
 
+from pathpy.adts.collection_wrapper import (CollectionWrapper,
+                                            get_collection_wrapper)
+from pathpy.generators.defaults import (LANGUAGE_TYPE,
+                                        LANGUAGE_TYPE, ONLY_COMPLETE_WORDS,
+                                        WORD_TYPE)
 from pathpy.generators.misc import MAX_LOOKAHEAD
 
 # from collections.abc import Hashable
@@ -20,16 +25,19 @@ class Expression(ABC):  # (Hashable)
     a set of tuples of letters, also called strings or words.
     """
 
-    def words_generator(self, max_lookahead: int = MAX_LOOKAHEAD):
+    def get_generator(self, max_lookahead: int = MAX_LOOKAHEAD):
         from pathpy.generators.words_generator import WordsGenerator
         return WordsGenerator(self, max_lookahead=max_lookahead)
 
-    def language(self, collection=set, word_type=lambda w: ''.join(str(l) for l in w), only_complete_words=True):
+    def get_language(self,
+                     language_type=LANGUAGE_TYPE,
+                     word_type=WORD_TYPE,
+                     only_complete_words=ONLY_COMPLETE_WORDS):
         from pathpy.generators.eager import get_language
-        return collection(collection(get_language(self, word_type=word_type, only_complete_words=only_complete_words)))
-
-    def generation_trace(self, collection=set, word_converter=lambda w: ''.join(str(l) for l in w)):
-        return collection(map(word_converter, self.words_generator()))
+        language = language_type()
+        for w in get_language(self, word_type=word_type, only_complete_words=only_complete_words):
+            language.put(w)
+        return language
 
     # self | other
     @singledispatchmethod

@@ -219,7 +219,9 @@ class Synchronizer:
         ...     _ = executor.submit(func_b)
         ...     _ = executor.submit(func_a)
 
-        >>> allowed_paths = exp.language(word_type=tuple)
+        >>> from pathpy.adts.collection_wrapper import get_collection_wrapper
+        >>> Set = get_collection_wrapper(set, lambda s, w: s.add(tuple(w)))
+        >>> allowed_paths = exp.get_language(Set)
 
         >>> assert tuple(shared_list) in allowed_paths
         """

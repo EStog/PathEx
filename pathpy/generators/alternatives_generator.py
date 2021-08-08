@@ -42,19 +42,19 @@ class AlternativesGenerator(Iterator):
         if table is None:
             table = SymbolsTable()
         self._visitor = self._get_visitor(expression, table)
-        self._alts = Chain()
+        self._alts: Chain[tuple[object, Expression, SymbolsTable]] = Chain()
         if not_normal:
             self._next = partial(next, self._visitor)
 
-    def __next__(self):
+    def __next__(self) -> tuple[object, Expression, SymbolsTable]:
         return self._next()
 
-    def _next(self):
+    def _next(self) -> tuple[object, Expression, SymbolsTable]:
         try:
             return next(self._alts)
         except StopIteration:
             head, tail, table = next(self._visitor)
-            if isinstance(head, NamedWildcard) and (value := table.get_value(head)) is not head:
+            if isinstance(head, NamedWildcard) and (value := table.get_concrete_value(head)) is not head:
                 head = value
             if isinstance(head, LettersPossitiveUnion):
                 head, rest = head.get_one_rest()
@@ -68,10 +68,6 @@ class AlternativesGenerator(Iterator):
     @_get_visitor.register
     def _term_visitor(self, exp: Term, table: SymbolsTable):
         yield exp, EMPTY_STRING, table
-
-    # @_get_visitor.register
-    # def visit_named_wildcard(self, exp: NamedWildcard, table: SymbolsTable):
-    #     yield table.get_value(exp), EMPTY_STRING, table
 
     @_get_visitor.register
     def _union_visitor(self, exp: Union, table: SymbolsTable):

@@ -1,25 +1,26 @@
 from __future__ import annotations
+from copy import copy
 
-from collections import deque
-from typing import Callable, Iterable
-
-from pathpy.adts.collection_wrapper import (CollectionWrapper,
-                                            get_collection_wrapper)
+from pathpy.adts.collection_wrapper import CollectionWrapper
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.nary_operators.concatenation import Concatenation
 from pathpy.expressions.terms.empty_string import EMPTY_STRING
+from pathpy.generators.defaults import (ALTERNATIVES_COLLECTION_TYPE,
+                                        ONLY_COMPLETE_WORDS,
+                                        WORD_TYPE)
 
 from .alternatives_generator import AlternativesGenerator
 from .symbols_table import SymbolsTable
 
 
-def _get_clean_alternatives(
+def _get_alternatives(
+        prefix_type: type[CollectionWrapper],
         expression: Expression, table: SymbolsTable,
         alternatives_collection_type: type[CollectionWrapper],
         only_complete_words: bool):
 
     alternatives = alternatives_collection_type()
-    alternatives.put(([], expression, table))
+    alternatives.put((prefix_type(), expression, table))
 
     while True:
         try:
@@ -30,39 +31,33 @@ def _get_clean_alternatives(
             alt = AlternativesGenerator(tail, table)
             tail = None
             for head, tail, table in alt:
+                prefix_copy = copy(prefix)
+                if head is not EMPTY_STRING:
+                    prefix_copy.put(head)
                 if tail is EMPTY_STRING:
-                    yield prefix + [head], table
+                    yield prefix_copy, table
                 else:
-                    alternatives.put((prefix+[head], tail, table))
+                    alternatives.put((prefix_copy, tail, table))
             if tail is None and not only_complete_words:
                 yield prefix, table
 
 
-def _init(table: SymbolsTable | None = None,
-          word_type: Callable[[Iterable[object]], object] | None = None,
-          alternatives_collection_type: type[CollectionWrapper] | None = None):
+def get_language(expression: Expression, table: SymbolsTable | None = None,
+                 word_type: type[CollectionWrapper] = WORD_TYPE,
+                 alternatives_collection_type: type[CollectionWrapper] = ALTERNATIVES_COLLECTION_TYPE,
+                 only_complete_words: bool = ONLY_COMPLETE_WORDS):
+
     if table is None:
         table = SymbolsTable()
-    if word_type is None:
-        def word_type(coll): return ''.join(str(x) for x in coll)
-    if alternatives_collection_type is None:
-        alternatives_collection_type = get_collection_wrapper(
-            deque, deque.appendleft, deque.extendleft, deque.popleft, IndexError)
-    return table, word_type, alternatives_collection_type
 
-
-def get_language(expression: Expression, table: SymbolsTable | None = None,
-                 word_type: Callable[[Iterable[object]], object] | None = None,
-                 alternatives_collection_type: type[CollectionWrapper] | None = None,
-                 only_complete_words: bool = True):
-
-    table, word_type, alternatives_collection_type = _init(
-        table, word_type, alternatives_collection_type)
-
-    for prefix, table in _get_clean_alternatives(expression, table,
-                                                 alternatives_collection_type,
-                                                 only_complete_words):
-        for prefix, _ in _get_clean_alternatives(Concatenation(prefix), table,
-                                                 alternatives_collection_type,
-                                                 only_complete_words):
-            yield word_type(prefix)
+    for prefix, table in _get_alternatives(word_type, expression, table,
+                                           alternatives_collection_type,
+                                           only_complete_words):
+        if not prefix:
+            prefix.put(EMPTY_STRING)
+            yield prefix
+        else:
+            for prefix, _ in _get_alternatives(word_type, Concatenation(prefix), table,
+                                            alternatives_collection_type,
+                                            only_complete_words):
+                yield prefix

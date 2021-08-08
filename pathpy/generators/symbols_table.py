@@ -51,11 +51,11 @@ class SymbolsTable:
         else:
             return cache[number], self
 
-    def get_value(self, o: NW) -> PU | NW:
+    def get_concrete_value(self, o: NW) -> PU | NW:
         x = self._value_of.get(self._group_of[o], o)
         return x if isinstance(x, PU) else o
 
-    def get_boundary(self, o: NW) -> Term:
+    def get_boundary_value(self, o: NW) -> Term:
         return self._value_of.get(self._group_of[o], o)
 
     @staticmethod

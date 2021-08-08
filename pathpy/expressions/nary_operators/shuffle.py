@@ -19,11 +19,14 @@ class Shuffle(NAryOperator):
     Example:
         >>> from pathpy import Concatenation as C, Shuffle as S
 
-        >>> assert S('ab').language() == {'ab', 'ba'}
+        >>> exp = S('ab')
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'ab', 'ba'}
 
-        >>> assert S('aa').language() == {'aa'}
+        >>> exp = S('aa')
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'aa'}
 
-        >>> assert ( C('abc') // C('xy') ).language() == {'abcxy', 'abxcy', 'abxyc', 'axbcy', 'axbyc', 'axybc', 'xabcy', 'xabyc', 'xaybc', 'xyabc'}
+        >>> exp = C('abc') // C('xy')
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'abcxy', 'abxcy', 'abxyc', 'axbcy', 'axbyc', 'axybc', 'xabcy', 'xabyc', 'xaybc', 'xyabc'}
     """
 
 
