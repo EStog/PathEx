@@ -8,9 +8,11 @@ class LettersPossitiveUnion(LettersUnion):
     At the semantic level, an union of letters is the same as a union of expression, where each expression is a letter, but it is preferred to use LettersPossitiveUnion in this case.
 
     >>> from pathpy import LettersPossitiveUnion as Ls
-    >>> assert Ls('abcd').get_language() == {'a', 'b', 'c', 'd'}
+    >>> exp = Ls('abcd')
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'a', 'b', 'c', 'd'}
 
-    >>> assert (Ls('ab') | Ls('cd')).get_language() == {'a', 'b', 'c', 'd'}
+    >>> exp = Ls('ab') | Ls('cd')
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'a', 'b', 'c', 'd'}
     """
 
     def get_one_rest(self):
