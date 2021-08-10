@@ -37,7 +37,7 @@ class AcquiredLock:
     def __init__(self, lock_class):
         """
         Args:
-            lock_class (Lock): This is the class of the underlier used locks.
+            lock_class (Lock): This is the class of the underlying used locks.
         """
         self._lock = lock_class()
         self._lock.acquire()
@@ -54,7 +54,7 @@ class AcquiredLock:
     def acquire(self, *args, **kwargs):
         """Acquires the lock and sets the waiting state properly.
 
-        Arguments are passed to the underlier lock.
+        Arguments are passed to the underlying lock.
 
         Returns:
             bool: True if acquired, False otherwise.
