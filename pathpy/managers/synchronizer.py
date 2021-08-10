@@ -134,8 +134,7 @@ class Synchronizer:
 
         self._sync_lock.acquire()  # protect the entire procedure
 
-        if new_alternatives := self._get_new_alternatives(label):
-            self._alternatives = new_alternatives
+        if self._advance(label):
             self._check_saved_labels()
             self._sync_lock.release()
         else:
@@ -154,14 +153,13 @@ class Synchronizer:
             for label in self._labels:
                 lock = self._labels[label]
                 if lock.waiting_amount > 0:
-                    if new_alternatives := self._get_new_alternatives(label):
+                    if self._advance(label):
                         lock.release()
-                        self._alternatives = new_alternatives
                         break
             else:
                 break
 
-    def _get_new_alternatives(self, label):
+    def _advance(self, label):
         def _assert_right_match(label, match, table):
             if isinstance(match, NamedWildcard):
                 return match == table.get_value(match)
@@ -178,7 +176,11 @@ class Synchronizer:
                     assert _assert_right_match(label, match, table), \
                         f'Match is {match} instead of label "{label}"'
                     new_alternatives.add((tail, table))
-        return new_alternatives
+        if new_alternatives:
+            self._alternatives = new_alternatives
+            return True
+        else:
+            return False
 
     def register(self, tag: _Tag, func=None):
         """
