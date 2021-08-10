@@ -43,22 +43,22 @@ class Substitution(Expression):
         >>> from pathpy import Concatenation as C, Union as U, EMPTY_STRING as e, WILDCARD as _
 
         >>> exp = C('abc')[{'a':'c', 'c':'a'}]
-        >>> assert exp.get_language() == {'cba'}
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'cba'}
 
         >>> exp = C('abc')['a':'xy', 'c':e]
-        >>> assert exp.get_language() == {'xyb'}
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'xyb'}
 
         >>> exp = C(U('ax'), 'c')['a':'b', 'c':'y']
-        >>> assert exp.get_language() == {'by', 'xy'}
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'by', 'xy'}
 
         >>> exp = C('abca')['a':_]
-        >>> assert set(exp.get_language()) == {'_0bc_0'}
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'_0bc_0'}
 
         >>> exp = C('abcacd')['c':_, 'a':'x'+_+'y']
-        >>> assert set(exp.get_language()) == {'x_0yb_1x_0y_1d'}
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'x_0yb_1x_0y_1d'}
 
         >>> exp = C(U('xyz'), *'abc')['x':_, 'y':'w'+_, 'z':'t', 'b':C('r',_,'s')]
-        >>> assert set(exp.get_language()) == {'_0ar_1sc', 'w_0ar_1sc', 'tar_0sc'}
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'_0ar_1sc', 'w_0ar_1sc', 'tar_0sc'}
     """
     argument: object
     replacements: dict[object, object]
