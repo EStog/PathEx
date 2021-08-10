@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
 from itertools import islice, zip_longest
+from typing import Iterator
 
 from pathpy.adts.multitask.acquired_lock import AcquiredLock
 from pathpy.expressions.nary_operators.concatenation import Concatenation
@@ -19,43 +20,44 @@ __all__ = ['Synchronizer']
 
 # TODO: refactor by using Shuffle and Intersection, and generalize to any kind of synchronizer
 
+
 class ConcurrencyType(Enum):
     THREADING = threading
 
 
 @dataclass(frozen=True, init=False, eq=False)
-class _Label:
-    parent: _Tag
+class Label:
+    parent: Tag
 
     def __repr__(self) -> str:
         if hasattr(self.parent, 'name'):
-            return f'{self.__class__.__name__[1:]}({self.parent.name})'
+            return f'{self.__class__.__name__}({self.parent.name})'
         else:
-            return f'{self.__class__.__name__[1:]}({id(self.parent)})'
+            return f'{self.__class__.__name__}({id(self.parent)})'
 
     def __hash__(self) -> int:
         return id(self)
 
 
-class _Enter(_Label):
+class Enter(Label):
     pass
 
 
-class _Exit(_Label):
+class Exit(Label):
     pass
 
 
 @dataclass(frozen=True, init=False, eq=False)
-class _Tag(Concatenation):
+class Tag(Concatenation):
 
-    enter: _Label
-    exit: _Label
+    enter: Label
+    exit: Label
 
     def __new__(cls, *args, name=None):
         if args:
             return super().__new__(cls, *args)
-        enter = _Enter()
-        exit = _Exit()
+        enter = Enter()
+        exit = Exit()
         self = super().__new__(cls, enter, exit)
 
         if name is not None:
@@ -69,9 +71,9 @@ class _Tag(Concatenation):
 
     def __repr__(self) -> str:
         if hasattr(self, 'name'):
-            return f'{self.__class__.__name__[1:]}({self.name})'
+            return f'{self.__class__.__name__}({self.name})'
         else:
-            return f'{self.__class__.__name__[1:]}({id(self)})'
+            return f'{self.__class__.__name__}({id(self)})'
 
     def __hash__(self) -> int:
         return id(hash)
@@ -96,6 +98,9 @@ class Synchronizer:
         The direct use of this method should be exercised with caution, because it leads to non structured code. In fact, in an object oriented design, its use should be discouraged. This method is public just because it might be usefull in a very specific and extraordinary use case where an structured approach may be too expensive, harder to design or to maintain.
 
         For an structured approach use the decorator `Synchronizer.register` or the context manager `Synchronizer.region`.
+
+        Args:
+            label (object): The label to wait for.
 
         Example:
 
@@ -126,9 +131,6 @@ class Synchronizer:
 
             >>> assert produced == []
             >>> assert consumed == [0, 1, 2, 3]
-
-        Args:
-            label (object): The label to wait for.
         """
         label = LettersPossitiveUnion({label})
 
@@ -182,8 +184,12 @@ class Synchronizer:
         else:
             return False
 
-    def register(self, tag: _Tag, func=None):
-        """
+    def register(self, tag: Tag, func=None):
+        """Decorator to mark a method as a concurrent unit of execution
+
+        Args:
+            tag (Tag): A tag to mark the given funcion with.
+
         >>> from concurrent.futures import ThreadPoolExecutor
         >>> from pathpy import Synchronizer
 
@@ -240,7 +246,53 @@ class Synchronizer:
             return wrapper(func)
 
     @contextmanager
-    def region(self, tag: _Tag):
+    def region(self, tag: Tag):
+        """Context manager to mark a piece of code as a concurrent unit of execution
+
+        Args:
+            tag (Tag): A tag to mark the corresponding block with.
+
+        >>> from concurrent.futures import ThreadPoolExecutor
+        >>> from pathpy import Synchronizer
+
+        >>> a, b, c = Synchronizer.named_tags('a', 'b', 'c')
+
+        >>> exp = ( a + (b|c) )+2
+
+        >>> shared_list = []
+
+        >>> sync = Synchronizer(exp)
+
+        >>> def func_a():
+        ...     with sync.region(a):
+        ...         shared_list.append(a.enter)
+        ...         # print('Func a')
+        ...         shared_list.append(a.exit)
+
+        >>> def func_b():
+        ...     with sync.region(b):
+        ...         shared_list.append(b.enter)
+        ...         # print('Func b')
+        ...         shared_list.append(b.exit)
+
+        >>> def func_c():
+        ...     with sync.region(c):
+        ...         shared_list.append(c.enter)
+        ...         # print('Func c')
+        ...         shared_list.append(c.exit)
+
+        >>> with ThreadPoolExecutor(max_workers=4) as executor:
+        ...     _ = executor.submit(func_c)
+        ...     _ = executor.submit(func_a)
+        ...     _ = executor.submit(func_b)
+        ...     _ = executor.submit(func_a)
+
+        >>> from pathpy.adts.collection_wrapper import get_collection_wrapper
+        >>> Set = get_collection_wrapper(set, lambda s, w: s.add(tuple(w)))
+        >>> allowed_paths = exp.get_language(Set)
+
+        >>> assert tuple(shared_list) in allowed_paths
+        """
         self.check(tag.enter)
         try:
             yield self
@@ -248,5 +300,27 @@ class Synchronizer:
             self.check(tag.exit)
 
     @classmethod
-    def tags(cls, n: int, *names):
-        return (_Tag(name=name) for _, name in islice(zip_longest(range(n), names), n))
+    def tags(cls, n: int) -> Iterator[Tag]:
+        """Factory method that gives `n` tags.
+
+        The names of the tags are the same as its object ids.
+
+        Args:
+            n (int): The amount of tags to be constructed
+
+        Returns:
+            Iterator[Tag]: an iterator that gives `n` anonymous tags.
+        """
+        return (Tag() for _ in range(n))
+
+    @classmethod
+    def named_tags(cls, *names: object) -> Iterator[Tag]:
+        """Factory method that gives named tags.
+
+        Args:
+            names (tuple[object]): The names for the constructed tags
+
+        Returns:
+            Iterator[Tag]: an iterator that gives tags with the given names.
+        """
+        return (Tag(name=name) for name in names)
