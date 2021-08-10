@@ -85,9 +85,7 @@ class Synchronizer:
         self._sync_module = concurrency_type.value
         self._sync_lock = self._sync_module.Lock()
         self._labels: dict[object, AcquiredLock] = {}
-        self._labels_lock = self._sync_module.Lock()
         self._alternatives = set()
-        self._alternatives_lock = self._sync_module.Lock()
         self._alternatives.add((exp, SymbolsTable()))
 
     def emit(self, label: object):
