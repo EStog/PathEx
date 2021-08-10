@@ -4,12 +4,8 @@ from abc import ABC
 from functools import singledispatchmethod
 from math import inf
 
-from pathpy.adts.collection_wrapper import (CollectionWrapper,
-                                            get_collection_wrapper)
-from pathpy.generators.defaults import (LANGUAGE_TYPE,
-                                        LANGUAGE_TYPE, ONLY_COMPLETE_WORDS,
-                                        WORD_TYPE)
-from pathpy.generators.misc import MAX_LOOKAHEAD
+from pathpy.generators.defaults import (LANGUAGE_TYPE, MAX_LOOKAHEAD,
+                                        ONLY_COMPLETE_WORDS, WORD_TYPE)
 
 # from collections.abc import Hashable
 
@@ -35,7 +31,8 @@ class Expression(ABC):  # (Hashable)
                      only_complete_words=ONLY_COMPLETE_WORDS):
         from pathpy.generators.eager import get_language
         language = language_type()
-        for w in get_language(self, word_type=word_type, only_complete_words=only_complete_words):
+        for w in get_language(self, word_type=word_type,
+                              only_complete_words=only_complete_words):
             language.put(w)
         return language
 

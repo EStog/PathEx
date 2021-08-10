@@ -3,11 +3,15 @@ from __future__ import annotations
 from typing import Iterator
 
 from pathpy.adts.singleton import singleton
+from pathpy.expressions.expression import Expression
 from pathpy.expressions.terms.empty_string import EMPTY_STRING
+from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
+    LettersPossitiveUnion
 
 from ._expressions._named_wildcard import NamedWildcard
 from .alternatives_generator import AlternativesGenerator
 from .lazy_value import LazyValue
+from .symbols_table import SymbolsTable
 
 
 @singleton
@@ -34,7 +38,7 @@ class LettersGenerator(Iterator[object]):
 
     def __next__(self) -> object:
         while self._pos == len(self._prefix):
-            if not self.advance_once():
+            if self.advance_once() == (None, None):
                 raise StopIteration
         ret = self._prefix[self._pos]
         self._pos += 1
@@ -42,24 +46,38 @@ class LettersGenerator(Iterator[object]):
 
     def advance_once(self):
         if self._exhausted:
-            return None
+            return None, None
         try:
             head, tail, table = next(self._alts_gen)
         except StopIteration:
             self._exhausted = True
-            return None
+            return None, None
         else:
             if tail is EMPTY_STRING:
                 self._exhausted = True
                 self._complete = True
-            self._words_generator.register_alternative(
-                self._prefix.copy(), self._alts_gen)
+            self._words_generator.register_alternative(self._prefix.copy(),
+                                                       self._alts_gen)
             self._alts_gen = AlternativesGenerator(tail, table)
             if isinstance(head, NamedWildcard):
-                head = LazyValue(head, table, self, self.max_lookahead)
+                head = LazyValue(head, tail, table,
+                                 len(self._prefix), self,
+                                 self.max_lookahead)
             if head is not EMPTY_STRING:
                 self._prefix.append(head)
-            return table
+            return tail, table
+
+    def update(self, one: object, rest: Iterator[object],
+               pos: int, tail: Expression, table: SymbolsTable):
+        self._prefix[pos] = one
+        before = self._prefix[:pos]
+        after = self._prefix[pos+1:]
+        self._words_generator.register_words(
+            LettersGenerator(
+                before + [l] + after,
+                AlternativesGenerator(tail, table),
+                self._words_generator,
+                self.max_lookahead) for l in rest)
 
     @property
     def exhausted(self):

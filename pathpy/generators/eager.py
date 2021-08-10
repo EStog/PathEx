@@ -58,6 +58,6 @@ def get_language(expression: Expression, table: SymbolsTable | None = None,
             yield prefix
         else:
             for prefix, _ in _get_alternatives(word_type, Concatenation(prefix), table,
-                                            alternatives_collection_type,
-                                            only_complete_words):
+                                               alternatives_collection_type,
+                                               only_complete_words):
                 yield prefix

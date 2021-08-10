@@ -1,23 +1,34 @@
+from functools import cached_property
+
+from pathpy.expressions.expression import Expression
+from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
+    LettersPossitiveUnion
+
 from ._expressions._named_wildcard import NamedWildcard
 from .symbols_table import SymbolsTable
 
 
 class LazyValue:
 
-    def __init__(self, wildcard: NamedWildcard, table: SymbolsTable,
-                 letters_generator, max_lookahead: int):
+    def __init__(self, wildcard: NamedWildcard,
+                 tail: Expression, table: SymbolsTable,
+                 pos: int, letters_generator, max_lookahead: int):
         from .letters_generator import LettersGenerator
         self._wildcard = wildcard
+        self._tail = tail
         self._table = table
+        self._pos = pos
         self._letters_generator: LettersGenerator = letters_generator
         self.max_lookahead = max_lookahead
 
-    def get_value(self) -> object:
+    @property
+    def value(self) -> object:
         def advanced(i):
             if i < self.max_lookahead and \
                     self._table.get_concrete_value(self._wildcard) is self._wildcard:
-                table = self._letters_generator.advance_once()
-                if table:
+                tail, table = self._letters_generator.advance_once()
+                if None not in (tail, table):
+                    self._tail = tail
                     self._table = table
                     return True
             return False
@@ -25,7 +36,11 @@ class LazyValue:
         i = 0
         while advanced(i):
             i += 1
-        return self._table.get_boundary_value(self._wildcard)
+        return self._break_up(self._table.get_boundary_value(self._wildcard))
 
-    def __str__(self) -> str:
-        return str(self.get_value())
+    def _break_up(self, term):
+        if isinstance(term, LettersPossitiveUnion):
+            term, rest = term.get_one_rest()
+            self._letters_generator.update(term, rest, self._pos,
+                                           self._tail, self._table)
+        return term

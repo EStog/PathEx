@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from functools import partial
-from typing import Callable, Iterable, Mapping
+from typing import Callable, Mapping
+from collections.abc import Iterable
 
 from .nary_operators.intersection import Intersection
 from .nary_operators.nary_operator import NAryOperator
