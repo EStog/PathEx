@@ -88,7 +88,7 @@ class Synchronizer:
         self._alternatives = set()
         self._alternatives.add((exp, SymbolsTable()))
 
-    def emit(self, label: object):
+    def check(self, label: object):
         """This method is used to wait for the availability of a single label.
 
         The label may be any comparable object. If the expression of the synchronizer is not able to generate the given object then the execution is blocked until the presence of another label in another task advances the associated expression's automata, so it can generate the label given in this method.
@@ -109,14 +109,14 @@ class Synchronizer:
             >>> consumed = []
 
             >>> def producer(x):
-            ...     sync.emit('Pi')
+            ...     sync.check('Pi')
             ...     produced.append(x)
-            ...     sync.emit('Pf')
+            ...     sync.check('Pf')
 
             >>> def consumer():
-            ...     sync.emit('Ci')
+            ...     sync.check('Ci')
             ...     consumed.append(produced.pop())
-            ...     sync.emit('Cf')
+            ...     sync.check('Cf')
 
             >>> with ThreadPoolExecutor(max_workers=8) as executor:
             ...     for _ in range(4):
@@ -136,7 +136,7 @@ class Synchronizer:
 
         if new_alternatives := self._get_new_alternatives(label):
             self._alternatives = new_alternatives
-            self._chained_release()
+            self._check_saved_labels()
             self._sync_lock.release()
         else:
             lock = self._labels.setdefault(
@@ -149,7 +149,7 @@ class Synchronizer:
             # lock.release must be done by another task.
             lock.acquire()
 
-    def _chained_release(self):
+    def _check_saved_labels(self):
         while True:
             for label in self._labels:
                 lock = self._labels[label]
@@ -226,9 +226,9 @@ class Synchronizer:
         def wrapper(wrapped):
             @wraps(wrapped)
             def f(*args, **kwargs):
-                self.emit(tag.enter)
+                self.check(tag.enter)
                 x = wrapped(*args, **kwargs)
-                self.emit(tag.exit)
+                self.check(tag.exit)
                 return x
             return f
 
@@ -239,11 +239,11 @@ class Synchronizer:
 
     @contextmanager
     def region(self, tag: _Tag):
-        self.emit(tag.enter)
+        self.check(tag.enter)
         try:
             yield self
         finally:
-            self.emit(tag.exit)
+            self.check(tag.exit)
 
     @classmethod
     def tags(cls, n: int, *names):
