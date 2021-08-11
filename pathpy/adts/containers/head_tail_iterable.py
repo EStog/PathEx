@@ -8,6 +8,7 @@ from itertools import chain
 from typing import Iterator, TypeVar
 
 from pathpy.adts.cached_generators.cached_iterator import CachedIterator
+from copy import copy
 
 __all__ = ['HeadTailIterable']
 
@@ -73,10 +74,10 @@ class HeadTailIterable(Iterable[_E]):
             head = next(_tail)
         except StopIteration:
             head = None
-        obj = object.__new__(cls)
-        object.__setattr__(obj, 'head', head)
-        object.__setattr__(obj, '_tail', _tail)
-        return obj
+        self = object.__new__(cls)
+        object.__setattr__(self, 'head', head)
+        object.__setattr__(self, '_tail', _tail)
+        return self
 
     def __add__(self, other: HeadTailIterable):
         if not isinstance(other, HeadTailIterable):
@@ -85,11 +86,17 @@ class HeadTailIterable(Iterable[_E]):
         if self.head and other.head:
             return self.__class__(chain([self.head], self._tail, [other.head], other._tail))
         elif self.head:
-            return self.__class__(chain([self.head], self._tail, other._tail))
+            return copy(self)
         elif other.head:
-            return self.__class__(chain(self._tail, [other.head], other._tail))
+            return copy(other)
         else:
-            return self.__class__(chain(self._tail, other._tail))
+            return self.__class__(())
+
+    def appended(self, other):
+        if self.head:
+            return self.__class__(chain([self.head], self._tail, [other]))
+        else:
+            return self.__class__([other])
 
     @cached_property
     def tail(self) -> HeadTailIterable[_E]:
