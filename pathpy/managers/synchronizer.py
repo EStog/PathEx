@@ -4,8 +4,6 @@ import threading
 from enum import Enum
 
 from pathpy.adts.multitask.acquired_lock import AcquiredLock
-from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
-    LettersPossitiveUnion
 
 from .multilabel_manager import MultilabelManager
 

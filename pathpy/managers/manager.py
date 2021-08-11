@@ -2,77 +2,23 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
-from dataclasses import dataclass
 from functools import wraps
 from typing import Iterator
 
 from pathpy.expressions.expression import Expression
-from pathpy.expressions.nary_operators.concatenation import Concatenation
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
 from pathpy.generators._expressions._named_wildcard import NamedWildcard
 from pathpy.generators.alternatives_generator import AlternativesGenerator
 from pathpy.generators.symbols_table import SymbolsTable
 
+from .tag import Tag
+
 __all__ = ['Manager']
 
 
-@dataclass(frozen=True, init=False, eq=False)
-class Label:
-    parent: Tag
-
-    def __repr__(self) -> str:
-        if hasattr(self.parent, 'name'):
-            return f'{self.__class__.__name__[1:]}({self.parent.name})'
-        else:
-            return f'{self.__class__.__name__[1:]}({id(self.parent)})'
-
-    def __hash__(self) -> int:
-        return id(self)
-
-
-class Enter(Label):
-    pass
-
-
-class Exit(Label):
-    pass
-
-
-@dataclass(frozen=True, init=False, eq=False)
-class Tag(Concatenation):
-
-    enter: Label
-    exit: Label
-
-    def __new__(cls, *args, name=None):
-        if args:
-            return super().__new__(cls, *args)
-        enter = Enter()
-        exit = Exit()
-        self = super().__new__(cls, enter, exit)
-
-        if name is not None:
-            object.__setattr__(self, 'name', name)
-
-        object.__setattr__(enter, 'parent', self)
-        object.__setattr__(exit, 'parent', self)
-        object.__setattr__(self, 'enter', enter)
-        object.__setattr__(self, 'exit', exit)
-        return self
-
-    def __repr__(self) -> str:
-        if hasattr(self, 'name'):
-            return f'{self.__class__.__name__[1:]}({self.name})'
-        else:
-            return f'{self.__class__.__name__[1:]}({id(self)})'
-
-    def __hash__(self) -> int:
-        return id(hash)
-
-
 class Manager(ABC):
-    """A generic abstract manager
+    """A generic abstract manager.
     """
 
     def __init__(self, expression: Expression):
@@ -124,9 +70,8 @@ class Manager(ABC):
         else:
             return False
 
-
     def register(self, tag: Tag, func=None):
-        """Decorator to mark a method as a concurrent unit of execution
+        """Decorator to mark a method as a region.
 
         Args:
             tag (Tag): A tag to mark the given funcion with.
@@ -147,7 +92,7 @@ class Manager(ABC):
 
     @contextmanager
     def region(self, tag: Tag):
-        """Context manager to mark a piece of code as a concurrent unit of execution
+        """Context manager to mark a piece of code as a region.
 
         Args:
             tag (Tag): A tag to mark the corresponding block with.
@@ -177,7 +122,7 @@ class Manager(ABC):
         """Factory method that gives named tags.
 
         Args:
-            names (tuple[object]): The names for the constructed tags
+            *names (tuple[object]): The names for the constructed tags
 
         Returns:
             Iterator[Tag]: an iterator that gives tags with the given names.
