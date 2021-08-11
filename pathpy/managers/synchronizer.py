@@ -1,20 +1,13 @@
 from __future__ import annotations
 
 import threading
-from contextlib import contextmanager
-from dataclasses import dataclass
 from enum import Enum
-from functools import wraps
-from itertools import islice, zip_longest
-from typing import Iterator
 
 from pathpy.adts.multitask.acquired_lock import AcquiredLock
-from pathpy.expressions.nary_operators.concatenation import Concatenation
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
-from pathpy.generators._expressions._named_wildcard import NamedWildcard
-from pathpy.generators.alternatives_generator import AlternativesGenerator
-from pathpy.generators.symbols_table import SymbolsTable
+
+from .multilabel_manager import MultilabelManager
 
 __all__ = ['Synchronizer']
 
@@ -25,170 +18,40 @@ class ConcurrencyType(Enum):
     THREADING = threading
 
 
-@dataclass(frozen=True, init=False, eq=False)
-class Label:
-    parent: Tag
-
-    def __repr__(self) -> str:
-        if hasattr(self.parent, 'name'):
-            return f'{self.__class__.__name__}({self.parent.name})'
-        else:
-            return f'{self.__class__.__name__}({id(self.parent)})'
-
-    def __hash__(self) -> int:
-        return id(self)
-
-
-class Enter(Label):
-    pass
-
-
-class Exit(Label):
-    pass
-
-
-@dataclass(frozen=True, init=False, eq=False)
-class Tag(Concatenation):
-
-    enter: Label
-    exit: Label
-
-    def __new__(cls, *args, name=None):
-        if args:
-            return super().__new__(cls, *args)
-        enter = Enter()
-        exit = Exit()
-        self = super().__new__(cls, enter, exit)
-
-        if name is not None:
-            object.__setattr__(self, 'name', name)
-
-        object.__setattr__(enter, 'parent', self)
-        object.__setattr__(exit, 'parent', self)
-        object.__setattr__(self, 'enter', enter)
-        object.__setattr__(self, 'exit', exit)
-        return self
-
-    def __repr__(self) -> str:
-        if hasattr(self, 'name'):
-            return f'{self.__class__.__name__}({self.name})'
-        else:
-            return f'{self.__class__.__name__}({id(self)})'
-
-    def __hash__(self) -> int:
-        return id(hash)
-
-
-class Synchronizer:
+class Synchronizer(MultilabelManager):
     """This class is a manager that controls the execution of its registered threads.
-    """
 
-    def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
-        self._sync_module = concurrency_type.value
-        self._sync_lock = self._sync_module.Lock()
-        self._labels: dict[object, AcquiredLock] = {}
-        self._alternatives = set()
-        self._alternatives.add((exp, SymbolsTable()))
+    Example using method `check`:
 
-    def check(self, label: object):
-        """This method is used to wait for the availability of a single label.
+        >>> from concurrent.futures import ThreadPoolExecutor
+        >>> from pathpy import Synchronizer, Concatenation as C
 
-        The label may be any comparable object. If the expression of the synchronizer is not able to generate the given object then the execution is blocked until the presence of another label in another task advances the associated expression's automata, so it can generate the label given in this method.
+        The following expression generates 'PiPfCiCf' | 'PiPfCiCfPiPfCiCf' | ...
+        >>> exp = +C('Pi','Pf','Ci','Cf')
+        >>> sync = Synchronizer(exp)
+        >>> produced = []
+        >>> consumed = []
 
-        The direct use of this method should be exercised with caution, because it leads to non structured code. In fact, in an object oriented design, its use should be discouraged. This method is public just because it might be usefull in a very specific and extraordinary use case where an structured approach may be too expensive, harder to design or to maintain.
+        >>> def producer(x):
+        ...     sync.check('Pi')
+        ...     produced.append(x)
+        ...     sync.check('Pf')
 
-        For an structured approach use the decorator `Synchronizer.register` or the context manager `Synchronizer.region`.
+        >>> def consumer():
+        ...     sync.check('Ci')
+        ...     consumed.append(produced.pop())
+        ...     sync.check('Cf')
 
-        Args:
-            label (object): The label to wait for.
+        >>> with ThreadPoolExecutor(max_workers=8) as executor:
+        ...     for _ in range(4):
+        ...         _ = executor.submit(consumer)
+        ...     for i in range(4):
+        ...         _ = executor.submit(producer, i)
 
-        Example:
+        >>> assert produced == []
+        >>> assert consumed == [0, 1, 2, 3]
 
-            >>> from concurrent.futures import ThreadPoolExecutor
-            >>> from pathpy import Synchronizer, Concatenation as C
-
-            The following expression generates 'PiPfCiCf' | 'PiPfCiCfPiPfCiCf' | ...
-            >>> exp = +C('Pi','Pf','Ci','Cf')
-            >>> sync = Synchronizer(exp)
-            >>> produced = []
-            >>> consumed = []
-
-            >>> def producer(x):
-            ...     sync.check('Pi')
-            ...     produced.append(x)
-            ...     sync.check('Pf')
-
-            >>> def consumer():
-            ...     sync.check('Ci')
-            ...     consumed.append(produced.pop())
-            ...     sync.check('Cf')
-
-            >>> with ThreadPoolExecutor(max_workers=8) as executor:
-            ...     for _ in range(4):
-            ...         _ = executor.submit(consumer)
-            ...     for i in range(4):
-            ...         _ = executor.submit(producer, i)
-
-            >>> assert produced == []
-            >>> assert consumed == [0, 1, 2, 3]
-        """
-        label = LettersPossitiveUnion({label})
-
-        self._sync_lock.acquire()  # protect the entire procedure
-
-        if self._advance(label):
-            self._check_saved_labels()
-            self._sync_lock.release()
-        else:
-            lock = self._labels.setdefault(
-                label, AcquiredLock(self._sync_module.Lock))
-
-            # release the procedure's protection lock in order to get blocked in the following line, so the blocking will be because this task being waiting for some other task, not because of the procedure's protection lock
-            self._sync_lock.release()
-
-            # lock.acquire in order to block.
-            # lock.release must be done by another task.
-            lock.acquire()
-
-    def _check_saved_labels(self):
-        while True:
-            for label in self._labels:
-                lock = self._labels[label]
-                if lock.waiting_amount > 0:
-                    if self._advance(label):
-                        lock.release()
-                        break
-            else:
-                break
-
-    def _advance(self, label):
-        def _assert_right_match(label, match, table):
-            if isinstance(match, NamedWildcard):
-                return match == table.get_value(match)
-            elif isinstance(match, LettersPossitiveUnion):
-                return match == label
-            else:
-                return False
-
-        new_alternatives = set()
-        for exp, table in self._alternatives:
-            for head, tail, table in AlternativesGenerator(exp, table, not_normal=True):
-                match, table = table.intersect(head, label)
-                if match is not None:
-                    assert _assert_right_match(label, match, table), \
-                        f'Match is {match} instead of label "{label}"'
-                    new_alternatives.add((tail, table))
-        if new_alternatives:
-            self._alternatives = new_alternatives
-            return True
-        else:
-            return False
-
-    def register(self, tag: Tag, func=None):
-        """Decorator to mark a method as a concurrent unit of execution
-
-        Args:
-            tag (Tag): A tag to mark the given funcion with.
+    Example using method register:
 
         >>> from concurrent.futures import ThreadPoolExecutor
         >>> from pathpy import Synchronizer
@@ -230,27 +93,8 @@ class Synchronizer:
         >>> allowed_paths = exp.get_language(Set)
 
         >>> assert tuple(shared_list) in allowed_paths
-        """
-        def wrapper(wrapped):
-            @wraps(wrapped)
-            def f(*args, **kwargs):
-                self.check(tag.enter)
-                x = wrapped(*args, **kwargs)
-                self.check(tag.exit)
-                return x
-            return f
 
-        if func is None:
-            return wrapper
-        else:
-            return wrapper(func)
-
-    @contextmanager
-    def region(self, tag: Tag):
-        """Context manager to mark a piece of code as a concurrent unit of execution
-
-        Args:
-            tag (Tag): A tag to mark the corresponding block with.
+    Example using method `region`.
 
         >>> from concurrent.futures import ThreadPoolExecutor
         >>> from pathpy import Synchronizer
@@ -292,35 +136,49 @@ class Synchronizer:
         >>> allowed_paths = exp.get_language(Set)
 
         >>> assert tuple(shared_list) in allowed_paths
-        """
-        self.check(tag.enter)
-        try:
-            yield self
-        finally:
-            self.check(tag.exit)
+    """
 
-    @classmethod
-    def tags(cls, n: int) -> Iterator[Tag]:
-        """Factory method that gives `n` tags.
+    def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
+        super().__init__(exp)
+        self._sync_module = concurrency_type.value
+        self._sync_lock = self._sync_module.Lock()
+        self._labels: dict[object, AcquiredLock] = {}
 
-        The names of the tags are the same as its object ids.
+    def check(self, label: object) -> None:
+        """This method is used to wait for the availability of a single label.
 
-        Args:
-            n (int): The amount of tags to be constructed
+        The label may be any comparable object. If the expression of the synchronizer is not able to generate the given object then the execution is blocked until the presence of another label in another task advances the associated expression's automata, so it can generate the label given in this method.
 
-        Returns:
-            Iterator[Tag]: an iterator that gives `n` anonymous tags.
-        """
-        return (Tag() for _ in range(n))
+        The direct use of this method should be exercised with caution, because it leads to non structured code. In fact, in an object oriented design, its use should be discouraged. This method is public just because it might be usefull in a very specific and extraordinary use case where an structured approach may be too expensive, harder to design or to maintain.
 
-    @classmethod
-    def named_tags(cls, *names: object) -> Iterator[Tag]:
-        """Factory method that gives named tags.
+        For an structured approach use the decorator `Synchronizer.register` or the context manager `Synchronizer.region`.
 
         Args:
-            names (tuple[object]): The names for the constructed tags
-
-        Returns:
-            Iterator[Tag]: an iterator that gives tags with the given names.
+            label (object): The label to wait for.
         """
-        return (Tag(name=name) for name in names)
+        self._sync_lock.acquire()  # protect the entire procedure
+
+        super().check(label)
+
+    def _post_success(self, label: object) -> None:
+        self._sync_lock.release()
+
+    def _register_label_presence(self, label: object) -> AcquiredLock:
+        return self._labels.setdefault(label, AcquiredLock(self._sync_module.Lock))
+
+    def _post_failure(self, lock: AcquiredLock) -> None:
+        # release the procedure's protection lock in order to get blocked in the following line, so the blocking will be because this task being waiting for some other task, not because of the procedure's protection lock
+        self._sync_lock.release()
+
+        # lock.acquire in order to block.
+        # lock.release must be done by another task.
+        lock.acquire()
+
+    def _get_associate(self, label: object) -> AcquiredLock:
+        return self._labels[label]
+
+    def _comply_condition_on_associate(self, lock: AcquiredLock) -> bool:
+        return lock.waiting_amount > 0
+
+    def _update_associate(self, lock: AcquiredLock) -> None:
+        lock.release()

@@ -39,7 +39,7 @@ class MultilabelManager(Manager):
         self._check_saved_labels()
         self._post_success(label)
 
-    def when_not_allowed(self, label: object) -> None:
+    def _when_not_allowed(self, label: object) -> None:
         associate = self._register_label_presence(label)
         self._post_failure(associate)
 

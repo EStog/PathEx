@@ -16,6 +16,7 @@ from pathpy.generators.symbols_table import SymbolsTable
 
 __all__ = ['Manager']
 
+
 @dataclass(frozen=True, init=False, eq=False)
 class Label:
     parent: Tag
@@ -79,10 +80,10 @@ class Manager(ABC):
         self._alternatives.add((expression, SymbolsTable()))
 
     @abstractmethod
-    def _when_allowed(self, label:object) -> None: ...
+    def _when_allowed(self, label: object) -> None: ...
 
     @abstractmethod
-    def _when_not_allowed(self, label:object) -> None: ...
+    def _when_not_allowed(self, label: object) -> None: ...
 
     def check(self, label: object) -> None:
         """ This method is used to notify to the manager the presence of a given label.
@@ -98,7 +99,7 @@ class Manager(ABC):
         else:
             self._when_not_allowed(label)
 
-    def _advance(self, label):
+    def _advance(self, label: object) -> bool:
         def _assert_right_match(label, match, table):
             if isinstance(match, NamedWildcard):
                 return match == table.get_value(match)
@@ -106,6 +107,8 @@ class Manager(ABC):
                 return match == label
             else:
                 return False
+
+        label = LettersPossitiveUnion({label})
 
         new_alternatives = set()
         for exp, table in self._alternatives:
@@ -115,7 +118,12 @@ class Manager(ABC):
                     assert _assert_right_match(label, match, table), \
                         f'Match is {match} instead of label "{label}"'
                     new_alternatives.add((tail, table))
-        return new_alternatives
+        if new_alternatives:
+            self._alternatives = new_alternatives
+            return True
+        else:
+            return False
+
 
     def register(self, tag: Tag, func=None):
         """Decorator to mark a method as a concurrent unit of execution
