@@ -5,9 +5,10 @@ from typing import Callable, Collection, TypeVar
 
 from pathpy.adts.containers.queue_set import QueueSet
 
+__all__ = ['CachedIterator']
+
 _T_co = TypeVar('_T_co', covariant=True)
 
-__all__ = ['CachedIterator']
 
 class CachedIterator(Iterator[_T_co]):
     def __init__(self, cached_values: Collection[_T_co],

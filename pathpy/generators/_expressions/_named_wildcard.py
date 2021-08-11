@@ -18,6 +18,3 @@ class NamedWildcard(Term):
 
     def __str__(self):
         return f'_{self.identifier}'
-
-
-__all__ = ['NamedWildcard']

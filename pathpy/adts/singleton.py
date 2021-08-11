@@ -1,9 +1,12 @@
+import re
+import threading
 from typing import TypeVar
+
+__all__ = ['singleton']
+
 
 _T = TypeVar('_T')
 
-import threading
-import re
 
 def singleton(wrapped_class: type[_T]) -> type[_T]:
     """Makes a class singleton
@@ -64,7 +67,7 @@ def singleton(wrapped_class: type[_T]) -> type[_T]:
                 try:
                     cls.__init__(instance, *init_args, **init_kwargs)
                 except:
-                    instance = None # rollback changes
+                    instance = None  # rollback changes
                     raise
 
                 try:
@@ -102,6 +105,3 @@ def singleton(wrapped_class: type[_T]) -> type[_T]:
     wrapped_class.__repr__ = __repr__
 
     return wrapped_class
-
-
-__all__ = ['singleton']

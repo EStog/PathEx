@@ -14,6 +14,8 @@ from pathpy.generators.defaults import (LANGUAGE_TYPE, MAX_LOOKAHEAD,
 # TODO: implementar igualdad estructural en __eq__
 # TODO: construir el hash una sola vez en tiempo de construcción de los objetos
 
+__all__ = ['Expression']
+
 
 class Expression(ABC):  # (Hashable)
     """
@@ -301,6 +303,3 @@ class Expression(ABC):  # (Hashable)
         for s in slices:
             d[s.start] = s.stop
         return Substitution(self, d)
-
-
-__all__ = ['Expression']

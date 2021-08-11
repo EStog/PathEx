@@ -9,8 +9,6 @@ from .multilabel_manager import MultilabelManager
 
 __all__ = ['Synchronizer']
 
-# TODO: refactor by using Shuffle and Intersection, and generalize to any kind of synchronizer
-
 
 class ConcurrencyType(Enum):
     THREADING = threading

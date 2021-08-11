@@ -1,4 +1,6 @@
-from pathpy.adts.multitask.atomics.atomic_integer import AtomicInteger
+from .atomics.atomic_integer import AtomicInteger
+
+__all__ = ['AcquiredLock']
 
 
 class AcquiredLock:

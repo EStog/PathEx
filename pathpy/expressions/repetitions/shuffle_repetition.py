@@ -1,5 +1,7 @@
 from .repetition import Repetition
 
+__all__ = ['ShuffleRepetition']
+
 
 class ShuffleRepetition(Repetition):
     """
@@ -39,6 +41,3 @@ class ShuffleRepetition(Repetition):
         >>> exp &= C('ab')%...
         >>> assert exp.get_language() == exp.get_generator().get_language() == {'ab', 'abab', 'aabb'}
     """
-
-
-__all__ = ['ShuffleRepetition']

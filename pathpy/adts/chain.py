@@ -1,7 +1,9 @@
 from collections import deque
 from collections.abc import Iterable, Iterator
-from typing import TypeVar
 from copy import copy
+from typing import TypeVar
+
+__all__ = ['Chain']
 
 _T = TypeVar('_T')
 

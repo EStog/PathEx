@@ -2,6 +2,8 @@ import threading
 
 from .atomic import Atomic
 
+__all__ = ['AtomicAttribute']
+
 
 class AtomicAttribute:
     """An attribute (a descriptor) that holds a variable whose value can be changed in concurrent-safe manner.

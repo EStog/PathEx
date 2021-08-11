@@ -16,8 +16,6 @@ __all__ = ['CachedGenerator',
 _E_co = TypeVar('_E_co', covariant=True)
 _E = TypeVar('_E')
 
-_T = TypeVar('_T')
-
 
 class CachedGenerator(Generic[_E_co]):
     """This class wraps a generator and cache its results. See the examples.

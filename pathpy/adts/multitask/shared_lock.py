@@ -1,5 +1,7 @@
 from functools import partial, wraps
 
+__all__ = ['SharedLock']
+
 OPERATION_NOT_EFFECTED = object
 
 
@@ -34,6 +36,7 @@ class _Operation:
     """This class represents object operations to be synchronized.
     It acts as a context manager and as a decorator.
     """
+
     def __init__(self, instance, acquire, release):
         self.acquire = acquire
         self.release = release
@@ -65,6 +68,7 @@ class _OperationDescriptor:
     """This class represents class operations to be synchronized.
     It acts as a descriptor and as a decorator.
     """
+
     def __init__(self, acquire, release):
         self.acquire = acquire
         self.release = release

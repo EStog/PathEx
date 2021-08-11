@@ -1,5 +1,7 @@
 from .letters_union import LettersUnion
 
+__all__ = ['LettersPossitiveUnion']
+
 
 class LettersPossitiveUnion(LettersUnion):
     """This class represents an union of letters.
@@ -23,6 +25,3 @@ class LettersPossitiveUnion(LettersUnion):
     def as_negative(self):
         from .letters_negative_union import LettersNegativeUnion
         return LettersNegativeUnion(self.letters)
-
-
-__all__ = ['LettersPossitiveUnion']

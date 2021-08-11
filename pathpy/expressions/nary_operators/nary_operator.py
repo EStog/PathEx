@@ -1,9 +1,12 @@
 from __future__ import annotations
+
 from typing import cast
 
 from pathpy.adts.containers.head_tail_iterable import HeadTailIterable
 
 from ..expression import Expression
+
+__all__ = ['NAryOperator']
 
 
 class NAryOperator(Expression, HeadTailIterable[Expression]):
@@ -20,6 +23,3 @@ class NAryOperator(Expression, HeadTailIterable[Expression]):
         if isinstance(other, self.__class__):
             return self.__class__(HeadTailIterable.__add__(self, other))
         return super().__add__(other)
-
-
-__all__ = ['NAryOperator']

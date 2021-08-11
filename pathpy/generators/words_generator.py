@@ -4,12 +4,12 @@ from typing import Iterable, Iterator
 
 from pathpy.adts.collection_wrapper import CollectionWrapper
 from pathpy.expressions.expression import Expression
-from pathpy.generators.alternatives_generator import AlternativesGenerator
-from pathpy.generators.defaults import (ALTERNATIVES_COLLECTION_TYPE,
-                                        LANGUAGE_TYPE, MAX_LOOKAHEAD, ONLY_COMPLETE_WORDS,
-                                        WORD_TYPE, WORDS_COLLECTION_TYPE)
-from pathpy.generators.lazy_value import LazyValue
 
+from .alternatives_generator import AlternativesGenerator
+from .defaults import (ALTERNATIVES_COLLECTION_TYPE, LANGUAGE_TYPE,
+                       MAX_LOOKAHEAD, ONLY_COMPLETE_WORDS, WORD_TYPE,
+                       WORDS_COLLECTION_TYPE)
+from .lazy_value import LazyValue
 from .letters_generator import LettersGenerator
 from .symbols_table import SymbolsTable
 

@@ -1,16 +1,18 @@
 from __future__ import annotations
+
 from copy import copy
 
 from pathpy.adts.collection_wrapper import CollectionWrapper
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.nary_operators.concatenation import Concatenation
 from pathpy.expressions.terms.empty_string import EMPTY_STRING
-from pathpy.generators.defaults import (ALTERNATIVES_COLLECTION_TYPE,
-                                        ONLY_COMPLETE_WORDS,
-                                        WORD_TYPE)
 
 from .alternatives_generator import AlternativesGenerator
+from .defaults import (ALTERNATIVES_COLLECTION_TYPE, ONLY_COMPLETE_WORDS,
+                       WORD_TYPE)
 from .symbols_table import SymbolsTable
+
+__all__ = ['get_language']
 
 
 def _get_alternatives(

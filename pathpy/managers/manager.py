@@ -16,6 +16,8 @@ from .tag import Tag
 
 __all__ = ['Manager']
 
+# TODO: refactor by using Shuffle and Intersection
+
 
 class Manager(ABC):
     """A generic abstract manager.

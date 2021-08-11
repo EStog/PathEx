@@ -1,11 +1,12 @@
 from __future__ import annotations
-from collections import deque
 
+from collections import deque
 from collections.abc import Iterable
 from typing import Collection, TypeVar
 
+__all__ = ['QueueSet']
+
 _T = TypeVar('_T')
-_S = TypeVar('_S')
 
 
 class QueueSet(Collection[_T]):
@@ -86,6 +87,3 @@ class QueueSet(Collection[_T]):
         x = self._queue.popleft()
         self._set.remove(x)
         return x
-
-
-__all__ = ['QueueSet']

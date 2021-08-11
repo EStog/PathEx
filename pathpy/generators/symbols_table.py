@@ -15,10 +15,13 @@ from pathpy.expressions.terms.wildcard import WILDCARD, Wildcard
 
 from ._expressions._named_wildcard import NamedWildcard as NW
 
-
 # TODO: Change type signatures from object to Term.
 # TODO: Check copy of inmutables for efficiency reasons
 # TODO: Use mutable collections.
+
+__all__ = ['SymbolsTable']
+
+
 @dataclass(frozen=True, eq=False)
 class SymbolsTable:
 
@@ -209,6 +212,3 @@ class SymbolsTable:
         del wilds_of[group2]
         wilds_of[group1] |= wilds2
         return updated_groups, wilds_of
-
-
-__all__ = ['SymbolsTable']

@@ -1,5 +1,7 @@
 from .repetition import Repetition
 
+__all__ = ['ConcatenationRepetition']
+
 
 class ConcatenationRepetition(Repetition):
     """
@@ -39,6 +41,3 @@ class ConcatenationRepetition(Repetition):
         >>> exp = C('ab')*2 & C('ab')*...
         >>> assert exp.get_language() == exp.get_generator().get_language() == {'', 'ab', 'abab'}
     """
-
-
-__all__ = ['ConcatenationRepetition']

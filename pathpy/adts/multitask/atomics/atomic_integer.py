@@ -3,7 +3,11 @@ import threading
 
 from .atomic import Atomic
 
+__all__ = ['AtomicInteger']
+
+
 # TODO: Add other integer methods.
+
 class AtomicInteger(Atomic):
     """An atomic integer. It has the same operation than Atomic, with comparison, sum and substraction.
 
@@ -42,11 +46,13 @@ class AtomicInteger(Atomic):
         return super()._unsafe_set_value(value)
 
     def _change_to_safe(self):
-        self.__dict__['_modification_operation'] = self._safe_modification_operation
+        self.__dict__[
+            '_modification_operation'] = self._safe_modification_operation
         return super()._change_to_safe()
 
     def _change_to_unsafe(self):
-        self.__dict__['_modification_operation'] = self._unsafe_modification_operation
+        self.__dict__[
+            '_modification_operation'] = self._unsafe_modification_operation
         return super()._change_to_unsafe()
 
     def __iadd__(self, value):

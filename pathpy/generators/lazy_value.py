@@ -1,5 +1,3 @@
-from functools import cached_property
-
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion

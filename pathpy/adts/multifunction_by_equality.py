@@ -6,6 +6,12 @@ from dataclasses import dataclass as _dataclass
 from types import MappingProxyType as _MappingProxyType
 from warnings import warn as _warn
 
+__all__ = ['MultifunctionByEquality',
+           'MultimethodByEquality',
+           'ValuesUnion',
+           'same', 'ignore', 'get_type']
+
+
 _T_co = _t.TypeVar('_T_co', covariant=True)
 
 
@@ -413,9 +419,3 @@ class MultimethodByEquality(MultifunctionByEquality[_T_co]):
             return w(func)
         else:
             return w
-
-
-__all__ = ['MultifunctionByEquality',
-           'MultimethodByEquality',
-           'ValuesUnion',
-           'same', 'ignore', 'get_type']

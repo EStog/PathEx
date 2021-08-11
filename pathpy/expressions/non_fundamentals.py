@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+from collections.abc import Iterable
 from functools import partial
 from typing import Callable, Mapping
-from collections.abc import Iterable
 
 from .nary_operators.intersection import Intersection
 from .nary_operators.nary_operator import NAryOperator
 from .nary_operators.union import Union
 from .negation import Negation
 from .substitution import Substitution
+
+__all__ = ['difference', 'symmetric_difference', 'multiplication']
 
 
 def difference(x: object, y: object):
@@ -33,6 +35,3 @@ def multiplication(argument: object, operator: Callable[..., NAryOperator],
 # def left_multiplication(argument: object, operator: Callable[[Iterable], NAryOperator],
 #                         replacements: Iterable[Mapping[object, object]]):
 #     pass
-
-
-__all__ = ['difference', 'symmetric_difference', 'multiplication']

@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import Callable, Collection, Iterator, Protocol, TypeVar
 from typing import Union as TUnion
 
-from pathpy.adts.containers.queue_set import QueueSet
+__all__ = ['TDecorableGenerator',
+           'TDecorableDescriptorGenerator', 'TCacheType']
 
 _E = TypeVar('_E')
 _E_co = TypeVar('_E_co', covariant=True)
@@ -20,7 +21,3 @@ TCacheType = dict[
 class TDecorableDescriptorGenerator(Protocol[_E_co]):
     def __get__(self, obj, cls=None) -> TDecorableGenerator[_E_co]: ...
     def __call__(self, *args, **kwargs) -> Iterator[_E_co]: ...
-
-
-__all__ = ['TDecorableGenerator',
-           'TDecorableDescriptorGenerator', 'TCacheType']

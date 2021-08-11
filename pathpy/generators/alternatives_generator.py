@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from functools import partial, singledispatchmethod
 from math import inf
-from pathpy.adts.chain import Chain
 from typing import Iterator, cast
 
+from pathpy.adts.chain import Chain
 from pathpy.adts.containers.head_tail_iterable import HeadTailIterable
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.nary_operators.concatenation import Concatenation

@@ -3,6 +3,8 @@ from __future__ import annotations
 import types
 from typing import Callable, Iterable, Protocol, TypeVar
 
+__all__ = ['CollectionWrapper']
+
 _T = TypeVar('_T')
 _O = TypeVar('_O')
 _X = TypeVar('_X')

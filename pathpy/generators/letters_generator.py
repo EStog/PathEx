@@ -5,8 +5,6 @@ from typing import Iterator
 from pathpy.adts.singleton import singleton
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.terms.empty_string import EMPTY_STRING
-from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
-    LettersPossitiveUnion
 
 from ._expressions._named_wildcard import NamedWildcard
 from .alternatives_generator import AlternativesGenerator

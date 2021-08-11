@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-
 from pathpy.expressions.nary_operators.concatenation import Concatenation
+
 
 @dataclass(frozen=True, init=False, eq=False)
 class Tag(Concatenation):

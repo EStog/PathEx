@@ -5,6 +5,8 @@ from math import inf
 
 from ..expression import Expression
 
+__all__ = ['Repetition']
+
 
 @dataclass(frozen=True, repr=False, init=False)
 class Repetition(Expression):
@@ -45,6 +47,3 @@ class Repetition(Expression):
     def as_shuffle_repetition(self):
         from .shuffle_repetition import ShuffleRepetition
         return ShuffleRepetition(self.argument, self.lower_bound, self.upper_bound)
-
-
-__all__ = ['Repetition']

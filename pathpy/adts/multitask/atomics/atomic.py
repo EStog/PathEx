@@ -1,6 +1,8 @@
 import threading
 from typing import Any
 
+__all__ = ['Atomic']
+
 
 class Atomic:
     """An object that holds a variable whose value can be changed in concurrent-safe manner.

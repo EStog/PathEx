@@ -9,6 +9,8 @@ from typing import Iterator, TypeVar
 
 from pathpy.adts.cached_generators.cached_iterator import CachedIterator
 
+__all__ = ['HeadTailIterable']
+
 _E = TypeVar('_E')
 
 
@@ -98,6 +100,3 @@ class HeadTailIterable(Iterable[_E]):
 
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}()'
-
-
-__all__ = ['HeadTailIterable']

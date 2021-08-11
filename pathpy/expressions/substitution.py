@@ -5,6 +5,8 @@ from typing import Mapping
 
 from .expression import Expression
 
+__all__ = ['Substitution']
+
 
 @dataclass(frozen=True, repr=False)
 class Substitution(Expression):
@@ -63,7 +65,7 @@ class Substitution(Expression):
     argument: object
     replacements: dict[object, object]
 
-    def __init__(self, argument: object, replacements: Mapping[object,object]) -> None:
+    def __init__(self, argument: object, replacements: Mapping[object, object]) -> None:
         object.__setattr__(self, 'argument', argument)
         object.__setattr__(self, 'replacements', dict(replacements))
 
@@ -78,6 +80,3 @@ class Substitution(Expression):
 
     def __hash__(self):
         return hash((self.argument, tuple(self.replacements.items())))
-
-
-__all__ = ['Substitution']

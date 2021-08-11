@@ -2,6 +2,8 @@ from dataclasses import dataclass
 
 from ..term import Term
 
+__all__ = ['LettersUnion']
+
 
 @dataclass(frozen=True)
 class LettersUnion(Term):
@@ -20,6 +22,3 @@ class LettersUnion(Term):
 
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({set(self.letters)!r})'
-
-
-__all__ = ['LettersUnion']

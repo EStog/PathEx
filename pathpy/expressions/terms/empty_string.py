@@ -2,6 +2,8 @@ from pathpy.adts.singleton import singleton
 
 from .term import Term
 
+__all__ = ['EmptyString', 'EMPTY_STRING']
+
 
 @singleton
 class EmptyString(Term):
@@ -15,5 +17,3 @@ class EmptyString(Term):
 
 
 EMPTY_STRING = EmptyString()
-
-__all__ = ['EmptyString', 'EMPTY_STRING']

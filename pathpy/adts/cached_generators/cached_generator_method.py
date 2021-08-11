@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 from functools import partial, wraps
-from pathpy.adts.containers.queue_set import QueueSet
-from pathpy.adts.collection_wrapper import CollectionWrapper, get_collection_wrapper
 from typing import Optional, TypeVar
+
+from pathpy.adts.collection_wrapper import (CollectionWrapper,
+                                            get_collection_wrapper)
+from pathpy.adts.containers.queue_set import QueueSet
 
 from .cached_generator import CachedGenerator, new_cached_generator
 from .type_defs import TDecorableDescriptorGenerator, TDecorableGenerator
