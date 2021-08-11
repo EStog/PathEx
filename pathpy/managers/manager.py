@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from dataclasses import dataclass
 from functools import wraps
-from typing import Callable, Iterator
+from typing import Iterator
 
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.nary_operators.concatenation import Concatenation
@@ -74,13 +74,15 @@ class Manager(ABC):
     """A generic abstract manager
     """
 
-    def __init__(self, exp: Expression,
-                 when_allowed: Callable[[Manager, object], None],
-                 when_not_allowed: Callable[[Manager, object], None]):
-        self._when_allowed = when_allowed
-        self._when_not_allowed = when_not_allowed
+    def __init__(self, expression: Expression):
         self._alternatives = set()
-        self._alternatives.add((exp, SymbolsTable()))
+        self._alternatives.add((expression, SymbolsTable()))
+
+    @abstractmethod
+    def _when_allowed(self, label:object) -> None: ...
+
+    @abstractmethod
+    def _when_not_allowed(self, label:object) -> None: ...
 
     def check(self, label: object) -> None:
         """ This method is used to notify to the manager the presence of a given label.
@@ -92,9 +94,9 @@ class Manager(ABC):
             label (object): The label to check for.
         """
         if self._advance(label):
-            self._when_allowed(self, label)
+            self._when_allowed(label)
         else:
-            self._when_not_allowed(self, label)
+            self._when_not_allowed(label)
 
     def _advance(self, label):
         def _assert_right_match(label, match, table):

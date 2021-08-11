@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable
+from abc import abstractmethod
 
 from pathpy.expressions.expression import Expression
 
@@ -13,38 +13,43 @@ class MultilabelManager(Manager):
     """This manager has the capability of register the checked labels in case they can not be generated in the moment. When the manager encounter a label that can be generated, it tries to update the information it has of the labels that were not able to generate previously.
     """
 
-    def __init__(self, expression: Expression,
-                 post_success: Callable[[MultilabelManager, object], None],
-                 post_failure: Callable[[MultilabelManager, object], None],
-                 register_label_presence: Callable[[MultilabelManager, object], object],
-                 get_associate: Callable[[MultilabelManager, object], object],
-                 comply_condition_on_associate: Callable[[MultilabelManager, object], bool],
-                 update_associate: Callable[[MultilabelManager, object], None]):
+    def __init__(self, expression: Expression):
         self._labels: dict[object, object] = {}
-        self._post_success = post_success
-        self._post_failure = post_failure
-        self._register_label_presence = register_label_presence
-        self._get_associate = get_associate
-        self._comply_condition_on_associate = comply_condition_on_associate
-        self._update_associate = update_associate
+        super().__init__(expression)
 
-        def when_allowed(self, label):
-            self._check_saved_labels()
-            self._post_success(self, label)
+    @abstractmethod
+    def _post_success(self, label: object) -> None: ...
 
-        def when_not_allowed(self, label):
-            obj = self._register_label_presence(self, label)
-            self._post_failure(self, obj)
+    @abstractmethod
+    def _post_failure(self, associate: object) -> None: ...
 
-        super().__init__(expression, when_allowed, when_not_allowed)
+    @abstractmethod
+    def _register_label_presence(self, label: object) -> object: ...
+
+    @abstractmethod
+    def _get_associate(self, label: object) -> object: ...
+
+    @abstractmethod
+    def _comply_condition_on_associate(self, associate: object) -> bool: ...
+
+    @abstractmethod
+    def _update_associate(self, associate: object) -> None: ...
+
+    def _when_allowed(self, label: object) -> None:
+        self._check_saved_labels()
+        self._post_success(label)
+
+    def when_not_allowed(self, label: object) -> None:
+        associate = self._register_label_presence(label)
+        self._post_failure(associate)
 
     def _check_saved_labels(self):
         while True:
             for label in self._labels:
-                obj = self._get_associate(self, label)
-                if self._comply_condition_on_associate(self, obj):
+                associate = self._get_associate(label)
+                if self._comply_condition_on_associate(associate):
                     if self._advance(label):
-                        self._update_associate(self, obj)
+                        self._update_associate(associate)
                         break
             else:
                 break
