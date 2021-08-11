@@ -18,10 +18,10 @@ class MultilabelManager(Manager):
         super().__init__(expression)
 
     @abstractmethod
-    def _post_success(self, label: object) -> None: ...
+    def _post_success(self, label: object) -> object: ...
 
     @abstractmethod
-    def _post_failure(self, associate: object) -> None: ...
+    def _post_failure(self, associate: object) -> object: ...
 
     @abstractmethod
     def _register_label_presence(self, label: object) -> object: ...
@@ -35,13 +35,13 @@ class MultilabelManager(Manager):
     @abstractmethod
     def _update_associate(self, associate: object) -> None: ...
 
-    def _when_allowed(self, label: object) -> None:
+    def _when_allowed(self, label: object) -> object:
         self._check_saved_labels()
-        self._post_success(label)
+        return self._post_success(label)
 
-    def _when_not_allowed(self, label: object) -> None:
+    def _when_not_allowed(self, label: object) -> object:
         associate = self._register_label_presence(label)
-        self._post_failure(associate)
+        return self._post_failure(associate)
 
     def _check_saved_labels(self):
         while True:

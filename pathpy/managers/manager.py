@@ -28,12 +28,12 @@ class Manager(ABC):
         self._alternatives.add((expression, SymbolsTable()))
 
     @abstractmethod
-    def _when_allowed(self, label: object) -> None: ...
+    def _when_allowed(self, label: object) -> object: ...
 
     @abstractmethod
-    def _when_not_allowed(self, label: object) -> None: ...
+    def _when_not_allowed(self, label: object) -> object: ...
 
-    def check(self, label: object) -> None:
+    def check(self, label: object) -> object:
         """ This method is used to notify to the manager the presence of a given label.
 
         The manager then see if this label is allowed by checking if the internal expression can generate the given label.
@@ -43,9 +43,9 @@ class Manager(ABC):
             label (object): The label to check for.
         """
         if self._advance(label):
-            self._when_allowed(label)
+            return self._when_allowed(label)
         else:
-            self._when_not_allowed(label)
+            return self._when_not_allowed(label)
 
     def _advance(self, label: object) -> bool:
         def _assert_right_match(label, match, table):
