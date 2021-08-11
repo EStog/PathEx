@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from collections import deque
 from collections.abc import Iterable
+from copy import copy
 from dataclasses import dataclass
 from functools import cached_property
 from itertools import chain
 from typing import Iterator, TypeVar
 
 from pathpy.adts.cached_generators.cached_iterator import CachedIterator
-from copy import copy
 
 __all__ = ['HeadTailIterable']
 
@@ -50,6 +50,13 @@ class HeadTailIterable(Iterable[_E]):
     >>> x = HeadTailIterable([1, 2, 3])
     >>> y = HeadTailIterable(['a', 'b'])
     >>> assert list(x + y) == [1, 2, 3, 'a', 'b']
+    >>> assert list(x.appended(4)) == [1, 2, 3, 4]
+    >>> z = x.appended_left(3)
+    >>> assert list(z) == [3, 1, 2, 3]
+    >>> assert z.head == 3
+    >>> assert list(z.tail) == list(x)
+    >>> assert list(x.copy()) == list(x)
+    >>> assert x.copy() is not x
     """
 
     class HeadTailIterator(Iterator):
@@ -69,9 +76,10 @@ class HeadTailIterable(Iterable[_E]):
     def __new__(cls, iterable: Iterable[_E]) -> HeadTailIterable[_E]:
         if isinstance(iterable, HeadTailIterable):
             return iterable
-        _tail = CachedIterator(deque(), iter(iterable), deque.append)
+        it = iter(iterable)
+        _tail = CachedIterator(deque(), it, deque.append)
         try:
-            head = next(_tail)
+            head = next(it)
         except StopIteration:
             head = None
         self = object.__new__(cls)
@@ -84,26 +92,41 @@ class HeadTailIterable(Iterable[_E]):
             raise TypeError(
                 f'can only concatenate {self.__class__.__name__} (not "{type(other)}") to {self.__class__.__name__}')
         if self.head and other.head:
-            return self.__class__(chain([self.head], self._tail, [other.head], other._tail))
+            return self.__class__(chain([self.head], self._tail.restarted(),
+                                        [other.head], other._tail.restarted()))
         elif self.head:
-            return copy(self)
+            return self.copy()
         elif other.head:
-            return copy(other)
+            return other.copy()
         else:
             return self.__class__(())
 
     def appended(self, other):
         if self.head:
-            return self.__class__(chain([self.head], self._tail, [other]))
+            return self.__class__(chain([self.head], self._tail.restarted(), [other]))
+        else:
+            return self.__class__([other])
+
+    def appended_left(self, other):
+        if self.head:
+            return self.__class__(chain([other, self.head], self._tail.restarted()))
         else:
             return self.__class__([other])
 
     @cached_property
     def tail(self) -> HeadTailIterable[_E]:
-        return self.__class__(self._tail)
+        return self.__class__(self._tail.restarted())
 
     def __iter__(self):
         return self.HeadTailIterator(self)
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}()'
+        return f'{self.__class__.__name__}{tuple(self)}'
+
+    def __copy__(self):
+        obj = object.__new__(self.__class__)
+        object.__setattr__(obj, 'head', self.head)
+        object.__setattr__(obj, '_tail', self._tail.restarted())
+        return obj
+
+    copy = __copy__

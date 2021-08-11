@@ -50,9 +50,9 @@ class Synchronizer(MultilabelManager):
     Example using method register:
 
         >>> from concurrent.futures import ThreadPoolExecutor
-        >>> from pathpy import Synchronizer
+        >>> from pathpy import Synchronizer, Tag
 
-        >>> a, b, c = Synchronizer.tags(3)
+        >>> a, b, c = Tag.anonym(3)
 
         >>> exp = ( a + (b|c) )+2
 
@@ -90,48 +90,45 @@ class Synchronizer(MultilabelManager):
 
         >>> assert tuple(shared_list) in allowed_paths
 
-    Example using method `region`.
+    # Example using method `region`.
 
-        >>> from concurrent.futures import ThreadPoolExecutor
-        >>> from pathpy import Synchronizer
+    #     >>> a, b, c = Tag.named('a', 'b', 'c')
 
-        >>> a, b, c = Synchronizer.named_tags('a', 'b', 'c')
+    #     >>> exp = ( a + (b|c) )+2
 
-        >>> exp = ( a + (b|c) )+2
+    #     >>> shared_list = []
 
-        >>> shared_list = []
+    #     >>> sync = Synchronizer(exp)
 
-        >>> sync = Synchronizer(exp)
+    #     >>> def func_a():
+    #     ...     with sync.region(a):
+    #     ...         shared_list.append(a.enter)
+    #     ...         # print('Func a')
+    #     ...         shared_list.append(a.exit)
 
-        >>> def func_a():
-        ...     with sync.region(a):
-        ...         shared_list.append(a.enter)
-        ...         # print('Func a')
-        ...         shared_list.append(a.exit)
+    #     >>> def func_b():
+    #     ...     with sync.region(b):
+    #     ...         shared_list.append(b.enter)
+    #     ...         # print('Func b')
+    #     ...         shared_list.append(b.exit)
 
-        >>> def func_b():
-        ...     with sync.region(b):
-        ...         shared_list.append(b.enter)
-        ...         # print('Func b')
-        ...         shared_list.append(b.exit)
+    #     >>> def func_c():
+    #     ...     with sync.region(c):
+    #     ...         shared_list.append(c.enter)
+    #     ...         # print('Func c')
+    #     ...         shared_list.append(c.exit)
 
-        >>> def func_c():
-        ...     with sync.region(c):
-        ...         shared_list.append(c.enter)
-        ...         # print('Func c')
-        ...         shared_list.append(c.exit)
+    #     >>> with ThreadPoolExecutor(max_workers=4) as executor:
+    #     ...     _ = executor.submit(func_c)
+    #     ...     _ = executor.submit(func_a)
+    #     ...     _ = executor.submit(func_b)
+    #     ...     _ = executor.submit(func_a)
 
-        >>> with ThreadPoolExecutor(max_workers=4) as executor:
-        ...     _ = executor.submit(func_c)
-        ...     _ = executor.submit(func_a)
-        ...     _ = executor.submit(func_b)
-        ...     _ = executor.submit(func_a)
+    #     >>> from pathpy.adts.collection_wrapper import get_collection_wrapper
+    #     >>> Set = get_collection_wrapper(set, lambda s, w: s.add(tuple(w)))
+    #     >>> allowed_paths = exp.get_language(Set)
 
-        >>> from pathpy.adts.collection_wrapper import get_collection_wrapper
-        >>> Set = get_collection_wrapper(set, lambda s, w: s.add(tuple(w)))
-        >>> allowed_paths = exp.get_language(Set)
-
-        >>> assert tuple(shared_list) in allowed_paths
+    #     >>> assert tuple(shared_list) in allowed_paths
     """
 
     def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):

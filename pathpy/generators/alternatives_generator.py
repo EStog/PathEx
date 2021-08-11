@@ -182,11 +182,11 @@ class AlternativesGenerator(Iterator):
 
         # a*[n,m] = a + a*[n-1,m-1] where n > 0
         else:
-            return self._get_visitor(Concatenation(exp.argument,
-                                                   ConcatenationRepetition(
-                                                       exp.argument,
-                                                       exp.lower_bound-1,
-                                                       exp.upper_bound-1)),
+            return self._get_visitor(Concatenation.new(exp.argument,
+                                                       ConcatenationRepetition(
+                                                           exp.argument,
+                                                           exp.lower_bound-1,
+                                                           exp.upper_bound-1)),
                                      table)
 
     @_get_visitor.register

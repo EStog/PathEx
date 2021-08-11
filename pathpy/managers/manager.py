@@ -104,29 +104,3 @@ class Manager(ABC):
             yield self
         finally:
             self.check(tag.exit)
-
-    @classmethod
-    def tags(cls, n: int) -> Iterator[Tag]:
-        """Factory method that gives `n` tags.
-
-        The names of the tags are the same as its object ids.
-
-        Args:
-            n (int): The amount of tags to be constructed
-
-        Returns:
-            Iterator[Tag]: an iterator that gives `n` anonymous tags.
-        """
-        return (Tag() for _ in range(n))
-
-    @classmethod
-    def named_tags(cls, *names: object) -> Iterator[Tag]:
-        """Factory method that gives named tags.
-
-        Args:
-            *names (tuple[object]): The names for the constructed tags
-
-        Returns:
-            Iterator[Tag]: an iterator that gives tags with the given names.
-        """
-        return (Tag(name=name) for name in names)

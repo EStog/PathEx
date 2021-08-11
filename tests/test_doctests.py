@@ -50,4 +50,6 @@ def load_tests(loader, tests, ignore):
         'pathpy.expressions.substitution'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.managers.synchronizer'))
+    tests.addTests(doctest.DocTestSuite(
+        'pathpy.managers.trace_checker'))
     return tests

@@ -42,7 +42,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __or__(self, other: object) -> Expression:
         from pathpy import Union
-        return Union(self, other)
+        return Union.new(self, other)
 
     # self|interable
     @__or__.register(list)
@@ -58,7 +58,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __and__(self, other: object) -> Expression:
         from pathpy import Intersection
-        return Intersection(self, other)
+        return Intersection.new(self, other)
 
     # self&iterable
     @__and__.register(list)
@@ -74,7 +74,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __matmul__(self, other: object) -> Expression:
         from pathpy import Synchronization
-        return Synchronization(self, other)
+        return Synchronization.new(self, other)
 
     # self@iterable
     @__matmul__.register(list)
@@ -143,7 +143,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __add__(self, other: object) -> Expression:
         from pathpy import Concatenation
-        return Concatenation(self, other)
+        return Concatenation.new(self, other)
 
     # self+number
     @__add__.register(int)
@@ -165,7 +165,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __radd__(self, other: object) -> Expression:
         from pathpy import Concatenation
-        return Concatenation(other, self)
+        return Concatenation.new(other, self)
 
     # number+self
     __radd__.register(int, __add__.dispatcher.dispatch(int))
@@ -184,7 +184,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __mul__(self, other: object) -> Expression:
         from pathpy import Concatenation, ConcatenationRepetition
-        return Concatenation(ConcatenationRepetition(self, 0, 1), other)
+        return Concatenation.new(ConcatenationRepetition(self, 0, 1), other)
 
     # self*number
     @__mul__.register(int)
@@ -206,7 +206,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __rmul__(self, other: object) -> Expression:
         from pathpy import Concatenation, ConcatenationRepetition
-        return Concatenation(ConcatenationRepetition(other, 0, 1), self)
+        return Concatenation.new(ConcatenationRepetition(other, 0, 1), self)
 
     # number*self
     __rmul__.register(int, __mul__.dispatcher.dispatch(int))
@@ -220,7 +220,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __floordiv__(self, other: object) -> Expression:
         from pathpy import Shuffle
-        return Shuffle(self, other)
+        return Shuffle.new(self, other)
 
     # self//number
     @__floordiv__.register(int)
@@ -247,7 +247,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __mod__(self, other: object) -> Expression:
         from pathpy import ConcatenationRepetition, Shuffle
-        return Shuffle(ConcatenationRepetition(self, 0, 1), other)
+        return Shuffle.new(ConcatenationRepetition(self, 0, 1), other)
 
     # self%number
     @__mod__.register(int)
@@ -269,7 +269,7 @@ class Expression(ABC):  # (Hashable)
     @singledispatchmethod
     def __rmod__(self, other: object) -> Expression:
         from pathpy import ConcatenationRepetition, Shuffle
-        return Shuffle(ConcatenationRepetition(other, 0, 1), self)
+        return Shuffle.new(ConcatenationRepetition(other, 0, 1), self)
 
     __rmod__.register(int, __mod__.dispatcher.dispatch(int))
     __rmod__.register(float, __mod__.dispatcher.dispatch(float))
