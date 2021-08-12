@@ -65,7 +65,7 @@ class Tag(Concatenation):
         """Factory method that gives named tags.
 
         Args:
-            *names (tuple[object]): The names for the constructed tags
+            names (tuple[object]): The names for the constructed tags
 
         Returns:
             Iterator[Tag]: an iterator that gives tags with the given names.

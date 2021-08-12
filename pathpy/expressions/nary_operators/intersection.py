@@ -4,7 +4,7 @@ __all__ = ['Intersection']
 
 
 class Intersection(NAryOperator):
-    """`Intersection` is semantically equivalent to intersection of languages (sets of strings), that is, to see the common strings between the considered languages.
+    r"""`Intersection` is semantically equivalent to intersection of languages (sets of strings), that is, to see the common strings between the considered languages.
 
     `Intersection` (`&`) can be expressed recursively in the following manner.
 
@@ -13,24 +13,31 @@ class Intersection(NAryOperator):
         `a & b = a`                 if `a == b`
         `a & b = {}`                if `a != b`
 
-    Example:
-        >>> from pathpy import Union as U, LettersPossitiveUnion as L, Concatenation as C, LettersNegativeUnion as NL
+    Examples:
+        >>> from pathpy.expressions.simplified_notation import *
         >>> from functools import partial
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz')
-        >>> assert exp.get_language() == exp.get_generator().get_language() == {'ay'}
+        >>> assert exp.get_language() ==  \
+        ...     exp.get_generator().get_language() == {'ay'}
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz') + 'w'
-        >>> assert exp.get_language() == exp.get_generator().get_language() == set()
-        >>> assert exp.get_language(only_complete_words=False) == exp.get_generator().get_language(only_complete_words=False) == {'ay'}
+        >>> assert exp.get_language() == \
+        ...     exp.get_generator().get_language() == set()
+        >>> assert exp.get_language(only_complete_words=False) == \
+        ...     exp.get_generator().get_language(only_complete_words=False) == {'ay'}
 
         >>> exp1 = L('a')*... & C('aaa') | C('aa')
         >>> exp2 = C('aaa') | C('aa') & L('a')*...
-        >>> assert exp1.get_language() == exp2.get_language() == exp1.get_generator().get_language() == exp2.get_generator().get_language()
+        >>> assert exp1.get_language() == \
+        ...     exp2.get_language() == \
+        ...     exp1.get_generator().get_language() == \
+        ...     exp2.get_generator().get_language()
 
-        >>> exp = L('abc') + C('xyz') & L('axy') + C('xyz')
-        >>> assert exp.get_language() == exp.get_generator().get_language() == {'axyz'}
+        >>> exp = Ls('abc') + C('xyz') & Ls('axy') + C('xyz')
+        >>> assert exp.get_language() == \
+        ...     exp.get_generator().get_language() == {'axyz'}
 
-        >>> exp = L('axy') + C('xyz') & NL('abc') + C('xyz')
+        >>> exp = Ls('axy') + C('xyz') & NLs('abc') + C('xyz')
         >>> assert exp.get_language() == {'xxyz', 'yxyz'}
     """
