@@ -10,7 +10,7 @@ from ..expression import Expression
 __all__ = ['NAryOperator']
 
 
-@dataclass(frozen=True, init=False, repr=False)
+@dataclass(frozen=True, repr=False)
 class NAryOperator(Expression):
 
     arguments: HeadTailIterable[Expression]

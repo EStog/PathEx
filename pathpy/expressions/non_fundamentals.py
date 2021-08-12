@@ -13,8 +13,14 @@ from .substitution import Substitution
 __all__ = ['difference', 'symmetric_difference', 'multiplication']
 
 
-def difference(x: object, y: object):
-    return Intersection(x, Negation(y))
+def difference(*args: object):
+    it = iter(args)
+    try:
+        x = next(it)
+    except StopIteration:
+        return Intersection()
+    else:
+        return Intersection(x, map(Negation, it))
 
 
 def symmetric_difference(x: object, y: object):
