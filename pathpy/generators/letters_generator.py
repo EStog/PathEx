@@ -61,8 +61,7 @@ class LettersGenerator(Iterator[object]):
                 head = LazyValue(head, tail, table,
                                  len(self._prefix), self,
                                  self.max_lookahead)
-            if head is not EMPTY_STRING:
-                self._prefix.append(head)
+            self._prefix.append(head)
             return tail, table
 
     def update(self, one: object, rest: Iterator[object],

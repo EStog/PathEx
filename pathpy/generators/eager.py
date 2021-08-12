@@ -34,8 +34,7 @@ def _get_alternatives(
             tail = None
             for head, tail, table in alt:
                 prefix_copy = copy(prefix)
-                if head is not EMPTY_STRING:
-                    prefix_copy.put(head)
+                prefix_copy.put(head)
                 if tail is EMPTY_STRING:
                     yield prefix_copy, table
                 else:

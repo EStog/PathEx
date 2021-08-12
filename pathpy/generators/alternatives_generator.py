@@ -111,15 +111,15 @@ class AlternativesGenerator(Iterator):
             # cached_alts_generator = CachedGenerator(self._get_visitor)
 
             for head1, tail1, table in self._get_visitor(exp.head, table):
-                for head2, tail2, table in self._get_visitor(exp.tail, table):
-                    # `aA & bB = (a & b) + (A & B)`
-                    tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
-                        else Intersection(tail1, tail2)
-                    # `a & b = a`                 if `a == b`
-                    head, table = table.intersect(head1, head2)
-                    if head:
-                        yield head, tail, table
-                    # `a & b = {}`                if `a != b`
+                    for head2, tail2, table in self._get_visitor(exp.tail, table):
+                            # `aA & bB = (a & b) + (A & B)`
+                            tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
+                                else Intersection(tail1, tail2)
+                            # `a & b = a`                 if `a == b`
+                            head, table = table.intersect(head1, head2)
+                            if head:
+                                yield head, tail, table
+                            # `a & b = {}`                if `a != b`
 
     @_get_visitor.register
     def visit_synchronization(self, exp: Synchronization, table: SymbolsTable):
@@ -153,16 +153,13 @@ class AlternativesGenerator(Iterator):
                 yield from self._get_visitor(exp.head, table)
                 return
 
-            # if exp.head is EMPTY_STRING:
-            #     yield exp.head, exp.tail, table
-            # else:
             for head, tail, table in self._get_visitor(exp.head, table):
                 tail = exp.tail if tail is EMPTY_STRING \
                     else Concatenation(tail, exp.tail)
-                # if head is EMPTY_STRING:
-                #     yield from alts_generator(tail, table)
-                # else:
-                yield head, tail, table
+                if head is EMPTY_STRING:
+                    yield from self._get_visitor(tail, table)
+                else:
+                    yield head, tail, table
 
     @_get_visitor.register
     def visit_concatenation_repetition(self, exp: ConcatenationRepetition, table: SymbolsTable):
