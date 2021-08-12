@@ -9,9 +9,13 @@ from .nary_operators.nary_operator import NAryOperator
 from .nary_operators.union import Union
 from .negation import Negation
 from .substitution import Substitution
+from .terms.letters_unions.letters_possitive_union import LettersPossitiveUnion
 
 __all__ = ['difference', 'symmetric_difference', 'multiplication']
 
+
+def letter(obj):
+    return LettersPossitiveUnion({obj})
 
 def difference(*args: object):
     it = iter(args)
