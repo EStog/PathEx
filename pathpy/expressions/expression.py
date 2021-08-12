@@ -23,17 +23,20 @@ class Expression(ABC):  # (Hashable)
     a set of tuples of letters, also called strings or words.
     """
 
-    def get_generator(self, max_lookahead: int = MAX_LOOKAHEAD):
+    def get_generator(self, extra: object = None, max_lookahead: int = MAX_LOOKAHEAD):
+        from pathpy.generators.symbols_table import SymbolsTable
         from pathpy.generators.words_generator import WordsGenerator
-        return WordsGenerator(self, max_lookahead=max_lookahead)
+        return WordsGenerator(self, SymbolsTable(), extra, max_lookahead=max_lookahead)
 
     def get_language(self,
                      language_type=LANGUAGE_TYPE,
                      word_type=WORD_TYPE,
-                     only_complete_words=ONLY_COMPLETE_WORDS):
+                     only_complete_words=ONLY_COMPLETE_WORDS,
+                     extra: object = None):
         from pathpy.generators.eager import get_language
+        from pathpy.generators.symbols_table import SymbolsTable
         language = language_type()
-        for w in get_language(self, word_type=word_type,
+        for w in get_language(self, SymbolsTable(), extra, word_type=word_type,
                               only_complete_words=only_complete_words):
             language.put(w)
         return language

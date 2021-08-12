@@ -23,9 +23,9 @@ class Manager(ABC):
     """A generic abstract manager.
     """
 
-    def __init__(self, expression: Expression):
+    def __init__(self, expression: Expression, extra: object = None):
         self._alternatives = set()
-        self._alternatives.add((expression, SymbolsTable()))
+        self._alternatives.add((expression, SymbolsTable(), extra))
 
     @abstractmethod
     def _when_allowed(self, label: object) -> object: ...
@@ -59,13 +59,13 @@ class Manager(ABC):
         label = LettersPossitiveUnion({label})
 
         new_alternatives = set()
-        for exp, table in self._alternatives:
-            for head, tail, table in AlternativesGenerator(exp, table, not_normal=True):
+        for exp, table, extra in self._alternatives:
+            for head, tail, table, extra in AlternativesGenerator(exp, table, extra, not_normal=True):
                 match, table = table.intersect(head, label)
                 if match is not None:
                     assert _assert_right_match(label, match, table), \
                         f'Match is {match} instead of label "{label}"'
-                    new_alternatives.add((tail, table))
+                    new_alternatives.add((tail, table, extra))
         if new_alternatives:
             self._alternatives = new_alternatives
             return True

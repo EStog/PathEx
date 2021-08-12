@@ -36,7 +36,7 @@ class LettersGenerator(Iterator[object]):
 
     def __next__(self) -> object:
         while self._pos == len(self._prefix):
-            if self.advance_once() == (None, None):
+            if self.advance_once() == (None, None, None):
                 raise StopIteration
         ret = self._prefix[self._pos]
         self._pos += 1
@@ -44,35 +44,35 @@ class LettersGenerator(Iterator[object]):
 
     def advance_once(self):
         if self._exhausted:
-            return None, None
+            return None, None, None
         try:
-            head, tail, table = next(self._alts_gen)
+            head, tail, table, extra = next(self._alts_gen)
         except StopIteration:
             self._exhausted = True
-            return None, None
+            return None, None, None
         else:
             if tail is EMPTY_STRING:
                 self._exhausted = True
                 self._complete = True
             self._words_generator.register_alternative(self._prefix.copy(),
                                                        self._alts_gen)
-            self._alts_gen = AlternativesGenerator(tail, table)
+            self._alts_gen = AlternativesGenerator(tail, table, extra)
             if isinstance(head, NamedWildcard):
-                head = LazyValue(head, tail, table,
+                head = LazyValue(head, tail, table, extra,
                                  len(self._prefix), self,
                                  self.max_lookahead)
             self._prefix.append(head)
-            return tail, table
+            return tail, table, extra
 
-    def update(self, one: object, rest: Iterator[object],
-               pos: int, tail: Expression, table: SymbolsTable):
+    def update(self, one: object, rest: Iterator[object], pos: int,
+               tail: Expression, table: SymbolsTable, extra: object):
         self._prefix[pos] = one
         before = self._prefix[:pos]
         after = self._prefix[pos+1:]
         self._words_generator.register_words(
             LettersGenerator(
                 before + [l] + after,
-                AlternativesGenerator(tail, table),
+                AlternativesGenerator(tail, table, extra),
                 self._words_generator,
                 self.max_lookahead) for l in rest)
 

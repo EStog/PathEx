@@ -22,7 +22,7 @@ Alternative = tuple[list[object], AlternativesGenerator]
 
 class WordsGenerator(Iterator[LettersGenerator]):
     def __init__(self, expression: Expression,
-                 table: SymbolsTable | None = None,
+                 table: SymbolsTable, extra: object,
                  alternatives_collection_type: type[CollectionWrapper] | None = None,
                  delivered_collection_type: type[CollectionWrapper] | None = None,
                  words_collection_type: type[CollectionWrapper] | None = None,
@@ -45,7 +45,7 @@ class WordsGenerator(Iterator[LettersGenerator]):
         else:
             self._words = words_collection_type()
         self._alternatives.put(
-            ([], AlternativesGenerator(expression, table)))
+            ([], AlternativesGenerator(expression, table, extra)))
         self.max_lookahead = max_lookahead
 
     def __next__(self) -> LettersGenerator:

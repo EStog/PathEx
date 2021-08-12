@@ -9,12 +9,13 @@ from .symbols_table import SymbolsTable
 class LazyValue:
 
     def __init__(self, wildcard: NamedWildcard,
-                 tail: Expression, table: SymbolsTable,
+                 tail: Expression, table: SymbolsTable, extra: object,
                  pos: int, letters_generator, max_lookahead: int):
         from .letters_generator import LettersGenerator
         self._wildcard = wildcard
         self._tail = tail
         self._table = table
+        self._extra = extra
         self._pos = pos
         self._letters_generator: LettersGenerator = letters_generator
         self.max_lookahead = max_lookahead
@@ -24,10 +25,11 @@ class LazyValue:
         def advanced(i):
             if i < self.max_lookahead and \
                     self._table.get_concrete_value(self._wildcard) is self._wildcard:
-                tail, table = self._letters_generator.advance_once()
-                if None not in (tail, table):
+                tail, table, extra = self._letters_generator.advance_once()
+                if (tail, table, extra) != (None, None, None):
                     self._tail = tail
                     self._table = table
+                    self._extra = extra
                     return True
             return False
 
@@ -40,5 +42,6 @@ class LazyValue:
         if isinstance(term, LettersPossitiveUnion):
             term, rest = term.get_one_rest()
             self._letters_generator.update(term, rest, self._pos,
-                                           self._tail, self._table)
+                                           self._tail, self._table,
+                                           self._extra)
         return term

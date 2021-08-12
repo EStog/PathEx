@@ -5,7 +5,8 @@ __all__ = ['ShuffleRepetition']
 
 class ShuffleRepetition(Repetition):
     """
-    `ShuffleRepetition` is semantically equivalent to range-bounded shuffle repetition of its argument. That is, `ShuffleRepetition(A, n, m)` means that expression `A` must be repeated using `Shuffle` from `n` to `m` times`.
+    `ShuffleRepetition` is semantically equivalent to range-bounded shuffle repetition of its argument. That is, `ShuffleRepetition(A, n, m)` means that expression `A` must be repeated using `Shuffle` from `n` to `m` times.
+
     For example:
         `ShuffleRepetition(ab, 1, 3) = ab | (ab // ab) | (ab // ab // ab)`
     where `+` is `Concatenation` and `|` is `Union`.
