@@ -3,6 +3,7 @@ from __future__ import annotations
 from functools import partial, singledispatchmethod
 from math import inf
 from typing import Iterator, cast
+from collections.abc import Callable
 
 from pathpy.adts.chain import Chain
 from pathpy.adts.containers.head_tail_iterable import HeadTailIterable
@@ -65,6 +66,11 @@ class AlternativesGenerator(Iterator):
     @singledispatchmethod
     def _get_visitor(self, expression: object, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         yield LettersPossitiveUnion({expression}), EMPTY_STRING, table, extra
+
+    @_get_visitor.register(Callable)
+    def _function_visitor(self, func: Callable[[object, object], tuple[object, SymbolsTable, object]], table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+        exp, table, extra = func(table, extra)
+        yield from self._get_visitor(exp, table, extra)
 
     @_get_visitor.register
     def _term_visitor(self, exp: Term, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
