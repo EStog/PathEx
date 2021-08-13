@@ -50,11 +50,11 @@ def multiplication(argument: object, operator: Callable[..., NAryOperator],
 #                         replacements: Iterable[Mapping[object, object]]):
 #     pass
 
-def conditional(predicate: Callable[[], bool], consequent: object=EMPTY_STRING, alternative: object=Union()) -> Callable[[SymbolsTable, object], tuple[object, SymbolsTable, object]]:
+def conditional(*branches: tuple[Callable[[], bool], object], otherwise: object=Union()) -> Callable[[SymbolsTable, object], tuple[object, SymbolsTable, object]]:
     def func(table: SymbolsTable, extra: object) -> tuple[object, SymbolsTable, object]:
-        if predicate():
-            return consequent, table, extra
-        else:
-            return alternative, table, extra
+        for predicate, consequence in branches:
+            if predicate():
+                return consequence, table, extra
+        return otherwise, table, extra
 
     return func

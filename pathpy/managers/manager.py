@@ -3,7 +3,6 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from functools import wraps
-from typing import Iterator
 
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \

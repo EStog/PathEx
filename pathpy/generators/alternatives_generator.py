@@ -36,6 +36,7 @@ if __debug__:
 
 __all__ = ['AlternativesGenerator']
 
+#TODO: Unify `table` and `extra` parameters.
 
 class AlternativesGenerator(Iterator):
 
