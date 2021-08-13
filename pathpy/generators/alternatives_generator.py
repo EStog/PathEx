@@ -68,7 +68,7 @@ class AlternativesGenerator(Iterator):
         yield LettersPossitiveUnion({expression}), EMPTY_STRING, table, extra
 
     @_get_visitor.register(Callable)
-    def _function_visitor(self, func: Callable[[object, object], tuple[object, SymbolsTable, object]], table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _function_visitor(self, func: Callable[[SymbolsTable, object], tuple[object, SymbolsTable, object]], table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         exp, table, extra = func(table, extra)
         yield from self._get_visitor(exp, table, extra)
 

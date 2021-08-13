@@ -16,4 +16,7 @@ class Union(NAryOperator):
 
     >>> exp = U('ab') | U('cd')
     >>> assert exp.get_language() == exp.get_generator().get_language() == {'a', 'b', 'c', 'd'}
+
+    >>> exp = U()
+    >>> assert exp.get_language() == exp.get_generator().get_language() == set()
     """
