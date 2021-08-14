@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import cached_property
-from typing import Iterator, Union
+from typing import ClassVar, Iterator
 
 from pathpy.expressions.nary_operators.concatenation import Concatenation
+
+from .label import Label
 
 __all__ = ['Tag']
 
@@ -19,29 +21,38 @@ class Tag(Concatenation):
     enter: Label
     exit: Label
 
+    label_class: ClassVar[type[Label]] = Label
+
     def __init__(self, name=None):
         if name is None:
             name = id(self)
         else:
-            object.__setattr__(self, 'name', name)
+            object.__setattr__(self, '_name', name)
 
-        enter = Enter(name)
-        exit = Exit(name)
+        enter = self.label_class(name, 'Enter')
+        exit = self.label_class(name, 'Exit')
+
         super().__init__(enter, exit)
 
         object.__setattr__(self, 'enter', enter)
         object.__setattr__(self, 'exit', exit)
         object.__setattr__(self, 'head', enter)
 
+    def _get_labels(self, name):
+        return
     @cached_property
     def tail(self):
         return Concatenation([self.exit])
 
-    def __repr__(self) -> str:
-        if hasattr(self, 'name'):
-            return f'{self.__class__.__name__}({self.name})'
+    @property
+    def name(self):
+        if hasattr(self, '_name'):
+            return self._name
         else:
-            return f'{self.__class__.__name__}({id(self)})'
+            return id(self)
+
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}({self.name})'
 
     def __hash__(self) -> int:
         return id(hash)
@@ -71,25 +82,3 @@ class Tag(Concatenation):
             Iterator[Tag]: an iterator that gives tags with the given names.
         """
         return (cls(name) for name in names)
-
-
-@dataclass(frozen=True)
-class Label:
-    """This class represents an object that is part of a Tag.
-    Label objects are used to identify the beginning and the end of a region
-    """
-    name: Union[int, str]
-
-    def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({self.name})'
-
-    def __hash__(self) -> int:
-        return id(self)
-
-
-class Enter(Label):
-    pass
-
-
-class Exit(Label):
-    pass

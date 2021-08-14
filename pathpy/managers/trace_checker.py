@@ -1,5 +1,10 @@
-from .manager import Manager
 from pathpy.expressions.expression import Expression
+from pathpy.managers.label import Label
+
+from .manager import Manager
+
+__all__ = ['TraceChecker']
+
 
 class TraceChecker(Manager):
     """This class is just to demonstrate the use of manager for other tasks different than task synchronization.
@@ -33,15 +38,18 @@ class TraceChecker(Manager):
         super().__init__(expression)
         self._last_seen_label = None
 
-    def _when_allowed(self, label: object) -> bool:
+    def _when_requested_match(self, label: Label) -> object:
+        pass
+
+    def _when_matched(self, label: Label, label_info: object) -> bool:
         self._last_seen_label = label
         return False
 
-    def _when_not_allowed(self, label: object) -> object:
+    def _when_not_matched(self, label: Label, label_info: object) -> object:
         if self._last_seen_label is None:
             return f'{label} is not allowed as first label'
         else:
             return f'{label} is not allowed after {self._last_seen_label}'
 
-    def check(self, label: object) -> object:
-        assert not (x := super().check(label)), x
+    def match(self, label: Label) -> object:
+        assert not (x := super().match(label)), x

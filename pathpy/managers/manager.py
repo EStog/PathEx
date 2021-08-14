@@ -10,7 +10,6 @@ from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
 from pathpy.generators._expressions._named_wildcard import NamedWildcard
 from pathpy.generators.alternatives_generator import AlternativesGenerator
 from pathpy.generators.symbols_table import SymbolsTable
-
 from .tag import Tag
 
 __all__ = ['Manager']
@@ -27,12 +26,15 @@ class Manager(ABC):
         self._alternatives.add((expression, SymbolsTable(), extra))
 
     @abstractmethod
-    def _when_allowed(self, label: object) -> object: ...
+    def _when_requested_match(self, label: object) -> object: ...
 
     @abstractmethod
-    def _when_not_allowed(self, label: object) -> object: ...
+    def _when_matched(self, label: object, label_info: object) -> object: ...
 
-    def check(self, label: object) -> object:
+    @abstractmethod
+    def _when_not_matched(self, label: object, label_info: object) -> object: ...
+
+    def match(self, label: object) -> object:
         """ This method is used to notify to the manager the presence of a given label.
 
         The manager then see if this label is allowed by checking if the internal expression can generate the given label.
@@ -41,10 +43,11 @@ class Manager(ABC):
         Args:
             label (object): The label to check for.
         """
+        label_info = self._when_requested_match(label)
         if self._advance(label):
-            return self._when_allowed(label)
+            return self._when_matched(label, label_info)
         else:
-            return self._when_not_allowed(label)
+            return self._when_not_matched(label, label_info)
 
     def _advance(self, label: object) -> bool:
         def _assert_right_match(label, match, table):
@@ -55,15 +58,15 @@ class Manager(ABC):
             else:
                 return False
 
-        label = LettersPossitiveUnion({label})
+        term = LettersPossitiveUnion({label})
 
         new_alternatives = set()
         for exp, table, extra in self._alternatives:
             for head, tail, table, extra in AlternativesGenerator(exp, table, extra, not_normal=True):
-                match, table = table.intersect(head, label)
+                match, table = table.intersect(head, term)
                 if match is not None:
-                    assert _assert_right_match(label, match, table), \
-                        f'Match is {match} instead of label "{label}"'
+                    assert _assert_right_match(term, match, table), \
+                        f'Match is {match} instead of label "{term}"'
                     new_alternatives.add((tail, table, extra))
         if new_alternatives:
             self._alternatives = new_alternatives
@@ -80,9 +83,9 @@ class Manager(ABC):
         def wrapper(wrapped):
             @wraps(wrapped)
             def f(*args, **kwargs):
-                self.check(tag.enter)
+                self.match(tag.enter)
                 x = wrapped(*args, **kwargs)
-                self.check(tag.exit)
+                self.match(tag.exit)
                 return x
             return f
 
@@ -98,8 +101,8 @@ class Manager(ABC):
         Args:
             tag (Tag): A tag to mark the corresponding block with.
         """
-        self.check(tag.enter)
+        self.match(tag.enter)
         try:
             yield self
         finally:
-            self.check(tag.exit)
+            self.match(tag.exit)
