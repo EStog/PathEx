@@ -83,7 +83,7 @@ class AlternativesGenerator(Iterator):
             yield from self._get_visitor(e, table, extra)
 
     @_get_visitor.register
-    def visit_negation(self, exp: Negation, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _negation_visitor(self, exp: Negation, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         def negations_generator():
             nonlocal table, extra
             for head, tail, table, extra in self._get_visitor(exp.argument, table, extra):
@@ -113,7 +113,7 @@ class AlternativesGenerator(Iterator):
                 yield from self._get_visitor(negations.head, table, extra)
 
     @_get_visitor.register
-    def visit_intersection(self, exp: Intersection, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _intersection_visitor(self, exp: Intersection, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         if exp.head is not None:
             if exp.tail.head is None:
                 yield from self._get_visitor(exp.head, table, extra)
@@ -133,7 +133,7 @@ class AlternativesGenerator(Iterator):
                     # `a & b = {}`                if `a != b`
 
     @_get_visitor.register
-    def visit_synchronization(self, exp: Synchronization, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _synchronization_visitor(self, exp: Synchronization, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         if exp.head is not None:
             if exp.tail.head is None:
                 yield from self._get_visitor(exp.head, table, extra)
@@ -158,7 +158,7 @@ class AlternativesGenerator(Iterator):
                         yield from self._get_visitor(Concatenation(Shuffle(head1, h2), tail), t2, extra)
 
     @_get_visitor.register
-    def visit_concatenation(self, exp: Concatenation, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _concatenation_visitor(self, exp: Concatenation, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         if exp.head is not None:
             if exp.tail.head is None:
                 yield from self._get_visitor(exp.head, table, extra)
@@ -173,7 +173,7 @@ class AlternativesGenerator(Iterator):
                     yield head, tail, table, extra
 
     @_get_visitor.register
-    def visit_concatenation_repetition(self, exp: ConcatenationRepetition, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _concatenation_repetition_visitor(self, exp: ConcatenationRepetition, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         assert exp.argument is not EMPTY_STRING, NOT_EMPTY_STRING_MESSAGE
 
         # a+1 = a
@@ -198,7 +198,7 @@ class AlternativesGenerator(Iterator):
                                      table, extra)
 
     @_get_visitor.register
-    def visit_shuffle(self, exp: Shuffle, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _shuffle_visitor(self, exp: Shuffle, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         if exp.head is not None:
             if exp.tail.head is None:
                 yield from self._get_visitor(exp.head, table, extra)
@@ -217,7 +217,7 @@ class AlternativesGenerator(Iterator):
             yield from shuffle(exp.tail, exp.head, table, extra)
 
     @_get_visitor.register
-    def visit_shuffle_repetition(self, exp: ShuffleRepetition, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _shuffle_repetition_visitor(self, exp: ShuffleRepetition, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         assert exp.argument is not EMPTY_STRING, NOT_EMPTY_STRING_MESSAGE
 
         # a//1 = a
@@ -249,7 +249,7 @@ class AlternativesGenerator(Iterator):
                            table, extra)
 
     @_get_visitor.register
-    def visit_with_cached_wildcards(self, exp: WithCachedWildcards, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _with_cached_wildcards_visitor(self, exp: WithCachedWildcards, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         for head, tail, table, extra in self._get_visitor(exp.expression, table, extra):
             number = exp.number
             if head is WILDCARD:
@@ -262,7 +262,7 @@ class AlternativesGenerator(Iterator):
             yield head, tail, table, extra
 
     @_get_visitor.register
-    def visit_substitution(self, exp: Substitution, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
+    def _substitution_visitor(self, exp: Substitution, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
         assert exp is not EMPTY_STRING, NOT_EMPTY_STRING_MESSAGE
 
         def get_gen_alt(head, replacements):

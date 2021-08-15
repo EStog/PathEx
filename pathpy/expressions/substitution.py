@@ -10,7 +10,7 @@ __all__ = ['Substitution']
 
 @dataclass(frozen=True, repr=False)
 class Substitution(Expression):
-    """Returns a function `Substitution -> Iterable[Concatenation]`
+    """Returns a function ``Substitution -> Iterable[Concatenation]``
     to visit a `Substitution` expression.
 
     `Substitution` is semantically equivalent to the replacement,
@@ -42,6 +42,7 @@ class Substitution(Expression):
                 type(a)=type(b)=Letter and a != b
 
     Example:
+
         >>> from pathpy import Concatenation as C, Union as U, EMPTY_STRING as e, WILDCARD as _
 
         >>> exp = C('abc')[{'a':'c', 'c':'a'}]

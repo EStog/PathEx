@@ -3,6 +3,7 @@ from __future__ import annotations
 from abc import ABC
 from functools import singledispatchmethod
 from math import inf
+from typing import Hashable
 
 from pathpy.generators.defaults import (LANGUAGE_TYPE, MAX_LOOKAHEAD,
                                         ONLY_COMPLETE_WORDS, WORD_TYPE)
@@ -17,10 +18,10 @@ from pathpy.generators.defaults import (LANGUAGE_TYPE, MAX_LOOKAHEAD,
 __all__ = ['Expression']
 
 
-class Expression(ABC):  # (Hashable)
-    """
-    This class represents an abstract Expression. An Expression represents
-    a set of tuples of letters, also called strings or words.
+class Expression(ABC):
+    """This class represents an abstract Expression.
+
+    An Expression represents a set of tuples of letters, also called strings or words.
     """
 
     def get_generator(self, extra: object = None, max_lookahead: int = MAX_LOOKAHEAD):
