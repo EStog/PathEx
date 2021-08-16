@@ -7,11 +7,15 @@ Welcome to PathPy's documentation!
 ==================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
-   modules
+   semantics/index
+   API/modules
 
+.. todo::
+
+   Put license, readme, how to collaborate, etc, in the index
 
 Indices and tables
 ==================
@@ -19,3 +23,12 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+
+.. ifconfig:: todo_include_todos == True
+
+   To be done
+   ==========
+
+   .. todolist::

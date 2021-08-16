@@ -32,7 +32,8 @@ class Manager(ABC):
     def _when_matched(self, label: object, label_info: object) -> object: ...
 
     @abstractmethod
-    def _when_not_matched(self, label: object, label_info: object) -> object: ...
+    def _when_not_matched(self, label: object,
+                          label_info: object) -> object: ...
 
     def match(self, label: object) -> object:
         """ This method is used to notify to the manager the presence of a given label.

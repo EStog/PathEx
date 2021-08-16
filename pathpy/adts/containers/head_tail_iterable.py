@@ -129,4 +129,10 @@ class HeadTailIterable(Iterable[_E]):
         object.__setattr__(obj, '_tail', self._tail.restarted())
         return obj
 
+    def __eq__(self, other):
+        if isinstance(other, HeadTailIterable):
+            return list(self) == list(other)
+        else:
+            return False
+
     copy = __copy__

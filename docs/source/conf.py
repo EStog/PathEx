@@ -39,8 +39,10 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.doctest',
     'sphinx.ext.coverage',
+    'sphinx.ext.imgmath',
     'sphinx.ext.todo',
     'sphinx.ext.intersphinx',
+    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     # 'sphinx.ext.duration'
@@ -67,14 +69,56 @@ html_theme = 'classic'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-default_role = 'any'
+modindex_common_prefix = [
+    'pathpy.',
+    'pathpy.adts.',
+    'pathpy.adts.cached_generators.',
+    'pathpy.adts.containers.',
+    'pathpy.adts.multitask.',
+    'pathpy.adts.multitask.atomics.',
+    'pathpy.expressions.',
+    'pathpy.expressions.nary_operators.',
+    'pathpy.expressions.terms.',
+    'pathpy.expressions.terms.letters_unions.',
+    'pathpy.expressions.repetitions.',
+    'pathpy.generators.',
+    'pathpy.generators._expressions.',
+    'pathpy.managers.'
+]
+
+# other general options
 nitpicky = True
 add_module_names = False
 show_authors = True
-modindex_common_prefix = ['pathpy.', 'pathpy.expressions.']
+#default_role = 'any'
+rst_epilog = f"""
+.. |ppy| replace:: {project}
+"""
 
+
+# sphinx.ext.todo options
 todo_include_todos = True
-autoclass_content = 'both'
+todo_emit_warnings = True
 
+
+# sphinx.ext.autodoc options
+autoclass_content = 'both'
+autodoc_typehints = 'both'
+autodoc_typehints_description_target = 'documented'
+autodoc_preserve_defaults = True
+autodoc_type_aliases = {
+
+}
+
+
+# sphinx.ext.napoleon options
+napoleon_include_special_with_doc = True
+
+# sphinx.ext.imgmath options
+imgmath_image_format = 'svg'
+imgmath_use_preview = True
+
+
+# sphinx.ext.intersphinx options
 intersphinx_mapping = {'python': ('https://docs.python.org/3',
                                   (None, 'python-objects.inv'))}

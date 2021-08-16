@@ -17,10 +17,10 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   pathpy.expressions.aliases
    pathpy.expressions.expression
    pathpy.expressions.negation
    pathpy.expressions.non_fundamentals
-   pathpy.expressions.simplified_notation
    pathpy.expressions.substitution
 
 Module contents

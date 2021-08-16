@@ -40,8 +40,13 @@ def multiplication(argument: object, operator: Callable[..., NAryOperator],
     if not isinstance(replacements, Iterable):
         raise TypeError('Replacements must be iterable')
     try:
-        return operator(map(partial(Substitution, argument=argument), replacements))
-    except TypeError:
+        def f(arg):
+            def p(r):
+                return Substitution(argument=arg, replacements=r)
+            return p
+        return operator(map(f(argument), replacements))
+    except TypeError as e:
+        print(e)
         raise TypeError(
             'Multiplication must take more than one replacement. For only one replacement use Substitution instead')
 

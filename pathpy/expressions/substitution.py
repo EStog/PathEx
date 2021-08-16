@@ -45,7 +45,7 @@ class Substitution(Expression):
 
         >>> from pathpy import Concatenation as C, Union as U, EMPTY_STRING as e, WILDCARD as _
 
-        >>> exp = C('abc')[{'a':'c', 'c':'a'}]
+        >>> exp = C('abc')['a':'c', 'c':'a']
         >>> assert exp.get_language() == exp.get_generator().get_language() == {'cba'}
 
         >>> exp = C('abc')['a':'xy', 'c':e]

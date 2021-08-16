@@ -14,7 +14,7 @@ class Intersection(NAryOperator):
         `a & b = {}`                if `a != b`
 
     Examples:
-        >>> from pathpy.expressions.simplified_notation import *
+        >>> from pathpy.expressions.aliases import *
         >>> from functools import partial
 
         >>> exp = 'a' + U('xy') & 'a' + U('yz')

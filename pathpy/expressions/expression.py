@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 from abc import ABC
+from collections.abc import Iterable
 from functools import singledispatchmethod
 from math import inf
-from typing import Hashable
 
 from pathpy.generators.defaults import (LANGUAGE_TYPE, MAX_LOOKAHEAD,
                                         ONLY_COMPLETE_WORDS, WORD_TYPE)
-
-# from collections.abc import Hashable
 
 # TODO: __str__ y __repr__ de todas las expresiones
 
@@ -19,9 +17,21 @@ __all__ = ['Expression']
 
 
 class Expression(ABC):
-    """This class represents an abstract Expression.
+    """Abstract base class of expressions.
 
-    An Expression represents a set of tuples of letters, also called strings or words.
+    An expression is a combination of symbols that complies with a set of structural rules. An expression is uniquey associated with a composition of functions over a universe of formal languages. That is, an expression generates a formal language, a formal language is a set of words and a word is a finite sequence of letters.
+
+    For example, the expression :math:`(a|b) + c`, generates sequences which two elements. The first element is either :math:`a` or :math:`b` and the second is :math:`c`. In |ppy| idiom this may be expressed as
+
+    >>> from pathpy.expressions.aliases import *
+    >>> expression = U('ab') + 'c'
+    >>> assert expression.get_language() == {'ac', 'bc'}
+
+    In this case a :mod:`short alias <pathpy.expressions.aliases>` of :class:`~.Union` and the overloaded operation :meth:`+ <pathpy.expressions.expression.Expression.__add__>` to express :class:`~.Concatenation` are being used to construct the desired expression. Method :meth:`get_language`, by default, gives the set of generated words as :class:`str` objects.
+
+    .. seealso:: :doc:`/semantics/expression`
+
+    .. todo:: add reference to external documentation about formal languages
     """
 
     def get_generator(self, extra: object = None, max_lookahead: int = MAX_LOOKAHEAD):
@@ -48,14 +58,7 @@ class Expression(ABC):
         from pathpy import Union
         return Union.new(self, other)
 
-    # self|interable
-    @__or__.register(list)
-    def __(self, iterable):
-        from pathpy import Union, multiplication
-        return multiplication(self, Union, iterable)
-
     # other | self
-    # iterable|self
     __ror__ = __or__
 
     # self & other
@@ -64,14 +67,7 @@ class Expression(ABC):
         from pathpy import Intersection
         return Intersection.new(self, other)
 
-    # self&iterable
-    @__and__.register(list)
-    def __(self, iterable):
-        from pathpy import Intersection, multiplication
-        return multiplication(self, Intersection, iterable)
-
     # other & self
-    # iterable&self
     __rand__ = __and__
 
     # self @ other
@@ -80,14 +76,7 @@ class Expression(ABC):
         from pathpy import Synchronization
         return Synchronization.new(self, other)
 
-    # self@iterable
-    @__matmul__.register(list)
-    def __(self, iterable):
-        from pathpy import Synchronization, multiplication
-        return multiplication(self, Synchronization, iterable)
-
     # other @ self
-    # iterable@self
     __rmatmul__ = __matmul__
 
     # self ^ other
@@ -96,14 +85,7 @@ class Expression(ABC):
         from pathpy import symmetric_difference
         return symmetric_difference(self, other)
 
-    # self^iterable
-    @__xor__.register(list)
-    def __(self, iterable):
-        from pathpy import multiplication, symmetric_difference
-        return multiplication(self, symmetric_difference, iterable)
-
     # other ^ self
-    # iterable^self
     __rxor__ = __xor__
 
     # self - other
@@ -112,25 +94,11 @@ class Expression(ABC):
         from pathpy import difference
         return difference(self, other)
 
-    # self-iterable
-    @__sub__.register(list)
-    def __(self, iterable):
-        from pathpy import difference, multiplication
-        return multiplication(self, difference, iterable)
-
     # other - self
     @singledispatchmethod
     def __rsub__(self, other: object) -> Expression:
         from pathpy import difference
         return difference(other, self)
-
-    # iterable-self
-    @__rsub__.register(list)
-    def __rsub__(self, iterable):
-        from pathpy import difference, multiplication
-
-        # TODO: replace by left multiplication
-        return multiplication(self, difference, iterable)
 
     # -self
     def __neg__(self):
@@ -145,25 +113,33 @@ class Expression(ABC):
 
     # self + other
     @singledispatchmethod
-    def __add__(self, other: object) -> Expression:
+    def __add__(self, other: object) -> Concatenation:
+        """Sum operation (``+``) is used to specify :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expression types.
+
+        .. testsetup:: *
+
+            >>> from pathpy.expressions.aliases import *
+            >>> from pathpy import Concatenation, ConcatenationRepetition
+            >>> from math import inf
+
+        With an :class:`int` it translate to :class:`~.ConcatenationRepetition`:
+
+        >>> assert L('a') + 4 == ConcatenationRepetition(L('a'), 4, 4)
+
+        With any other object it translate to :class:`~.Concatenation`:
+
+        >>> assert L('a') + 'e' == Concatenation(L('a'), 'e')
+        """
         from pathpy import Concatenation
         return Concatenation.new(self, other)
 
     # self+number
     @__add__.register(int)
-    @__add__.register(float)
-    @__add__.register(type(...))
-    def __(self, number):
+    def __(self, number) -> ConcatenationRepetition:
         from pathpy import ConcatenationRepetition
         if number is ...:
             number = inf
         return ConcatenationRepetition(self, number, number)
-
-    # self+iterable
-    @__add__.register(list)
-    def __(self, iterable):
-        from pathpy import Concatenation, multiplication
-        return multiplication(self, Concatenation, iterable)
 
     # other + self
     @singledispatchmethod
@@ -175,9 +151,6 @@ class Expression(ABC):
     __radd__.register(int, __add__.dispatcher.dispatch(int))
     __radd__.register(float, __add__.dispatcher.dispatch(float))
     __radd__.register(type(...), __add__.dispatcher.dispatch(type(...)))
-
-    # iterable+self
-    __radd__.register(list, __add__.dispatcher.dispatch(list))
 
     # +self
     def __pos__(self):
@@ -236,15 +209,8 @@ class Expression(ABC):
             number = inf
         return ShuffleRepetition(self, number, number)
 
-    # self//iterable
-    @__floordiv__.register(list)
-    def __(self, iterable):
-        from pathpy import Shuffle, multiplication
-        return multiplication(self, Shuffle, iterable)
-
     # other // self
     # number//self
-    # iterable//other
     __rfloordiv__ = __floordiv__
 
     # self % other
@@ -292,12 +258,6 @@ class Expression(ABC):
         assert slice.step == None, 'Step must be None'
         from pathpy import Substitution
         return Substitution(self, {slice.start: slice.stop})
-
-    # self[dictionary]
-    @__getitem__.register
-    def __(self, dictionary: dict):
-        from pathpy import Substitution
-        return Substitution(self, dictionary)
 
     # self[slices]
     @__getitem__.register(tuple)
