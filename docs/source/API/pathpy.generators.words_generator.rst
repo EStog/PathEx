@@ -1,7 +1,7 @@
-pathpy.generators.words\_generator module
+pathpy.generation.words\_generator module
 =========================================
 
-.. automodule:: pathpy.generators.words_generator
+.. automodule:: pathpy.generation.words_generator
    :members:
    :undoc-members:
    :show-inheritance:

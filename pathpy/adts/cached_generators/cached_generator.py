@@ -19,7 +19,7 @@ _E = TypeVar('_E')
 
 class CachedGenerator(Generic[_E_co]):
     """This class wraps a generator and cache its results. See the examples.
-    Designed for single-thread and deterministic generators only.
+    Designed for single-thread and deterministic generation only.
 
     The class can be used as a function decorator:
 

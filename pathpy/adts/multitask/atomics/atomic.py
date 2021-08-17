@@ -33,7 +33,7 @@ class Atomic:
     ... else:
     ...     print('Wrong!')
 
-    Atomic values may be used as context managers. This is helpful if some related actions must be done while holding the lock of the atomic. `__enter__` will return the object itself. Any operation of the atomic object called inside the managed block will be effected without acquiring the underlier lock.
+    Atomic values may be used as context managing. This is helpful if some related actions must be done while holding the lock of the atomic. `__enter__` will return the object itself. Any operation of the atomic object called inside the managed block will be effected without acquiring the underlier lock.
 
     >>> with a:
     ...     # adicional actions here

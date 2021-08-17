@@ -9,8 +9,8 @@ from abc import ABC
 from functools import singledispatchmethod
 from math import inf
 
-from pathpy.generators.defaults import (LANGUAGE_TYPE, MAX_LOOKAHEAD,
-                                        ONLY_COMPLETE_WORDS, WORD_TYPE)
+from pathpy.generation.defaults import (LANGUAGE_TYPE, ONLY_COMPLETE_WORDS,
+                                        WORD_TYPE)
 
 # TODO: __str__ y __repr__ de todas las expresiones
 
@@ -23,21 +23,26 @@ __all__ = ['Expression']
 class Expression(ABC):
     """Abstract base class of expressions."""
 
-    def get_generator(self, extra: object = None, max_lookahead: int = MAX_LOOKAHEAD):
-        from pathpy.generators.symbols_table import SymbolsTable
-        from pathpy.generators.words_generator import WordsGenerator
-        return WordsGenerator(self, SymbolsTable(), extra, max_lookahead=max_lookahead)
+    def get_generator(self, extra: object = None):
+        from pathpy.generation.symbols_table import SymbolsTable
+        from pathpy.generation.words_generator import WordsGenerator
+        return WordsGenerator(self, SymbolsTable(), extra)
 
-    def get_language(self,
-                     language_type=LANGUAGE_TYPE,
+    def get_eager_generator(self, only_complete_words=ONLY_COMPLETE_WORDS,
+                            extra: object = None):
+        from pathpy.generation.eager import words_generator
+        from pathpy.generation.symbols_table import SymbolsTable
+        return words_generator(self, table=SymbolsTable(), extra=extra, only_complete_words=only_complete_words)
+
+    def get_language(self, language_type=LANGUAGE_TYPE,
                      word_type=WORD_TYPE,
                      only_complete_words=ONLY_COMPLETE_WORDS,
                      extra: object = None):
-        from pathpy.generators.eager import get_language
-        from pathpy.generators.symbols_table import SymbolsTable
+        from pathpy.generation.eager import words_generator
+        from pathpy.generation.symbols_table import SymbolsTable
         language = language_type()
-        for w in get_language(self, SymbolsTable(), extra, word_type=word_type,
-                              only_complete_words=only_complete_words):
+        for w in words_generator(self, table=SymbolsTable(), extra=extra, word_type=word_type,
+                                 only_complete_words=only_complete_words):
             language.put(w)
         return language
 

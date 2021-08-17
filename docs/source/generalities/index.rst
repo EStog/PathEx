@@ -10,4 +10,4 @@ This section contains general explanations of each entity that |ppy| provides.
     expression
     empty_word
 
-.. todo:: Divide in *expressions*, *generators*, *managers*, etc.
+.. todo:: Divide in *expressions*, *generation*, *managing*, etc.

@@ -1,5 +1,5 @@
 from pathpy.expressions.expression import Expression
-from pathpy.managers.label import Label
+from pathpy.managing.label import Label
 
 from .manager import Manager
 

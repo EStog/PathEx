@@ -1,4 +1,4 @@
-pathpy.managers package
+pathpy.managing package
 =======================
 
 Submodules
@@ -7,16 +7,16 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   pathpy.managers.label
-   pathpy.managers.manager
-   pathpy.managers.synchronizer
-   pathpy.managers.tag
-   pathpy.managers.trace_checker
+   pathpy.managing.label
+   pathpy.managing.manager
+   pathpy.managing.synchronizer
+   pathpy.managing.tag
+   pathpy.managing.trace_checker
 
 Module contents
 ---------------
 
-.. automodule:: pathpy.managers
+.. automodule:: pathpy.managing
    :members:
    :undoc-members:
    :show-inheritance:

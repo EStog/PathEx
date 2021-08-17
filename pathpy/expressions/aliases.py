@@ -1,3 +1,5 @@
+__all__ = ['C', 'I', 'S', 'U', 'N', 'D', 'L', 'M', 'SD', 'CR', 'SR', 'NLs', 'Ls', '_']
+
 from .nary_operators.concatenation import Concatenation as C
 from .nary_operators.intersection import Intersection as I
 from .nary_operators.shuffle import Shuffle as S

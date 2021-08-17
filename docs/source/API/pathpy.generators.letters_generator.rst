@@ -1,7 +1,7 @@
-pathpy.generators.letters\_generator module
+pathpy.generation.letters\_generator module
 ===========================================
 
-.. automodule:: pathpy.generators.letters_generator
+.. automodule:: pathpy.generation.letters_generator
    :members:
    :undoc-members:
    :show-inheritance:

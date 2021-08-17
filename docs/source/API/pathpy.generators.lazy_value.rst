@@ -1,7 +1,7 @@
-pathpy.generators.lazy\_value module
+pathpy.generation.lazy\_value module
 ====================================
 
-.. automodule:: pathpy.generators.lazy_value
+.. automodule:: pathpy.generation.lazy_value
    :members:
    :undoc-members:
    :show-inheritance:

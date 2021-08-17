@@ -1,7 +1,7 @@
-pathpy.managers.trace\_checker module
+pathpy.managing.trace\_checker module
 =====================================
 
-.. automodule:: pathpy.managers.trace_checker
+.. automodule:: pathpy.managing.trace_checker
    :members:
    :undoc-members:
    :show-inheritance:

@@ -9,8 +9,8 @@ Subpackages
 
    pathpy.adts
    pathpy.expressions
-   pathpy.generators
-   pathpy.managers
+   pathpy.generation
+   pathpy.managing
 
 Module contents
 ---------------

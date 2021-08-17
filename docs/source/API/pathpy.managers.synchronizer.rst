@@ -1,7 +1,7 @@
-pathpy.managers.synchronizer module
+pathpy.managing.synchronizer module
 ===================================
 
-.. automodule:: pathpy.managers.synchronizer
+.. automodule:: pathpy.managing.synchronizer
    :members:
    :undoc-members:
    :show-inheritance:

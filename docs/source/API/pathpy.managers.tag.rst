@@ -1,7 +1,7 @@
-pathpy.managers.tag module
+pathpy.managing.tag module
 ==========================
 
-.. automodule:: pathpy.managers.tag
+.. automodule:: pathpy.managing.tag
    :members:
    :undoc-members:
    :show-inheritance:

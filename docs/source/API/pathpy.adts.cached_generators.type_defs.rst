@@ -1,4 +1,4 @@
-pathpy.adts.cached\_generators.type\_defs module
+pathpy.adts.cached\_generation.type\_defs module
 ================================================
 
 .. automodule:: pathpy.adts.cached_generators.type_defs

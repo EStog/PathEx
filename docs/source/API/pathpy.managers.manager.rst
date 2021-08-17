@@ -1,7 +1,7 @@
-pathpy.managers.manager module
+pathpy.managing.manager module
 ==============================
 
-.. automodule:: pathpy.managers.manager
+.. automodule:: pathpy.managing.manager
    :members:
    :undoc-members:
    :show-inheritance:

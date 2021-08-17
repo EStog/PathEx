@@ -1,7 +1,7 @@
-pathpy.managers.label module
+pathpy.managing.label module
 ============================
 
-.. automodule:: pathpy.managers.label
+.. automodule:: pathpy.managing.label
    :members:
    :undoc-members:
    :show-inheritance:

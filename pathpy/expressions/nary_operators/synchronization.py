@@ -16,7 +16,8 @@ class Synchronization(NAryOperator):
         `aA @ bB = (a @ b) + (A @ B)`
 
     Example:
-        >>> from pathpy import Union as U, WILDCARD as _, Concatenation as C
+        >>> from pathpy.expressions.aliases import *
+        >>> from pathpy.util import SET_OF_TUPLES
 
         >>> exp = ( 'a' + U('xy') ) @ ( 'a' + U('yz') )
         >>> assert exp.get_language() == exp.get_generator().get_language() == {
@@ -41,10 +42,8 @@ class Synchronization(NAryOperator):
         >>> from pathpy import LettersNegativeUnion as NL
 
         >>> exp = (NL('abc') + C('xyz')) @ C('qxyz')
-        >>> from pathpy.adts.collection_wrapper import get_collection_wrapper
-        >>> Set = get_collection_wrapper(set, lambda s, w: s.add(tuple(w)))
-        >>> assert exp.get_language(Set) == exp.get_generator().get_language(Set) == {('q', NL('a', 'c', 'q', 'b'), 'x', 'y', 'z'), (NL('a', 'c', 'q', 'b'), 'q', 'x', 'y', 'z'), ('q', 'x', 'y', 'z')}
+        >>> assert exp.get_language(SET_OF_TUPLES) == exp.get_generator().get_language(SET_OF_TUPLES) == {('q', NL('a', 'c', 'q', 'b'), 'x', 'y', 'z'), (NL('a', 'c', 'q', 'b'), 'q', 'x', 'y', 'z'), ('q', 'x', 'y', 'z')}
 
         >>> exp = (NL('abc') + C('xyz')) @ C('axyz')
-        >>> assert exp.get_language(Set) == exp.get_generator().get_language(Set) == {(NL('b', 'a', 'c'), 'a', 'x', 'y', 'z'), ('a', NL('b', 'a', 'c'), 'x', 'y', 'z')}
+        >>> assert exp.get_language(SET_OF_TUPLES) == exp.get_generator().get_language(SET_OF_TUPLES) == {(NL('b', 'a', 'c'), 'a', 'x', 'y', 'z'), ('a', NL('b', 'a', 'c'), 'x', 'y', 'z')}
     """

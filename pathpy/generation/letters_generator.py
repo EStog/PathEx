@@ -23,12 +23,11 @@ INCOMPLETE_WORD = IncompleteWord()
 class LettersGenerator(Iterator[object]):
 
     def __init__(self, prefix: list[object], alts_gen: AlternativesGenerator,
-                 words_generator, max_lookahead: int):
+                 words_generator):
         from .words_generator import WordsGenerator
         self._prefix = prefix
         self._alts_gen = alts_gen
         self._words_generator: WordsGenerator = words_generator
-        self.max_lookahead = max_lookahead
         self._pos = 0
         self._complete = False
         self._exhausted = False
@@ -59,8 +58,7 @@ class LettersGenerator(Iterator[object]):
             self._alts_gen = AlternativesGenerator(tail, table, extra)
             if isinstance(head, NamedWildcard):
                 head = LazyValue(head, tail, table, extra,
-                                 len(self._prefix), self,
-                                 self.max_lookahead)
+                                 len(self._prefix), self)
             self._prefix.append(head)
             return tail, table, extra
 

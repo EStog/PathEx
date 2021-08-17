@@ -4,7 +4,7 @@ from collections.abc import Iterable
 from functools import partial
 from typing import Callable, Mapping
 
-from pathpy.generators.symbols_table import SymbolsTable
+from pathpy.generation.symbols_table import SymbolsTable
 
 from .nary_operators.intersection import Intersection
 from .nary_operators.nary_operator import NAryOperator

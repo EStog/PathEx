@@ -9,17 +9,18 @@ from pathpy.expressions.terms.empty_word import EMPTY_WORD
 
 from .alternatives_generator import AlternativesGenerator
 from .defaults import (ALTERNATIVES_COLLECTION_TYPE, ONLY_COMPLETE_WORDS,
-                       WORD_TYPE)
+                       WORD_MAX_LENGTH, WORD_TYPE)
 from .symbols_table import SymbolsTable
 
-__all__ = ['get_language']
+__all__ = ['words_generator']
 
 
 def _get_alternatives(
         prefix_type: type[CollectionWrapper],
         expression: Expression, table: SymbolsTable, extra: object,
         alternatives_collection_type: type[CollectionWrapper],
-        only_complete_words: bool):
+        only_complete_words: bool,
+        word_max_length: int = WORD_MAX_LENGTH):
 
     alternatives = alternatives_collection_type()
     alternatives.put((prefix_type(), expression, table, extra))
@@ -43,10 +44,10 @@ def _get_alternatives(
                 yield prefix, table, extra
 
 
-def get_language(expression: Expression, table: SymbolsTable, extra: object,
-                 word_type: type[CollectionWrapper] = WORD_TYPE,
-                 alternatives_collection_type: type[CollectionWrapper] = ALTERNATIVES_COLLECTION_TYPE,
-                 only_complete_words: bool = ONLY_COMPLETE_WORDS):
+def words_generator(expression: Expression, table: SymbolsTable, extra: object,
+                    word_type: type[CollectionWrapper] = WORD_TYPE,
+                    alternatives_collection_type: type[CollectionWrapper] = ALTERNATIVES_COLLECTION_TYPE,
+                    only_complete_words: bool = ONLY_COMPLETE_WORDS):
 
     for prefix, table, extra in _get_alternatives(word_type, expression, table, extra,
                                                   alternatives_collection_type,

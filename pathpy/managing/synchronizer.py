@@ -4,7 +4,7 @@ import threading
 from enum import Enum
 
 from pathpy.adts.multitask.acquired_lock import AcquiredLock
-from pathpy.managers.manager import Manager
+from pathpy.managing.manager import Manager
 
 __all__ = ['Synchronizer']
 

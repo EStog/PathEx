@@ -140,7 +140,7 @@ class SharedLock:
         >>> execute(get_value, append)
 
 
-    `write_operation` and `read_operation` can also be used as context managers:
+    `write_operation` and `read_operation` can also be used as context managing:
 
         >>> def append(l, x):
         ...     with lock.write_operation:

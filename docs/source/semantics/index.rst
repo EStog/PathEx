@@ -9,4 +9,4 @@ This section contains the exposition of the semantics of the expressions. The ex
 
     expression
 
-.. todo:: Divide in *expressions*, *generators*, *managers*, etc.
+.. todo:: Divide in *expressions*, *generation*, *managing*, etc.

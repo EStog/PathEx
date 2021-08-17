@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from collections import deque
 from collections.abc import Iterable
-from copy import copy
 from dataclasses import dataclass
 from functools import cached_property
 from itertools import chain

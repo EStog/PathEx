@@ -1,7 +1,7 @@
-pathpy.generators.defaults module
+pathpy.generation.defaults module
 =================================
 
-.. automodule:: pathpy.generators.defaults
+.. automodule:: pathpy.generation.defaults
    :members:
    :undoc-members:
    :show-inheritance:

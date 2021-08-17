@@ -7,8 +7,8 @@ from pathpy.expressions.expression import Expression
 
 from .alternatives_generator import AlternativesGenerator
 from .defaults import (ALTERNATIVES_COLLECTION_TYPE, LANGUAGE_TYPE,
-                       MAX_LOOKAHEAD, ONLY_COMPLETE_WORDS, WORD_TYPE,
-                       WORDS_COLLECTION_TYPE)
+                       MAX_LOOKAHEAD, ONLY_COMPLETE_WORDS, WORD_MAX_LENGTH,
+                       WORD_TYPE, WORDS_COLLECTION_TYPE)
 from .lazy_value import LazyValue
 from .letters_generator import LettersGenerator
 from .symbols_table import SymbolsTable
@@ -25,8 +25,7 @@ class WordsGenerator(Iterator[LettersGenerator]):
                  table: SymbolsTable, extra: object,
                  alternatives_collection_type: type[CollectionWrapper] | None = None,
                  delivered_collection_type: type[CollectionWrapper] | None = None,
-                 words_collection_type: type[CollectionWrapper] | None = None,
-                 max_lookahead: int = MAX_LOOKAHEAD):
+                 words_collection_type: type[CollectionWrapper] | None = None):
         if table is None:
             table = SymbolsTable()
         if alternatives_collection_type is None:
@@ -46,7 +45,6 @@ class WordsGenerator(Iterator[LettersGenerator]):
             self._words = words_collection_type()
         self._alternatives.put(
             ([], AlternativesGenerator(expression, table, extra)))
-        self.max_lookahead = max_lookahead
 
     def __next__(self) -> LettersGenerator:
         try:
@@ -59,8 +57,7 @@ class WordsGenerator(Iterator[LettersGenerator]):
                     if not self._advance_one_delivered():
                         raise StopIteration
                 else:
-                    to_deliver = LettersGenerator(prefix, alts_gen,
-                                                  self, self.max_lookahead)
+                    to_deliver = LettersGenerator(prefix, alts_gen, self)
                     if not to_deliver.exhausted or to_deliver.complete:
                         break
         self._delivered.put(to_deliver)
@@ -87,14 +84,22 @@ class WordsGenerator(Iterator[LettersGenerator]):
     def get_language(self,
                      language_collection_type=LANGUAGE_TYPE,
                      word_collection_type=WORD_TYPE,
-                     only_complete_words=ONLY_COMPLETE_WORDS):
+                     only_complete_words: bool = ONLY_COMPLETE_WORDS,
+                     word_max_length: int = WORD_MAX_LENGTH):
         language = language_collection_type()
         for w in self:
             word = word_collection_type()
-            for l in w:
-                if isinstance(l, LazyValue):
-                    l = l.value
-                word.put(l)
+            i = 0
+            while word_max_length <= 0 or i < word_max_length:
+                try:
+                    l = next(w)
+                except StopIteration:
+                    break
+                else:
+                    if isinstance(l, LazyValue):
+                        l = l.get_value(word_max_length-i)
+                    word.put(l)
+                    i += 1
             if not only_complete_words or w.complete:
                 language.put(word)
         return language

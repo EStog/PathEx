@@ -1,3 +1,4 @@
+from pathpy.generation.defaults import MAX_LOOKAHEAD
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
@@ -10,7 +11,7 @@ class LazyValue:
 
     def __init__(self, wildcard: NamedWildcard,
                  tail: Expression, table: SymbolsTable, extra: object,
-                 pos: int, letters_generator, max_lookahead: int):
+                 pos: int, letters_generator):
         from .letters_generator import LettersGenerator
         self._wildcard = wildcard
         self._tail = tail
@@ -18,12 +19,10 @@ class LazyValue:
         self._extra = extra
         self._pos = pos
         self._letters_generator: LettersGenerator = letters_generator
-        self.max_lookahead = max_lookahead
 
-    @property
-    def value(self) -> object:
+    def get_value(self, max_lookahead=MAX_LOOKAHEAD) -> object:
         def advanced(i):
-            if i < self.max_lookahead and \
+            if (max_lookahead <= 0 or i < max_lookahead) and \
                     self._table.get_concrete_value(self._wildcard) is self._wildcard:
                 tail, table, extra = self._letters_generator.advance_once()
                 if (tail, table, extra) != (None, None, None):

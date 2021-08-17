@@ -1,2 +1,2 @@
 from .expressions import *
-from .managers import *
+from .managing import *

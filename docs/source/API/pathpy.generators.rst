@@ -1,4 +1,4 @@
-pathpy.generators package
+pathpy.generation package
 =========================
 
 Submodules
@@ -7,19 +7,19 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   pathpy.generators.alternatives_generator
-   pathpy.generators.defaults
-   pathpy.generators.eager
-   pathpy.generators.lazy_value
-   pathpy.generators.letters_generator
-   pathpy.generators.misc
-   pathpy.generators.symbols_table
-   pathpy.generators.words_generator
+   pathpy.generation.alternatives_generator
+   pathpy.generation.defaults
+   pathpy.generation.eager
+   pathpy.generation.lazy_value
+   pathpy.generation.letters_generator
+   pathpy.generation.misc
+   pathpy.generation.symbols_table
+   pathpy.generation.words_generator
 
 Module contents
 ---------------
 
-.. automodule:: pathpy.generators
+.. automodule:: pathpy.generation
    :members:
    :undoc-members:
    :show-inheritance:

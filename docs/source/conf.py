@@ -81,9 +81,9 @@ modindex_common_prefix = [
     'pathpy.expressions.terms.',
     'pathpy.expressions.terms.letters_unions.',
     'pathpy.expressions.repetitions.',
-    'pathpy.generators.',
-    'pathpy.generators._expressions.',
-    'pathpy.managers.'
+    'pathpy.generation.',
+    'pathpy.generation._expressions.',
+    'pathpy.managing.'
 ]
 
 # other general options

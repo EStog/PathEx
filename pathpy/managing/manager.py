@@ -7,9 +7,9 @@ from functools import wraps
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
     LettersPossitiveUnion
-from pathpy.generators._expressions._named_wildcard import NamedWildcard
-from pathpy.generators.alternatives_generator import AlternativesGenerator
-from pathpy.generators.symbols_table import SymbolsTable
+from pathpy.generation._expressions._named_wildcard import NamedWildcard
+from pathpy.generation.alternatives_generator import AlternativesGenerator
+from pathpy.generation.symbols_table import SymbolsTable
 from .tag import Tag
 
 __all__ = ['Manager']

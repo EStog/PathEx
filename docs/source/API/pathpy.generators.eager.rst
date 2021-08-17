@@ -1,7 +1,7 @@
-pathpy.generators.eager module
+pathpy.generation.eager module
 ==============================
 
-.. automodule:: pathpy.generators.eager
+.. automodule:: pathpy.generation.eager
    :members:
    :undoc-members:
    :show-inheritance:

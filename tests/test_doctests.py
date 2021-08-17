@@ -51,7 +51,7 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.substitution'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.managers.synchronizer'))
+        'pathpy.managing.synchronizer'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.managers.trace_checker'))
+        'pathpy.managing.trace_checker'))
     return tests

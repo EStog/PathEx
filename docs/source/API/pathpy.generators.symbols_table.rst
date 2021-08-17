@@ -1,7 +1,7 @@
-pathpy.generators.symbols\_table module
+pathpy.generation.symbols\_table module
 =======================================
 
-.. automodule:: pathpy.generators.symbols_table
+.. automodule:: pathpy.generation.symbols_table
    :members:
    :undoc-members:
    :show-inheritance:

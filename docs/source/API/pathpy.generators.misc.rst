@@ -1,7 +1,7 @@
-pathpy.generators.misc module
+pathpy.generation.misc module
 =============================
 
-.. automodule:: pathpy.generators.misc
+.. automodule:: pathpy.generation.misc
    :members:
    :undoc-members:
    :show-inheritance:
