@@ -8,3 +8,5 @@ This section contains the exposition of the semantics of the expressions. The ex
     :caption: Contents:
 
     expression
+
+.. todo:: Divide in *expressions*, *generators*, *managers*, etc.

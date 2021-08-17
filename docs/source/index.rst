@@ -3,19 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to PathPy's documentation!
-==================================
+Welcome to |ppy|'s documentation!
+=================================
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
 
+   generalities/index
    semantics/index
    API/modules
 
-.. todo::
+.. todo:: add *license*
 
-   Put license, readme, how to collaborate, etc, in the index
+.. todo:: add *introduction*
+
+.. todo:: add *how to collaborate*
+
+.. todo:: add *how to read this docs*
+
+.. todo:: add *glossary*
 
 Indices and tables
 ==================
@@ -23,8 +30,6 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
 
 .. ifconfig:: todo_include_todos == True
 

@@ -1,7 +1,11 @@
+"""
+.. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
+.. codeauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
+"""
+
 from __future__ import annotations
 
 from abc import ABC
-from collections.abc import Iterable
 from functools import singledispatchmethod
 from math import inf
 
@@ -17,22 +21,7 @@ __all__ = ['Expression']
 
 
 class Expression(ABC):
-    """Abstract base class of expressions.
-
-    An expression is a combination of symbols that complies with a set of structural rules. An expression is uniquey associated with a composition of functions over a universe of formal languages. That is, an expression generates a formal language, a formal language is a set of words and a word is a finite sequence of letters.
-
-    For example, the expression :math:`(a|b) + c`, generates sequences which two elements. The first element is either :math:`a` or :math:`b` and the second is :math:`c`. In |ppy| idiom this may be expressed as
-
-    >>> from pathpy.expressions.aliases import *
-    >>> expression = U('ab') + 'c'
-    >>> assert expression.get_language() == {'ac', 'bc'}
-
-    In this case a :mod:`short alias <pathpy.expressions.aliases>` of :class:`~.Union` and the overloaded operation :meth:`+ <pathpy.expressions.expression.Expression.__add__>` to express :class:`~.Concatenation` are being used to construct the desired expression. Method :meth:`get_language`, by default, gives the set of generated words as :class:`str` objects.
-
-    .. seealso:: :doc:`/semantics/expression`
-
-    .. todo:: add reference to external documentation about formal languages
-    """
+    """Abstract base class of expressions."""
 
     def get_generator(self, extra: object = None, max_lookahead: int = MAX_LOOKAHEAD):
         from pathpy.generators.symbols_table import SymbolsTable

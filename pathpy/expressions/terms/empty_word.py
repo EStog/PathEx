@@ -2,11 +2,11 @@ from pathpy.adts.singleton import singleton
 
 from .term import Term
 
-__all__ = ['EmptyString', 'EMPTY_STRING']
+__all__ = ['EmptyWord', 'EMPTY_WORD']
 
 
 @singleton
-class EmptyString(Term):
+class EmptyWord(Term):
     """This is a singleton class that represents the
     expression that generates the empty string.
     """
@@ -16,4 +16,4 @@ class EmptyString(Term):
         return ''
 
 
-EMPTY_STRING = EmptyString()
+EMPTY_WORD = EmptyWord()

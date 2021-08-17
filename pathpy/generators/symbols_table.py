@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field, replace
 from typing import cast
 
-from pathpy.expressions.terms.empty_string import EMPTY_STRING, EmptyString
+from pathpy.expressions.terms.empty_word import EMPTY_WORD, EmptyWord
 from pathpy.expressions.terms.letters_unions.letters_negative_union import \
     LettersNegativeUnion as NU
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
@@ -69,9 +69,9 @@ class SymbolsTable:
 
         if a1_type == a2_type == NW:
             return self._intersect_nameds(a1, a2)
-        elif a1_type == NW and a2_type != EmptyString:
+        elif a1_type == NW and a2_type != EmptyWord:
             return self._intersect_named__term(a1, a2)
-        elif a2_type == NW and a1_type != EmptyString:
+        elif a2_type == NW and a1_type != EmptyWord:
             return self._intersect_named__term(a2, a1)
         else:
             return self._get_intersect_values(a1, a2), self
@@ -81,9 +81,9 @@ class SymbolsTable:
 
         if a1_type == a2_type == NW:
             return self._bi_difference_nameds(a1, a2)
-        elif a1_type == NW and a2_type != EmptyString:
+        elif a1_type == NW and a2_type != EmptyWord:
             return self._bi_difference_named__term(a1, a2)
-        elif a2_type == NW and a1_type != EmptyString:
+        elif a2_type == NW and a1_type != EmptyWord:
             return self._bi_difference_named__term(a2, a1)
         else:
             x, y = self._get_bi_difference_values(a1, a2)
@@ -92,9 +92,9 @@ class SymbolsTable:
     def _get_intersect_values(self, a1: Term, a2: Term) -> Term | None:
         a1_type, a2_type = type(a1), type(a2)
 
-        if a1_type == a2_type == EmptyString:
-            return EMPTY_STRING
-        elif a1_type == EmptyString or a2_type == EmptyString:
+        if a1_type == a2_type == EmptyWord:
+            return EMPTY_WORD
+        elif a1_type == EmptyWord or a2_type == EmptyWord:
             return None
         elif (a1_type, a2_type) == (PU, PU):
             a1, a2 = cast(PU, a1), cast(PU, a2)
@@ -124,12 +124,12 @@ class SymbolsTable:
 
         a1_type, a2_type = type(a1), type(a2)
 
-        if a1_type == a2_type == EmptyString:
+        if a1_type == a2_type == EmptyWord:
             return None, None
-        elif a1_type == EmptyString:
-            return EMPTY_STRING, a2
-        elif a2_type == EmptyString:
-            return a1, EMPTY_STRING
+        elif a1_type == EmptyWord:
+            return EMPTY_WORD, a2
+        elif a2_type == EmptyWord:
+            return a1, EMPTY_WORD
         elif (a1_type, a2_type) == (PU,  PU):
             a1, a2 = cast(PU, a1), cast(PU, a2)
             return (self._get_letters_union(a1.letters - a2.letters, PU),

@@ -5,7 +5,7 @@ from copy import copy
 from pathpy.adts.collection_wrapper import CollectionWrapper
 from pathpy.expressions.expression import Expression
 from pathpy.expressions.nary_operators.concatenation import Concatenation
-from pathpy.expressions.terms.empty_string import EMPTY_STRING
+from pathpy.expressions.terms.empty_word import EMPTY_WORD
 
 from .alternatives_generator import AlternativesGenerator
 from .defaults import (ALTERNATIVES_COLLECTION_TYPE, ONLY_COMPLETE_WORDS,
@@ -35,7 +35,7 @@ def _get_alternatives(
             for head, tail, table, extra in alt:
                 prefix_copy = copy(prefix)
                 prefix_copy.put(head)
-                if tail is EMPTY_STRING:
+                if tail is EMPTY_WORD:
                     yield prefix_copy, table, extra
                 else:
                     alternatives.put((prefix_copy, tail, table, extra))
@@ -52,7 +52,7 @@ def get_language(expression: Expression, table: SymbolsTable, extra: object,
                                                   alternatives_collection_type,
                                                   only_complete_words):
         if not prefix:
-            prefix.put(EMPTY_STRING)
+            prefix.put(EMPTY_WORD)
             yield prefix
         else:
             for prefix, _, _ in _get_alternatives(word_type, Concatenation(prefix), table, extra,

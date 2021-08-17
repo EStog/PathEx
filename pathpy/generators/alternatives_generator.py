@@ -19,7 +19,7 @@ from pathpy.expressions.repetitions.concatenation_repetition import \
     ConcatenationRepetition
 from pathpy.expressions.repetitions.shuffle_repetition import ShuffleRepetition
 from pathpy.expressions.substitution import Substitution
-from pathpy.expressions.terms.empty_string import EMPTY_STRING
+from pathpy.expressions.terms.empty_word import EMPTY_WORD
 from pathpy.expressions.terms.letters_unions.letters_negative_union import \
     LettersNegativeUnion
 from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
@@ -32,7 +32,7 @@ from ._expressions._with_cached_wildcards import WithCachedWildcards
 from .symbols_table import SymbolsTable
 
 if __debug__:
-    from .misc import NOT_EMPTY_STRING_MESSAGE
+    from .misc import NOT_EMPTY_WORD_MESSAGE
 
 __all__ = ['AlternativesGenerator']
 
@@ -66,7 +66,7 @@ class AlternativesGenerator(Iterator):
 
     @singledispatchmethod
     def _get_visitor(self, expression: object, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
-        yield LettersPossitiveUnion({expression}), EMPTY_STRING, table, extra
+        yield LettersPossitiveUnion({expression}), EMPTY_WORD, table, extra
 
     @_get_visitor.register(Callable)
     def _function_visitor(self, func: Callable[[SymbolsTable, object], tuple[object, SymbolsTable, object]], table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
@@ -75,7 +75,7 @@ class AlternativesGenerator(Iterator):
 
     @_get_visitor.register
     def _term_visitor(self, exp: Term, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
-        yield exp, EMPTY_STRING, table, extra
+        yield exp, EMPTY_WORD, table, extra
 
     @_get_visitor.register
     def _union_visitor(self, exp: Union, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
@@ -98,11 +98,11 @@ class AlternativesGenerator(Iterator):
         argument_type = type(exp.argument)
         if argument_type is LettersPossitiveUnion:
             yield (cast(LettersPossitiveUnion, exp.argument).as_negative(),
-                   EMPTY_STRING, table, extra)
+                   EMPTY_WORD, table, extra)
         elif argument_type is LettersNegativeUnion:
             yield (cast(LettersNegativeUnion, exp.argument).as_possitive(),
-                   EMPTY_STRING, table, extra)
-        elif exp.argument is EMPTY_STRING:
+                   EMPTY_WORD, table, extra)
+        elif exp.argument is EMPTY_WORD:
             yield from self._get_visitor(ConcatenationRepetition(WILDCARD, 1, inf),
                                          table, extra)
         elif isinstance(exp.argument, NAryOperator):
@@ -124,7 +124,7 @@ class AlternativesGenerator(Iterator):
             for head1, tail1, table, extra in self._get_visitor(exp.head, table, extra):
                 for head2, tail2, table, extra in self._get_visitor(exp.tail, table, extra):
                     # `aA & bB = (a & b) + (A & B)`
-                    tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
+                    tail = EMPTY_WORD if tail1 is tail2 is EMPTY_WORD \
                         else Intersection(tail1, tail2)
                     # `a & b = a`                 if `a == b`
                     head, table = table.intersect(head1, head2)
@@ -144,7 +144,7 @@ class AlternativesGenerator(Iterator):
             for head1, tail1, table, extra in self._get_visitor(exp.head, table, extra):
                 for head2, tail2, table, extra in self._get_visitor(exp.tail, table, extra):
                     # `aA @ bB = (a @ b) + (A @ B)`
-                    tail = EMPTY_STRING if tail1 is tail2 is EMPTY_STRING \
+                    tail = EMPTY_WORD if tail1 is tail2 is EMPTY_WORD \
                         else Synchronization(tail1, tail2)
                     # `a @ b = a`                     if `a == b`
                     head, table = table.intersect(head1, head2)
@@ -165,16 +165,16 @@ class AlternativesGenerator(Iterator):
                 return
 
             for head, tail, table, extra in self._get_visitor(exp.head, table, extra):
-                tail = exp.tail if tail is EMPTY_STRING \
+                tail = exp.tail if tail is EMPTY_WORD \
                     else Concatenation(tail, exp.tail)
-                if head is EMPTY_STRING:
+                if head is EMPTY_WORD:
                     yield from self._get_visitor(tail, table, extra)
                 else:
                     yield head, tail, table, extra
 
     @_get_visitor.register
     def _concatenation_repetition_visitor(self, exp: ConcatenationRepetition, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
-        assert exp.argument is not EMPTY_STRING, NOT_EMPTY_STRING_MESSAGE
+        assert exp.argument is not EMPTY_WORD, NOT_EMPTY_WORD_MESSAGE
 
         # a+1 = a
         if exp.lower_bound == exp.upper_bound == 1:
@@ -182,7 +182,7 @@ class AlternativesGenerator(Iterator):
 
         # a*n = empty | a*[1,n]
         elif exp.lower_bound == 0:
-            return self._get_visitor(Union(EMPTY_STRING,
+            return self._get_visitor(Union(EMPTY_WORD,
                                            ConcatenationRepetition(
                                                exp.argument,
                                                1, exp.upper_bound)),
@@ -207,7 +207,7 @@ class AlternativesGenerator(Iterator):
             def shuffle(x, y, table, extra):
                 for head, tail, table, extra in self._get_visitor(x, table, extra):
                     # aA // B = a + (A // B) | ...
-                    if tail is not EMPTY_STRING:
+                    if tail is not EMPTY_WORD:
                         yield head, Shuffle(tail, y), table, extra
                     else:
                         # a // B = a + B | ...
@@ -218,7 +218,7 @@ class AlternativesGenerator(Iterator):
 
     @_get_visitor.register
     def _shuffle_repetition_visitor(self, exp: ShuffleRepetition, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
-        assert exp.argument is not EMPTY_STRING, NOT_EMPTY_STRING_MESSAGE
+        assert exp.argument is not EMPTY_WORD, NOT_EMPTY_WORD_MESSAGE
 
         # a//1 = a
         if exp.lower_bound == exp.upper_bound == 1:
@@ -226,7 +226,7 @@ class AlternativesGenerator(Iterator):
 
         # a%n = empty | a%[1,n]
         elif exp.lower_bound == 0:
-            yield from self._get_visitor(Union(EMPTY_STRING,
+            yield from self._get_visitor(Union(EMPTY_WORD,
                                                ShuffleRepetition(
                                                    exp.argument,
                                                    1, exp.upper_bound)),
@@ -235,7 +235,7 @@ class AlternativesGenerator(Iterator):
             for head, tail, table, extra in self._get_visitor(exp.argument, table, extra):
 
                 # (aB)%[n,m] = a*[n,m] if `B` is empty string
-                if tail is EMPTY_STRING:
+                if tail is EMPTY_WORD:
                     yield from self._get_visitor(exp.as_concatenation_repetition(), table, extra)
 
                 # = a + (B // aB%[n-1,m-1] ) where n > 0
@@ -256,18 +256,18 @@ class AlternativesGenerator(Iterator):
                 head, table = table.get_wildcard(exp.cache_id, exp.number)
                 number += 1
 
-            if tail is not EMPTY_STRING:
+            if tail is not EMPTY_WORD:
                 tail = WithCachedWildcards(tail, number, exp.cache_id)
 
             yield head, tail, table, extra
 
     @_get_visitor.register
     def _substitution_visitor(self, exp: Substitution, table: SymbolsTable, extra: object) -> Iterator[tuple[Term, Expression, SymbolsTable, object]]:
-        assert exp is not EMPTY_STRING, NOT_EMPTY_STRING_MESSAGE
+        assert exp is not EMPTY_WORD, NOT_EMPTY_WORD_MESSAGE
 
         def get_gen_alt(head, replacements):
             nonlocal exp_tail
-            if exp_tail is not EMPTY_STRING:
+            if exp_tail is not EMPTY_WORD:
                 exp_tail = Substitution(exp_tail, replacements)
 
             return head, exp_tail, table, extra
@@ -284,13 +284,13 @@ class AlternativesGenerator(Iterator):
                         for repl_head, repl_tail, table, extra in self._get_visitor(repl, table, extra):
                             # a[D,a:r]     = r
                             # (aA)[D,a:r]  = r + A[D,a:r]
-                            if repl_tail is EMPTY_STRING:
+                            if repl_tail is EMPTY_WORD:
                                 replacements = exp.replacements | {
                                     exp_head: repl_head}
                                 yield get_gen_alt(repl_head, replacements)
                             else:
                                 # a[D,a:rR] = r + R
-                                if exp_tail is EMPTY_STRING:
+                                if exp_tail is EMPTY_WORD:
                                     yield repl_head, repl_tail, table, extra
                                 # (aA)[D,a:rR] = r + R + A[D,a:rR]
                                 # where `r` may be a cached previous NamedWildcard

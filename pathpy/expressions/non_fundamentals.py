@@ -12,7 +12,7 @@ from .nary_operators.union import Union
 from .negation import Negation
 from .substitution import Substitution
 from .terms.letters_unions.letters_possitive_union import LettersPossitiveUnion
-from .terms.empty_string import EMPTY_STRING
+from .terms.empty_word import EMPTY_WORD
 
 __all__ = ['difference', 'symmetric_difference', 'multiplication']
 

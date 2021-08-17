@@ -4,7 +4,7 @@ from typing import Iterator
 
 from pathpy.adts.singleton import singleton
 from pathpy.expressions.expression import Expression
-from pathpy.expressions.terms.empty_string import EMPTY_STRING
+from pathpy.expressions.terms.empty_word import EMPTY_WORD
 
 from ._expressions._named_wildcard import NamedWildcard
 from .alternatives_generator import AlternativesGenerator
@@ -51,7 +51,7 @@ class LettersGenerator(Iterator[object]):
             self._exhausted = True
             return None, None, None
         else:
-            if tail is EMPTY_STRING:
+            if tail is EMPTY_WORD:
                 self._exhausted = True
                 self._complete = True
             self._words_generator.register_alternative(self._prefix.copy(),

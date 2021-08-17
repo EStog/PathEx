@@ -1,0 +1,1 @@
+.. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>

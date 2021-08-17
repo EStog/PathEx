@@ -22,7 +22,7 @@ class Concatenation(NAryOperator):
     A concatenation may also be constructed by using + operator.
 
     Examples:
-       >>> from pathpy import Union as U, Concatenation as C, Intersection as I, EMPTY_STRING
+       >>> from pathpy import Union as U, Concatenation as C, Intersection as I, EMPTY_WORD
 
        >>> exp = U('ab') + C('xy')
        >>> assert exp.get_language() == exp.get_generator().get_language() == {'axy', 'bxy'}
@@ -33,5 +33,5 @@ class Concatenation(NAryOperator):
        >>> exp = I('xy') + 'a'
        >>> assert exp.get_language() == exp.get_generator().get_language() == set()
 
-       >>> assert EMPTY_STRING.get_language() == EMPTY_STRING.get_generator().get_language() == {''}
+       >>> assert EMPTY_WORD.get_language() == EMPTY_WORD.get_generator().get_language() == {''}
     """

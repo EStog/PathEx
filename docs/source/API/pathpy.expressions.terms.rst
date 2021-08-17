@@ -15,7 +15,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   pathpy.expressions.terms.empty_string
+   pathpy.expressions.terms.empty_word
    pathpy.expressions.terms.term
    pathpy.expressions.terms.wildcard
 
