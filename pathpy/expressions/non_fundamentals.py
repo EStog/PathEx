@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
-from functools import partial
 from typing import Callable, Mapping
 
 from pathpy.generation.symbols_table import SymbolsTable
@@ -12,7 +11,6 @@ from .nary_operators.union import Union
 from .negation import Negation
 from .substitution import Substitution
 from .terms.letters_unions.letters_possitive_union import LettersPossitiveUnion
-from .terms.empty_word import EMPTY_WORD
 
 __all__ = ['difference', 'symmetric_difference', 'multiplication']
 

@@ -25,7 +25,7 @@ For example, the expression :math:`(a|b)c`, generates sequences which two elemen
 >>> expression = U('ab') + 'c'
 >>> assert expression.get_language() == {'ac', 'bc'}
 
-In this case ``U`` is a :mod:`short alias <pathpy.expressions.aliases>` of :class:`~.Union` and the overloaded operation :meth:`+ <pathpy.expressions.expression.Expression.__add__>` to express :class:`~.Concatenation` are being used to construct the desired expression. Method :meth:`get_language <pathpy.expressions.expression.Expression.get_language>`, by default, gives the words represented as :class:`str` objects.
+In this case ``U`` is a :mod:`short alias <pathpy.expressions.aliases>` of :class:`~.Union` and the overloaded operation :meth:`+ <pathpy.expressions.expression.Expression.__add__>` that express :class:`~.Concatenation` is being used to construct the desired expression. Method :meth:`get_language <pathpy.expressions.expression.Expression.get_language>`, by default, gives the words as :class:`str` objects.
 
 The previous example shows a case that generates a finite language. However, there are expressions which language is infinite. For example, the expression :math:`(ab)*` generates a language which elements are the :doc:`empty word <empty_word>` or :math:`ab` several times repeated. In |ppy| idiom this may be expressed as:
 

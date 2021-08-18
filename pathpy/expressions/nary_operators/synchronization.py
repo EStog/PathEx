@@ -5,15 +5,7 @@ __all__ = ['Synchronization']
 
 class Synchronization(NAryOperator):
     """
-    `Synchronization` is semantically equivalent to a weak intersection of languages (sets of strings), that is, to see the "almost" common strings between the considered languages. The letters that are different are put as a shuffle in their corresponding places in the
-    resulting strings.
 
-    `Synchronization` (`@`) can be expressed recursively in the following manner.
-
-    Let `a` and `b` be letters, `A` and `B` strings, and `E` the empty string.
-        `a @ b = a`                     if `a == b`
-        `a @ b = a // b`                if `a != b`
-        `aA @ bB = (a @ b) + (A @ B)`
 
     Example:
         >>> from pathpy.expressions.aliases import *

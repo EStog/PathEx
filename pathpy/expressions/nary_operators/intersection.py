@@ -4,14 +4,7 @@ __all__ = ['Intersection']
 
 
 class Intersection(NAryOperator):
-    r"""`Intersection` is semantically equivalent to intersection of languages (sets of strings), that is, to see the common strings between the considered languages.
-
-    `Intersection` (`&`) can be expressed recursively in the following manner.
-
-    Let `a` and `b` be letters, `A` and `B` strings, and `E` the empty string.
-        `aA & bB = (a & b) + (A & B)`
-        `a & b = a`                 if `a == b`
-        `a & b = {}`                if `a != b`
+    r"""
 
     Examples:
         >>> from pathpy.expressions.aliases import *

@@ -10,36 +10,7 @@ __all__ = ['Substitution']
 
 @dataclass(frozen=True, repr=False)
 class Substitution(Expression):
-    """Returns a function ``Substitution -> Iterable[Concatenation]``
-    to visit a `Substitution` expression.
-
-    `Substitution` is semantically equivalent to the replacement,
-    by a given object, of a letter of the strings in a given language.
-
-    In the notation `A[D]`, `A` is an expression and `D` is a dictionary
-    that contains the replacements. Roughly speaking, it means that the
-    result of A[D] is a set of strings, each one of them taken from `A`
-    but with each occurrence of `key in D.keys()` replaced by `D[key]`.
-
-        (aA)[D,a:_] = (aA)[D,a:v]
-            where type(v)=NamedWildcard and type(a)=Letter
-                and `v` not in `A`
-
-        (aA)[D,a:_R] = (aA)[D,a:vR]
-            where type(v)=NamedWildcard and type(a)=Letter
-                and `v` not in `A`
-
-        a[D,a:r]     = r
-        (aA)[D,a:r]  = r + A[D,a:r]
-
-        a[D,a:rR]    = r + R
-        (aA)[D,a:rR] = r + R + A[D,a:rR]
-            where `c` not in `A`
-
-        So the following case should never occur:
-            A[x:a] + B[x:b]
-                where type(x)=NamedWildcard and
-                type(a)=type(b)=Letter and a != b
+    """
 
     Example:
 
