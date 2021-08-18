@@ -107,7 +107,6 @@ autodoc_typehints = 'both'
 autodoc_typehints_description_target = 'documented'
 autodoc_preserve_defaults = True
 autodoc_type_aliases = {
-
 }
 
 

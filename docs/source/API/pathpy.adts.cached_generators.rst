@@ -1,4 +1,4 @@
-pathpy.adts.cached\_generation package
+pathpy.adts.cached\_generators package
 ======================================
 
 Submodules

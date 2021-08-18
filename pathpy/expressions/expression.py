@@ -19,6 +19,7 @@ from pathpy.generation.defaults import (LANGUAGE_TYPE, ONLY_COMPLETE_WORDS,
 
 __all__ = ['Expression']
 
+ellipsis = type(...)
 
 class Expression(ABC):
     """Abstract base class of expressions."""
@@ -108,19 +109,18 @@ class Expression(ABC):
     # self + other
     @singledispatchmethod
     def __add__(self, other: object) -> Concatenation:
-        """Sum operation (``+``) is used to specify :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expression types.
+        """Plus symbol (``+``) is used to construct :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
 
         .. testsetup:: *
 
             >>> from pathpy.expressions.aliases import *
             >>> from pathpy import Concatenation, ConcatenationRepetition
-            >>> from math import inf
 
-        With an :class:`int` it translate to :class:`~.ConcatenationRepetition`:
+        With an :class:`int` as operand it construct a :class:`~.ConcatenationRepetition`:
 
-        >>> assert L('a') + 4 == ConcatenationRepetition(L('a'), 4, 4)
+        >>> assert L('a')+4 == ConcatenationRepetition(L('a'), 4, 4)
 
-        With any other object it translate to :class:`~.Concatenation`:
+        With any other object as operand it constructs a :class:`~.Concatenation`:
 
         >>> assert L('a') + 'e' == Concatenation(L('a'), 'e')
         """
@@ -131,20 +131,31 @@ class Expression(ABC):
     @__add__.register(int)
     def __(self, number) -> ConcatenationRepetition:
         from pathpy import ConcatenationRepetition
-        if number is ...:
-            number = inf
         return ConcatenationRepetition(self, number, number)
 
     # other + self
     @singledispatchmethod
-    def __radd__(self, other: object) -> Expression:
+    def __radd__(self, other: object) -> Concatenation:
+        """This is the same as :meth:`__add__`, except when it is used to construct :class:`~.Concatenation` because the former is not commutative.
+
+        .. testsetup:: *
+
+            >>> from pathpy.expressions.aliases import *
+            >>> from pathpy import Concatenation
+
+        For example:
+
+        >>> exp1 = L('a') + 's'
+        >>> exp2 = 's' + L('a')
+        >>> assert exp1 != exp2
+        >>> assert exp1 == Concatenation(L('a'), 's')
+        >>> assert exp2 == Concatenation('s', L('a'))
+        """
         from pathpy import Concatenation
         return Concatenation.new(other, self)
 
     # number+self
     __radd__.register(int, __add__.dispatcher.dispatch(int))
-    __radd__.register(float, __add__.dispatcher.dispatch(float))
-    __radd__.register(type(...), __add__.dispatcher.dispatch(type(...)))
 
     # +self
     def __pos__(self):
@@ -153,36 +164,67 @@ class Expression(ABC):
 
     # self * other
     @singledispatchmethod
-    def __mul__(self, other: object) -> Expression:
+    def __mul__(self, other: object) -> Concatenation:
+        """Asterisk symbol (``*``) is used to construct an optional :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
+
+        .. testsetup:: *
+
+            >>> from pathpy.expressions.aliases import *
+            >>> from pathpy import Concatenation, ConcatenationRepetition
+            >>> from math import inf
+
+        With any of :class:`list` of two boundaries, an :class:`int`, :obj:`math.inf` or :data:`Ellipsis` as operand it constructs a :class:`~.ConcatenationRepetition`:
+
+        >>> assert L('a')*[2,5] == ConcatenationRepetition(L('a'), 2, 5)
+        >>> assert L('a')*4 == L('a')*[0,4] == ConcatenationRepetition(L('a'), 0, 4)
+        >>> assert L('a')*inf == L('a')*... == ConcatenationRepetition(L('a'), 0, inf)
+
+        With any other object as operand it constructs an optional :class:`~.Concatenation`:
+
+        >>> assert L('a') * 'e' == Concatenation(ConcatenationRepetition(L('a'), 0, 1), 'e')
+        """
         from pathpy import Concatenation, ConcatenationRepetition
         return Concatenation.new(ConcatenationRepetition(self, 0, 1), other)
+
+    # self*[lb,ub]
+    @__mul__.register(list)
+    def __(self, bounds) -> ConcatenationRepetition:
+        from pathpy import ConcatenationRepetition
+        return ConcatenationRepetition(self, *bounds)
 
     # self*number
     @__mul__.register(int)
     @__mul__.register(float)
-    @__mul__.register(type(...))
-    def __(self, number):
+    @__mul__.register(ellipsis)
+    def __(self, number) -> ConcatenationRepetition:
         from pathpy import ConcatenationRepetition
-        if number is ...:
-            number = inf
         return ConcatenationRepetition(self, 0, number)
-
-    # self*[lb,ub]
-    @__mul__.register
-    def __(self, bounds: list):
-        from pathpy import ConcatenationRepetition
-        return ConcatenationRepetition(self, *bounds)
 
     # other * self
     @singledispatchmethod
-    def __rmul__(self, other: object) -> Expression:
+    def __rmul__(self, other: object) -> Concatenation:
+        """This is the same as :meth:`__mul__`, except when it is used to construct :class:`~.Concatenation` because the former is not commutative.
+
+        .. testsetup:: *
+
+            >>> from pathpy.expressions.aliases import *
+            >>> from pathpy import Concatenation, ConcatenationRepetition
+
+        For example:
+
+        >>> exp1 = L('a') * 's'
+        >>> exp2 = 's' * L('a')
+        >>> assert exp1 != exp2
+        >>> assert exp1 == Concatenation(ConcatenationRepetition(L('a'), 0, 1), 's')
+        >>> assert exp2 == Concatenation(ConcatenationRepetition('s', 0, 1), L('a'))
+        """
         from pathpy import Concatenation, ConcatenationRepetition
         return Concatenation.new(ConcatenationRepetition(other, 0, 1), self)
 
     # number*self
     __rmul__.register(int, __mul__.dispatcher.dispatch(int))
     __rmul__.register(float, __mul__.dispatcher.dispatch(float))
-    __rmul__.register(type(...), __mul__.dispatcher.dispatch(type(...)))
+    __rmul__.register(ellipsis, __mul__.dispatcher.dispatch(ellipsis))
 
     # [lb,ub]*self
     __rmul__.register(list, __mul__.dispatcher.dispatch(list))
@@ -196,7 +238,7 @@ class Expression(ABC):
     # self//number
     @__floordiv__.register(int)
     @__floordiv__.register(float)
-    @__floordiv__.register(type(...))
+    @__floordiv__.register(ellipsis)
     def __(self, number):
         from pathpy import ShuffleRepetition
         if number is ...:
@@ -216,7 +258,7 @@ class Expression(ABC):
     # self%number
     @__mod__.register(int)
     @__mod__.register(float)
-    @__mod__.register(type(...))
+    @__mod__.register(ellipsis)
     def __(self, number):
         from pathpy import ShuffleRepetition
         if number is ...:
@@ -237,7 +279,7 @@ class Expression(ABC):
 
     __rmod__.register(int, __mod__.dispatcher.dispatch(int))
     __rmod__.register(float, __mod__.dispatcher.dispatch(float))
-    __rmod__.register(type(...), __mod__.dispatcher.dispatch(type(...)))
+    __rmod__.register(ellipsis, __mod__.dispatcher.dispatch(ellipsis))
 
     # [lb,ub]%self
     __rmod__.register(list, __mod__.dispatcher.dispatch(list))

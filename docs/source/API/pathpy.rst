@@ -12,6 +12,14 @@ Subpackages
    pathpy.generation
    pathpy.managing
 
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   pathpy.util
+
 Module contents
 ---------------
 

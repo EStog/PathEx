@@ -4,8 +4,6 @@ from dataclasses import dataclass
 from functools import cached_property
 
 from pathpy.adts.containers.head_tail_iterable import HeadTailIterable
-from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
-    LettersPossitiveUnion
 
 from ..expression import Expression
 

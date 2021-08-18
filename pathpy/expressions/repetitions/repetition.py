@@ -16,23 +16,27 @@ class Repetition(Expression):
     """The expression to be repeated"""
     lower_bound: int | float = 0
     """The minimum amount of repetitions to be produced"""
-    upper_bound: int | float = inf
+    upper_bound: int | float | ... = inf
     """The amount of repetitions to be produced.
     If it is math.inf, it is assumed to be infinite"""
 
     def __init__(self, argument: object, lower_bound: int | float = 0,
-                 upper_bound: int | float = inf):
+                 upper_bound: int | float | ... = inf):
+
+        if upper_bound is ...:
+            upper_bound = inf
+
+        assert isinstance(lower_bound, int) and lower_bound > -1, \
+            'Lower bound must be possitive int or cero'
+        assert isinstance(upper_bound, int) or upper_bound == inf and \
+            upper_bound > -1, \
+            'Upper bound must be possitive int (not cero) or math.inf'
+        assert lower_bound <= upper_bound, \
+            'Lower bound must be less or equal to upper bound'
+
         object.__setattr__(self, 'argument', argument)
         object.__setattr__(self, 'lower_bound', lower_bound)
         object.__setattr__(self, 'upper_bound', upper_bound)
-
-        assert isinstance(self.lower_bound, int) and self.lower_bound > -1, \
-            'Lower bound must be possitive int or cero'
-        assert isinstance(self.upper_bound, int) or self.upper_bound == inf and \
-            self.upper_bound > -1, \
-            'Upper bound must be possitive int (not cero) or math.inf'
-        assert self.lower_bound <= self.upper_bound, \
-            'Lower bound must be less or equal to upper bound'
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
