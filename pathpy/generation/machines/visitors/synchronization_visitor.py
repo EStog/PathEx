@@ -13,7 +13,7 @@ def synchronization_visitor(machine: MachineWithMatchUnmatch, head1, head2, tail
     # `a @ b = a`                     if `a == b`
     match = machine.match(head1, head2)
     if match:
-        yield head1, tail
+        yield match, tail
     # `a @ b = a // b`                if `a != b`
     mismatches = machine.mismatch(head1, head2)
     for m1, m2 in mismatches:
