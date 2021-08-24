@@ -1,7 +1,7 @@
-pathpy.expressions.substitution module
+pathpy.expressions.terms.letter module
 ======================================
 
-.. automodule:: pathpy.expressions.substitution
+.. automodule:: pathpy.expressions.terms.letter
    :members:
    :undoc-members:
    :show-inheritance:

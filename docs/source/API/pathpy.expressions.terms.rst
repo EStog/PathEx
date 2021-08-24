@@ -1,14 +1,6 @@
 pathpy.expressions.terms package
 ================================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   pathpy.expressions.terms.letters_unions
-
 Submodules
 ----------
 
@@ -16,8 +8,8 @@ Submodules
    :maxdepth: 4
 
    pathpy.expressions.terms.empty_word
+   pathpy.expressions.terms.letter
    pathpy.expressions.terms.term
-   pathpy.expressions.terms.wildcard
 
 Module contents
 ---------------

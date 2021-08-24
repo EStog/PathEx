@@ -19,9 +19,7 @@ Submodules
 
    pathpy.expressions.aliases
    pathpy.expressions.expression
-   pathpy.expressions.negation
    pathpy.expressions.non_fundamentals
-   pathpy.expressions.substitution
 
 Module contents
 ---------------

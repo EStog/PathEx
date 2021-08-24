@@ -19,7 +19,6 @@ Submodules
 
    pathpy.adts.chain
    pathpy.adts.collection_wrapper
-   pathpy.adts.multifunction_by_equality
    pathpy.adts.singleton
 
 Module contents
