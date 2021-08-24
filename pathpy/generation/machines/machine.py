@@ -32,7 +32,7 @@ class MachineWithMatch(Machine):
 
 class MachineWithUnmatch(Machine):
     @abstractmethod
-    def unmatch(self, value1: object, value2: object) -> Iterable[object]: ...
+    def mismatch(self, value1: object, value2: object) -> Iterable[tuple[object, object]]: ...
 
 
 class MachineWithMatchUnmatch(MachineWithMatch, MachineWithUnmatch):
