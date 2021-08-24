@@ -15,8 +15,6 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.collection_wrapper'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.multifunction_by_equality'))
-    tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multitask.acquired_lock'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.multitask.atomics.atomic'))
@@ -41,15 +39,9 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.nary_operators.union'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.terms.letters_unions.letters_negative_union'))
-    tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.terms.letters_unions.letters_possitive_union'))
-    tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.repetitions.concatenation_repetition'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.repetitions.shuffle_repetition'))
-    tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.substitution'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.managing.synchronizer'))
     tests.addTests(doctest.DocTestSuite(

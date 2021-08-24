@@ -27,10 +27,10 @@ class Intersection(NAryOperator):
         ...     exp1.get_generator().get_language() == \
         ...     exp2.get_generator().get_language()
 
-        >>> exp = Ls('abc') + C('xyz') & Ls('axy') + C('xyz')
+        >>> exp = U('abc') + C('xyz') & U('axy') + C('xyz')
         >>> assert exp.get_language() == \
         ...     exp.get_generator().get_language() == {'axyz'}
 
-        >>> exp = Ls('axy') + C('xyz') & NLs('abc') + C('xyz')
-        >>> assert exp.get_language() == {'xxyz', 'yxyz'}
+        # >>> exp = Ls('axy') + C('xyz') & NLs('abc') + C('xyz')
+        # >>> assert exp.get_language() == {'xxyz', 'yxyz'}
     """

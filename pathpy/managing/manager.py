@@ -5,11 +5,8 @@ from contextlib import contextmanager
 from functools import wraps
 
 from pathpy.expressions.expression import Expression
-from pathpy.expressions.terms.letters_unions.letters_possitive_union import \
-    LettersPossitiveUnion
-from pathpy.generation._expressions._named_wildcard import NamedWildcard
-from pathpy.generation.alternatives_generator import AlternativesGenerator
-from pathpy.generation.symbols_table import SymbolsTable
+from pathpy.generation.machines.machine import MachineWithMatch
+
 from .tag import Tag
 
 __all__ = ['Manager']
@@ -21,9 +18,10 @@ class Manager(ABC):
     """A generic abstract manager.
     """
 
-    def __init__(self, expression: Expression, extra: object = None):
+    def __init__(self, expression: Expression, machine: MachineWithMatch):
         self._alternatives = set()
-        self._alternatives.add((expression, SymbolsTable(), extra))
+        self._alternatives.add(expression)
+        self._machine = machine
 
     @abstractmethod
     def _when_requested_match(self, label: object) -> object: ...
@@ -51,24 +49,14 @@ class Manager(ABC):
             return self._when_not_matched(label, label_info)
 
     def _advance(self, label: object) -> bool:
-        def _assert_right_match(label, match, table):
-            if isinstance(match, NamedWildcard):
-                return match == table.get_value(match)
-            elif isinstance(match, LettersPossitiveUnion):
-                return match == label
-            else:
-                return False
-
-        term = LettersPossitiveUnion({label})
-
         new_alternatives = set()
-        for exp, table, extra in self._alternatives:
-            for head, tail, table, extra in AlternativesGenerator(exp, table, extra, not_normal=True):
-                match, table = table.intersect(head, term)
+        for exp in self._alternatives:
+            for head, tail in self._machine.branches(exp):
+                match = self._machine.match(label, head)
                 if match is not None:
-                    assert _assert_right_match(term, match, table), \
-                        f'Match is {match} instead of label "{term}"'
-                    new_alternatives.add((tail, table, extra))
+                    assert match == label, \
+                        f'Match is {match} instead of label "{label}"'
+                    new_alternatives.add(tail)
         if new_alternatives:
             self._alternatives = new_alternatives
             return True

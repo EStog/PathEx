@@ -11,39 +11,48 @@ from math import inf
 
 from pathpy.generation.defaults import (LANGUAGE_TYPE, ONLY_COMPLETE_WORDS,
                                         WORD_TYPE)
+from pathpy.generation.machines.machine import Machine
 
 # TODO: __str__ y __repr__ de todas las expresiones
-
-# TODO: implementar igualdad estructural en __eq__
-# TODO: construir el hash una sola vez en tiempo de construcción de los objetos
 
 __all__ = ['Expression']
 
 ellipsis = type(...)
 
+
 class Expression(ABC):
     """Abstract base class of expressions."""
 
-    def get_generator(self, extra: object = None):
-        from pathpy.generation.symbols_table import SymbolsTable
+    def get_generator(self, machine: Machine | None = None):
+        if machine is None:
+            from pathpy.generation.machines.extended_simple_machine import \
+                ExtendedSimpleMachine
+            machine = ExtendedSimpleMachine()
         from pathpy.generation.words_generator import WordsGenerator
-        return WordsGenerator(self, SymbolsTable(), extra)
+        return WordsGenerator(self, machine)
 
-    def get_eager_generator(self, only_complete_words=ONLY_COMPLETE_WORDS,
-                            extra: object = None):
+    def get_eager_generator(self, machine: Machine | None = None,
+                            word_type=WORD_TYPE,
+                            only_complete_words=ONLY_COMPLETE_WORDS):
+        if machine is None:
+            from pathpy.generation.machines.extended_simple_machine import \
+                ExtendedSimpleMachine
+            machine = ExtendedSimpleMachine()
         from pathpy.generation.eager import words_generator
-        from pathpy.generation.symbols_table import SymbolsTable
-        return words_generator(self, table=SymbolsTable(), extra=extra, only_complete_words=only_complete_words)
+        return words_generator(self, machine, word_type, only_complete_words)
 
-    def get_language(self, language_type=LANGUAGE_TYPE,
+    def get_language(self,
+                     language_type=LANGUAGE_TYPE,
                      word_type=WORD_TYPE,
                      only_complete_words=ONLY_COMPLETE_WORDS,
-                     extra: object = None):
+                     machine: Machine | None = None,):
+        if machine is None:
+            from pathpy.generation.machines.extended_simple_machine import \
+                ExtendedSimpleMachine
+            machine = ExtendedSimpleMachine()
         from pathpy.generation.eager import words_generator
-        from pathpy.generation.symbols_table import SymbolsTable
         language = language_type()
-        for w in words_generator(self, table=SymbolsTable(), extra=extra, word_type=word_type,
-                                 only_complete_words=only_complete_words):
+        for w in words_generator(self, machine, word_type, only_complete_words=only_complete_words):
             language.put(w)
         return language
 
@@ -75,36 +84,25 @@ class Expression(ABC):
     __rmatmul__ = __matmul__
 
     # self ^ other
-    @singledispatchmethod
-    def __xor__(self, other: object) -> Expression:
-        from pathpy import symmetric_difference
-        return symmetric_difference(self, other)
+    # @singledispatchmethod
+    # def __xor__(self, other: object) -> Expression:
+    #     from pathpy import symmetric_difference
+    #     return symmetric_difference(self, other)
 
     # other ^ self
-    __rxor__ = __xor__
+    # __rxor__ = __xor__
 
     # self - other
-    @singledispatchmethod
-    def __sub__(self, other: object) -> Expression:
-        from pathpy import difference
-        return difference(self, other)
+    # @singledispatchmethod
+    # def __sub__(self, other: object) -> Expression:
+    #     from pathpy import difference
+    #     return difference(self, other)
 
     # other - self
-    @singledispatchmethod
-    def __rsub__(self, other: object) -> Expression:
-        from pathpy import difference
-        return difference(other, self)
-
-    # -self
-    def __neg__(self):
-        from pathpy import (LettersNegativeUnion, LettersPossitiveUnion,
-                            Negation)
-        if isinstance(self, LettersPossitiveUnion):
-            return LettersNegativeUnion(self.letters)
-        elif isinstance(self, LettersNegativeUnion):
-            return LettersPossitiveUnion(self.letters)
-        else:
-            return Negation(self)
+    # @singledispatchmethod
+    # def __rsub__(self, other: object) -> Expression:
+    #     from pathpy import difference
+    #     return difference(other, self)
 
     # self + other
     @singledispatchmethod
@@ -287,19 +285,3 @@ class Expression(ABC):
     @singledispatchmethod
     def __getitem__(self, key: object) -> Expression:
         raise TypeError('Key schema not supported')
-
-    # self[slice]
-    @__getitem__.register
-    def __(self, slice: slice):
-        assert slice.step == None, 'Step must be None'
-        from pathpy import Substitution
-        return Substitution(self, {slice.start: slice.stop})
-
-    # self[slices]
-    @__getitem__.register(tuple)
-    def __(self, slices: tuple[slice, ...]):
-        from pathpy import Substitution
-        d = {}
-        for s in slices:
-            d[s.start] = s.stop
-        return Substitution(self, d)

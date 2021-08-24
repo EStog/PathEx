@@ -3,13 +3,9 @@ from __future__ import annotations
 from typing import Iterator
 
 from pathpy.adts.singleton import singleton
-from pathpy.expressions.expression import Expression
 from pathpy.expressions.terms.empty_word import EMPTY_WORD
 
-from ._expressions._named_wildcard import NamedWildcard
-from .alternatives_generator import AlternativesGenerator
-from .lazy_value import LazyValue
-from .symbols_table import SymbolsTable
+from .machines.machine import Branches, Machine
 
 
 @singleton
@@ -22,11 +18,13 @@ INCOMPLETE_WORD = IncompleteWord()
 
 class LettersGenerator(Iterator[object]):
 
-    def __init__(self, prefix: list[object], alts_gen: AlternativesGenerator,
-                 words_generator):
+    def __init__(self, prefix: list[object],
+                 branches: Branches,
+                 machine: Machine, words_generator):
         from .words_generator import WordsGenerator
         self._prefix = prefix
-        self._alts_gen = alts_gen
+        self._machine = machine
+        self._branches = branches
         self._words_generator: WordsGenerator = words_generator
         self._pos = 0
         self._complete = False
@@ -34,45 +32,30 @@ class LettersGenerator(Iterator[object]):
         self.advance_once()
 
     def __next__(self) -> object:
-        while self._pos == len(self._prefix):
-            if self.advance_once() == (None, None, None):
+        if self._pos == len(self._prefix):
+            if not self.advance_once():
                 raise StopIteration
         ret = self._prefix[self._pos]
         self._pos += 1
         return ret
 
-    def advance_once(self):
+    def advance_once(self) -> bool:
         if self._exhausted:
-            return None, None, None
+            return False
         try:
-            head, tail, table, extra = next(self._alts_gen)
+            head, tail = next(self._branches)
         except StopIteration:
             self._exhausted = True
-            return None, None, None
+            return False
         else:
             if tail is EMPTY_WORD:
                 self._exhausted = True
                 self._complete = True
-            self._words_generator.register_alternative(self._prefix.copy(),
-                                                       self._alts_gen)
-            self._alts_gen = AlternativesGenerator(tail, table, extra)
-            if isinstance(head, NamedWildcard):
-                head = LazyValue(head, tail, table, extra,
-                                 len(self._prefix), self)
+            self._words_generator.register_partial_word(
+                self._prefix.copy(), self._branches)
+            self._branches = self._machine.branches(tail)
             self._prefix.append(head)
-            return tail, table, extra
-
-    def update(self, one: object, rest: Iterator[object], pos: int,
-               tail: Expression, table: SymbolsTable, extra: object):
-        self._prefix[pos] = one
-        before = self._prefix[:pos]
-        after = self._prefix[pos+1:]
-        self._words_generator.register_words(
-            LettersGenerator(
-                before + [l] + after,
-                AlternativesGenerator(tail, table, extra),
-                self._words_generator,
-                self.max_lookahead) for l in rest)
+            return True
 
     @property
     def exhausted(self):

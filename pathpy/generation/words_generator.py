@@ -1,85 +1,69 @@
 from __future__ import annotations
 
-from typing import Iterable, Iterator
+from typing import Iterator
 
 from pathpy.adts.collection_wrapper import CollectionWrapper
 from pathpy.expressions.expression import Expression
+from pathpy.generation.machines.machine import Branches, Machine
 
-from .alternatives_generator import AlternativesGenerator
-from .defaults import (ALTERNATIVES_COLLECTION_TYPE, LANGUAGE_TYPE,
-                       MAX_LOOKAHEAD, ONLY_COMPLETE_WORDS, WORD_MAX_LENGTH,
-                       WORD_TYPE, WORDS_COLLECTION_TYPE)
-from .lazy_value import LazyValue
+from .defaults import (COLLECTION_TYPE, LANGUAGE_TYPE, ONLY_COMPLETE_WORDS,
+                       WORD_MAX_LENGTH, WORD_TYPE)
 from .letters_generator import LettersGenerator
-from .symbols_table import SymbolsTable
 
 # TODO: Concurrent-safe version.
 
 __all__ = ['WordsGenerator']
 
-Alternative = tuple[list[object], AlternativesGenerator]
+Subtree = tuple[list[object], Branches]
 
 
 class WordsGenerator(Iterator[LettersGenerator]):
-    def __init__(self, expression: Expression,
-                 table: SymbolsTable, extra: object,
-                 alternatives_collection_type: type[CollectionWrapper] | None = None,
-                 delivered_collection_type: type[CollectionWrapper] | None = None,
-                 words_collection_type: type[CollectionWrapper] | None = None):
-        if table is None:
-            table = SymbolsTable()
-        if alternatives_collection_type is None:
-            self._alternatives: CollectionWrapper[Alternative] = \
-                ALTERNATIVES_COLLECTION_TYPE()
+    def __init__(self, expression: Expression, machine: Machine,
+                 partial_words_type: type[CollectionWrapper] | None = None,
+                 delivered_words_type: type[CollectionWrapper] | None = None):
+        self._machine = machine
+        if partial_words_type is None:
+            self._partial_words: CollectionWrapper[Subtree] = \
+                COLLECTION_TYPE()
         else:
-            self._alternatives = alternatives_collection_type()
-        if delivered_collection_type is None:
-            self._delivered: CollectionWrapper[LettersGenerator] = \
-                ALTERNATIVES_COLLECTION_TYPE()
+            self._partial_words = partial_words_type()
+        if delivered_words_type is None:
+            self._delivered_words: CollectionWrapper[LettersGenerator] = \
+                COLLECTION_TYPE()
         else:
-            self._delivered = delivered_collection_type()
-        if words_collection_type is None:
-            self._words: CollectionWrapper[LettersGenerator] = \
-                WORDS_COLLECTION_TYPE()
-        else:
-            self._words = words_collection_type()
-        self._alternatives.put(
-            ([], AlternativesGenerator(expression, table, extra)))
+            self._delivered_words = delivered_words_type()
+        self._partial_words.put(
+            ([], machine.branches(expression)))
 
     def __next__(self) -> LettersGenerator:
-        try:
-            to_deliver = self._words.pop()
-        except self._words.PopException:
-            while True:
-                try:
-                    prefix, alts_gen = self._alternatives.pop()
-                except self._alternatives.PopException:
-                    if not self._advance_one_delivered():
-                        raise StopIteration
-                else:
-                    to_deliver = LettersGenerator(prefix, alts_gen, self)
-                    if not to_deliver.exhausted or to_deliver.complete:
-                        break
-        self._delivered.put(to_deliver)
+        while True:
+            try:
+                prefix, alternatives = self._partial_words.pop()
+            except self._partial_words.PopException:
+                if not self._advance_one_delivered():
+                    raise StopIteration
+            else:
+                to_deliver = LettersGenerator(
+                    prefix, alternatives, self._machine, self)
+                if not to_deliver.exhausted or to_deliver.complete:
+                    break
+        self._delivered_words.put(to_deliver)
         return to_deliver
 
     def _advance_one_delivered(self) -> bool:
         while True:
             try:
-                delivered = self._delivered.pop()
-            except self._delivered.PopException:
+                delivered = self._delivered_words.pop()
+            except self._delivered_words.PopException:
                 return False
             else:
-                if None not in delivered.advance_once():
-                    self._delivered.put(delivered)
+                if delivered.advance_once():
+                    self._delivered_words.put(delivered)
                     break
         return True
 
-    def register_alternative(self, prefix, alts_gen):
-        self._alternatives.put((prefix, alts_gen))
-
-    def register_words(self, iterable: Iterable):
-        self._words.extend(iterable)
+    def register_partial_word(self, prefix, alts_gen):
+        self._partial_words.put((prefix, alts_gen))
 
     def get_language(self,
                      language_collection_type=LANGUAGE_TYPE,
@@ -96,8 +80,6 @@ class WordsGenerator(Iterator[LettersGenerator]):
                 except StopIteration:
                     break
                 else:
-                    if isinstance(l, LazyValue):
-                        l = l.get_value(word_max_length-i)
                     word.put(l)
                     i += 1
             if not only_complete_words or w.complete:

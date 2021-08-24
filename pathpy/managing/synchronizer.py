@@ -1,10 +1,13 @@
 from __future__ import annotations
+from pathpy.generation.machines.extended_simple_machine import ExtendedSimpleMachine
+from pathpy.generation.machines.machine import MachineWithMatch
 
 import threading
 from enum import Enum
 
 from pathpy.adts.multitask.acquired_lock import AcquiredLock
 from pathpy.managing.manager import Manager
+from pathpy.expressions.expression import Expression
 
 __all__ = ['Synchronizer']
 
@@ -157,8 +160,10 @@ class Synchronizer(Manager):
         >>> assert tuple(shared_list) in allowed_paths
     """
 
-    def __init__(self, exp, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
-        super().__init__(exp)
+    def __init__(self, exp: Expression, machine: MachineWithMatch|None=None, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
+        if machine is None:
+            machine = ExtendedSimpleMachine()
+        super().__init__(exp, machine)
         self._sync_module = concurrency_type.value
         self._sync_lock = self._sync_module.Lock()
         self._labels: dict[object, LabelInfo] = {}

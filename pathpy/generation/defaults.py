@@ -8,8 +8,6 @@ MAX_LOOKAHEAD = -1
 WORD_MAX_LENGTH = -1
 WORD_TYPE = get_collection_wrapper(list, list.append)
 LANGUAGE_TYPE = SET_OF_STRS
-ALTERNATIVES_COLLECTION_TYPE = get_collection_wrapper(
+COLLECTION_TYPE = get_collection_wrapper(
     deque, deque.appendleft, None, deque.popleft, IndexError)
 ONLY_COMPLETE_WORDS = True
-WORDS_COLLECTION_TYPE = get_collection_wrapper(
-    Chain, extend=Chain.expand_right, pop=Chain.__next__, pop_exception=StopIteration)

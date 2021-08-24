@@ -1,4 +1,9 @@
+from __future__ import annotations
+
 from pathpy.expressions.expression import Expression
+from pathpy.generation.machines.extended_simple_machine import \
+    ExtendedSimpleMachine
+from pathpy.generation.machines.machine import Machine, MachineWithMatch
 from pathpy.managing.label import Label
 
 from .manager import Manager
@@ -34,8 +39,10 @@ class TraceChecker(Manager):
     AssertionError: Enter(func_c) is not allowed after Exit(func_a)
     """
 
-    def __init__(self, expression: Expression):
-        super().__init__(expression)
+    def __init__(self, expression: Expression, machine: MachineWithMatch | None = None):
+        if machine is None:
+            machine = ExtendedSimpleMachine()
+        super().__init__(expression, machine)
         self._last_seen_label = None
 
     def _when_requested_match(self, label: Label) -> object:
