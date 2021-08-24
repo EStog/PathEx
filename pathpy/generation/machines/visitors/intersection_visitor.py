@@ -1,20 +1,20 @@
+from __future__ import annotations
+
 from pathpy.expressions.nary_operators.intersection import Intersection
-from pathpy.expressions.terms.empty_word import EMPTY_WORD
+from pathpy.expressions.terms.empty_word import EmptyWord
+from pathpy.expressions.nary_operators.nary_operator import NAryOperator
 
 from ..machine import Branches, MachineWithMatch
-from .decorators import nary_operator_visitor
+from .decorators import matching_operator_visitor, nary_operator_visitor
 
 __all__ = ['intersection_visitor']
 
+
 @nary_operator_visitor
-def intersection_visitor(machine: MachineWithMatch, exp: Intersection) -> Branches:
-    for head1, tail1 in machine.branches(exp.head):
-        for head2, tail2 in machine.branches(exp.tail):
-            # `aA & bB = (a & b) + (A & B)`
-            tail = EMPTY_WORD if tail1 is tail2 is EMPTY_WORD \
-                else Intersection(tail1, tail2)
-            # `a & b = a`                 if `a == b`
-            match = machine.match(head1, head2)
-            if match:
-                yield match, tail
-            # `a & b = {}`                if `a != b`
+@matching_operator_visitor
+def intersection_visitor(machine: MachineWithMatch, head1: object, head2: object, tail: object) -> Branches:
+    # `a & b = a`                 if `a == b`
+    match = machine.match(head1, head2)
+    if match:
+        yield match, tail
+    # `a & b = {}`                if `a != b`
