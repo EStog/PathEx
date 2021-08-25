@@ -1,3 +1,4 @@
+from pathpy.expressions.nary_operators.difference import Difference
 from pathpy.expressions.nary_operators.intersection import Intersection
 from pathpy.expressions.nary_operators.shuffle import Shuffle
 from pathpy.expressions.nary_operators.synchronization import Synchronization
@@ -6,6 +7,7 @@ from pathpy.expressions.repetitions.shuffle_repetition import ShuffleRepetition
 from .functions import simple_match, simple_mismatch
 from .machine import MachineWithMatchUnmatch
 from .simple_machine import SimpleMachine
+from .visitors.difference_visitor import difference_visitor
 from .visitors.intersection_visitor import intersection_visitor
 from .visitors.shuffle_repetition_visitor import shuffle_repetition_visitor
 from .visitors.shuffle_visitor import shuffle_visitor
@@ -24,3 +26,4 @@ class ExtendedSimpleMachine(SimpleMachine, MachineWithMatchUnmatch):
         cls.branches.register(Shuffle, shuffle_visitor)
         cls.branches.register(
             ShuffleRepetition, shuffle_repetition_visitor)
+        cls.branches.register(Difference, difference_visitor)

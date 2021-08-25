@@ -31,6 +31,8 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.nary_operators.concatenation'))
     tests.addTests(doctest.DocTestSuite(
+        'pathpy.expressions.nary_operators.difference'))
+    tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.nary_operators.intersection'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.nary_operators.shuffle'))

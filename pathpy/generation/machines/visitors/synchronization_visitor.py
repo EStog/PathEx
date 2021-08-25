@@ -15,6 +15,5 @@ def synchronization_visitor(machine: MachineWithMatchUnmatch, head1, head2, tail
     if match:
         yield match, tail
     # `a @ b = a // b`                if `a != b`
-    mismatches = machine.mismatch(head1, head2)
-    for m1, m2 in mismatches:
+    for m1, m2 in machine.mismatch(head1, head2):
         yield from machine.branches(Concatenation(Shuffle(m1, m2), tail))

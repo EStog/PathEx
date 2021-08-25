@@ -93,20 +93,20 @@ class Expression(ABC):
     # __rxor__ = __xor__
 
     # self - other
-    # @singledispatchmethod
-    # def __sub__(self, other: object) -> Expression:
-    #     from pathpy import difference
-    #     return difference(self, other)
+    @singledispatchmethod
+    def __sub__(self, other: object) -> Expression:
+        from pathpy import Difference
+        return Difference.new(self, other)
 
     # other - self
-    # @singledispatchmethod
-    # def __rsub__(self, other: object) -> Expression:
-    #     from pathpy import difference
-    #     return difference(other, self)
+    @singledispatchmethod
+    def __rsub__(self, other: object) -> Expression:
+        from pathpy import Difference
+        return Difference.new(other, self)
 
     # self + other
     @singledispatchmethod
-    def __add__(self, other: object) -> Concatenation:
+    def __add__(self, other: object) -> 'Concatenation':
         """Plus symbol (``+``) is used to construct :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
 
         .. testsetup:: *
@@ -127,13 +127,13 @@ class Expression(ABC):
 
     # self+number
     @__add__.register(int)
-    def __(self, number) -> ConcatenationRepetition:
+    def __(self, number) -> 'ConcatenationRepetition':
         from pathpy import ConcatenationRepetition
         return ConcatenationRepetition(self, number, number)
 
     # other + self
     @singledispatchmethod
-    def __radd__(self, other: object) -> Concatenation:
+    def __radd__(self, other: object) -> 'Concatenation':
         """This is the same as :meth:`__add__`, except when it is used to construct :class:`~.Concatenation` because the former is not commutative.
 
         .. testsetup:: *
@@ -162,7 +162,7 @@ class Expression(ABC):
 
     # self * other
     @singledispatchmethod
-    def __mul__(self, other: object) -> Concatenation:
+    def __mul__(self, other: object) -> 'Concatenation':
         """Asterisk symbol (``*``) is used to construct an optional :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
 
         .. testsetup:: *
@@ -186,7 +186,7 @@ class Expression(ABC):
 
     # self*[lb,ub]
     @__mul__.register(list)
-    def __(self, bounds) -> ConcatenationRepetition:
+    def __(self, bounds) -> 'ConcatenationRepetition':
         from pathpy import ConcatenationRepetition
         return ConcatenationRepetition(self, *bounds)
 
@@ -194,13 +194,13 @@ class Expression(ABC):
     @__mul__.register(int)
     @__mul__.register(float)
     @__mul__.register(ellipsis)
-    def __(self, number) -> ConcatenationRepetition:
+    def __(self, number) -> 'ConcatenationRepetition':
         from pathpy import ConcatenationRepetition
         return ConcatenationRepetition(self, 0, number)
 
     # other * self
     @singledispatchmethod
-    def __rmul__(self, other: object) -> Concatenation:
+    def __rmul__(self, other: object) -> 'Concatenation':
         """This is the same as :meth:`__mul__`, except when it is used to construct :class:`~.Concatenation` because the former is not commutative.
 
         .. testsetup:: *
