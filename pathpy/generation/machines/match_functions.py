@@ -8,11 +8,12 @@ from pathpy.expressions.terms.complemented_letters_union import \
 from pathpy.expressions.terms.singleton_words import (SINGLETON_WORDS,
                                                       SingletonWords)
 
-from .machine import MachineWithMatch
+from .machine import MachineWithMatch, Matches
 
 
-def simple_match(self: MachineWithMatch, value1: object, value2: object) -> object:
-    return value1 if value1 == value2 else None
+def simple_match(self: MachineWithMatch, value1: object, value2: object) -> Matches:
+    if value1 == value2:
+        yield value1
 
 
 def _get_union(v1, v2, op, kind):
@@ -53,27 +54,30 @@ def general_match_with_complemented_singwords(value1: object, value2: object,
         return match
 
 
-def match_with_(self: MachineWithMatch, value1: object, value2: object, func) -> object:
+def match_with_(self: MachineWithMatch, value1: object, value2: object, func) -> Matches:
     type1, type2 = type(value1), type(value2)
     if match := func(value1, value2, type1, type2):
-        return match
+        if isinstance(match, Union):
+            yield from match
+        else:
+            yield match
     else:
-        return simple_match(self, value1, value2)
+        yield from simple_match(self, value1, value2)
 
 
 def match_with_singwords(self: MachineWithMatch,
-                         value1: object, value2: object) -> object:
+                         value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
                        general_match_with_singwords)
 
 
 def match_with_complemented(self: MachineWithMatch,
-                            value1: object, value2: object) -> object:
+                            value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
                        general_match_with_complemented)
 
 
 def match_with_complemented_singwords(self: MachineWithMatch,
-                                      value1: object, value2: object) -> object:
+                                      value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
                        general_match_with_complemented_singwords)

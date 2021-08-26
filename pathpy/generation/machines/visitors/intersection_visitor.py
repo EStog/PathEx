@@ -14,7 +14,6 @@ __all__ = ['intersection_visitor']
 @matching_operator_visitor
 def intersection_visitor(machine: MachineWithMatch, head1: object, head2: object, tail: object) -> Branches:
     # `a & b = a`                 if `a == b`
-    match = machine.match(head1, head2)
-    if match:
+    for match in machine.match(head1, head2):
         yield match, tail
     # `a & b = {}`                if `a != b`

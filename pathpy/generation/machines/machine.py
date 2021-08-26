@@ -24,10 +24,10 @@ class Machine(ABC):
     @abstractmethod
     def _populate_visitor(cls): ...
 
-
+Matches = Iterable[object]
 class MachineWithMatch(Machine):
     @abstractmethod
-    def match(self, value1: object, value2: object) -> object: ...
+    def match(self, value1: object, value2: object) -> Matches: ...
 
 
 class MachineWithMismatch(Machine):

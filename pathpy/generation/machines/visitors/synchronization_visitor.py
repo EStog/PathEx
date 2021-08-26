@@ -11,8 +11,7 @@ __all__ = ['synchronization_visitor']
 @matching_operator_visitor
 def synchronization_visitor(machine: MachineWithMatchMismatch, head1, head2, tail) -> Branches:
     # `a @ b = a`                     if `a == b`
-    match = machine.match(head1, head2)
-    if match:
+    for match in machine.match(head1, head2):
         yield match, tail
     # `a @ b = a // b`                if `a != b`
     for m1, m2 in machine.mismatch(head1, head2):

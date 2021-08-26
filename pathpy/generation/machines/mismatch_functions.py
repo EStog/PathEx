@@ -12,7 +12,8 @@ Mismatches = Sequence[tuple[object, object]]
 
 
 def simple_mismatch(self: MachineWithMismatch, value1: object, value2: object) -> Mismatches:
-    return [(value1, value2)] if value1 != value2 else []
+    if value1 != value2:
+        yield value1, value2
 
 
 def _get_list_union(v1, v2, op, kind, second):
@@ -64,10 +65,14 @@ def general_mismatch_with_complemented_singwords(value1: object, value2: object,
 def mismatch_with_(self: MachineWithMismatch,
                    value1: object, value2: object, func) -> Mismatches:
     type1, type2 = type(value1), type(value2)
-    if r := func(value1, value2, type1, type2):
-        return r[:1] if len(r) == 2 and r[0] == r[1] else r
+    if mismatches := func(value1, value2, type1, type2):
+        for mismatch, v in mismatches:
+            if isinstance(mismatch, Union):
+                yield from map(lambda x: (x, v), mismatch)
+            else:
+                yield mismatch, v
     else:
-        return simple_mismatch(self, value1, value2)
+        yield from simple_mismatch(self, value1, value2)
 
 
 def mismatch_with_singwords(self: MachineWithMismatch,

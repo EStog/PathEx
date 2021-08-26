@@ -52,8 +52,7 @@ class Manager(ABC):
         new_alternatives = set()
         for exp in self._alternatives:
             for head, tail in self._machine.branches(exp):
-                match = self._machine.match(label, head)
-                if match is not None:
+                for match in self._machine.match(label, head):
                     assert match == label, \
                         f'Match is {match} instead of label "{label}"'
                     new_alternatives.add(tail)

@@ -18,17 +18,17 @@ def difference_visitor(machine: MachineWithMatchMismatch, exp: Difference) -> Br
             tail = EMPTY_WORD if tail1 is tail2 is EMPTY_WORD \
                 else exp.__class__(tail1, tail2)
             # `a @ b = a`                     if `a == b`
-            match = machine.match(head1, head2)
-            if match:
+            for match in machine.match(head1, head2):
                 matches.add(match)
                 if match in mismatches:
                     del mismatches[match]
                 if tail is not EMPTY_WORD:
                     yield match, tail
             # `a @ b = a // b`                if `a != b`
-            if mss := machine.mismatch(head1, head2):
-                m, h = mss[0]
-                if h is head2 and m not in matches:
+            for m, h in machine.mismatch(head1, head2):
+                if h is not head2:
+                    break
+                if m not in matches:
                     mismatches[m] = tail
         for m in mismatches:
             yield m, mismatches[m]

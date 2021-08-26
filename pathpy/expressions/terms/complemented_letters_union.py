@@ -7,7 +7,11 @@ from .term import Term
 
 @dataclass(frozen=True, repr=False)
 class ComplementedLettersUnion(Term):
-    """This class represents the complent of a set of letters.
+    """This class represents the complement of a set of letters.
+
+    >>> from pathpy.expressions.aliases import *
+    >>> exp = ( CL('a')+'a' ) & ( C('ab')|C('ba')|C('aa')|C('xa') )
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'ba', 'xa'}
     """
     letters: frozenset
 
