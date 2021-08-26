@@ -10,8 +10,9 @@ class SingletonWords(Term):
     >>> from pathpy.expressions.aliases import *
     >>> exp = C(_, *'aby') & C(*'xab', _)
     >>> assert exp.get_language() == exp.get_generator().get_language() == {'xaby'}
+    >>> exp = C(_, *'aby') - C(*'xabz')
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'xaby', '-xaby'}
     """
-    pass
 
 
 SINGLETON_WORDS = SingletonWords()

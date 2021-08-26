@@ -27,7 +27,8 @@ def difference_visitor(machine: MachineWithMatchMismatch, exp: Difference) -> Br
                     yield match, tail
             # `a @ b = a // b`                if `a != b`
             if mss := machine.mismatch(head1, head2):
-                if (mismatch := mss[0][0]) not in matches:
-                    mismatches[mismatch] = tail
+                m, h = mss[0]
+                if h is head2 and m not in matches:
+                    mismatches[m] = tail
         for m in mismatches:
             yield m, mismatches[m]

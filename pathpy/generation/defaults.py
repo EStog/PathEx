@@ -1,7 +1,6 @@
 from collections import deque
 from pathpy.util import SET_OF_STRS
 
-from pathpy.adts.chain import Chain
 from pathpy.adts.collection_wrapper import get_collection_wrapper
 
 MAX_LOOKAHEAD = -1
