@@ -25,9 +25,9 @@ class Expression(ABC):
 
     def get_generator(self, machine: Machine | None = None):
         if machine is None:
-            from pathpy.generation.machines.extended_simple_machine import \
-                ExtendedSimpleMachine
-            machine = ExtendedSimpleMachine()
+            from pathpy.generation.machines.extended_machine_with_complemented_singwords import \
+                ExtendedMachineWithComplementedSingWords
+            machine = ExtendedMachineWithComplementedSingWords()
         from pathpy.generation.words_generator import WordsGenerator
         return WordsGenerator(self, machine)
 
@@ -35,9 +35,9 @@ class Expression(ABC):
                             word_type=WORD_TYPE,
                             only_complete_words=ONLY_COMPLETE_WORDS):
         if machine is None:
-            from pathpy.generation.machines.extended_simple_machine import \
-                ExtendedSimpleMachine
-            machine = ExtendedSimpleMachine()
+            from pathpy.generation.machines.extended_machine_with_complemented_singwords import \
+                ExtendedMachineWithComplementedSingWords
+            machine = ExtendedMachineWithComplementedSingWords()
         from pathpy.generation.eager import words_generator
         return words_generator(self, machine, word_type, only_complete_words)
 
@@ -47,9 +47,9 @@ class Expression(ABC):
                      only_complete_words=ONLY_COMPLETE_WORDS,
                      machine: Machine | None = None,):
         if machine is None:
-            from pathpy.generation.machines.extended_simple_machine import \
-                ExtendedSimpleMachine
-            machine = ExtendedSimpleMachine()
+            from pathpy.generation.machines.extended_machine_with_complemented_singwords import \
+                ExtendedMachineWithComplementedSingWords
+            machine = ExtendedMachineWithComplementedSingWords()
         from pathpy.generation.eager import words_generator
         language = language_type()
         for w in words_generator(self, machine, word_type, only_complete_words=only_complete_words):

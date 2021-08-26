@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from pathpy.expressions.expression import Expression
-from pathpy.generation.machines.extended_simple_machine import \
-    ExtendedSimpleMachine
+from pathpy.generation.machines.extended_machine_with_complemented_singwords import \
+    ExtendedMachineWithComplementedSingWords
 from pathpy.generation.machines.machine import Machine, MachineWithMatch
 from pathpy.managing.label import Label
 
@@ -41,7 +41,7 @@ class TraceChecker(Manager):
 
     def __init__(self, expression: Expression, machine: MachineWithMatch | None = None):
         if machine is None:
-            machine = ExtendedSimpleMachine()
+            machine = ExtendedMachineWithComplementedSingWords()
         super().__init__(expression, machine)
         self._last_seen_label = None
 

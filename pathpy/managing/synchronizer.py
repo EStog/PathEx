@@ -1,5 +1,5 @@
 from __future__ import annotations
-from pathpy.generation.machines.extended_simple_machine import ExtendedSimpleMachine
+from pathpy.generation.machines.extended_machine_with_complemented_singwords import ExtendedMachineWithComplementedSingWords
 from pathpy.generation.machines.machine import MachineWithMatch
 
 import threading
@@ -162,7 +162,7 @@ class Synchronizer(Manager):
 
     def __init__(self, exp: Expression, machine: MachineWithMatch|None=None, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
         if machine is None:
-            machine = ExtendedSimpleMachine()
+            machine = ExtendedMachineWithComplementedSingWords()
         super().__init__(exp, machine)
         self._sync_module = concurrency_type.value
         self._sync_lock = self._sync_module.Lock()

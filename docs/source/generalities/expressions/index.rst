@@ -51,7 +51,7 @@ There are various kinds of expressions, which general documentation may be found
     :maxdepth: 2
 
     Empty word <empty_word>
-    Negation <negation>
+    Union <union>
 
 .. todo:: Add reference to external documentation about formal languages
 

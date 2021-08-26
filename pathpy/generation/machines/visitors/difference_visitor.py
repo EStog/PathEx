@@ -1,14 +1,14 @@
 from pathpy.expressions.nary_operators.difference import Difference
 from pathpy.expressions.terms.empty_word import EMPTY_WORD
 
-from ..machine import Branches, MachineWithMatchUnmatch
+from ..machine import Branches, MachineWithMatchMismatch
 from .decorators import nary_operator_visitor
 
 __all__ = ['difference_visitor']
 
 
 @nary_operator_visitor
-def difference_visitor(machine: MachineWithMatchUnmatch, exp: Difference) -> Branches:
+def difference_visitor(machine: MachineWithMatchMismatch, exp: Difference) -> Branches:
     for head1, tail1 in machine.branches(exp.head):
         # this variables are just to support the case of the presence of wildcards. In the simple case without wildcards, this is fairly harmless.
         matches = set()
@@ -26,8 +26,8 @@ def difference_visitor(machine: MachineWithMatchUnmatch, exp: Difference) -> Bra
                 if tail is not EMPTY_WORD:
                     yield match, tail
             # `a @ b = a // b`                if `a != b`
-            for mismatch, _ in machine.mismatch(head1, head2):
-                if mismatch not in matches:
+            if mss := machine.mismatch(head1, head2):
+                if (mismatch := mss[0][0]) not in matches:
                     mismatches[mismatch] = tail
         for m in mismatches:
             yield m, mismatches[m]

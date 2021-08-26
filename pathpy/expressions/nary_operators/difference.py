@@ -12,4 +12,8 @@ class Difference(NAryOperator):
     >>> exp = ( U('xab') + U('xy') ) - ( U('ab') + U('ab') )
     >>> assert exp.get_language() == exp.get_generator().get_language() == \
         {'ax', 'ay', 'bx', 'by', 'xx', 'xy'}
+    >>> exp = L('a') - L('b')
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'a'}
+    >>> exp = L('a') - L('a')
+    >>> assert exp.get_language() == exp.get_generator().get_language() == set()
     """

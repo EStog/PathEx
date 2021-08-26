@@ -1,0 +1,17 @@
+from pathpy.adts.singleton import singleton
+
+from .term import Term
+
+
+@singleton
+class SingletonWords(Term):
+    """This class represents the language of singleton words, that is, the set of all words of length 1.
+
+    >>> from pathpy.expressions.aliases import *
+    >>> exp = C(_, *'aby') & C(*'xab', _)
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'xaby'}
+    """
+    pass
+
+
+SINGLETON_WORDS = SingletonWords()

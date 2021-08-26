@@ -45,6 +45,8 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.repetitions.shuffle_repetition'))
     tests.addTests(doctest.DocTestSuite(
+        'pathpy.expressions.terms.singleton_words'))
+    tests.addTests(doctest.DocTestSuite(
         'pathpy.managing.synchronizer'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.managing.trace_checker'))

@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from functools import singledispatchmethod
-from typing import Iterable, Iterator
+from typing import Iterable, Iterator, Sequence
 
 __all__ = ['Machine']
 
@@ -30,10 +30,10 @@ class MachineWithMatch(Machine):
     def match(self, value1: object, value2: object) -> object: ...
 
 
-class MachineWithUnmatch(Machine):
+class MachineWithMismatch(Machine):
     @abstractmethod
-    def mismatch(self, value1: object, value2: object) -> Iterable[tuple[object, object]]: ...
+    def mismatch(self, value1: object, value2: object) -> Sequence[tuple[object, object]]: ...
 
 
-class MachineWithMatchUnmatch(MachineWithMatch, MachineWithUnmatch):
+class MachineWithMatchMismatch(MachineWithMatch, MachineWithMismatch):
     pass
