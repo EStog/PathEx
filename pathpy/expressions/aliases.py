@@ -1,4 +1,4 @@
-__all__ = ['C', 'I', 'S', 'U', 'CR', 'SR', 'L', '_', 'CL']
+__all__ = ['C', 'I', 'S', 'U', 'CR', 'SR', 'L', '_', 'LC']
 
 from .nary_operators.concatenation import Concatenation as C
 from .nary_operators.intersection import Intersection as I
@@ -8,4 +8,4 @@ from .repetitions.concatenation_repetition import ConcatenationRepetition as CR
 from .repetitions.shuffle_repetition import ShuffleRepetition as SR
 from .terms.letter import Letter as L
 from .terms.singleton_words import SINGLETON_WORDS as _
-from .terms.complemented_letters_union import ComplementedLettersUnion as CL
+from .terms.letters_complement import LettersComplement as LC

@@ -16,4 +16,11 @@ class Difference(NAryOperator):
     >>> assert exp.get_language() == exp.get_generator().get_language() == {'a'}
     >>> exp = L('a') - L('a')
     >>> assert exp.get_language() == exp.get_generator().get_language() == set()
+    >>> exp = C('ab') - 'abc'
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'ab'}
+
+    In the case of the presence of :class:`SingletonWords` object the difference may be given in a decomposed manner.
+
+    >>> exp = _+3 - C('ab')
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'-ab_', 'ab_', 'a-b_', '-a-b_'} # this is the same as {'___'}, but this is given descomposed.
     """

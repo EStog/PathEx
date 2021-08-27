@@ -3,10 +3,11 @@ from __future__ import annotations
 from operator import or_, sub
 
 from pathpy.expressions.nary_operators.union import Union
-from pathpy.expressions.terms.complemented_letters_union import \
-    ComplementedLettersUnion
+from pathpy.expressions.terms.letters_complement import \
+    LettersComplement
 from pathpy.expressions.terms.singleton_words import (SINGLETON_WORDS,
                                                       SingletonWords)
+from pathpy.expressions.terms.empty_word import EmptyWord
 
 from .machine import MachineWithMatch, Matches
 
@@ -23,30 +24,32 @@ def _get_union(v1, v2, op, kind):
 
 def general_match_with_singwords(value1: object, value2: object,
                                  type1, type2) -> object:
-    if type1 == type2 == SingletonWords:
-        return SINGLETON_WORDS
-    elif type1 == SingletonWords:
-        return value2
-    elif type2 == SingletonWords:
-        return value1
+    if EmptyWord not in (type1, type2):
+        if type1 == type2 == SingletonWords:
+            return SINGLETON_WORDS
+        elif type1 == SingletonWords:
+            return value2
+        elif type2 == SingletonWords:
+            return value1
 
 
 def general_match_with_complemented(value1: object, value2: object,
                                     type1, type2) -> object:
-    if type1 == type2 == ComplementedLettersUnion:
-        # De Morgan's Law
-        return _get_union(value1.letters, value2.letters, or_, ComplementedLettersUnion)
-    elif type1 == ComplementedLettersUnion:
-        return _get_union({value2}, value1.letters, sub, Union)
-    elif type2 == ComplementedLettersUnion:
-        return _get_union({value1}, value2.letters, sub, Union)
+    if EmptyWord not in (type1, type2):
+        if type1 == type2 == LettersComplement:
+            # De Morgan's Law
+            return _get_union(value1.letters, value2.letters, or_, LettersComplement)
+        elif type1 == LettersComplement:
+            return _get_union({value2}, value1.letters, sub, Union)
+        elif type2 == LettersComplement:
+            return _get_union({value1}, value2.letters, sub, Union)
 
 
 def general_match_with_complemented_singwords(value1: object, value2: object,
                                               type1, type2) -> object:
-    if type1 == ComplementedLettersUnion and type2 == SingletonWords:
+    if type1 == LettersComplement and type2 == SingletonWords:
         return value1
-    elif type1 == SingletonWords and type2 == ComplementedLettersUnion:
+    elif type1 == SingletonWords and type2 == LettersComplement:
         return value2
     elif match := general_match_with_singwords(value1, value2, type1, type2):
         return match

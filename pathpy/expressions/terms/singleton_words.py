@@ -14,5 +14,8 @@ class SingletonWords(Term):
     >>> assert exp.get_language() == exp.get_generator().get_language() == {'xaby', '-xaby'}
     """
 
+    def __str__(self) -> str:
+        return '_'
+
 
 SINGLETON_WORDS = SingletonWords()

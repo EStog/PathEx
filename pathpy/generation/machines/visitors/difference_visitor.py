@@ -10,21 +10,20 @@ __all__ = ['difference_visitor']
 @nary_operator_visitor
 def difference_visitor(machine: MachineWithMatchMismatch, exp: Difference) -> Branches:
     for head1, tail1 in machine.branches(exp.head):
-        # this variables are just to support the case of the presence of wildcards. In the simple case without wildcards, this is fairly harmless.
         matches = set()
         mismatches = {}
         for head2, tail2 in machine.branches(exp.tail):
-            # `aA op bB = (a match b) + (A match B)`
+
             tail = EMPTY_WORD if tail1 is tail2 is EMPTY_WORD \
                 else exp.__class__(tail1, tail2)
-            # `a @ b = a`                     if `a == b`
+
             for match in machine.match(head1, head2):
                 matches.add(match)
                 if match in mismatches:
                     del mismatches[match]
                 if tail is not EMPTY_WORD:
                     yield match, tail
-            # `a @ b = a // b`                if `a != b`
+
             for m, h in machine.mismatch(head1, head2):
                 if h is not head2:
                     break

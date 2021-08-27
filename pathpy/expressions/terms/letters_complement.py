@@ -1,4 +1,3 @@
-import re
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -6,11 +5,11 @@ from .term import Term
 
 
 @dataclass(frozen=True, repr=False)
-class ComplementedLettersUnion(Term):
-    """This class represents the complement of a set of letters.
+class LettersComplement(Term):
+    """This class represents the complement of a language of singleton words (words of length 1).
 
     >>> from pathpy.expressions.aliases import *
-    >>> exp = ( CL('a')+'a' ) & ( C('ab')|C('ba')|C('aa')|C('xa') )
+    >>> exp = ( LC('a')+'a' ) & ( C('ab')|C('ba')|C('aa')|C('xa') )
     >>> assert exp.get_language() == exp.get_generator().get_language() == {'ba', 'xa'}
     """
     letters: frozenset
