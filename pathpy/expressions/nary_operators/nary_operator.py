@@ -2,13 +2,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import cached_property
+from typing import TypeVar
 
 from pathpy.adts.containers.head_tail_iterable import HeadTailIterable
 
 from ..expression import Expression
 
 __all__ = ['NAryOperator']
-
+_T = TypeVar('_T', bound='NAryOperator')
 
 @dataclass(frozen=True, repr=False)
 class NAryOperator(Expression):
@@ -26,7 +27,7 @@ class NAryOperator(Expression):
         return f'{self.__class__.__name__}{tuple(self.arguments)}'
 
     @cached_property
-    def tail(self):
+    def tail(self: _T) -> _T:
         return self.__class__(self.arguments.tail)
 
     def __iter__(self):

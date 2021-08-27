@@ -1,19 +1,15 @@
 from __future__ import annotations
-from pathpy.generation.machines.extended_machine_with_complemented_singwords import ExtendedMachineWithComplementedSingWords
-from pathpy.generation.machines.machine import MachineWithMatch
 
 import threading
-from enum import Enum
 
 from pathpy.adts.multitask.acquired_lock import AcquiredLock
-from pathpy.managing.manager import Manager
 from pathpy.expressions.expression import Expression
+from pathpy.generation.machines.extended_machine_with_complemented_singwords import \
+    ExtendedMachineWithComplementedSingWords
+from pathpy.generation.machines.machine import MachineWithMatch
+from pathpy.managing.manager import Manager
 
 __all__ = ['Synchronizer']
-
-
-class ConcurrencyType(Enum):
-    THREADING = threading
 
 
 class LabelInfo(AcquiredLock):
@@ -160,12 +156,14 @@ class Synchronizer(Manager):
         >>> assert tuple(shared_list) in allowed_paths
     """
 
-    def __init__(self, exp: Expression, machine: MachineWithMatch|None=None, concurrency_type: ConcurrencyType = ConcurrencyType.THREADING):
+    def __init__(self, exp: Expression,
+                 machine: MachineWithMatch | None = None,
+                 lock_class=threading.Lock):
         if machine is None:
             machine = ExtendedMachineWithComplementedSingWords()
         super().__init__(exp, machine)
-        self._sync_module = concurrency_type.value
-        self._sync_lock = self._sync_module.Lock()
+        self._lock_class = lock_class
+        self._sync_lock = lock_class()
         self._labels: dict[object, LabelInfo] = {}
 
     match = Manager.match
@@ -175,7 +173,7 @@ class Synchronizer(Manager):
 
     The direct use of this method should be exercised with caution, because it leads to non structured code. In fact, in an object oriented design, its use should be discouraged. This method is public just because it might be usefull in a very specific and extraordinary use case where an structured approach may be too expensive, harder to design or to maintain.
 
-    For an structured approach use the decorator `Synchronizer.register` or the context manager `Synchronizer.region`.
+    For an structured approach use the decorator :meth:`register` or the context manager :meth:`region`.
 
     Args:
         label (object): The label to wait for.
@@ -184,7 +182,7 @@ class Synchronizer(Manager):
     def _when_requested_match(self, label: object) -> object:
         self._sync_lock.acquire()  # protect the entire procedure
         lock = self._labels.setdefault(
-            label, LabelInfo(self._sync_module.Lock))
+            label, LabelInfo(self._lock_class))
         lock.inc_requests()
         return lock
 
@@ -213,7 +211,7 @@ class Synchronizer(Manager):
                 break
 
     def requests(self, label: object):
-        return self._labels.setdefault(label, LabelInfo(self._sync_module.Lock)).requests
+        return self._labels.setdefault(label, LabelInfo(self._lock_class)).requests
 
     def permits(self, label: object):
-        return self._labels.setdefault(label, LabelInfo(self._sync_module.Lock)).permits
+        return self._labels.setdefault(label, LabelInfo(self._lock_class)).permits
