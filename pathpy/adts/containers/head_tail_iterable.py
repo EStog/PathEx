@@ -5,6 +5,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from functools import cached_property
 from itertools import chain
+from pathpy.adts.util import get_head_tail
 from typing import Iterator, TypeVar
 
 from pathpy.adts.cached_generators.cached_iterator import CachedIterator
@@ -75,15 +76,12 @@ class HeadTailIterable(Iterable[_E]):
     def __new__(cls, iterable: Iterable[_E]) -> HeadTailIterable[_E]:
         if isinstance(iterable, HeadTailIterable):
             return iterable
-        it = iter(iterable)
-        _tail = CachedIterator(deque(), it, deque.append)
-        try:
-            head = next(it)
-        except StopIteration:
-            head = None
+        head, _tail = get_head_tail(iterable)
         self = object.__new__(cls)
         object.__setattr__(self, 'head', head)
-        object.__setattr__(self, '_tail', _tail)
+        if _tail is None:
+            _tail = iter(())
+        object.__setattr__(self, '_tail', CachedIterator([], _tail, list.append))
         return self
 
     def __add__(self, other: HeadTailIterable):

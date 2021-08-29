@@ -27,6 +27,8 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathpy.adts.singleton'))
     tests.addTests(doctest.DocTestSuite(
+        'pathpy.adts.util'))
+    tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.expression'))
     tests.addTests(doctest.DocTestSuite(
         'pathpy.expressions.nary_operators.concatenation'))

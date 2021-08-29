@@ -7,8 +7,8 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   pathpy.managing.label
    pathpy.managing.manager
+   pathpy.managing.process_synchronizer
    pathpy.managing.synchronizer
    pathpy.managing.tag
    pathpy.managing.trace_checker

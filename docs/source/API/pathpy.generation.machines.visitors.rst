@@ -9,6 +9,8 @@ Submodules
 
    pathpy.generation.machines.visitors.concatenation_repetition_visitor
    pathpy.generation.machines.visitors.concatenation_visitor
+   pathpy.generation.machines.visitors.decorators
+   pathpy.generation.machines.visitors.difference_visitor
    pathpy.generation.machines.visitors.intersection_visitor
    pathpy.generation.machines.visitors.letter_visitor
    pathpy.generation.machines.visitors.misc

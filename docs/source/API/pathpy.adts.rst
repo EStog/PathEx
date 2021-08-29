@@ -20,6 +20,7 @@ Submodules
    pathpy.adts.chain
    pathpy.adts.collection_wrapper
    pathpy.adts.singleton
+   pathpy.adts.util
 
 Module contents
 ---------------

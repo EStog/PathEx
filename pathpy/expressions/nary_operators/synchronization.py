@@ -9,7 +9,7 @@ class Synchronization(NAryOperator):
 
     Example:
         >>> from pathpy.expressions.aliases import *
-        >>> from pathpy.util import SET_OF_TUPLES
+        >>> from pathpy.adts.util import SET_OF_TUPLES
 
         >>> exp = ( 'a' + U('xy') ) @ ( 'a' + U('yz') )
         >>> assert exp.get_language() == exp.get_generator().get_language() == {

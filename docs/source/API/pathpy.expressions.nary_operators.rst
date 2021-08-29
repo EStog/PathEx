@@ -8,6 +8,7 @@ Submodules
    :maxdepth: 4
 
    pathpy.expressions.nary_operators.concatenation
+   pathpy.expressions.nary_operators.difference
    pathpy.expressions.nary_operators.intersection
    pathpy.expressions.nary_operators.nary_operator
    pathpy.expressions.nary_operators.shuffle

@@ -30,7 +30,7 @@ In this case ``U`` is a :mod:`short alias <pathpy.expressions.aliases>` of :clas
 The previous example shows a case that generates a finite language. However, there are expressions which language is infinite. For example, the expression :math:`(ab)*` generates a language which elements are the :doc:`empty word <empty_word>` or :math:`ab` several times repeated. In |ppy| idiom this may be expressed as:
 
 .. >>> from pathpy.expressions.aliases import *
->>> from pathpy.util import take
+>>> from pathpy.adts.util import take
 >>> expression = C('ab')*...
 >>> assert {''.join(str(l) for l in w) for w in take(5, expression.get_eager_generator())} == \
 ...   {'', 'ab', 'abab', 'ababab', 'abababab'}

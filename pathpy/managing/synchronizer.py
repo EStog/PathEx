@@ -109,7 +109,7 @@ class Synchronizer(Manager):
         ...     _ = executor.submit(func_b)
         ...     _ = executor.submit(func_a)
 
-        >>> from pathpy.util import SET_OF_TUPLES
+        >>> from pathpy.adts.util import SET_OF_TUPLES
         >>> allowed_paths = exp.get_language(SET_OF_TUPLES)
 
         >>> assert tuple(shared_list) in allowed_paths
@@ -148,7 +148,7 @@ class Synchronizer(Manager):
         ...     _ = executor.submit(func_b)
         ...     _ = executor.submit(func_a)
 
-        >>> from pathpy.util import SET_OF_TUPLES
+        >>> from pathpy.adts.util import SET_OF_TUPLES
         >>> allowed_paths = exp.get_language(SET_OF_TUPLES)
 
         >>> assert tuple(shared_list) in allowed_paths
