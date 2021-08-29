@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('../../'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'PathPy'
+project = 'PathEx'
 copyright = f'2019-{datetime.today().year}, Ernesto Soto Gómez'
 author = 'Ernesto Soto Gómez'
 
@@ -70,25 +70,25 @@ html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
 
 modindex_common_prefix = [
-    'pathpy.',
-    'pathpy.adts.',
-    'pathpy.adts.cached_generators.',
-    'pathpy.adts.containers.',
-    'pathpy.adts.multitask.',
-    'pathpy.adts.multitask.atomics.',
-    'pathpy.expressions.',
-    'pathpy.expressions.nary_operators.',
-    'pathpy.expressions.terms.',
-    'pathpy.expressions.terms.letters_unions.',
-    'pathpy.expressions.repetitions.',
-    'pathpy.generation.',
-    'pathpy.generation._expressions.',
-    'pathpy.managing.'
+    'pathex.',
+    'pathex.adts.',
+    'pathex.adts.cached_generators.',
+    'pathex.adts.containers.',
+    'pathex.adts.multitask.',
+    'pathex.adts.multitask.atomics.',
+    'pathex.expressions.',
+    'pathex.expressions.nary_operators.',
+    'pathex.expressions.terms.',
+    'pathex.expressions.terms.letters_unions.',
+    'pathex.expressions.repetitions.',
+    'pathex.generation.',
+    'pathex.managing.'
 ]
 
 # other general options
 nitpicky = True
 add_module_names = False
+python_use_unqualified_type_names = True
 show_authors = True
 #default_role = 'any'
 rst_epilog = f"""

@@ -3,55 +3,55 @@ import doctest
 
 def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.cached_generators.cached_generator'))
+        'pathex.adts.cached_generators.cached_generator'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.cached_generators.cached_generator_method'))
+        'pathex.adts.cached_generators.cached_generator_method'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.chain'))
+        'pathex.adts.chain'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.containers.head_tail_iterable'))
+        'pathex.adts.containers.head_tail_iterable'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.containers.queue_set'))
+        'pathex.adts.containers.queue_set'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.collection_wrapper'))
+        'pathex.adts.collection_wrapper'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.multitask.acquired_lock'))
+        'pathex.adts.multitask.acquired_lock'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.multitask.atomics.atomic'))
+        'pathex.adts.multitask.atomics.atomic'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.multitask.atomics.atomic_attribute'))
+        'pathex.adts.multitask.atomics.atomic_attribute'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.multitask.atomics.atomic_integer'))
+        'pathex.adts.multitask.atomics.atomic_integer'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.multitask.shared_lock'))
+        'pathex.adts.multitask.shared_lock'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.singleton'))
+        'pathex.adts.singleton'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.adts.util'))
+        'pathex.adts.util'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.expression'))
+        'pathex.expressions.expression'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.nary_operators.concatenation'))
+        'pathex.expressions.nary_operators.concatenation'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.nary_operators.difference'))
+        'pathex.expressions.nary_operators.difference'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.nary_operators.intersection'))
+        'pathex.expressions.nary_operators.intersection'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.nary_operators.shuffle'))
+        'pathex.expressions.nary_operators.shuffle'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.nary_operators.synchronization'))
+        'pathex.expressions.nary_operators.synchronization'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.nary_operators.union'))
+        'pathex.expressions.nary_operators.union'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.repetitions.concatenation_repetition'))
+        'pathex.expressions.repetitions.concatenation_repetition'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.repetitions.shuffle_repetition'))
+        'pathex.expressions.repetitions.shuffle_repetition'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.terms.letters_complement'))
+        'pathex.expressions.terms.letters_complement'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.expressions.terms.singleton_words'))
+        'pathex.expressions.terms.singleton_words'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.managing.synchronizer'))
+        'pathex.managing.synchronizer'))
     tests.addTests(doctest.DocTestSuite(
-        'pathpy.managing.trace_checker'))
+        'pathex.managing.trace_checker'))
     return tests

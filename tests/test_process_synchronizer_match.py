@@ -9,8 +9,8 @@ sys.path.append(os.getcwd())
 from concurrent.futures import ProcessPoolExecutor
 from multiprocessing.managers import SyncManager
 
-from pathpy import Concatenation as C
-from pathpy.managing.process_synchronizer import (get_synchronizer,
+from pathex import Concatenation as C
+from pathex.managing.process_synchronizer import (get_synchronizer,
                                                   process_synchronizer)
 
 

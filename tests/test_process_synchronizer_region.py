@@ -8,9 +8,9 @@ sys.path.append(os.getcwd())
 
 from multiprocessing.managers import SyncManager
 
-from pathpy import ProcessPoolExecutor, Tag, process_synchronizer
-from pathpy.managing.process_synchronizer import process_region
-from pathpy.adts.util import SET_OF_TUPLES
+from pathex import ProcessPoolExecutor, Tag, process_synchronizer
+from pathex.managing.process_synchronizer import process_region
+from pathex.adts.util import SET_OF_TUPLES
 
 a, b, c = Tag.named('a', 'b', 'c')
 
