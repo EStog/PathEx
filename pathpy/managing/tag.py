@@ -2,11 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import cached_property
-from typing import ClassVar, Iterator
+from typing import Iterator
 
 from pathpy.expressions.nary_operators.concatenation import Concatenation
-
-from .label import Label
 
 __all__ = ['Tag']
 
@@ -18,10 +16,8 @@ class Tag(Concatenation):
     A Tag is just a concatenation of two Labels objects, identifying the beginning and the end of the region.
     """
 
-    enter: Label
-    exit: Label
-
-    label_class: ClassVar[type[Label]] = Label
+    enter: str
+    exit: str
 
     def __init__(self, name=None):
         if name is None:
@@ -29,8 +25,8 @@ class Tag(Concatenation):
         else:
             object.__setattr__(self, '_name', name)
 
-        enter = self.label_class(name, 'Enter')
-        exit = self.label_class(name, 'Exit')
+        enter = f'{name}.enter'
+        exit =  f'{name}.exit'
 
         super().__init__(enter, exit)
 
@@ -38,8 +34,6 @@ class Tag(Concatenation):
         object.__setattr__(self, 'exit', exit)
         object.__setattr__(self, 'head', enter)
 
-    def _get_labels(self, name):
-        return
     @cached_property
     def tail(self):
         return Concatenation([self.exit])

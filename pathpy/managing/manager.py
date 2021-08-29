@@ -42,6 +42,8 @@ class Manager(ABC):
         Args:
             label (object): The label to check for.
         """
+        # with open('pepe', 'a') as f:
+        #     f.write(label + ' ' + str(self._alternatives)+'\n')
         label_info = self._when_requested_match(label)
         if self._advance(label):
             return self._when_matched(label, label_info)

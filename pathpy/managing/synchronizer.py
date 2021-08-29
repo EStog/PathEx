@@ -41,7 +41,7 @@ class LabelInfo(AcquiredLock):
 class Synchronizer(Manager):
     """This class is a manager that controls the execution of its registered threads.
 
-    Example using method `check`:
+    Example using :meth:`match`::
 
         >>> from concurrent.futures import ThreadPoolExecutor
         >>> from pathpy import Synchronizer, Concatenation as C
@@ -69,10 +69,10 @@ class Synchronizer(Manager):
         ...         _ = executor.submit(producer, i)
 
         >>> assert produced == []
-        >>> assert consumed == [0, 1, 2, 3]
+        >>> assert set(consumed) == {0, 1, 2, 3}
         >>> assert sync.requests('Pi') == sync.permits('Pf') == sync.requests('Ci') == sync.permits('Cf') == 4
 
-    Example using method register:
+    Example using :meth:`register`::
 
         >>> from concurrent.futures import ThreadPoolExecutor
         >>> from pathpy import Synchronizer, Tag
@@ -109,13 +109,12 @@ class Synchronizer(Manager):
         ...     _ = executor.submit(func_b)
         ...     _ = executor.submit(func_a)
 
-        >>> from pathpy.adts.collection_wrapper import get_collection_wrapper
-        >>> Set = get_collection_wrapper(set, lambda s, w: s.add(tuple(w)))
-        >>> allowed_paths = exp.get_language(Set)
+        >>> from pathpy.util import SET_OF_TUPLES
+        >>> allowed_paths = exp.get_language(SET_OF_TUPLES)
 
         >>> assert tuple(shared_list) in allowed_paths
 
-    Example using method `region`.
+    Example using :meth:`region`::
 
         >>> a, b, c = Tag.named('a', 'b', 'c')
 
@@ -149,9 +148,8 @@ class Synchronizer(Manager):
         ...     _ = executor.submit(func_b)
         ...     _ = executor.submit(func_a)
 
-        >>> from pathpy.adts.collection_wrapper import get_collection_wrapper
-        >>> Set = get_collection_wrapper(set, lambda s, w: s.add(tuple(w)))
-        >>> allowed_paths = exp.get_language(Set)
+        >>> from pathpy.util import SET_OF_TUPLES
+        >>> allowed_paths = exp.get_language(SET_OF_TUPLES)
 
         >>> assert tuple(shared_list) in allowed_paths
     """

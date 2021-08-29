@@ -3,9 +3,7 @@ from __future__ import annotations
 from pathpy.expressions.expression import Expression
 from pathpy.generation.machines.extended_machine_with_complemented_singwords import \
     ExtendedMachineWithComplementedSingWords
-from pathpy.generation.machines.machine import Machine, MachineWithMatch
-from pathpy.managing.label import Label
-
+from pathpy.generation.machines.machine import MachineWithMatch
 from .manager import Manager
 
 __all__ = ['TraceChecker']
@@ -36,7 +34,7 @@ class TraceChecker(Manager):
     >>> func_a(), func_c(), func_b()
     Traceback (most recent call last):
         ...
-    AssertionError: Enter(func_c) is not allowed after Exit(func_a)
+    AssertionError: func_c.enter is not allowed after func_a.exit
     """
 
     def __init__(self, expression: Expression, machine: MachineWithMatch | None = None):
@@ -45,18 +43,18 @@ class TraceChecker(Manager):
         super().__init__(expression, machine)
         self._last_seen_label = None
 
-    def _when_requested_match(self, label: Label) -> object:
+    def _when_requested_match(self, label: object) -> object:
         pass
 
-    def _when_matched(self, label: Label, label_info: object) -> bool:
+    def _when_matched(self, label: object, label_info: object) -> bool:
         self._last_seen_label = label
         return False
 
-    def _when_not_matched(self, label: Label, label_info: object) -> object:
+    def _when_not_matched(self, label: object, label_info: object) -> object:
         if self._last_seen_label is None:
             return f'{label} is not allowed as first label'
         else:
             return f'{label} is not allowed after {self._last_seen_label}'
 
-    def match(self, label: Label) -> object:
+    def match(self, label: object) -> object:
         assert not (x := super().match(label)), x
