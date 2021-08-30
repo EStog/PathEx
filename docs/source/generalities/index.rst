@@ -6,7 +6,7 @@ Generalities
 
 ------------
 
-This section contains general explanations of each entity that |ppy| provides.
+This section contains general explanations of each entity that |pe| provides.
 
 .. toctree::
     :maxdepth: 2

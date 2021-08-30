@@ -2,34 +2,47 @@ import re
 import threading
 from typing import TypeVar
 
+__doc__ = f"""
+
+Singleton decorator
+===================
+
+:Module: ``{__name__}``
+
+.. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
+.. codeauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
+
+---------------------------------------------------------------
+
+This module provides a :func:`~.singleton` decorator. Although it may seem that this has little usefulness in Python (because its inherent dynamic nature), the idea is to diminsh the possibilities in that an error may be committed, and to enforce some memory optimization by using only one instance of the decorated class.
+
+.. include:: non_essential_disclamer.txt
+
+.. todo:: Review and finish
+"""
+
 __all__ = ['singleton']
 
 
-_T = TypeVar('_T')
+T = TypeVar('T')
 
 
-def singleton(wrapped_class: type[_T]) -> type[_T]:
+def singleton(wrapped_class: type[T]) -> type[T]:
     """Makes a class singleton
 
     Use it as a decorator:
 
-    >>> from dataclasses import dataclass
+        >>> from dataclasses import dataclass
 
-    >>> @singleton
-    ... @dataclass(init=False)
-    ... class A:
-    ...     attribute: int
-    ...
-    ...     def __init__(self, attribute: int):
-    ...         self.attribute = attribute + 1
+        >>> @singleton
+        ... @dataclass(init=False)
+        ... class A:
+        ...     attribute: int
+        ...
+        ...     def __init__(self, attribute: int):
+        ...         self.attribute = attribute + 1
 
-    Any call to the class will return the same object.
-    The first call will make proper initialization, but
-    subsequent calls will ignore the arguments. It is
-    allowed to call the class without arguments after
-    the first call.
-    Also, this class does not provides an instance attribute.
-    Use the class call instead or a previously assigned variable.
+    Any call to the class will return the same object. The first call will make proper initialization, but subsequent calls will ignore the arguments. It is allowed to call the class without arguments after the first call. Use the class call instead or a previously assigned variable.
 
     >>> try:
     ...     A()

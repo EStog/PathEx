@@ -1,8 +1,3 @@
-"""
-.. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
-.. codeauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
-"""
-
 from __future__ import annotations
 
 from abc import ABC
@@ -13,6 +8,19 @@ from pathex.generation.defaults import (LANGUAGE_TYPE, ONLY_COMPLETE_WORDS,
                                         WORD_TYPE)
 from pathex.generation.machines.machine import Machine
 
+__doc__= f"""
+
+Expressions abstract base class
+===============================
+
+:Module: ``{__name__}``
+
+.. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
+.. codeauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
+
+---------------------------------------------------------------
+"""
+
 # TODO: __str__ y __repr__ de todas las expresiones
 
 __all__ = ['Expression']
@@ -21,9 +29,22 @@ ellipsis = type(...)
 
 
 class Expression(ABC):
-    """Abstract base class of expressions."""
+    """Expressions abstract base class.
+
+    In |pe| objects of any other kind different from :class:`Expression` are interpreted as an identity terminal expression. :class:`Expression` is meant to grouping those kind of expressions that has a special meaning and to provide general methods and Python operator overloading.
+    """
 
     def get_generator(self, machine: Machine | None = None):
+        """get_generator(machine: Machine | None = None) -> WordsGenerator
+
+        Gives a :class:`~.WordsGenerator` with default values for the actual expression.
+        This method is meant as a handy shorcut for ``WordsGenerator(expression, machine)``.
+
+        :param machine: The machine to be used to interpret the expression, defaults to None. If it is None, then an instance of :class:`~.ExtendedMachineWithComplementedSingWords` will be used.
+        :type machine: Machine | None
+        :return: A :class:`~.WordsGenerator` with default values.
+        :rtype: WordsGenerator
+        """
         if machine is None:
             from pathex.generation.machines.extended_machine_with_complemented_singwords import \
                 ExtendedMachineWithComplementedSingWords

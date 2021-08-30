@@ -92,7 +92,7 @@ python_use_unqualified_type_names = True
 show_authors = True
 #default_role = 'any'
 rst_epilog = f"""
-.. |ppy| replace:: {project}
+.. |pe| replace:: {project}
 """
 
 
@@ -106,6 +106,7 @@ autoclass_content = 'both'
 autodoc_typehints = 'both'
 autodoc_typehints_description_target = 'documented'
 autodoc_preserve_defaults = True
+autodoc_member_order='groupwise'
 autodoc_type_aliases = {
 }
 

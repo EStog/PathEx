@@ -11,14 +11,16 @@ __doc__ = f"""
 Useful functions and constants
 ==============================
 
-**Module:** ``{__name__}``
+:Module: ``{__name__}``
 
 .. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
 .. codeauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
 
 ---------------------------------------------------------------
 
-This module contains some useful functions and constants. The content of this module is not intended to be part of the exposed main features of |ppy|. Nonetheless, it is documented in case some user find it usefull by itself.
+This module contains some useful little functions and constants.
+
+.. include:: non_essential_disclamer.txt
 """
 
 
@@ -33,14 +35,14 @@ def take(n: int, iterable: Iterable[T]) -> Iterator[T]:
 
     If ``iterable`` has less than ``n`` elements, all elements from ``iterable`` are given.
 
-    .. testsetup:: *
+    .. testsetup::
 
         >>> from pathex.adts.util import take
 
-    Example::
+    Example:
 
-        >>> assert list(take(5, range(7))) == [0, 1, 2, 3, 4]
-        >>> assert list(take(5, range(4))) == [0, 1, 2, 3]
+    >>> assert list(take(5, range(7))) == [0, 1, 2, 3, 4]
+    >>> assert list(take(5, range(4))) == [0, 1, 2, 3]
 
     :param int n: the amount of elements to be taken.
     :param Iterable[T] it: the iterable to be taken from.
@@ -53,11 +55,11 @@ def take(n: int, iterable: Iterable[T]) -> Iterator[T]:
 def get_head_tail(iterable: Iterable[T]) -> tuple[object, Iterator[T] | None]:
     """Decompose the given ``iterable`` into its head and tail.
 
-    Example:
-
-    .. testsetup:: *
+    .. testsetup::
 
        >>> from pathex.adts.util import get_head_tail
+
+    Example:
 
     >>> head, tail = get_head_tail([1, 2, 3, 4])
     >>> assert head == 1
