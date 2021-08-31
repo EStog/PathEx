@@ -3,16 +3,14 @@ from __future__ import annotations
 from operator import or_, sub
 
 from pathex.expressions.nary_operators.union import Union
-from pathex.expressions.terms.letters_complement import \
-    LettersComplement
-from pathex.expressions.terms.singleton_words import (SINGLETON_WORDS,
-                                                      SingletonWords)
+from pathex.expressions.terms.alphabet import ALPHABET, Alphabet
 from pathex.expressions.terms.empty_word import EmptyWord
+from pathex.expressions.terms.letters_complement import LettersComplement
 
-from .machine import MachineWithMatch, Matches
+from .machine import MachineMatch, Matches
 
 
-def simple_match(self: MachineWithMatch, value1: object, value2: object) -> Matches:
+def simple_match(self: MachineMatch, value1: object, value2: object) -> Matches:
     if value1 == value2:
         yield value1
 
@@ -22,18 +20,18 @@ def _get_union(v1, v2, op, kind):
     return kind(s) if s else None
 
 
-def general_match_with_singwords(value1: object, value2: object,
+def general_match_alphabet(value1: object, value2: object,
                                  type1, type2) -> object:
     if EmptyWord not in (type1, type2):
-        if type1 == type2 == SingletonWords:
-            return SINGLETON_WORDS
-        elif type1 == SingletonWords:
+        if type1 == type2 == Alphabet:
+            return ALPHABET
+        elif type1 == Alphabet:
             return value2
-        elif type2 == SingletonWords:
+        elif type2 == Alphabet:
             return value1
 
 
-def general_match_with_complemented(value1: object, value2: object,
+def general_match_completters(value1: object, value2: object,
                                     type1, type2) -> object:
     if EmptyWord not in (type1, type2):
         if type1 == type2 == LettersComplement:
@@ -45,19 +43,19 @@ def general_match_with_complemented(value1: object, value2: object,
             return _get_union({value1}, value2.letters, sub, Union)
 
 
-def general_match_with_complemented_singwords(value1: object, value2: object,
+def general_match_compalphabet(value1: object, value2: object,
                                               type1, type2) -> object:
-    if type1 == LettersComplement and type2 == SingletonWords:
+    if type1 == LettersComplement and type2 == Alphabet:
         return value1
-    elif type1 == SingletonWords and type2 == LettersComplement:
+    elif type1 == Alphabet and type2 == LettersComplement:
         return value2
-    elif match := general_match_with_singwords(value1, value2, type1, type2):
+    elif match := general_match_alphabet(value1, value2, type1, type2):
         return match
-    elif match := general_match_with_complemented(value1, value2, type1, type2):
+    elif match := general_match_completters(value1, value2, type1, type2):
         return match
 
 
-def match_with_(self: MachineWithMatch, value1: object, value2: object, func) -> Matches:
+def match_with_(self: MachineMatch, value1: object, value2: object, func) -> Matches:
     type1, type2 = type(value1), type(value2)
     if match := func(value1, value2, type1, type2):
         if isinstance(match, Union):
@@ -68,19 +66,19 @@ def match_with_(self: MachineWithMatch, value1: object, value2: object, func) ->
         yield from simple_match(self, value1, value2)
 
 
-def match_with_singwords(self: MachineWithMatch,
+def match_alphabet(self: MachineMatch,
                          value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
-                       general_match_with_singwords)
+                       general_match_alphabet)
 
 
-def match_with_complemented(self: MachineWithMatch,
+def match_completters(self: MachineMatch,
                             value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
-                       general_match_with_complemented)
+                       general_match_completters)
 
 
-def match_with_complemented_singwords(self: MachineWithMatch,
-                                      value1: object, value2: object) -> Matches:
+def match_compalphabet(self: MachineMatch,
+                          value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
-                       general_match_with_complemented_singwords)
+                       general_match_compalphabet)

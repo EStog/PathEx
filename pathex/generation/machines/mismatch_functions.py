@@ -4,16 +4,16 @@ from typing import Sequence
 from pathex.expressions.nary_operators.union import Union
 from pathex.expressions.terms.letters_complement import \
     LettersComplement
-from pathex.expressions.terms.singleton_words import SingletonWords
+from pathex.expressions.terms.alphabet import Alphabet
 
-from .machine import MachineWithMismatch
+from .machine import MachineMismatch
 
 from pathex.expressions.terms.empty_word import EmptyWord
 
 Mismatches = Sequence[tuple[object, object]]
 
 
-def simple_mismatch(self: MachineWithMismatch, value1: object, value2: object) -> Mismatches:
+def simple_mismatch(self: MachineMismatch, value1: object, value2: object) -> Mismatches:
     if value1 != value2:
         yield value1, value2
 
@@ -23,19 +23,19 @@ def _get_list_union(v1, v2, op, kind, second):
     return [(kind(s), second)] if s else []
 
 
-def general_mismatch_with_singwords(value1: object, value2: object,
+def general_mismatch_alphabet(value1: object, value2: object,
                                     type1, type2) -> Mismatches:
     if EmptyWord not in (type1, type2):
-        if type1 == type2 == SingletonWords:
+        if type1 == type2 == Alphabet:
             return []
-        elif type1 == SingletonWords:
+        elif type1 == Alphabet:
             return [(LettersComplement({value2}), value2)]
-        elif type2 == SingletonWords:
+        elif type2 == Alphabet:
             return [(LettersComplement({value1}), value1)]
     return []
 
 
-def general_mismatch_with_complemented(value1: object, value2: object,
+def general_mismatch_completters(value1: object, value2: object,
                                        type1, type2) -> Mismatches:
     if EmptyWord not in (type1, type2):
         if type1 == type2 == LettersComplement:
@@ -50,21 +50,21 @@ def general_mismatch_with_complemented(value1: object, value2: object,
     return []
 
 
-def general_mismatch_with_complemented_singwords(value1: object, value2: object,
+def general_mismatch_compalphabet(value1: object, value2: object,
                                                  type1, type2) -> Mismatches:
-    if type1 == LettersComplement and type2 == SingletonWords:
+    if type1 == LettersComplement and type2 == Alphabet:
         return [(value1.letters, value1)]
-    elif type1 == SingletonWords and type2 == LettersComplement:
+    elif type1 == Alphabet and type2 == LettersComplement:
         return [(value2.letters, value2)]
-    elif r := general_mismatch_with_singwords(value1, value2, type1, type2):
+    elif r := general_mismatch_alphabet(value1, value2, type1, type2):
         return r
-    elif r := general_mismatch_with_complemented(value1, value2, type1, type2):
+    elif r := general_mismatch_completters(value1, value2, type1, type2):
         return r
     else:
         return []
 
 
-def mismatch_with_(self: MachineWithMismatch,
+def mismatch_with_(self: MachineMismatch,
                    value1: object, value2: object, func) -> Mismatches:
     type1, type2 = type(value1), type(value2)
     if mismatches := func(value1, value2, type1, type2):
@@ -77,16 +77,16 @@ def mismatch_with_(self: MachineWithMismatch,
         yield from simple_mismatch(self, value1, value2)
 
 
-def mismatch_with_singwords(self: MachineWithMismatch,
+def mismatch_alphabet(self: MachineMismatch,
                             value1: object, value2: object) -> Mismatches:
-    return mismatch_with_(self, value1, value2, general_mismatch_with_singwords)
+    return mismatch_with_(self, value1, value2, general_mismatch_alphabet)
 
 
-def mismatch_with_complemented(self: MachineWithMismatch,
+def mismatch_completters(self: MachineMismatch,
                                value1: object, value2: object) -> Mismatches:
-    return mismatch_with_(self, value1, value2, general_mismatch_with_complemented)
+    return mismatch_with_(self, value1, value2, general_mismatch_completters)
 
 
-def mismatch_with_complemented_singwords(self: MachineWithMismatch,
+def mismatch_compalphabet(self: MachineMismatch,
                                          value1: object, value2: object) -> Mismatches:
-    return mismatch_with_(self, value1, value2, general_mismatch_with_complemented_singwords)
+    return mismatch_with_(self, value1, value2, general_mismatch_compalphabet)

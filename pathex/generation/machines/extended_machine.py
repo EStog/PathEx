@@ -4,7 +4,7 @@ from pathex.expressions.nary_operators.shuffle import Shuffle
 from pathex.expressions.nary_operators.synchronization import Synchronization
 from pathex.expressions.repetitions.shuffle_repetition import ShuffleRepetition
 
-from .machine import MachineWithMatchMismatch
+from .machine import MachineMatchMismatch
 from .match_functions import simple_match
 from .mismatch_functions import simple_mismatch
 from .simple_machine import SimpleMachine
@@ -15,7 +15,7 @@ from .visitors.shuffle_visitor import shuffle_visitor
 from .visitors.synchronization_visitor import synchronization_visitor
 
 
-class ExtendedMachine(SimpleMachine, MachineWithMatchMismatch):
+class ExtendedMachine(SimpleMachine, MachineMatchMismatch):
     match = simple_match
     mismatch = simple_mismatch
 

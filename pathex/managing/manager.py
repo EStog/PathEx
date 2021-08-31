@@ -5,7 +5,7 @@ from contextlib import contextmanager
 from functools import wraps
 
 from pathex.expressions.expression import Expression
-from pathex.generation.machines.machine import MachineWithMatch
+from pathex.generation.machines.machine import MachineMatch
 
 from .tag import Tag
 
@@ -18,7 +18,7 @@ class Manager(ABC):
     """A generic abstract manager.
     """
 
-    def __init__(self, expression: Expression, machine: MachineWithMatch):
+    def __init__(self, expression: Expression, machine: MachineMatch):
         self._alternatives = set()
         self._alternatives.add(expression)
         self._machine = machine

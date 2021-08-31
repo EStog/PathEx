@@ -105,7 +105,7 @@ todo_emit_warnings = True
 autoclass_content = 'both'
 autodoc_typehints = 'both'
 autodoc_typehints_description_target = 'documented'
-autodoc_preserve_defaults = True
+# autodoc_preserve_defaults = True
 autodoc_member_order='groupwise'
 autodoc_type_aliases = {
 }

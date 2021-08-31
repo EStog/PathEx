@@ -9,4 +9,4 @@ WORD_TYPE = get_collection_wrapper(list, list.append)
 LANGUAGE_TYPE = SET_OF_STRS
 COLLECTION_TYPE = get_collection_wrapper(
     deque, deque.appendleft, None, deque.popleft, IndexError)
-ONLY_COMPLETE_WORDS = True
+COMPLETE_WORDS = True

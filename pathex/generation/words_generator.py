@@ -6,7 +6,7 @@ from pathex.adts.collection_wrapper import CollectionWrapper
 from pathex.expressions.expression import Expression
 from pathex.generation.machines.machine import Branches, Machine
 
-from .defaults import (COLLECTION_TYPE, LANGUAGE_TYPE, ONLY_COMPLETE_WORDS,
+from .defaults import (COLLECTION_TYPE, LANGUAGE_TYPE, COMPLETE_WORDS,
                        WORD_MAX_LENGTH, WORD_TYPE)
 from .letters_generator import LettersGenerator
 
@@ -68,7 +68,7 @@ class WordsGenerator(Iterator[LettersGenerator]):
     def get_language(self,
                      language_collection_type=LANGUAGE_TYPE,
                      word_collection_type=WORD_TYPE,
-                     only_complete_words: bool = ONLY_COMPLETE_WORDS,
+                     complete_words: bool = COMPLETE_WORDS,
                      word_max_length: int = WORD_MAX_LENGTH):
         language = language_collection_type()
         for w in self:
@@ -82,6 +82,6 @@ class WordsGenerator(Iterator[LettersGenerator]):
                 else:
                     word.put(l)
                     i += 1
-            if not only_complete_words or w.complete:
+            if not complete_words or w.complete:
                 language.put(word)
         return language

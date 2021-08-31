@@ -49,7 +49,7 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathex.expressions.terms.letters_complement'))
     tests.addTests(doctest.DocTestSuite(
-        'pathex.expressions.terms.singleton_words'))
+        'pathex.expressions.terms.alphabet'))
     tests.addTests(doctest.DocTestSuite(
         'pathex.managing.synchronizer'))
     tests.addTests(doctest.DocTestSuite(

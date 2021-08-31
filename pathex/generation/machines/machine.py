@@ -25,15 +25,15 @@ class Machine(ABC):
     def _populate_visitor(cls): ...
 
 Matches = Iterable[object]
-class MachineWithMatch(Machine):
+class MachineMatch(Machine):
     @abstractmethod
     def match(self, value1: object, value2: object) -> Matches: ...
 
 
-class MachineWithMismatch(Machine):
+class MachineMismatch(Machine):
     @abstractmethod
     def mismatch(self, value1: object, value2: object) -> Sequence[tuple[object, object]]: ...
 
 
-class MachineWithMatchMismatch(MachineWithMatch, MachineWithMismatch):
+class MachineMatchMismatch(MachineMatch, MachineMismatch):
     pass

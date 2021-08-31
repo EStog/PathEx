@@ -26,8 +26,7 @@ def get_collection_wrapper(parent: type[_T],
                            extend: Callable[[_T, Iterable[_O]],
                                             None] | None = None,
                            pop: Callable[[_T], _O] | None = None,
-                           pop_exception: type[Exception] | None = None,
-                           add: Callable[[_T, _T | _X], _T | _X] | None = None) -> type[CollectionWrapper[_O]]:
+                           pop_exception: type[Exception] | None = None) -> type[CollectionWrapper[_O]]:
     """Generates a class adaptor with a put-extend-pop-add interface
 
     This adaptor factory is usefull for using with classes that expect WrapperCollection interface.
@@ -61,6 +60,8 @@ def get_collection_wrapper(parent: type[_T],
     >>> Deque = get_collection_wrapper(deque, deque.append, deque.extend, deque.pop, IndexError)
     >>> test(Deque)
     """
+    def __repr__(self):
+        return name
     def exec_body(cls):
         cls.update(parent.__dict__)
         if put:

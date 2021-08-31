@@ -4,9 +4,9 @@ import threading
 
 from pathex.adts.multitask.acquired_lock import AcquiredLock
 from pathex.expressions.expression import Expression
-from pathex.generation.machines.extended_machine_with_complemented_singwords import \
-    ExtendedMachineWithComplementedSingWords
-from pathex.generation.machines.machine import MachineWithMatch
+from pathex.generation.machines.extended_machine_compalphabet import \
+    ExtendedMachineCompalphabet
+from pathex.generation.machines.machine import MachineMatch
 from pathex.managing.manager import Manager
 
 __all__ = ['Synchronizer']
@@ -155,10 +155,10 @@ class Synchronizer(Manager):
     """
 
     def __init__(self, exp: Expression,
-                 machine: MachineWithMatch | None = None,
+                 machine: MachineMatch | None = None,
                  lock_class=threading.Lock):
         if machine is None:
-            machine = ExtendedMachineWithComplementedSingWords()
+            machine = ExtendedMachineCompalphabet()
         super().__init__(exp, machine)
         self._lock_class = lock_class
         self._sync_lock = lock_class()

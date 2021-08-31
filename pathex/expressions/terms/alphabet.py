@@ -4,7 +4,7 @@ from .term import Term
 
 
 @singleton
-class SingletonWords(Term):
+class Alphabet(Term):
     """This class represents the language of singleton words, that is, the set of all words of length 1.
 
     >>> from pathex.expressions.aliases import *
@@ -18,4 +18,4 @@ class SingletonWords(Term):
         return '_'
 
 
-SINGLETON_WORDS = SingletonWords()
+ALPHABET = Alphabet()

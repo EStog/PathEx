@@ -12,7 +12,7 @@ from multiprocessing.pool import Pool as mpPool
 from typing import Any, Callable, Iterable, TypeVar
 
 from pathex.expressions.expression import Expression
-from pathex.generation.machines.machine import MachineWithMatch
+from pathex.generation.machines.machine import MachineMatch
 
 from .synchronizer import Synchronizer
 from .tag import Tag
@@ -38,7 +38,7 @@ class SynchronizerProxy(BaseProxy):
         return self._callmethod('permits', (label,))
 
 
-def process_synchronizer(exp: Expression, machine: MachineWithMatch | None = None,
+def process_synchronizer(exp: Expression, machine: MachineMatch | None = None,
                          lock_class=threading.Lock, address=None, authkey=None, manager_class=BaseManager) -> SyncManager:
 
     synchronizer = Synchronizer(exp, machine, lock_class)

@@ -1,14 +1,14 @@
 from pathex.expressions.nary_operators.difference import Difference
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 
-from ..machine import Branches, MachineWithMatchMismatch
+from ..machine import Branches, MachineMatchMismatch
 from .decorators import nary_operator_visitor
 
 __all__ = ['difference_visitor']
 
 
 @nary_operator_visitor
-def difference_visitor(machine: MachineWithMatchMismatch, exp: Difference) -> Branches:
+def difference_visitor(machine: MachineMatchMismatch, exp: Difference) -> Branches:
     for head1, tail1 in machine.branches(exp.head):
         matches = set()
         mismatches = {}

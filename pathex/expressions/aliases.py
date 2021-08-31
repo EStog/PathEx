@@ -7,5 +7,5 @@ from .nary_operators.union import Union as U
 from .repetitions.concatenation_repetition import ConcatenationRepetition as CR
 from .repetitions.shuffle_repetition import ShuffleRepetition as SR
 from .terms.letter import Letter as L
-from .terms.singleton_words import SINGLETON_WORDS as _
+from .terms.alphabet import ALPHABET as _
 from .terms.letters_complement import LettersComplement as LC
