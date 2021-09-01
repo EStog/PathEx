@@ -30,6 +30,7 @@ ellipsis = type(...)
 T = TypeVar('T', bound=CollectionWrapper)
 E = TypeVar('E', bound=CollectionWrapper)
 
+
 class Expression(ABC):
     """Expressions abstract base class.
 
@@ -103,13 +104,44 @@ class Expression(ABC):
         """
 
     # self | other
-    @singledispatchmethod
     def __or__(self, other: object) -> Expression:
+        """Vertical bar symbol (``|``) is used to construct :class:`~.Union` expression instances:
+
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Union
+
+        >>> assert L('a') | 'b' == Union(L('a'), 'b')
+
+        :class:`~.Union` arguments are always given in a flattened manner when constructed with ``+``:
+
+        >>> assert L('a') | 'b' | 'c' == Union(L('a'), 'b', 'c')
+        """
         from pathex import Union
         return Union.new(self, other)
 
     # other | self
-    __ror__ = __or__
+    def __ror__(self, other: object) -> Expression:
+        """Although :class:`~.Union` is conmutative this construction (reflected ``|`` operator) preserve the order of the operands to allow the user to change the order of evaluation:
+
+        .. testsetup:: *
+
+                >>> from pathex.expressions.aliases import *
+                >>> from pathex import Union
+
+        >>> exp1 = L('a') | 'b'
+        >>> exp2 = 'b' | L('a')
+        >>> assert exp1 != exp2
+        >>> assert exp1 == Union(L('a'), 'b')
+        >>> assert exp2 == Union('b', L('a'))
+
+        However, the semantics remain the same:
+
+        >>> assert exp1.get_language() == exp2.get_language() == {'a', 'b'}
+        """
+        from pathex import Union
+        return Union.new(other, self)
 
     # self & other
     @singledispatchmethod
@@ -150,10 +182,13 @@ class Expression(ABC):
         from pathex import Difference
         return Difference.new(other, self)
 
+    # self+number
     # self + other
-    @singledispatchmethod
-    def __add__(self, other: object) -> 'Concatenation':
-        """Plus symbol (``+``) is used to construct :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
+    def __add__(self, v: object):
+        """__add__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
+        __add__(number: int) -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition
+
+        Plus symbol (``+``) is used to construct :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
 
         .. testsetup:: *
 
@@ -167,27 +202,30 @@ class Expression(ABC):
         With any other object as operand it constructs a :class:`~.Concatenation`:
 
         >>> assert L('a') + 'e' == Concatenation(L('a'), 'e')
-        """
-        from pathex import Concatenation
-        return Concatenation.new(self, other)
 
-    # self+number
-    @__add__.register(int)
-    def __(self, number) -> 'ConcatenationRepetition':
-        from pathex import ConcatenationRepetition
-        return ConcatenationRepetition(self, number, number)
+        :class:`~.Concatenation` arguments are always given in a flattened manner when constructed with ``+``:
+
+        >>> assert L('a') + 'b' + 'c' + 'd' == Concatenation(L('a'), *'bcd')
+        """
+        if isinstance(v, int):
+            from pathex import ConcatenationRepetition
+            return ConcatenationRepetition(self, v, v)
+        else:
+            from pathex import Concatenation
+            return Concatenation.new(self, v)
 
     # other + self
-    @singledispatchmethod
-    def __radd__(self, other: object) -> 'Concatenation':
-        """This is the same as :meth:`__add__`, except when it is used to construct :class:`~.Concatenation` because the former is not commutative.
+    # number+self
+    def __radd__(self, v):
+        """__radd__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
+        __radd__(number: int) -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition
+
+        This is the same as :meth:`__add__`, except when it is used to construct :class:`~.Concatenation` because it is not commutative:
 
         .. testsetup:: *
 
             >>> from pathex.expressions.aliases import *
             >>> from pathex import Concatenation
-
-        For example:
 
         >>> exp1 = L('a') + 's'
         >>> exp2 = 's' + L('a')
@@ -195,21 +233,26 @@ class Expression(ABC):
         >>> assert exp1 == Concatenation(L('a'), 's')
         >>> assert exp2 == Concatenation('s', L('a'))
         """
-        from pathex import Concatenation
-        return Concatenation.new(other, self)
-
-    # number+self
-    __radd__.register(int, __add__.dispatcher.dispatch(int))
+        if isinstance(v, int):
+            from pathex import ConcatenationRepetition
+            return ConcatenationRepetition(self, v, v)
+        else:
+            from pathex import Concatenation
+            return Concatenation.new(v, self)
 
     # +self
     def __pos__(self):
         from pathex import ConcatenationRepetition
         return ConcatenationRepetition(self, 1, inf)
 
+    # self*[lb,ub]
+    # self*number
     # self * other
-    @singledispatchmethod
-    def __mul__(self, other: object) -> 'Concatenation':
-        """Asterisk symbol (``*``) is used to construct an optional :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
+    def __mul__(self, v):
+        """__mul__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
+        __mul__(bound: [int, int] | int | math.inf | Ellipsis) -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition
+
+        Asterisk symbol (``*``) is used to construct an optional :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
 
         .. testsetup:: *
 
@@ -217,7 +260,7 @@ class Expression(ABC):
             >>> from pathex import Concatenation, ConcatenationRepetition
             >>> from math import inf
 
-        With any of :class:`list` of two boundaries, an :class:`int`, :obj:`math.inf` or :data:`Ellipsis` as operand it constructs a :class:`~.ConcatenationRepetition`:
+        With any of a :class:`list` of two :class:`int`, an :class:`int`, :obj:`math.inf` or :data:`Ellipsis` as operand it constructs a :class:`~.ConcatenationRepetition`:
 
         >>> assert L('a')*[2,5] == ConcatenationRepetition(L('a'), 2, 5)
         >>> assert L('a')*4 == L('a')*[0,4] == ConcatenationRepetition(L('a'), 0, 4)
@@ -227,34 +270,29 @@ class Expression(ABC):
 
         >>> assert L('a') * 'e' == Concatenation(ConcatenationRepetition(L('a'), 0, 1), 'e')
         """
-        from pathex import Concatenation, ConcatenationRepetition
-        return Concatenation.new(ConcatenationRepetition(self, 0, 1), other)
-
-    # self*[lb,ub]
-    @__mul__.register(list)
-    def __(self, bounds) -> 'ConcatenationRepetition':
-        from pathex import ConcatenationRepetition
-        return ConcatenationRepetition(self, *bounds)
-
-    # self*number
-    @__mul__.register(int)
-    @__mul__.register(float)
-    @__mul__.register(ellipsis)
-    def __(self, number) -> 'ConcatenationRepetition':
-        from pathex import ConcatenationRepetition
-        return ConcatenationRepetition(self, 0, number)
+        if isinstance(v, list):
+            from pathex import ConcatenationRepetition
+            return ConcatenationRepetition(self, *v)
+        elif isinstance(v, (int, float, ellipsis)):
+            from pathex import ConcatenationRepetition
+            return ConcatenationRepetition(self, 0, v)
+        else:
+            from pathex import Concatenation, ConcatenationRepetition
+            return Concatenation.new(ConcatenationRepetition(self, 0, 1), v)
 
     # other * self
-    @singledispatchmethod
-    def __rmul__(self, other: object) -> 'Concatenation':
-        """This is the same as :meth:`__mul__`, except when it is used to construct :class:`~.Concatenation` because the former is not commutative.
+    # number*self
+    # [lb,ub]*self
+    def __rmul__(self, other):
+        """__rmul__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
+        __rmul__(bound: [int, int] | int | math.inf | Ellipsis) -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition
+
+        This is the same as :meth:`__mul__`, except when it is used to construct :class:`~.Concatenation` because it is not commutative:
 
         .. testsetup:: *
 
             >>> from pathex.expressions.aliases import *
             >>> from pathex import Concatenation, ConcatenationRepetition
-
-        For example:
 
         >>> exp1 = L('a') * 's'
         >>> exp2 = 's' * L('a')
@@ -262,16 +300,11 @@ class Expression(ABC):
         >>> assert exp1 == Concatenation(ConcatenationRepetition(L('a'), 0, 1), 's')
         >>> assert exp2 == Concatenation(ConcatenationRepetition('s', 0, 1), L('a'))
         """
-        from pathex import Concatenation, ConcatenationRepetition
-        return Concatenation.new(ConcatenationRepetition(other, 0, 1), self)
-
-    # number*self
-    __rmul__.register(int, __mul__.dispatcher.dispatch(int))
-    __rmul__.register(float, __mul__.dispatcher.dispatch(float))
-    __rmul__.register(ellipsis, __mul__.dispatcher.dispatch(ellipsis))
-
-    # [lb,ub]*self
-    __rmul__.register(list, __mul__.dispatcher.dispatch(list))
+        if not isinstance(other, (list, int, float, ellipsis)):
+            from pathex import Concatenation, ConcatenationRepetition
+            return Concatenation.new(ConcatenationRepetition(other, 0, 1), self)
+        else:
+            return self.__mul__(other)
 
     # self // other
     @singledispatchmethod
