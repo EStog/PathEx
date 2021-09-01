@@ -104,8 +104,10 @@ class Expression(ABC):
         """
 
     # self | other
-    def __or__(self, other: object) -> Expression:
-        """Vertical bar symbol (``|``) is used to construct :class:`~.Union` expression instances:
+    def __or__(self, other):
+        """__or__(other: object) -> pathex.expressions.nary_operators.union.Union
+
+        Vertical bar symbol (``|``) is used to construct :class:`~.Union` expression instances:
 
         .. testsetup:: *
 
@@ -114,7 +116,7 @@ class Expression(ABC):
 
         >>> assert L('a') | 'b' == Union(L('a'), 'b')
 
-        :class:`~.Union` arguments are always given in a flattened manner when constructed with ``+``:
+        :class:`~.Union` arguments are always given in a flattened manner when constructed with ``|``:
 
         >>> assert L('a') | 'b' | 'c' == Union(L('a'), 'b', 'c')
         """
@@ -122,8 +124,10 @@ class Expression(ABC):
         return Union.new(self, other)
 
     # other | self
-    def __ror__(self, other: object) -> Expression:
-        """Although :class:`~.Union` is conmutative this construction (reflected ``|`` operator) preserve the order of the operands to allow the user to change the order of evaluation:
+    def __ror__(self, other):
+        """__ror__(other: object) -> pathex.expressions.nary_operators.union.Union
+
+        Although :class:`~.Union` is conmutative this construction (reflected ``|`` operator) preserve the order of the operands to allow the user to change the order of evaluation:
 
         .. testsetup:: *
 
@@ -144,13 +148,48 @@ class Expression(ABC):
         return Union.new(other, self)
 
     # self & other
-    @singledispatchmethod
-    def __and__(self, other: object) -> Expression:
+    def __and__(self, other):
+        """__and__(other: object) -> pathex.expressions.nary_operators.intersection.Intersection
+
+        Ampersand symbol (``&``) is used to construct :class:`~.Intersection` expression instances:
+
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Intersection
+
+        >>> assert L('a') & 'a' == Intersection(L('a'), 'a')
+
+        :class:`~.Intersection` arguments are always given in a flattened manner when constructed with ``&``:
+
+        >>> assert L('a') & 'a' & 'b' == Intersection(L('a'), 'a', 'b')
+        """
         from pathex import Intersection
         return Intersection.new(self, other)
 
     # other & self
-    __rand__ = __and__
+    def __rand__(self, other: object):
+        """__rand__(other: object) -> pathex.expressions.nary_operators.intersection.Intersection
+
+        Although :class:`~.Intersection` is conmutative this construction (reflected ``&`` operator) preserve the order of the operands to allow the user to change the order of evaluation:
+
+        .. testsetup:: *
+
+                >>> from pathex.expressions.aliases import *
+                >>> from pathex import Intersection
+
+        >>> exp1 = L('a') & 'a'
+        >>> exp2 = 'a' & L('a')
+        >>> assert exp1 != exp2
+        >>> assert exp1 == Intersection(L('a'), 'a')
+        >>> assert exp2 == Intersection('a', L('a'))
+
+        However, the semantics remain the same:
+
+        >>> assert exp1.get_language() == exp2.get_language() == {'a'}
+        """
+        from pathex import Intersection
+        return Intersection.new(other, self)
 
     # self @ other
     @singledispatchmethod
