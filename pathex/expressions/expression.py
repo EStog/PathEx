@@ -131,8 +131,8 @@ class Expression(ABC):
 
         .. testsetup:: *
 
-                >>> from pathex.expressions.aliases import *
-                >>> from pathex import Union
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Union
 
         >>> exp1 = L('a') | 'b'
         >>> exp2 = 'b' | L('a')
@@ -175,8 +175,8 @@ class Expression(ABC):
 
         .. testsetup:: *
 
-                >>> from pathex.expressions.aliases import *
-                >>> from pathex import Intersection
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Intersection
 
         >>> exp1 = L('a') & 'a'
         >>> exp2 = 'a' & L('a')
@@ -192,32 +192,86 @@ class Expression(ABC):
         return Intersection.new(other, self)
 
     # self @ other
-    @singledispatchmethod
-    def __matmul__(self, other: object) -> Expression:
+    def __matmul__(self, other):
+        """__matmul__(self, other: object) -> pathex.expressions.nary_operators.synchronization.Synchronization
+
+        Arroba symbol (``@``) is used to construct :class:`~.Synchronization` expression instances:
+
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Synchronization
+
+        >>> assert L('a') @ 'a' == Synchronization(L('a'), 'a')
+
+        :class:`~.Synchronization` arguments are always given in a flattened manner when constructed with ``@``:
+
+        >>> assert L('a') @ 'a' @ 'b' == Synchronization(L('a'), 'a', 'b')
+        """
         from pathex import Synchronization
         return Synchronization.new(self, other)
 
     # other @ self
-    __rmatmul__ = __matmul__
+    def __rmatmul__(self, other):
+        """__rmatmul__(other: object) -> pathex.expressions.nary_operators.synchronization.Synchronization
 
-    # self ^ other
-    # @singledispatchmethod
-    # def __xor__(self, other: object) -> Expression:
-    #     from pathex import symmetric_difference
-    #     return symmetric_difference(self, other)
+        Although :class:`~.Synchronization` is conmutative this construction (reflected ``@`` operator) preserve the order of the operands to allow the user to change the order of evaluation:
 
-    # other ^ self
-    # __rxor__ = __xor__
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Synchronization
+
+        >>> exp1 = L('a') @ 'b'
+        >>> exp2 = 'b' @ L('a')
+        >>> assert exp1 != exp2
+        >>> assert exp1 == Synchronization(L('a'), 'b')
+        >>> assert exp2 == Synchronization('b', L('a'))
+
+        However, the semantics remain the same:
+
+        >>> assert exp1.get_language() == exp2.get_language() == {'ab', 'ba'}
+        """
+        from pathex import Synchronization
+        return Synchronization.new(other, self)
 
     # self - other
-    @singledispatchmethod
-    def __sub__(self, other: object) -> Expression:
+    def __sub__(self, other):
+        """__sub__(self, other: object) -> pathex.expressions.nary_operators.difference.Difference
+
+        Minus symbol (``-``) is used to construct :class:`~.Difference` expression instances:
+
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Difference
+
+        >>> assert L('a') - 'a' == Difference(L('a'), 'a')
+
+        :class:`~.Difference` arguments are always given in a flattened manner when constructed with ``-``:
+
+        >>> assert L('a') - 'a' - 'b' == Difference(L('a'), 'a', 'b')
+        """
         from pathex import Difference
         return Difference.new(self, other)
 
     # other - self
-    @singledispatchmethod
-    def __rsub__(self, other: object) -> Expression:
+    def __rsub__(self, other):
+        """__rsub__(self, other: object) -> pathex.expressions.nary_operators.difference.Difference
+
+        :class:`~.Difference` is not conmutative in general, so reflected ``-`` operator preserve the order of operator:
+
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Difference
+
+        >>> exp1 = L('a') - 'b'
+        >>> exp2 = 'b' - L('a')
+        >>> assert exp1 != exp2
+        >>> assert exp1 == Difference(L('a'), 'b')
+        >>> assert exp2 == Difference('b', L('a'))
+        """
         from pathex import Difference
         return Difference.new(other, self)
 
@@ -227,18 +281,18 @@ class Expression(ABC):
         """__add__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
         __add__(number: int) -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition
 
-        Plus symbol (``+``) is used to construct :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expressions instances.
+        Plus symbol (``+``) is used to construct :class:`~.Concatenation` and :class:`~.ConcatenationRepetition` expression instances.
 
         .. testsetup:: *
 
             >>> from pathex.expressions.aliases import *
             >>> from pathex import Concatenation, ConcatenationRepetition
 
-        With an :class:`int` as operand it construct a :class:`~.ConcatenationRepetition`:
+        With an :class:`int` as operand a :class:`~.ConcatenationRepetition` is constructed:
 
         >>> assert L('a')+4 == ConcatenationRepetition(L('a'), 4, 4)
 
-        With any other object as operand it constructs a :class:`~.Concatenation`:
+        With any other object as operand a :class:`~.Concatenation` is constructed:
 
         >>> assert L('a') + 'e' == Concatenation(L('a'), 'e')
 
@@ -281,6 +335,18 @@ class Expression(ABC):
 
     # +self
     def __pos__(self):
+        """__pos__() -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition:
+
+        Plus symbol (``+``) used as an unary operator constructs a :class:`~.ConcatenationRepetition` expression instance with lower bound ``1`` and upper bound :obj:`math.inf`:
+
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import ConcatenationRepetition
+            >>> from math import inf
+
+        >>> assert +L('a') == ConcatenationRepetition(L('a'), 1, inf)
+        """
         from pathex import ConcatenationRepetition
         return ConcatenationRepetition(self, 1, inf)
 
