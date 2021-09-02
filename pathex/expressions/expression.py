@@ -313,7 +313,7 @@ class Expression(ABC):
         """__radd__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
         __radd__(number: int) -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition
 
-        This is the same as :meth:`__add__`, except when it is used to construct :class:`~.Concatenation` because it is not commutative:
+        This is the same as :meth:`__add__` except when it is used to construct :class:`~.Concatenation` because it is not commutative:
 
         .. testsetup:: *
 
@@ -388,11 +388,11 @@ class Expression(ABC):
     # other * self
     # number*self
     # [lb,ub]*self
-    def __rmul__(self, other):
+    def __rmul__(self, v):
         """__rmul__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
         __rmul__(bound: [int, int] | int | math.inf | Ellipsis) -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition
 
-        This is the same as :meth:`__mul__`, except when it is used to construct :class:`~.Concatenation` because it is not commutative:
+        This is the same as :meth:`__mul__` except when it is used to construct :class:`~.Concatenation`:
 
         .. testsetup:: *
 
@@ -405,66 +405,134 @@ class Expression(ABC):
         >>> assert exp1 == Concatenation(ConcatenationRepetition(L('a'), 0, 1), 's')
         >>> assert exp2 == Concatenation(ConcatenationRepetition('s', 0, 1), L('a'))
         """
-        if not isinstance(other, (list, int, float, ellipsis)):
+        if not isinstance(v, (list, int, float, ellipsis)):
             from pathex import Concatenation, ConcatenationRepetition
-            return Concatenation.new(ConcatenationRepetition(other, 0, 1), self)
+            return Concatenation.new(ConcatenationRepetition(v, 0, 1), self)
         else:
-            return self.__mul__(other)
+            return self.__mul__(v)
 
     # self // other
-    @singledispatchmethod
-    def __floordiv__(self, other: object) -> Expression:
-        from pathex import Shuffle
-        return Shuffle.new(self, other)
+    def __floordiv__(self, v):
+        """__floordiv__(other: object) -> pathex.expressions.nary_operators.shuffle.Shuffle
+        __floordiv__(other: int) -> pathex.expressions.nary_operators.shuffle_repetition.ShuffleRepetition
 
-    # self//number
-    @__floordiv__.register(int)
-    @__floordiv__.register(float)
-    @__floordiv__.register(ellipsis)
-    def __(self, number):
-        from pathex import ShuffleRepetition
-        if number is ...:
-            number = inf
-        return ShuffleRepetition(self, number, number)
+        Double slash symbol (``//``) is used to construct :class:`~.Shuffle` and :class:`~.ShuffleRepetition` expression instances.
+
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Shuffle, ShuffleRepetition
+
+        With an :class:`int` as operand a :class:`~.ShuffleRepetition` is constructed:
+
+        >>> assert L('a')//4 == ShuffleRepetition(L('a'), 4, 4)
+
+        With any other object as operand a :class:`~.Shuffle` is constructed:
+
+        >>> assert L('a') // 'e' == Shuffle(L('a'), 'e')
+
+        :class:`~.Shuffle` arguments are always given in a flattened manner when constructed with ``+``:
+
+        >>> assert L('a') // 'b' // 'c' // 'd' == Shuffle(L('a'), *'bcd')
+
+        """
+        if isinstance(v, int):
+            from pathex import ShuffleRepetition
+            return ShuffleRepetition(self, v, v)
+        else:
+            from pathex import Shuffle
+            return Shuffle.new(self, v)
 
     # other // self
     # number//self
-    __rfloordiv__ = __floordiv__
+    def __rfloordiv__(self, v):
+        """__rfloordiv__(other: object) -> pathex.expressions.nary_operators.shuffle.Shuffle
+        __rfloordiv__(other: int) -> pathex.expressions.nary_operators.shuffle_repetition.ShuffleRepetition
 
-    # self % other
-    @singledispatchmethod
-    def __mod__(self, other: object) -> Expression:
-        from pathex import ConcatenationRepetition, Shuffle
-        return Shuffle.new(ConcatenationRepetition(self, 0, 1), other)
+        This is the same as :meth:`__floordiv__` except when it is used to construct :class:`~.Shuffle` because, although that operation is conmutative, this construction (reflected ``//`` operator) preserve the order of the operands to allow the user to change the order of evaluation:
 
-    # self%number
-    @__mod__.register(int)
-    @__mod__.register(float)
-    @__mod__.register(ellipsis)
-    def __(self, number):
-        from pathex import ShuffleRepetition
-        if number is ...:
-            number = inf
-        return ShuffleRepetition(self, 0, number)
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import ShuffleRepetition
+
+        >>> exp1 = L('a') // 's'
+        >>> exp2 = 's' // L('a')
+        >>> assert exp1 != exp2
+        >>> assert exp1 == Shuffle(L('a'), 's')
+        >>> assert exp2 == Shuffle('s', L('a'))
+
+        However, the semantics remain the same:
+
+        >>> assert exp1.get_language() == exp2.get_language() == {'sa', 'as'}
+        """
+        if isinstance(v, int):
+            from pathex import ShuffleRepetition
+            return ShuffleRepetition(self, v, v)
+        else:
+            from pathex import Shuffle
+            return Shuffle.new(v, self)
 
     # self%[lb, ub]
-    @__mod__.register
-    def __(self, bounds: list):
-        from pathex import ShuffleRepetition
-        return ShuffleRepetition(self, *bounds)
+    # self%number
+    # self % other
+    def __mod__(self, v):
+        """__mod__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
+        __mul__(bound: [int, int] | int | math.inf | Ellipsis) -> pathex.expressions.repetitions.shuffle_repetition.ShuffleRepetition
 
+        Asterisk symbol (``%``) is used to construct an optional :class:`~.Shuffle` and :class:`~.ShuffleRepetition` expressions instances.
+
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Shuffle, ShuffleRepetition
+            >>> from math import inf
+
+        With any of a :class:`list` of two :class:`int`, an :class:`int`, :obj:`math.inf` or :data:`Ellipsis` as operand it constructs a :class:`~.ShuffleRepetition`:
+
+        >>> assert L('a')%[2,5] == ShuffleRepetition(L('a'), 2, 5)
+        >>> assert L('a')%4 == L('a')%[0,4] == ShuffleRepetition(L('a'), 0, 4)
+        >>> assert L('a')%inf == L('a')%... == ShuffleRepetition(L('a'), 0, inf)
+
+        With any other object as operand it constructs an optional :class:`~.Shuffle`:
+
+        >>> assert L('a') % 'e' == Shuffle(ConcatenationRepetition(L('a'), 0, 1), 'e')
+        """
+        if isinstance(v, list):
+            from pathex import ShuffleRepetition
+            return ShuffleRepetition(self, *v)
+        elif isinstance(v, (int, float, ellipsis)):
+            from pathex import ShuffleRepetition
+            return ShuffleRepetition(self, 0, v)
+        else:
+            from pathex import ConcatenationRepetition, Shuffle
+            return Shuffle.new(ConcatenationRepetition(self, 0, 1), v)
+
+    # [lb, ub]%self
+    # number%self
     # other % self
-    @singledispatchmethod
-    def __rmod__(self, other: object) -> Expression:
-        from pathex import ConcatenationRepetition, Shuffle
-        return Shuffle.new(ConcatenationRepetition(other, 0, 1), self)
+    def __rmod__(self, v):
+        """__rmod__(other: object) -> pathex.expressions.nary_operators.shuffle.Shuffle
+        __rmod__(bound: [int, int] | int | math.inf | Ellipsis) -> pathex.expressions.repetitions.shuffle_repetition.ShuffleRepetition
 
-    __rmod__.register(int, __mod__.dispatcher.dispatch(int))
-    __rmod__.register(float, __mod__.dispatcher.dispatch(float))
-    __rmod__.register(ellipsis, __mod__.dispatcher.dispatch(ellipsis))
+        This is the same as :meth:`__mod__` except when it is used to construct :class:`~.Shuffle`. In this case the first argument must allways be an :class:`Expression` instance to avoid confusion with :ref:`old-string-formatting`:
 
-    # [lb,ub]%self
-    __rmod__.register(list, __mod__.dispatcher.dispatch(list))
+        .. testsetup:: *
+
+            >>> from pathex.expressions.aliases import *
+            >>> from pathex import Shuffle, ConcatenationRepetition
+
+        >>> exp1 = L('a') % 's'
+        >>> exp2 = L('s') % 'a' # 's' % L('a') means print-style format operation, not Shuffle.
+        >>> assert exp1 != exp2
+        >>> assert exp1 == Shuffle(ConcatenationRepetition(L('a'), 0, 1), 's')
+        >>> assert exp2 == Shuffle(ConcatenationRepetition(L('s'), 0, 1), 'a')
+        """
+        if not isinstance(v, (list, int, float, ellipsis)):
+            from pathex import Shuffle, ConcatenationRepetition
+            return Shuffle.new(ConcatenationRepetition(v, 0, 1), self)
+        else:
+            return self.__mod__(v)
 
     @singledispatchmethod
     def __getitem__(self, key: object) -> Expression:
