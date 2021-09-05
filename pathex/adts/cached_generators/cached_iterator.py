@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Iterator, Set
 from typing import Callable, Collection, TypeVar
 
-from pathex.adts.containers.queue_set import QueueSet
+from pathex.adts.containers.ordered_set import OrderedSet
 
 __all__ = ['CachedIterator']
 
@@ -22,14 +22,14 @@ class CachedIterator(Iterator[_T_co]):
         self._next = self._next_from_cached_values
         self._cache_add_op = cache_add_op
         self._non_repeated = non_repeated
-        if non_repeated or (non_repeated is None and isinstance(cached_values, (Set, QueueSet))):
+        if non_repeated or (non_repeated is None and isinstance(cached_values, (Set, OrderedSet))):
             self._generate_next = self._get_while_not_in_cache
         else:  # if non_repeated is False
             self._generate_next = next
 
     @property
     def cached_values(self) -> tuple[_T_co, ...]:
-        if isinstance(self._cached_values, QueueSet):
+        if isinstance(self._cached_values, OrderedSet):
             return self._cached_values.as_tuple()
         else:
             return tuple(self._cached_values)

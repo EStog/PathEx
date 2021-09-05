@@ -1,3 +1,5 @@
+from pathex.adts.util import flattened
+
 from .nary_operator import NAryOperator
 
 __all__ = ['Union']
@@ -20,3 +22,5 @@ class Union(NAryOperator):
     >>> exp = U()
     >>> assert exp.get_language() == exp.get_generator().get_language() == set()
     """
+
+    flattened = classmethod(flattened)

@@ -1,3 +1,5 @@
+from pathex.adts.util import flattened
+
 from .nary_operator import NAryOperator
 
 __all__ = ['Concatenation']
@@ -20,3 +22,5 @@ class Concatenation(NAryOperator):
 
       >>> assert EMPTY_WORD.get_language() == EMPTY_WORD.get_generator().get_language() == {''}
     """
+
+   flattened = classmethod(flattened)

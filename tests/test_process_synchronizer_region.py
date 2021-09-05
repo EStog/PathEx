@@ -1,5 +1,5 @@
 """
-Example using :meth:`region`
+Example using :meth:`process_region`
 """
 import os
 import os.path

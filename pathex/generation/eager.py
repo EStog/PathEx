@@ -15,6 +15,7 @@ __all__ = ['words_generator']
 
 T = TypeVar('T', bound=CollectionWrapper)
 
+
 def words_generator(expression: Expression, machine: Machine,
                     word_type: type[T] = WORD_TYPE,
                     complete_words: bool = COMPLETE_WORDS,
@@ -23,7 +24,6 @@ def words_generator(expression: Expression, machine: Machine,
 
     partial_words = partial_words_type()
     partial_words.put((word_type(), expression))
-    EMPTY = word_type()
 
     while True:
         try:
@@ -31,18 +31,16 @@ def words_generator(expression: Expression, machine: Machine,
         except partial_words.PopException:
             break
         else:
-            alt = machine.branches(tail)
+            alts = machine.branches(tail)
             tail = None
             if word_max_length <= 0 or len(prefix) < word_max_length:
-                for head, tail in alt:
+                for head, tail in alts:
                     prefix_copy = copy(prefix)
-                    prefix_copy.put(head)
+                    if head is not EMPTY_WORD:
+                        prefix_copy.put(head)
                     if tail is EMPTY_WORD:
                         yield prefix_copy
                     else:
                         partial_words.put((prefix_copy, tail))
             if tail is None and not complete_words:
-                if not prefix:
-                    yield EMPTY
-                else:
-                    yield prefix
+                yield prefix

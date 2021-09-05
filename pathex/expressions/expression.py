@@ -121,7 +121,7 @@ class Expression(ABC):
         >>> assert L('a') | 'b' | 'c' == Union(L('a'), 'b', 'c')
         """
         from pathex import Union
-        return Union.new(self, other)
+        return Union.flattened(self, other)
 
     # other | self
     def __ror__(self, other):
@@ -145,7 +145,7 @@ class Expression(ABC):
         >>> assert exp1.get_language() == exp2.get_language() == {'a', 'b'}
         """
         from pathex import Union
-        return Union.new(other, self)
+        return Union.flattened(other, self)
 
     # self & other
     def __and__(self, other):
@@ -165,7 +165,7 @@ class Expression(ABC):
         >>> assert L('a') & 'a' & 'b' == Intersection(L('a'), 'a', 'b')
         """
         from pathex import Intersection
-        return Intersection.new(self, other)
+        return Intersection.flattened(self, other)
 
     # other & self
     def __rand__(self, other: object):
@@ -189,7 +189,7 @@ class Expression(ABC):
         >>> assert exp1.get_language() == exp2.get_language() == {'a'}
         """
         from pathex import Intersection
-        return Intersection.new(other, self)
+        return Intersection.flattened(other, self)
 
     # self @ other
     def __matmul__(self, other):
@@ -209,7 +209,7 @@ class Expression(ABC):
         >>> assert L('a') @ 'a' @ 'b' == Synchronization(L('a'), 'a', 'b')
         """
         from pathex import Synchronization
-        return Synchronization.new(self, other)
+        return Synchronization.flattened(self, other)
 
     # other @ self
     def __rmatmul__(self, other):
@@ -233,7 +233,7 @@ class Expression(ABC):
         >>> assert exp1.get_language() == exp2.get_language() == {'ab', 'ba'}
         """
         from pathex import Synchronization
-        return Synchronization.new(other, self)
+        return Synchronization.flattened(other, self)
 
     # self - other
     def __sub__(self, other):
@@ -247,13 +247,9 @@ class Expression(ABC):
             >>> from pathex import Difference
 
         >>> assert L('a') - 'a' == Difference(L('a'), 'a')
-
-        :class:`~.Difference` arguments are always given in a flattened manner when constructed with ``-``:
-
-        >>> assert L('a') - 'a' - 'b' == Difference(L('a'), 'a', 'b')
         """
         from pathex import Difference
-        return Difference.new(self, other)
+        return Difference(self, other)
 
     # other - self
     def __rsub__(self, other):
@@ -273,8 +269,10 @@ class Expression(ABC):
         >>> assert exp2 == Difference('b', L('a'))
         """
         from pathex import Difference
-        return Difference.new(other, self)
+        return Difference(other, self)
 
+    # self+...
+    # self+inf
     # self+number
     # self + other
     def __add__(self, v: object):
@@ -287,9 +285,11 @@ class Expression(ABC):
 
             >>> from pathex.expressions.aliases import *
             >>> from pathex import Concatenation, ConcatenationRepetition
+            >>> from math import inf
 
-        With an :class:`int` as operand a :class:`~.ConcatenationRepetition` is constructed:
+        With :obj:`math.inf`, :data:`Ellipsis` or an :class:`int` as operand a :class:`~.ConcatenationRepetition` is constructed:
 
+        >>> assert L('a')+inf == L('a')+... == ConcatenationRepetition(L('a'), 1, inf)
         >>> assert L('a')+4 == ConcatenationRepetition(L('a'), 4, 4)
 
         With any other object as operand a :class:`~.Concatenation` is constructed:
@@ -300,15 +300,18 @@ class Expression(ABC):
 
         >>> assert L('a') + 'b' + 'c' + 'd' == Concatenation(L('a'), *'bcd')
         """
-        if isinstance(v, int):
+        if v in (inf, Ellipsis):
+            from pathex import ConcatenationRepetition
+            return ConcatenationRepetition(self, 1, inf)
+        elif isinstance(v, int):
             from pathex import ConcatenationRepetition
             return ConcatenationRepetition(self, v, v)
         else:
             from pathex import Concatenation
-            return Concatenation.new(self, v)
+            return Concatenation.flattened(self, v)
 
-    # other + self
     # number+self
+    # other + self
     def __radd__(self, v):
         """__radd__(other: object) -> pathex.expressions.nary_operators.concatenation.Concatenation
         __radd__(number: int) -> pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition
@@ -326,12 +329,11 @@ class Expression(ABC):
         >>> assert exp1 == Concatenation(L('a'), 's')
         >>> assert exp2 == Concatenation('s', L('a'))
         """
-        if isinstance(v, int):
-            from pathex import ConcatenationRepetition
-            return ConcatenationRepetition(self, v, v)
+        if v in (inf, Ellipsis) or isinstance(v, int):
+            return self.__add__(v)
         else:
             from pathex import Concatenation
-            return Concatenation.new(v, self)
+            return Concatenation.flattened(v, self)
 
     # +self
     def __pos__(self):
@@ -378,12 +380,12 @@ class Expression(ABC):
         if isinstance(v, list):
             from pathex import ConcatenationRepetition
             return ConcatenationRepetition(self, *v)
-        elif isinstance(v, (int, float, ellipsis)):
+        elif v in (inf, Ellipsis) or isinstance(v, int):
             from pathex import ConcatenationRepetition
             return ConcatenationRepetition(self, 0, v)
         else:
             from pathex import Concatenation, ConcatenationRepetition
-            return Concatenation.new(ConcatenationRepetition(self, 0, 1), v)
+            return Concatenation.flattened(ConcatenationRepetition(self, 0, 1), v)
 
     # other * self
     # number*self
@@ -405,12 +407,15 @@ class Expression(ABC):
         >>> assert exp1 == Concatenation(ConcatenationRepetition(L('a'), 0, 1), 's')
         >>> assert exp2 == Concatenation(ConcatenationRepetition('s', 0, 1), L('a'))
         """
-        if not isinstance(v, (list, int, float, ellipsis)):
-            from pathex import Concatenation, ConcatenationRepetition
-            return Concatenation.new(ConcatenationRepetition(v, 0, 1), self)
-        else:
+        if v in (inf, Ellipsis) or isinstance(v, (list, int)):
             return self.__mul__(v)
+        else:
+            from pathex import Concatenation, ConcatenationRepetition
+            return Concatenation.flattened(ConcatenationRepetition(v, 0, 1), self)
 
+    # self//...
+    # self//inf
+    # self//number
     # self // other
     def __floordiv__(self, v):
         """__floordiv__(other: object) -> pathex.expressions.nary_operators.shuffle.Shuffle
@@ -422,9 +427,11 @@ class Expression(ABC):
 
             >>> from pathex.expressions.aliases import *
             >>> from pathex import Shuffle, ShuffleRepetition
+            >>> from math import inf
 
-        With an :class:`int` as operand a :class:`~.ShuffleRepetition` is constructed:
+        With :obj:`math.inf`, :data:`Ellipsis` or an :class:`int` as operand a :class:`~.ShuffleRepetition` is constructed:
 
+        >>> assert L('a')//inf == L('a')//... == ShuffleRepetition(L('a'), 1, inf)
         >>> assert L('a')//4 == ShuffleRepetition(L('a'), 4, 4)
 
         With any other object as operand a :class:`~.Shuffle` is constructed:
@@ -436,12 +443,15 @@ class Expression(ABC):
         >>> assert L('a') // 'b' // 'c' // 'd' == Shuffle(L('a'), *'bcd')
 
         """
-        if isinstance(v, int):
+        if v in (inf, Ellipsis):
+            from pathex import ShuffleRepetition
+            return ShuffleRepetition(self, 1, inf)
+        elif isinstance(v, int):
             from pathex import ShuffleRepetition
             return ShuffleRepetition(self, v, v)
         else:
             from pathex import Shuffle
-            return Shuffle.new(self, v)
+            return Shuffle.flattened(self, v)
 
     # other // self
     # number//self
@@ -454,7 +464,7 @@ class Expression(ABC):
         .. testsetup:: *
 
             >>> from pathex.expressions.aliases import *
-            >>> from pathex import ShuffleRepetition
+            >>> from pathex import Shuffle
 
         >>> exp1 = L('a') // 's'
         >>> exp2 = 's' // L('a')
@@ -466,12 +476,11 @@ class Expression(ABC):
 
         >>> assert exp1.get_language() == exp2.get_language() == {'sa', 'as'}
         """
-        if isinstance(v, int):
-            from pathex import ShuffleRepetition
-            return ShuffleRepetition(self, v, v)
+        if v in (inf, Ellipsis) or isinstance(v, int):
+            return self.__floordiv__(v)
         else:
             from pathex import Shuffle
-            return Shuffle.new(v, self)
+            return Shuffle.flattened(v, self)
 
     # self%[lb, ub]
     # self%number
@@ -485,7 +494,7 @@ class Expression(ABC):
         .. testsetup:: *
 
             >>> from pathex.expressions.aliases import *
-            >>> from pathex import Shuffle, ShuffleRepetition
+            >>> from pathex import Shuffle, ShuffleRepetition, ConcatenationRepetition
             >>> from math import inf
 
         With any of a :class:`list` of two :class:`int`, an :class:`int`, :obj:`math.inf` or :data:`Ellipsis` as operand it constructs a :class:`~.ShuffleRepetition`:
@@ -501,12 +510,12 @@ class Expression(ABC):
         if isinstance(v, list):
             from pathex import ShuffleRepetition
             return ShuffleRepetition(self, *v)
-        elif isinstance(v, (int, float, ellipsis)):
+        elif v in (inf, Ellipsis) or isinstance(v, int):
             from pathex import ShuffleRepetition
             return ShuffleRepetition(self, 0, v)
         else:
             from pathex import ConcatenationRepetition, Shuffle
-            return Shuffle.new(ConcatenationRepetition(self, 0, 1), v)
+            return Shuffle.flattened(ConcatenationRepetition(self, 0, 1), v)
 
     # [lb, ub]%self
     # number%self
@@ -528,11 +537,11 @@ class Expression(ABC):
         >>> assert exp1 == Shuffle(ConcatenationRepetition(L('a'), 0, 1), 's')
         >>> assert exp2 == Shuffle(ConcatenationRepetition(L('s'), 0, 1), 'a')
         """
-        if not isinstance(v, (list, int, float, ellipsis)):
-            from pathex import Shuffle, ConcatenationRepetition
-            return Shuffle.new(ConcatenationRepetition(v, 0, 1), self)
-        else:
+        if v in (inf, Ellipsis) or isinstance(v, (list, int)):
             return self.__mod__(v)
+        else:
+            from pathex import ConcatenationRepetition, Shuffle
+            return Shuffle.flattened(ConcatenationRepetition(v, 0, 1), self)
 
     @singledispatchmethod
     def __getitem__(self, key: object) -> Expression:

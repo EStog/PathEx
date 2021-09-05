@@ -3,16 +3,10 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from collections import deque
 from contextlib import contextmanager
-from copy import copy
 from functools import wraps
 
-from pathex.adts.singleton import singleton
 from pathex.expressions.expression import Expression
-from pathex.expressions.nary_operators.concatenation import Concatenation
-from pathex.expressions.nary_operators.intersection import Intersection
-from pathex.expressions.nary_operators.union import Union
 from pathex.generation.machines.machine import MachineMatch
-from pathex.expressions.terms.empty_word import EMPTY_WORD
 
 from .tag import Tag
 
@@ -24,37 +18,11 @@ __all__ = ['Manager']
 class Manager(ABC):
     """A generic abstract manager.
     """
-    @singleton
-    class _WaitingLabels:
-        """The instance of this class is used to represent future labels to be matched with. The idea is to use an abstract replacement object that is to be concretized with the current waiting-labels expression.
-        """
-        pass
-
-    @staticmethod
-    def _waiting_labels_visitor(machine, exp):
-        # return a visitor to the current waiting-labels expression
-        return machine.branches(machine.waiting_labels_expression)
 
     def __init__(self, expression: Expression, machine: MachineMatch):
-        self._waiting_labels = self._WaitingLabels()
-        self._expression: object = Intersection(self._waiting_labels, expression)
-
-        class CustomMachine(machine.__class__):
-            waiting_labels_expression: object
-
-            @classmethod
-            def _populate_visitor(cls):
-                super()._populate_visitor()
-                cls.branches.register(self._WaitingLabels,
-                                      self._waiting_labels_visitor)
-
-        # Just in case ``machine`` has some attributes:
-        machine = copy(machine)
-
-        # Expand ``machine.branch`` with ``_waiting_labels_visitor``:
-        machine.__class__ = CustomMachine
-
-        self._machine: CustomMachine = machine
+        self._alternatives = deque()
+        self._alternatives.append(expression)
+        self._machine = machine
 
     @abstractmethod
     def _when_requested_match(self, label: object) -> object: ...
@@ -83,18 +51,14 @@ class Manager(ABC):
 
     def _advance(self, label: object) -> bool:
         new_alternatives = deque()
-        # the waiting-labels expression is setted as a sequence consisting of the current label to be matched, followed by the rest of the labels that are to be matched
-        self._machine.waiting_labels_expression = Concatenation(label, self._waiting_labels)
-        alts = deque([self._expression])
-        while alts:
-            exp = alts.popleft()
+        for exp in self._alternatives:
             for head, tail in self._machine.branches(exp):
-                if head == label:
+                for match in self._machine.match(label, head):
+                    assert match == label, \
+                        f'Match is {match} instead of label "{label}"'
                     new_alternatives.append(tail)
-                elif head == EMPTY_WORD:
-                    alts.append(tail)
         if new_alternatives:
-            self._expression = Union(new_alternatives)
+            self._alternatives = new_alternatives
             return True
         else:
             return False

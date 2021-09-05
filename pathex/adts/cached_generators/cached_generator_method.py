@@ -5,7 +5,7 @@ from typing import Optional, TypeVar
 
 from pathex.adts.collection_wrapper import (CollectionWrapper,
                                             get_collection_wrapper)
-from pathex.adts.containers.queue_set import QueueSet
+from pathex.adts.containers.ordered_set import OrderedSet
 
 from .cached_generator import CachedGenerator, new_cached_generator
 from .type_defs import TDecorableDescriptorGenerator, TDecorableGenerator
@@ -36,7 +36,7 @@ class CachedGeneratorMethod(CachedGenerator[_E_co]):
     """
 
     def __init__(self, function: TDecorableDescriptorGenerator[_E_co],
-                 cache_type: CollectionWrapper = get_collection_wrapper(QueueSet, put=QueueSet.append), non_repeated=None):
+                 cache_type: CollectionWrapper = get_collection_wrapper(OrderedSet, put=OrderedSet.append), non_repeated=None):
         super().__init__(function, cache_type, non_repeated)
         self.__isabstractmethod__ = \
             getattr(function, '__isabstractmethod__', False)
@@ -54,5 +54,5 @@ class CachedGeneratorMethod(CachedGenerator[_E_co]):
 
 def cached_generator_method(
         function: Optional[TDecorableGenerator[_E]] = None, /, *,
-        cache_type: CollectionWrapper = get_collection_wrapper(QueueSet, put=QueueSet.append), non_repeated=None) -> CachedGenerator[_E] | partial:
+        cache_type: CollectionWrapper = get_collection_wrapper(OrderedSet, put=OrderedSet.append), non_repeated=None) -> CachedGenerator[_E] | partial:
     return new_cached_generator(CachedGeneratorMethod, function, cache_type, non_repeated)

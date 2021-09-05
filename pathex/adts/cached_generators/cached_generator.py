@@ -5,7 +5,7 @@ from typing import Callable, Generic, Optional, TypeVar
 
 from pathex.adts.collection_wrapper import (CollectionWrapper,
                                             get_collection_wrapper)
-from pathex.adts.containers.queue_set import QueueSet
+from pathex.adts.containers.ordered_set import OrderedSet
 
 from .cached_iterator import CachedIterator
 from .type_defs import TCacheType, TDecorableGenerator
@@ -40,7 +40,7 @@ class CachedGenerator(Generic[_E_co]):
     >>> assert it.cached_values == (x, y)
     >>> assert (x, y) == (next(it), next(it))
     >>> s = {x for x in it}
-    >>> assert it.cached_values == QueueSet(l)
+    >>> assert it.cached_values == OrderedSet(l)
     >>> it = f(l)
     >>> it = it.skipped_cached_values()
     >>> try:
@@ -57,11 +57,11 @@ class CachedGenerator(Generic[_E_co]):
     >>> it = f((1, 2, 3))
     >>> assert it.cached_values == ()
     >>> it = f(l)
-    >>> assert it.cached_values == QueueSet(l)
+    >>> assert it.cached_values == OrderedSet(l)
     """
 
     def __init__(self, function: TDecorableGenerator[_E_co],
-                 cache_type: CollectionWrapper = get_collection_wrapper(QueueSet, put=QueueSet.append), non_repeated=None):
+                 cache_type: CollectionWrapper = get_collection_wrapper(OrderedSet, put=OrderedSet.append), non_repeated=None):
         self._cache_type = cache_type
         self._cache: TCacheType[_E_co] = dict()
         self._non_repeated = non_repeated
@@ -96,6 +96,6 @@ def new_cached_generator(
 
 def cached_generator(
         function: Optional[TDecorableGenerator[_E]] = None, /, *,
-        cache_type: CollectionWrapper = get_collection_wrapper(QueueSet, put=QueueSet.append), non_repeated=None
+        cache_type: CollectionWrapper = get_collection_wrapper(OrderedSet, put=OrderedSet.append), non_repeated=None
 ) -> CachedGenerator[_E] | partial:
     return new_cached_generator(CachedGenerator, function, cache_type, non_repeated)

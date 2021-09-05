@@ -32,7 +32,7 @@ class LettersGenerator(Iterator[object]):
         self.advance_once()
 
     def __next__(self) -> object:
-        if self._pos == len(self._prefix):
+        while self._pos == len(self._prefix):
             if not self.advance_once():
                 raise StopIteration
         ret = self._prefix[self._pos]
@@ -54,7 +54,8 @@ class LettersGenerator(Iterator[object]):
             self._words_generator.register_partial_word(
                 self._prefix.copy(), self._branches)
             self._branches = self._machine.branches(tail)
-            self._prefix.append(head)
+            if head is not EMPTY_WORD:
+                self._prefix.append(head)
             return True
 
     @property

@@ -1,5 +1,5 @@
 """
-Example using :meth:`register`
+Example using :meth:`process_register`
 """
 import os
 import os.path

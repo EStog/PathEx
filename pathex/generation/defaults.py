@@ -8,5 +8,5 @@ WORD_MAX_LENGTH = -1
 WORD_TYPE = get_collection_wrapper(list, list.append)
 LANGUAGE_TYPE = SET_OF_STRS
 COLLECTION_TYPE = get_collection_wrapper(
-    deque, deque.appendleft, None, deque.popleft, IndexError)
+    deque, deque.append, None, deque.popleft, IndexError)
 COMPLETE_WORDS = True

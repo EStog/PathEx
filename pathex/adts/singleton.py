@@ -108,8 +108,14 @@ def singleton(wrapped_class: type[T]) -> type[T]:
 
     def __repr__(self):
         name = self.__class__.__name__
-        s = re.sub(r'[A-Z]', r'_\g<0>', name[1:])
-        return f"<{name[0]}{s}>".upper()
+        i = 0
+        while name[i] == '_':
+            i += 1
+        i += 1
+        prefix = name[:i]
+        name = name[i:]
+        s = re.sub(r'[A-Z]', r'_\g<0>', name)
+        return f"<{prefix}{s}>".upper()
 
     if '__new__' in wrapped_class.__dict__:
         wrapped_class.__old_new__ = wrapped_class.__new__

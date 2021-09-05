@@ -1,4 +1,5 @@
 from __future__ import annotations
+from collections import deque
 
 from dataclasses import dataclass
 from functools import cached_property
@@ -32,16 +33,3 @@ class NAryOperator(Expression):
 
     def __iter__(self):
         return iter(self.arguments)
-
-    @classmethod
-    def new(cls, exp1, exp2):
-        exp1_is_cls = isinstance(exp1, cls)
-        exp2_is_cls = isinstance(exp2, cls)
-        if exp1_is_cls and exp2_is_cls:
-            return cls(exp1.arguments+exp2.arguments)
-        elif exp1_is_cls:
-            return cls(exp1.arguments.appended(exp2))
-        elif exp2_is_cls:
-            return cls(exp2.arguments.appended_left(exp1))
-        else:
-            return cls(exp1, exp2)

@@ -11,7 +11,7 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathex.adts.containers.head_tail_iterable'))
     tests.addTests(doctest.DocTestSuite(
-        'pathex.adts.containers.queue_set'))
+        'pathex.adts.containers.ordered_set'))
     tests.addTests(doctest.DocTestSuite(
         'pathex.adts.collection_wrapper'))
     tests.addTests(doctest.DocTestSuite(

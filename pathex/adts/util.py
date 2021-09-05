@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import deque
 from collections.abc import Iterator as Iter
 from copy import copy
 from typing import Iterable, Iterator, TypeVar
@@ -90,3 +91,15 @@ SET_OF_TUPLES.__doc__ = """A :class:`~.CollectionWrapper` where elements given t
 SET_OF_STRS = get_collection_wrapper(
     set, put=lambda s, w: s.add(''.join(str(l) for l in w)))
 SET_OF_STRS.__doc__ = """A :class:`~.CollectionWrapper` where elements given to :meth:`~.put` are converted to :class:`str` before addition."""
+
+
+def flattened(cls, *args):
+    if len(args) == 1:
+        args = args[0]
+    new_args = deque()
+    for exp in args:
+        if isinstance(exp, cls):
+            new_args.extend(exp.arguments)
+        else:
+            new_args.append(exp)
+    return cls(new_args)

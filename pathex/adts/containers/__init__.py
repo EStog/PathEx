@@ -1,2 +1,2 @@
 from .head_tail_iterable import *
-from .queue_set import *
+from .ordered_set import *

@@ -11,8 +11,5 @@ __all__ = ['concatenation_visitor']
 def concatenation_visitor(machine: Machine, exp: Concatenation) -> Branches:
     for head, tail in machine.branches(exp.head):
         tail = exp.tail if tail is EMPTY_WORD \
-            else Concatenation(tail, exp.tail)
-        if head is EMPTY_WORD:
-            yield from machine.branches(tail)
-        else:
-            yield head, tail
+            else Concatenation.flattened(tail, exp.tail)
+        yield head, tail

@@ -16,8 +16,7 @@ def shuffle_visitor(machine: Machine, exp: Shuffle) -> Branches:
     while back:
         e = back.popleft()
         for head, tail in machine.branches(e):
-            if head is not EMPTY_WORD:
-                rest = Shuffle(front + back)
-                tail = rest if tail is EMPTY_WORD else Shuffle(tail, rest)
-                yield head, tail
+            tail = Shuffle.flattened(front + back) if tail is EMPTY_WORD else \
+                Shuffle.flattened([tail, *(front + back)])
+            yield head, tail
         front.append(e)
