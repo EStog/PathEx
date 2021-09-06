@@ -15,7 +15,7 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathex.adts.collection_wrapper'))
     tests.addTests(doctest.DocTestSuite(
-        'pathex.adts.multitask.acquired_lock'))
+        'pathex.adts.multitask.counted_condition'))
     tests.addTests(doctest.DocTestSuite(
         'pathex.adts.multitask.atomics.atomic'))
     tests.addTests(doctest.DocTestSuite(

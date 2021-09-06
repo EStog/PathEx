@@ -46,7 +46,7 @@ class Tag(Concatenation):
             return id(self)
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({self.name})'
+        return f'{self.__class__.__name__}({self.name!r})'
 
     def __hash__(self) -> int:
         return id(hash)

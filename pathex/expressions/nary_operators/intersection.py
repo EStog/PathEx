@@ -20,7 +20,7 @@ class Intersection(NAryOperator):
         >>> assert exp.get_language() == \
         ...     exp.get_generator().get_language() == set()
         >>> assert exp.get_language(complete_words=False) == \
-        ...     exp.get_generator().get_language(complete_words=False) == {'ay'}
+        ...     exp.get_generator().get_language(complete_words=False) == {'ay', 'a'}
 
         >>> exp1 = L('a')*... & C('aaa') | C('aa')
         >>> exp2 = C('aaa') | C('aa') & L('a')*...

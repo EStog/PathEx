@@ -30,14 +30,14 @@ def matching_operator_visitor(match_func: Callable[[_Machine, object, object, ob
     def f(machine: _Machine, exp: NAryOperator) -> Branches:
         for head1, tail1 in machine.branches(exp.head):
             if head1 is EMPTY_WORD and tail1 is not EMPTY_WORD:
-                yield EMPTY_WORD, exp.__class__(tail1, exp.tail)
+                yield EMPTY_WORD, exp.__class__.flattened(tail1, exp.tail)
             else:
                 for head2, tail2 in machine.branches(exp.tail):
                     if head2 is EMPTY_WORD and tail2 is not EMPTY_WORD:
-                        yield EMPTY_WORD, exp.__class__(Concatenation(head1, tail1), tail2)
+                        yield EMPTY_WORD, exp.__class__.flattened(Concatenation.flattened(head1, tail1), tail2)
                     else:
                         # `aA op bB = (a match b) + (A match B)`
                         tail = EMPTY_WORD if tail1 is tail2 is EMPTY_WORD \
-                            else exp.__class__(tail1, tail2)
+                            else exp.__class__.flattened(tail1, tail2)
                         yield from match_func(machine, head1, head2, tail)
     return f

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import threading
 
-from pathex.adts.multitask.acquired_lock import AcquiredLock
+from pathex.adts.multitask.counted_condition import CountedCondition
 from pathex.expressions.expression import Expression
 from pathex.generation.machines.extended_machine_compalphabet import \
     ExtendedMachineCompalphabet
@@ -12,30 +12,31 @@ from pathex.managing.manager import Manager
 __all__ = ['Synchronizer']
 
 
-class LabelInfo(AcquiredLock):
+class LabelInfo(CountedCondition):
+    def __init__(self, lock):
+        super().__init__(lock)
+        self._requests = 0
+        self._permits = 0
 
-    def __init__(self, lock_class):
-        super().__init__(lock_class)
-        self._requested = 0
-        self._passed = 0
+    def get_requests(self):
+        with self:
+            return self._requests
+
+    def get_permits(self):
+        with self:
+            return self._permits
 
     def inc_requests(self):
-        self._requested += 1
+        with self:
+            self._requests += 1
 
     def inc_permits(self):
-        self._passed += 1
+        with self:
+            self._permits += 1
 
-    def release(self):
-        self.inc_permits()
-        return super().release()
-
-    @property
-    def requests(self):
-        return self._requested
-
-    @property
-    def permits(self):
-        return self._passed
+    def notify(self) -> None:
+        super().notify()
+        self._permits += 1
 
 
 class Synchronizer(Manager):
@@ -179,37 +180,52 @@ class Synchronizer(Manager):
 
     def _when_requested_match(self, label: object) -> object:
         self._sync_lock.acquire()  # protect the entire procedure
-        lock = self._labels.setdefault(
-            label, LabelInfo(self._lock_class))
-        lock.inc_requests()
-        return lock
+        label_info = self._labels.setdefault(
+            label, LabelInfo(self._lock_class()))
+        label_info.inc_requests()
+        # print(f'requested {label}')
+        return label_info
 
     def _when_matched(self, label: object, label_info: LabelInfo) -> None:
+        # print(f'matched {label}')
         self._check_waiting_labels()
         label_info.inc_permits()
         self._sync_lock.release()
 
     def _when_not_matched(self, label: object, label_info: LabelInfo) -> None:
+        # print(f'not_matched {label}')
         # release the procedure's protection lock in order to get blocked in the following line, so the blocking will be because this task being waiting for some other task, not because of the procedure's protection lock
         self._sync_lock.release()
 
         # lock.acquire in order to block.
         # lock.release must be done by another task.
-        label_info.acquire()
+        with label_info:
+            label_info.wait()
 
     def _check_waiting_labels(self):
         while True:
             for label in self._labels:
                 lock = self._labels[label]
-                if lock.waiting_amount > 0:
-                    if self._advance(label):
-                        lock.release()
-                        break
+                with lock:
+                    if lock.waiting_count > 0:
+                        if self._advance(label):
+                            # print(f'releasing {label}')
+                            lock.notify()
+                            # print(f'{label} released')
+                            break
             else:
                 break
 
     def requests(self, label: object):
-        return self._labels.setdefault(label, LabelInfo(self._lock_class)).requests
+        with self._sync_lock:
+            if label_info := self._labels.get(label):
+                return label_info.get_requests()
+            else:
+                return 0
 
     def permits(self, label: object):
-        return self._labels.setdefault(label, LabelInfo(self._lock_class)).permits
+        with self._sync_lock:
+            if label_info := self._labels.get(label):
+                return label_info.get_permits()
+            else:
+                return 0

@@ -37,7 +37,7 @@ class Manager(ABC):
 
     def __init__(self, expression: Expression, machine: MachineMatch):
         self._waiting_labels = self._WaitingLabels()
-        self._expression: object = Intersection(self._waiting_labels, expression)
+        self._expression: object = Intersection.flattened(self._waiting_labels, expression)
 
         class CustomMachine(machine.__class__):
             waiting_labels_expression: object
@@ -91,10 +91,10 @@ class Manager(ABC):
             for head, tail in self._machine.branches(exp):
                 if head == label:
                     new_alternatives.append(tail)
-                elif head == EMPTY_WORD:
+                elif head is EMPTY_WORD:
                     alts.append(tail)
         if new_alternatives:
-            self._expression = Union(new_alternatives)
+            self._expression = Union.flattened(new_alternatives)
             return True
         else:
             return False
