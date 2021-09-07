@@ -21,16 +21,12 @@ class OrderedSet(Collection[_T]):
         if isinstance(queue, OrderedSet):
             return queue
         self = super().__new__(cls)
-        self._queue = queue
-        queue = deque()
-        self._set = set()
-        cls._set: set[_T]
-        for x in self._queue:
-            if x not in self._set:
-                self._set.add(x)
-                queue.append(x)
-        self._queue = queue
         cls._queue: deque[_T]
+        cls._set: set[_T]
+        self._queue = deque()
+        self._set = set()
+        for x in queue:
+            self.append(x)
         return self
 
     def _add(self, element, add):
@@ -64,7 +60,10 @@ class OrderedSet(Collection[_T]):
     appendleft = addleft
 
     def _pop(self, pop):
-        x = pop()
+        try:
+            x = pop()
+        except IndexError:
+            raise IndexError(f'pop from empty {self.__class__.__name__}')
         self._set.remove(x)
         return x
 
