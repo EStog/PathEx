@@ -7,4 +7,4 @@ __all__ = ['optional']
 
 
 def optional(argument: object):
-    return Union(argument, EMPTY_WORD)
+    return Union((EMPTY_WORD, argument))

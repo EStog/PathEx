@@ -1,5 +1,3 @@
-from pathex.adts.util import flattened
-
 from .nary_operator import NAryOperator
 
 __all__ = ['Intersection']
@@ -36,5 +34,3 @@ class Intersection(NAryOperator):
         # >>> exp = Ls('axy') + C('xyz') & NLs('abc') + C('xyz')
         # >>> assert exp.get_language() == {'xxyz', 'yxyz'}
     """
-
-    flattened = classmethod(flattened)

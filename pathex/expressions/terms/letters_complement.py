@@ -4,7 +4,7 @@ from typing import Iterable
 from .term import Term
 
 
-@dataclass(frozen=True, repr=False)
+@dataclass(frozen=True)
 class LettersComplement(Term):
     """This class represents the complement of a language of singleton words (words of length 1).
 

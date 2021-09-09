@@ -1,17 +1,22 @@
 """
 Example using :meth:`process_register`
 """
+
+#XXX: DO NOT AUTOMATICALLY FORMAT THIS FILE!
+
 import os
 import os.path
 import sys
-sys.path.append(os.getcwd())
-
 from multiprocessing.managers import SyncManager
+
+# this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
+sys.path.append(os.getcwd())
 
 from pathex import (ProcessPoolExecutor, Tag, process_register,
                     process_synchronizer)
 from pathex.adts.util import SET_OF_TUPLES
 
+# Tags must be named and visible for import
 a, b, c = Tag.named('a', 'b', 'c')
 
 

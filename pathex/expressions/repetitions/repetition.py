@@ -20,7 +20,8 @@ class Repetition(Expression):
     """The amount of repetitions to be produced.
     If it is math.inf, it is assumed to be infinite"""
 
-    def __init__(self, argument: object, lower_bound: int | float = 0,
+    def __init__(self, argument: object,
+                 lower_bound: int | float = 0,
                  upper_bound: int | float | ... = inf):
 
         if upper_bound is ...:
@@ -39,10 +40,7 @@ class Repetition(Expression):
         object.__setattr__(self, 'upper_bound', upper_bound)
 
     def __repr__(self):
-        return (f'{self.__class__.__name__}('
-                f'{self.argument!r}, '
-                f'{self.lower_bound!r}, '
-                f'{self.upper_bound!r})')
+        return f'{self.__class__.__name__}({self.argument!r}, {self.lower_bound!r}, {self.upper_bound!r})'
 
     def as_concatenation_repetition(self):
         from .concatenation_repetition import ConcatenationRepetition

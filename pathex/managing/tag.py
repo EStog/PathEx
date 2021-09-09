@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from functools import cached_property
 from typing import Iterator
 
 from pathex.expressions.nary_operators.concatenation import Concatenation
@@ -28,15 +27,10 @@ class Tag(Concatenation):
         enter = f'{name}.enter'
         exit =  f'{name}.exit'
 
-        super().__init__(enter, exit)
+        super().__init__((enter, exit))
 
         object.__setattr__(self, 'enter', enter)
         object.__setattr__(self, 'exit', exit)
-        object.__setattr__(self, 'head', enter)
-
-    @cached_property
-    def tail(self):
-        return Concatenation([self.exit])
 
     @property
     def name(self):
@@ -49,7 +43,7 @@ class Tag(Concatenation):
         return f'{self.__class__.__name__}({self.name!r})'
 
     def __hash__(self) -> int:
-        return id(hash)
+        return id(self)
 
     @classmethod
     def anonym(cls, n: int) -> Iterator[Tag]:

@@ -7,10 +7,10 @@ from pathex.expressions.terms.alphabet import ALPHABET, Alphabet
 from pathex.expressions.terms.empty_word import EmptyWord
 from pathex.expressions.terms.letters_complement import LettersComplement
 
-from .machine import MachineMatch, Matches
+from .decomposer import DecomposerMatch, Matches
 
 
-def simple_match(self: MachineMatch, value1: object, value2: object) -> Matches:
+def simple_match(self: DecomposerMatch, value1: object, value2: object) -> Matches:
     if value1 == value2:
         yield value1
 
@@ -21,7 +21,7 @@ def _get_union(v1, v2, op, kind):
 
 
 def general_match_alphabet(value1: object, value2: object,
-                                 type1, type2) -> object:
+                           type1, type2) -> object:
     if EmptyWord not in (type1, type2):
         if type1 == type2 == Alphabet:
             return ALPHABET
@@ -32,7 +32,7 @@ def general_match_alphabet(value1: object, value2: object,
 
 
 def general_match_completters(value1: object, value2: object,
-                                    type1, type2) -> object:
+                              type1, type2) -> object:
     if EmptyWord not in (type1, type2):
         if type1 == type2 == LettersComplement:
             # De Morgan's Law
@@ -44,7 +44,7 @@ def general_match_completters(value1: object, value2: object,
 
 
 def general_match_compalphabet(value1: object, value2: object,
-                                              type1, type2) -> object:
+                               type1, type2) -> object:
     if type1 == LettersComplement and type2 == Alphabet:
         return value1
     elif type1 == Alphabet and type2 == LettersComplement:
@@ -55,30 +55,30 @@ def general_match_compalphabet(value1: object, value2: object,
         return match
 
 
-def match_with_(self: MachineMatch, value1: object, value2: object, func) -> Matches:
+def match_with_(self: DecomposerMatch, value1: object, value2: object, func) -> Matches:
     type1, type2 = type(value1), type(value2)
     if match := func(value1, value2, type1, type2):
         if isinstance(match, Union):
-            yield from match
+            yield from match.arguments
         else:
             yield match
     else:
         yield from simple_match(self, value1, value2)
 
 
-def match_alphabet(self: MachineMatch,
-                         value1: object, value2: object) -> Matches:
+def match_alphabet(self: DecomposerMatch,
+                   value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
                        general_match_alphabet)
 
 
-def match_completters(self: MachineMatch,
-                            value1: object, value2: object) -> Matches:
+def match_completters(self: DecomposerMatch,
+                      value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
                        general_match_completters)
 
 
-def match_compalphabet(self: MachineMatch,
-                          value1: object, value2: object) -> Matches:
+def match_compalphabet(self: DecomposerMatch,
+                       value1: object, value2: object) -> Matches:
     return match_with_(self, value1, value2,
                        general_match_compalphabet)

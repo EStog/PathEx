@@ -1,5 +1,3 @@
-from pathex.adts.util import flattened
-
 from .nary_operator import NAryOperator
 
 __all__ = ['Shuffle']
@@ -20,5 +18,3 @@ class Shuffle(NAryOperator):
         >>> exp = C('abc') // C('xy')
         >>> assert exp.get_language() == exp.get_generator().get_language() == {'abcxy', 'abxcy', 'abxyc', 'axbcy', 'axbyc', 'axybc', 'xabcy', 'xabyc', 'xaybc', 'xyabc'}
     """
-
-    flattened = classmethod(flattened)

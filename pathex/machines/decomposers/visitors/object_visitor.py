@@ -1,9 +1,9 @@
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 
-from ..machine import Branches, Machine
+from ..decomposer import Branches, Decomposer
 
 __all__ = ['object_visitor']
 
 
-def object_visitor(machine: Machine, exp: object) -> Branches:
+def object_visitor(machine: Decomposer, exp: object) -> Branches:
     yield exp, EMPTY_WORD

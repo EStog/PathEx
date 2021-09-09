@@ -4,8 +4,7 @@ from typing import Iterator
 
 from pathex.adts.singleton import singleton
 from pathex.expressions.terms.empty_word import EMPTY_WORD
-
-from .machines.machine import Branches, Machine
+from pathex.machines.decomposers.decomposer import Branches, Decomposer
 
 
 @singleton
@@ -18,18 +17,19 @@ INCOMPLETE_WORD = IncompleteWord()
 
 class LettersGenerator(Iterator[object]):
 
-    def __init__(self, prefix: list[object],
+    def __init__(self, prefix: tuple,
                  branches: Branches,
-                 machine: Machine, words_generator):
+                 decomposer: Decomposer, words_generator):
         from .words_generator import WordsGenerator
         self._prefix = prefix
-        self._machine = machine
+        self._decomposed = decomposer
         self._branches = branches
         self._words_generator: WordsGenerator = words_generator
         self._pos = 0
         self._complete = False
         self._exhausted = False
-        self.advance_once()
+        self._initial_tail = self.advance_once()
+        self._initial_prefix = self._prefix
 
     def __next__(self) -> object:
         while self._pos == len(self._prefix):
@@ -39,7 +39,7 @@ class LettersGenerator(Iterator[object]):
         self._pos += 1
         return ret
 
-    def advance_once(self) -> bool:
+    def advance_once(self) -> object:
         if self._exhausted:
             return False
         try:
@@ -48,15 +48,16 @@ class LettersGenerator(Iterator[object]):
             self._exhausted = True
             return False
         else:
+            self._words_generator.register_partial_word(
+                self._prefix, self._branches)
             if tail is EMPTY_WORD:
                 self._exhausted = True
                 self._complete = True
-            self._words_generator.register_partial_word(
-                self._prefix.copy(), self._branches)
-            self._branches = self._machine.branches(tail)
+            else:
+                self._branches = self._decomposed.transform(tail)
             if head is not EMPTY_WORD:
-                self._prefix.append(head)
-            return True
+                self._prefix += (head,)
+            return tail
 
     @property
     def exhausted(self):
@@ -74,3 +75,12 @@ class LettersGenerator(Iterator[object]):
 
     def __str__(self) -> str:
         return ''.join(str(l) for l in self)
+
+    def __eq__(self, other):
+        if isinstance(other, LettersGenerator):
+            return (self._initial_prefix, self._initial_tail) == (other._initial_prefix, other._initial_tail)
+        else:
+            return False
+
+    def __hash__(self):
+        return hash((self._initial_prefix, self._initial_tail))

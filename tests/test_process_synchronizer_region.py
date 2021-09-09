@@ -1,17 +1,22 @@
 """
 Example using :meth:`process_region`
 """
+
+#XXX: DO NOT AUTOMATICALLY FORMAT THIS FILE!
+
 import os
 import os.path
 import sys
-sys.path.append(os.getcwd())
-
 from multiprocessing.managers import SyncManager
 
-from pathex import ProcessPoolExecutor, Tag, process_synchronizer
-from pathex.managing.process_synchronizer import process_region
-from pathex.adts.util import SET_OF_TUPLES
+# this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
+sys.path.append(os.getcwd())
 
+from pathex import ProcessPoolExecutor, Tag, process_synchronizer
+from pathex.adts.util import SET_OF_TUPLES
+from pathex.managing.process_synchronizer import process_region
+
+# Tags must be named and visible for import
 a, b, c = Tag.named('a', 'b', 'c')
 
 

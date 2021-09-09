@@ -1,31 +1,29 @@
 from collections import deque
-from pathex.expressions.nary_operators.concatenation import Concatenation
+from pathex.machines.decomposers.visitors.decorators import nary_operator_visitor
 from pathex.expressions.nary_operators.difference import Difference
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 
-from ..machine import Branches, MachineMatchMismatch
-from .decorators import nary_operator_visitor
+from ..decomposer import Branches, DecomposerMatchMismatch
 
 __all__ = ['difference_visitor']
 
-
 @nary_operator_visitor
-def difference_visitor(machine: MachineMatchMismatch, exp: Difference) -> Branches:
-    for head1, tail1 in machine.branches(exp.head):
+def difference_visitor(machine: DecomposerMatchMismatch, exp: Difference) -> Branches:
+    for head1, tail1 in machine._transform(exp.args_head):
         if head1 is EMPTY_WORD and tail1 is not EMPTY_WORD:
-            yield EMPTY_WORD, exp.__class__(tail1, exp.tail)
+            yield EMPTY_WORD, exp.__class__(tail1, *exp.args_tail)
         else:
             matches = set()
             mismatches = {}
-            alts = deque([exp.tail])
+            alts = deque([Difference(exp.args_tail)])
             while alts:
                 other = alts.popleft()
-                for head2, tail2 in machine.branches(other):
+                for head2, tail2 in machine._transform(other):
                     if head2 is EMPTY_WORD and tail2 is not EMPTY_WORD:
                         alts.append(tail2)
                     else:
                         tail = EMPTY_WORD if tail1 is tail2 is EMPTY_WORD \
-                            else exp.__class__(tail1, tail2)
+                            else Difference(tail1, tail2)
                         for match in machine.match(head1, head2):
                             matches.add(match)
                             if match in mismatches:

@@ -4,9 +4,9 @@ import threading
 
 from pathex.adts.multitask.counted_condition import CountedCondition
 from pathex.expressions.expression import Expression
-from pathex.generation.machines.extended_machine_compalphabet import \
-    ExtendedMachineCompalphabet
-from pathex.generation.machines.machine import MachineMatch
+from pathex.machines.decomposers.extended_decomposer_compalphabet import \
+    ExtendedDecomposerCompalphabet
+from pathex.machines.decomposers.decomposer import DecomposerMatch
 from pathex.managing.manager import Manager
 
 __all__ = ['Synchronizer']
@@ -153,13 +153,51 @@ class Synchronizer(Manager):
         >>> allowed_paths = exp.get_language(SET_OF_TUPLES)
 
         >>> assert tuple(shared_list) in allowed_paths
+
+    Example of *readers* and *writers* threads:
+
+        >>> from collections import deque
+        >>> from concurrent.futures import ThreadPoolExecutor
+        >>> from pathex import Synchronizer, Tag
+
+        >>> writer, reader = Tag.named('writer', 'reader')
+
+        >>> exp = (writer | reader//...)+...
+
+        >>> sync = Synchronizer(exp)
+
+        >>> shared_buffer = deque()
+
+        >>> @sync.register(writer)
+        ... def append(x):
+        ...     shared_buffer.append(x)
+
+        >>> @sync.register(reader)
+        ... def get_top():
+        ...     try:
+        ...         x = shared_buffer[0]
+        ...     except Exception:
+        ...         return None
+        ...     else:
+        ...         return x
+
+        >>> @sync.register(writer)
+        ... def appendleft(x):
+        ...     shared_buffer.appendleft(x)
+
+        >>> with ThreadPoolExecutor() as executor:
+        ...     _ = [executor.submit(append, 4) for _ in range(5)]
+        ...     _ = [executor.submit(get_top) for _ in range(5)]
+        ...     _ = [executor.submit(appendleft, 3) for _ in range(5)]
+
+        >>> assert shared_buffer == deque([3, 3, 3, 3, 3, 4, 4, 4, 4, 4])
     """
 
     def __init__(self, exp: Expression,
-                 machine: MachineMatch | None = None,
+                 machine: DecomposerMatch | None = None,
                  lock_class=threading.Lock):
         if machine is None:
-            machine = ExtendedMachineCompalphabet()
+            machine = ExtendedDecomposerCompalphabet()
         super().__init__(exp, machine)
         self._lock_class = lock_class
         self._sync_lock = lock_class()

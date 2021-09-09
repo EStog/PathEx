@@ -59,6 +59,17 @@ class OrderedSet(Collection[_T]):
     append = add
     appendleft = addleft
 
+    def extend(self, other: Iterable[_T]):
+        for e in other:
+            self.append(e)
+
+    def extendleft(self, other: Iterable[_T]):
+        for e in other:
+            self.appendleft(e)
+
+    update = append
+    updateleft = appendleft
+
     def _pop(self, pop):
         try:
             x = pop()

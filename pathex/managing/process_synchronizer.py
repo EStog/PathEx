@@ -12,7 +12,7 @@ from multiprocessing.pool import Pool as mpPool
 from typing import Any, Callable, Iterable, TypeVar
 
 from pathex.expressions.expression import Expression
-from pathex.generation.machines.machine import MachineMatch
+from pathex.machines.decomposers.decomposer import DecomposerMatch
 
 from .synchronizer import Synchronizer
 from .tag import Tag
@@ -38,13 +38,14 @@ class SynchronizerProxy(BaseProxy):
         return self._callmethod('permits', (label,))
 
 
-def process_synchronizer(exp: Expression, machine: MachineMatch | None = None,
+def process_synchronizer(exp: Expression, decomposer: DecomposerMatch | None = None,
                          lock_class=threading.Lock, address=None, authkey=None, manager_class=BaseManager) -> SyncManager:
 
-    synchronizer = Synchronizer(exp, machine, lock_class)
+    synchronizer = Synchronizer(exp, decomposer, lock_class)
 
     class ProcessManager(manager_class):
-        pass
+        get_synchronizer: Callable[[], SynchronizerProxy]
+
     ProcessManager.register(typeid='get_synchronizer',
                             proxytype=SynchronizerProxy,
                             callable=lambda: synchronizer)
@@ -54,7 +55,7 @@ def process_synchronizer(exp: Expression, machine: MachineMatch | None = None,
     return manager
 
 
-def get_synchronizer(address: Address, authkey: bytes = None) -> SynchronizerProxy:
+def get_synchronizer(address: Address, authkey: bytes | None = None) -> SynchronizerProxy:
     """Obtains a :ref:`proxy <multiprocessing-proxy-objects>` to a :class:`~.Synchronizer` retrieved from *address* and with the given *authkey*.
     """
     class ProcessManager(BaseManager):

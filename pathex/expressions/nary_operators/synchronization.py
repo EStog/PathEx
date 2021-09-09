@@ -1,5 +1,3 @@
-from pathex.adts.util import flattened
-
 from .nary_operator import NAryOperator
 
 __all__ = ['Synchronization']
@@ -42,5 +40,3 @@ class Synchronization(NAryOperator):
         # >>> exp = C(Ls('xyz') , 'b', Ls('yz')) & C('v', 'b', 'v')['v':_]
         # >>> assert exp.get_language() == exp.get_generator().get_language() == {'yby', 'zbz'}
     """
-
-    flattened = classmethod(flattened)

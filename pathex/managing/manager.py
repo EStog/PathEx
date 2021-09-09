@@ -6,13 +6,14 @@ from contextlib import contextmanager
 from copy import copy
 from functools import wraps
 
+from pathex.adts.containers.ordered_set import OrderedSet
 from pathex.adts.singleton import singleton
 from pathex.expressions.expression import Expression
 from pathex.expressions.nary_operators.concatenation import Concatenation
 from pathex.expressions.nary_operators.intersection import Intersection
 from pathex.expressions.nary_operators.union import Union
-from pathex.generation.machines.machine import MachineMatch
 from pathex.expressions.terms.empty_word import EMPTY_WORD
+from pathex.machines.decomposers.decomposer import DecomposerMatch
 
 from .tag import Tag
 
@@ -33,28 +34,29 @@ class Manager(ABC):
     @staticmethod
     def _waiting_labels_visitor(machine, exp):
         # return a visitor to the current waiting-labels expression
-        return machine.branches(machine.waiting_labels_expression)
+        return machine.transform(machine.waiting_labels_expression)
 
-    def __init__(self, expression: Expression, machine: MachineMatch):
+    def __init__(self, expression: Expression, decomposer: DecomposerMatch):
         self._waiting_labels = self._WaitingLabels()
-        self._expression: object = Intersection.flattened(self._waiting_labels, expression)
+        self._expression: object = Intersection(
+            self._waiting_labels, expression)
 
-        class CustomMachine(machine.__class__):
+        class CustomDecomposer(decomposer.__class__):
             waiting_labels_expression: object
 
             @classmethod
-            def _populate_visitor(cls):
-                super()._populate_visitor()
-                cls.branches.register(self._WaitingLabels,
-                                      self._waiting_labels_visitor)
+            def _populate_transformer(cls):
+                super()._populate_transformer()
+                cls._transform.register(self._WaitingLabels,
+                                        self._waiting_labels_visitor)
 
         # Just in case ``machine`` has some attributes:
-        machine = copy(machine)
+        decomposer = copy(decomposer)
 
         # Expand ``machine.branch`` with ``_waiting_labels_visitor``:
-        machine.__class__ = CustomMachine
+        decomposer.__class__ = CustomDecomposer
 
-        self._machine: CustomMachine = machine
+        self._decomposer: CustomDecomposer = decomposer
 
     @abstractmethod
     def _when_requested_match(self, label: object) -> object: ...
@@ -84,17 +86,19 @@ class Manager(ABC):
     def _advance(self, label: object) -> bool:
         new_alternatives = deque()
         # the waiting-labels expression is setted as a sequence consisting of the current label to be matched, followed by the rest of the labels that are to be matched
-        self._machine.waiting_labels_expression = Concatenation(label, self._waiting_labels)
-        alts = deque([self._expression])
+        self._decomposer.waiting_labels_expression = Concatenation(
+            label, self._waiting_labels)
+        alts = OrderedSet([self._expression])
         while alts:
             exp = alts.popleft()
-            for head, tail in self._machine.branches(exp):
+            # print(exp)
+            for head, tail in self._decomposer.transform(exp):
                 if head == label:
                     new_alternatives.append(tail)
                 elif head is EMPTY_WORD:
                     alts.append(tail)
         if new_alternatives:
-            self._expression = Union.flattened(new_alternatives)
+            self._expression = Union(new_alternatives)
             return True
         else:
             return False

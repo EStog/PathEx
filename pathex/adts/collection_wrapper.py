@@ -1,20 +1,25 @@
 from __future__ import annotations
 
 import types
-from typing import Callable, Iterable, Protocol, TypeVar
+from typing import Any, Callable, Iterable, Iterator, Protocol, TypeVar
 
 __all__ = ['CollectionWrapper']
 
 _T = TypeVar('_T')
 _O = TypeVar('_O')
-_X = TypeVar('_X')
 
 
 class CollectionWrapper(Protocol[_O]):
     PopException: type[Exception]
-    def __init__(self: CollectionWrapper[_O]) -> None: ...
-    def __add__(self: CollectionWrapper[_O],
-                other: CollectionWrapper[_O] | _T) -> CollectionWrapper[_O] | _T: ...
+
+    def __init__(self: CollectionWrapper[_O],
+                 _it: Iterable[_O] = ...) -> None: ...
+    def __add__(
+        self, other: CollectionWrapper[_O] | _T) -> CollectionWrapper[_O] | _T: ...
+
+    def __len__(self) -> int: ...
+    def __iter__(self) -> Iterator[_O]: ...
+    def __contains__(self, _o: Any) -> bool: ...
 
     def put(self: CollectionWrapper[_O], obj: _O) -> None: ...
     def extend(self: CollectionWrapper[_O], it: Iterable[_O]) -> None: ...
@@ -26,20 +31,14 @@ def get_collection_wrapper(parent: type[_T],
                            extend: Callable[[_T, Iterable[_O]],
                                             None] | None = None,
                            pop: Callable[[_T], _O] | None = None,
-                           pop_exception: type[Exception] | None = None) -> type[CollectionWrapper[_O]]:
+                           pop_exception: type[Exception] | None = None,
+                           __contains__: Callable[[
+                               _T, Any], bool] | None = None,
+                           __len__: Callable[[_T], int] | None = None,
+                           __iter__: Callable[[_T], Iterator[_O]] | None = None) -> type[CollectionWrapper[_O]]:
     """Generates a class adaptor with a put-extend-pop-add interface
 
     This adaptor factory is usefull for using with classes that expect WrapperCollection interface.
-
-    Args:
-        parent (type[_T]): The base class
-        put (Callable[[_T, _O], None] | None): method to put one element
-        extend (Callable[[_T, Iterable[_O]], None]| None): method to extend the collection with an iterable
-        pop (Callable[[_T], _O]): method to take (and remove) an element
-        add (Callable[[_T, _T|_X], _T|_X] | None): method to implement __add__
-
-    Returns:
-        type[CollectionWrapper[_O]]: The wrapped collection.
 
     >>> def test(T):
     ...     l = T([1, 2, 3])
@@ -60,8 +59,7 @@ def get_collection_wrapper(parent: type[_T],
     >>> Deque = get_collection_wrapper(deque, deque.append, deque.extend, deque.pop, IndexError)
     >>> test(Deque)
     """
-    def __repr__(self):
-        return name
+
     def exec_body(cls):
         cls.update(parent.__dict__)
         if put:
@@ -71,6 +69,12 @@ def get_collection_wrapper(parent: type[_T],
         if pop:
             cls['pop'] = pop
             cls['PopException'] = pop_exception
+        if __contains__:
+            cls['__contains__'] = __contains__
+        if __len__:
+            cls['__len__'] = __len__
+        if __iter__:
+            cls['__iter__'] = __iter__
 
     name = f'{parent.__name__[0].title()+parent.__name__[1:]}Wrapper'
     return types.new_class(name, (parent,), exec_body=exec_body)

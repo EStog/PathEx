@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from pathex.expressions.expression import Expression
-from pathex.generation.machines.extended_machine_compalphabet import \
-    ExtendedMachineCompalphabet
-from pathex.generation.machines.machine import MachineMatch
+from pathex.machines.decomposers.extended_decomposer_compalphabet import \
+    ExtendedDecomposerCompalphabet
+from pathex.machines.decomposers.decomposer import DecomposerMatch
 from .manager import Manager
 
 __all__ = ['TraceChecker']
@@ -37,9 +37,9 @@ class TraceChecker(Manager):
     AssertionError: func_c.enter is not allowed after func_a.exit
     """
 
-    def __init__(self, expression: Expression, machine: MachineMatch | None = None):
+    def __init__(self, expression: Expression, machine: DecomposerMatch | None = None):
         if machine is None:
-            machine = ExtendedMachineCompalphabet()
+            machine = ExtendedDecomposerCompalphabet()
         super().__init__(expression, machine)
         self._last_seen_label = None
 

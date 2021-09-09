@@ -8,7 +8,7 @@ class ShuffleRepetition(Repetition):
 
 
     Examples:
-        >>> from pathex import Shuffle as S, Concatenation as C
+        >>> from pathex.expressions.aliases import *
 
         >>> exp = S('ab')%[1,2]
         >>> assert exp.get_language() == exp.get_generator().get_language() == {'ab', 'ba', 'abab', 'abba', 'baba', 'aabb', 'baab', 'bbaa'}
