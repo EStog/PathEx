@@ -1,4 +1,4 @@
-.. automodule:: pathex.generation.machines.machine
+.. automodule:: pathex.machines.simplifier
    :members:
    :undoc-members:
    :show-inheritance:

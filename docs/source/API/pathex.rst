@@ -15,4 +15,5 @@ Subpackages
    pathex.adts
    pathex.expressions
    pathex.generation
+   pathex.machines
    pathex.managing

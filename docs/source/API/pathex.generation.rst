@@ -6,14 +6,6 @@ pathex.generation package
    :undoc-members:
    :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   pathex.generation.machines
-
 Submodules
 ----------
 

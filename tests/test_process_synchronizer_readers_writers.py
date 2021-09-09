@@ -42,12 +42,12 @@ if __name__ == '__main__':
 
     exp = (writer | reader//...)+...
 
-    pmanager = process_synchronizer(
+    psync = process_synchronizer(
         exp, manager_class=SyncManager)
 
-    shared_buffer = pmanager.list()
+    shared_buffer = psync.list()
 
-    with ProcessPoolExecutor(pmanager.address, max_workers=4) as executor:
+    with ProcessPoolExecutor(psync.address, max_workers=4) as executor:
         _ = [executor.submit(append, shared_buffer, 4) for _ in range(5)]
         _ = [executor.submit(get_top, shared_buffer) for _ in range(5)]
         _ = [executor.submit(appendleft, shared_buffer, 3) for _ in range(5)]

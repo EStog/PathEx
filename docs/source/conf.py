@@ -35,6 +35,7 @@ needs_sphinx = '3.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinxcontrib.bibtex',
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.doctest',
@@ -45,6 +46,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinx.ext.autosectionlabel'
     # 'sphinx.ext.duration'
 ]
 
@@ -86,7 +88,7 @@ modindex_common_prefix = [
 ]
 
 # other general options
-nitpicky = True
+# nitpicky = True
 add_module_names = False
 python_use_unqualified_type_names = True
 show_authors = True
@@ -106,7 +108,7 @@ autoclass_content = 'both'
 autodoc_typehints = 'both'
 autodoc_typehints_description_target = 'documented'
 # autodoc_preserve_defaults = True
-autodoc_member_order='groupwise'
+autodoc_member_order = 'groupwise'
 autodoc_type_aliases = {
 }
 
@@ -124,3 +126,7 @@ imgmath_font_size = 13
 # sphinx.ext.intersphinx options
 intersphinx_mapping = {'python': ('https://docs.python.org/3',
                                   (None, 'python-objects.inv'))}
+
+
+# sphinxcontrib-bibtex options
+bibtex_bibfiles = ['refs.bib']

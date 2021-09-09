@@ -47,12 +47,12 @@ if __name__ == '__main__':
 
     exp = (a + (b | c))+2
 
-    pmanager = process_synchronizer(
+    psync = process_synchronizer(
         exp, manager_class=SyncManager)
 
-    shared = pmanager.list()
+    shared = psync.list()
 
-    with ProcessPoolExecutor(pmanager.address, max_workers=4) as executor:
+    with ProcessPoolExecutor(psync.address, max_workers=4) as executor:
         r1 = executor.submit(func_c, shared)
         r2 = executor.submit(func_a, shared)
         r3 = executor.submit(func_b, shared)

@@ -10,8 +10,10 @@ Welcome to |pe|'s documentation!
    :maxdepth: 1
    :caption: Contents:
 
+   readme_file
    generalities/index
    semantics/index
+   references
    API/pathex
 
 .. todo:: add *license*

@@ -13,4 +13,4 @@ Submodules
    :maxdepth: 4
 
    pathex.adts.containers.head_tail_iterable
-   pathex.adts.containers.queue_set
+   pathex.adts.containers.ordered_set

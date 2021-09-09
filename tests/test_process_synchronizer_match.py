@@ -35,18 +35,18 @@ def consumer(address, produced, consumed):
 if __name__ == '__main__':
     # The following expression generates 'PiPfCiCf' | 'PiPfCiCfPiPfCiCf' | ...
     exp = +C('Pi', 'Pf', 'Ci', 'Cf')
-    pmanager = process_synchronizer(exp, manager_class=SyncManager)
-    produced = pmanager.list()
-    consumed = pmanager.list()
+    psync = process_synchronizer(exp, manager_class=SyncManager)
+    produced = psync.list()
+    consumed = psync.list()
 
     with ProcessPoolExecutor(max_workers=8) as executor:
         for _ in range(4):
-            executor.submit(consumer, pmanager.address, produced, consumed)
+            executor.submit(consumer, psync.address, produced, consumed)
         for i in range(4):
-            executor.submit(producer, pmanager.address, produced, i)
+            executor.submit(producer, psync.address, produced, i)
 
     assert list(produced) == []
     assert set(consumed) == {0, 1, 2, 3}
-    sync = get_synchronizer(pmanager.address)
+    sync = get_synchronizer(psync.address)
     assert sync.requests('Pi') == sync.permits(
         'Pf') == sync.requests('Ci') == sync.permits('Cf') == 4

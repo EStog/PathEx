@@ -1,4 +1,4 @@
-.. automodule:: pathex.adts.containers.queue_set
+.. automodule:: pathex.adts.containers.ordered_set
    :members:
    :undoc-members:
    :show-inheritance:

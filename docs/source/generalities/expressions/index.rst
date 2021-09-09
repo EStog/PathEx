@@ -6,6 +6,8 @@ Generalities of expressions
 
 ------------------------
 
+.. todo:: document here how to use overloaded operators
+
 This section explains the concept of "expression" in general terms and in the context of |pe|.
 
 .. seealso::
@@ -29,7 +31,7 @@ In this case ``U`` is a :mod:`short alias <pathex.expressions.aliases>` of :clas
 
 The previous example shows a case that generates a finite language. However, there are expressions which language is infinite. For example, the expression :math:`(ab)*` generates a language which elements are the :doc:`empty word <empty_word>` or :math:`ab` several times repeated. In |pe| idiom this may be expressed as:
 
-.. >>> from pathex.expressions.aliases import *
+>>> from pathex.expressions.aliases import *
 >>> from pathex.adts.util import take
 >>> expression = C('ab')*...
 >>> assert {''.join(str(l) for l in w) for w in take(5, expression.get_eager_generator())} == \
