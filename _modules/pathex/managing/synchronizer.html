@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pathex.managing.synchronizer &#8212; PathEx 0.1 documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">PathEx 0.1 documentation</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../overview.html">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../generalities/index.html">
+   Generalities
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../generalities/expressions/index.html">
+     Expressions
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../generalities/expressions/empty_word.html">
+       Empty word
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../generalities/expressions/union.html">
+       Union
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../semantics/index.html">
+   Semantics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../semantics/expressions/index.html">
+     Expressions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../references.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../API/pathex.html">
+   pathex package
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.adts.html">
+     pathex.adts package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.adts.cached_generators.html">
+       pathex.adts.cached_generators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.adts.concurrency.html">
+       pathex.adts.concurrency package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="../../../API/pathex.adts.concurrency.atomics.html">
+         pathex.adts.concurrency.atomics package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.adts.containers.html">
+       pathex.adts.containers package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../API/pathex.adts.singleton.html">
+       Singleton decorator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../API/pathex.adts.util.html">
+       Useful functions and constants
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.expressions.html">
+     pathex.expressions package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.expressions.nary_operators.html">
+       pathex.expressions.nary_operators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.expressions.repetitions.html">
+       pathex.expressions.repetitions package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.expressions.terms.html">
+       pathex.expressions.terms package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../API/pathex.expressions.expression.html">
+       Expressions abstract base class
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.generation.html">
+     pathex.generation package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.machines.html">
+     pathex.machines package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.machines.decomposers.html">
+       pathex.machines.decomposers package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="../../../API/pathex.machines.decomposers.visitors.html">
+         pathex.machines.decomposers.visitors package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.managing.html">
+     pathex.managing package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <h1>Source code for pathex.managing.synchronizer</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">pathex.adts.concurrency.counted_condition</span> <span class="kn">import</span> <span class="n">CountedCondition</span>
+<span class="kn">from</span> <span class="nn">pathex.expressions.expression</span> <span class="kn">import</span> <span class="n">Expression</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.extended_decomposer_compalphabet</span> <span class="kn">import</span> \
+    <span class="n">ExtendedDecomposerCompalphabet</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">DecomposerMatch</span>
+<span class="kn">from</span> <span class="nn">pathex.managing.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Synchronizer&#39;</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">LabelInfo</span><span class="p">(</span><span class="n">CountedCondition</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lock</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">lock</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_requests</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_permits</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">get_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_requests</span>
+
+    <span class="k">def</span> <span class="nf">get_permits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_permits</span>
+
+    <span class="k">def</span> <span class="nf">inc_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_requests</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">inc_permits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_permits</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_permits</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="Synchronizer"><a class="viewcode-back" href="../../../API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer">[docs]</a><span class="k">class</span> <span class="nc">Synchronizer</span><span class="p">(</span><span class="n">Manager</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class is a manager that controls the execution of its registered threads.</span>
+
+<span class="sd">    Example using :meth:`match`::</span>
+
+<span class="sd">        &gt;&gt;&gt; from concurrent.futures import ThreadPoolExecutor</span>
+<span class="sd">        &gt;&gt;&gt; from pathex import Synchronizer, Concatenation as C</span>
+
+<span class="sd">        &gt;&gt;&gt; # The following expression generates &#39;PiPfCiCf&#39; | &#39;PiPfCiCfPiPfCiCf&#39; | ...</span>
+<span class="sd">        &gt;&gt;&gt; exp = +C(&#39;Pi&#39;,&#39;Pf&#39;,&#39;Ci&#39;,&#39;Cf&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; sync = Synchronizer(exp)</span>
+<span class="sd">        &gt;&gt;&gt; produced = []</span>
+<span class="sd">        &gt;&gt;&gt; consumed = []</span>
+
+<span class="sd">        &gt;&gt;&gt; def producer(x):</span>
+<span class="sd">        ...     sync.match(&#39;Pi&#39;)</span>
+<span class="sd">        ...     produced.append(x)</span>
+<span class="sd">        ...     sync.match(&#39;Pf&#39;)</span>
+
+<span class="sd">        &gt;&gt;&gt; def consumer():</span>
+<span class="sd">        ...     sync.match(&#39;Ci&#39;)</span>
+<span class="sd">        ...     consumed.append(produced.pop())</span>
+<span class="sd">        ...     sync.match(&#39;Cf&#39;)</span>
+
+<span class="sd">        &gt;&gt;&gt; with ThreadPoolExecutor(max_workers=8) as executor:</span>
+<span class="sd">        ...     for _ in range(4):</span>
+<span class="sd">        ...         _ = executor.submit(consumer)</span>
+<span class="sd">        ...     for i in range(4):</span>
+<span class="sd">        ...         _ = executor.submit(producer, i)</span>
+
+<span class="sd">        &gt;&gt;&gt; assert produced == []</span>
+<span class="sd">        &gt;&gt;&gt; assert set(consumed) == {0, 1, 2, 3}</span>
+<span class="sd">        &gt;&gt;&gt; assert sync.requests(&#39;Pi&#39;) == sync.permits(&#39;Pf&#39;) == sync.requests(&#39;Ci&#39;) == sync.permits(&#39;Cf&#39;) == 4</span>
+
+<span class="sd">    Example using :meth:`register`::</span>
+
+<span class="sd">        &gt;&gt;&gt; from concurrent.futures import ThreadPoolExecutor</span>
+<span class="sd">        &gt;&gt;&gt; from pathex import Synchronizer, Tag</span>
+
+<span class="sd">        &gt;&gt;&gt; a, b, c = Tag.anonym(3)</span>
+
+<span class="sd">        &gt;&gt;&gt; exp = ( a + (b|c) )+2</span>
+
+<span class="sd">        &gt;&gt;&gt; shared_list = []</span>
+
+<span class="sd">        &gt;&gt;&gt; sync = Synchronizer(exp)</span>
+
+<span class="sd">        &gt;&gt;&gt; @sync.register(a)</span>
+<span class="sd">        ... def func_a():</span>
+<span class="sd">        ...     shared_list.append(a.enter)</span>
+<span class="sd">        ...     # print(&#39;Func a&#39;)</span>
+<span class="sd">        ...     shared_list.append(a.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; @sync.register(b)</span>
+<span class="sd">        ... def func_b():</span>
+<span class="sd">        ...     shared_list.append(b.enter)</span>
+<span class="sd">        ...     # print(&#39;Func b&#39;)</span>
+<span class="sd">        ...     shared_list.append(b.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; @sync.register(c)</span>
+<span class="sd">        ... def func_c():</span>
+<span class="sd">        ...     shared_list.append(c.enter)</span>
+<span class="sd">        ...     # print(&#39;Func c&#39;)</span>
+<span class="sd">        ...     shared_list.append(c.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; with ThreadPoolExecutor(max_workers=4) as executor:</span>
+<span class="sd">        ...     _ = executor.submit(func_c)</span>
+<span class="sd">        ...     _ = executor.submit(func_a)</span>
+<span class="sd">        ...     _ = executor.submit(func_b)</span>
+<span class="sd">        ...     _ = executor.submit(func_a)</span>
+
+<span class="sd">        &gt;&gt;&gt; from pathex.adts.util import SET_OF_TUPLES</span>
+<span class="sd">        &gt;&gt;&gt; allowed_paths = exp.get_language(SET_OF_TUPLES)</span>
+
+<span class="sd">        &gt;&gt;&gt; assert tuple(shared_list) in allowed_paths</span>
+
+<span class="sd">    Example using :meth:`region`::</span>
+
+<span class="sd">        &gt;&gt;&gt; a, b, c = Tag.named(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)</span>
+
+<span class="sd">        &gt;&gt;&gt; exp = ( a + (b|c) )+2</span>
+
+<span class="sd">        &gt;&gt;&gt; shared_list = []</span>
+
+<span class="sd">        &gt;&gt;&gt; sync = Synchronizer(exp)</span>
+
+<span class="sd">        &gt;&gt;&gt; def func_a():</span>
+<span class="sd">        ...     with sync.region(a):</span>
+<span class="sd">        ...         shared_list.append(a.enter)</span>
+<span class="sd">        ...         # print(&#39;Func a&#39;)</span>
+<span class="sd">        ...         shared_list.append(a.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; def func_b():</span>
+<span class="sd">        ...     with sync.region(b):</span>
+<span class="sd">        ...         shared_list.append(b.enter)</span>
+<span class="sd">        ...         # print(&#39;Func b&#39;)</span>
+<span class="sd">        ...         shared_list.append(b.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; def func_c():</span>
+<span class="sd">        ...     with sync.region(c):</span>
+<span class="sd">        ...         shared_list.append(c.enter)</span>
+<span class="sd">        ...         # print(&#39;Func c&#39;)</span>
+<span class="sd">        ...         shared_list.append(c.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; with ThreadPoolExecutor(max_workers=4) as executor:</span>
+<span class="sd">        ...     _ = executor.submit(func_c)</span>
+<span class="sd">        ...     _ = executor.submit(func_a)</span>
+<span class="sd">        ...     _ = executor.submit(func_b)</span>
+<span class="sd">        ...     _ = executor.submit(func_a)</span>
+
+<span class="sd">        &gt;&gt;&gt; from pathex.adts.util import SET_OF_TUPLES</span>
+<span class="sd">        &gt;&gt;&gt; allowed_paths = exp.get_language(SET_OF_TUPLES)</span>
+
+<span class="sd">        &gt;&gt;&gt; assert tuple(shared_list) in allowed_paths</span>
+
+<span class="sd">    Example of *readers* and *writers* threads:</span>
+
+<span class="sd">        &gt;&gt;&gt; from collections import deque</span>
+<span class="sd">        &gt;&gt;&gt; from concurrent.futures import ThreadPoolExecutor</span>
+<span class="sd">        &gt;&gt;&gt; from pathex import Synchronizer, Tag</span>
+
+<span class="sd">        &gt;&gt;&gt; writer, reader = Tag.named(&#39;writer&#39;, &#39;reader&#39;)</span>
+
+<span class="sd">        &gt;&gt;&gt; exp = (writer | reader//...)+...</span>
+
+<span class="sd">        &gt;&gt;&gt; sync = Synchronizer(exp)</span>
+
+<span class="sd">        &gt;&gt;&gt; shared_buffer = deque()</span>
+
+<span class="sd">        &gt;&gt;&gt; @sync.register(writer)</span>
+<span class="sd">        ... def append(x):</span>
+<span class="sd">        ...     shared_buffer.append(x)</span>
+
+<span class="sd">        &gt;&gt;&gt; @sync.register(reader)</span>
+<span class="sd">        ... def get_top():</span>
+<span class="sd">        ...     try:</span>
+<span class="sd">        ...         x = shared_buffer[0]</span>
+<span class="sd">        ...     except Exception:</span>
+<span class="sd">        ...         return None</span>
+<span class="sd">        ...     else:</span>
+<span class="sd">        ...         return x</span>
+
+<span class="sd">        &gt;&gt;&gt; @sync.register(writer)</span>
+<span class="sd">        ... def appendleft(x):</span>
+<span class="sd">        ...     shared_buffer.appendleft(x)</span>
+
+<span class="sd">        &gt;&gt;&gt; with ThreadPoolExecutor() as executor:</span>
+<span class="sd">        ...     _ = [executor.submit(append, 4) for _ in range(5)]</span>
+<span class="sd">        ...     _ = [executor.submit(get_top) for _ in range(5)]</span>
+<span class="sd">        ...     _ = [executor.submit(appendleft, 3) for _ in range(5)]</span>
+
+<span class="sd">        &gt;&gt;&gt; assert shared_buffer == deque([3, 3, 3, 3, 3, 4, 4, 4, 4, 4])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp</span><span class="p">:</span> <span class="n">Expression</span><span class="p">,</span>
+                 <span class="n">machine</span><span class="p">:</span> <span class="n">DecomposerMatch</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">lock_class</span><span class="o">=</span><span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">machine</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">machine</span> <span class="o">=</span> <span class="n">ExtendedDecomposerCompalphabet</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">machine</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock_class</span> <span class="o">=</span> <span class="n">lock_class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_lock</span> <span class="o">=</span> <span class="n">lock_class</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">object</span><span class="p">,</span> <span class="n">LabelInfo</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">match</span> <span class="o">=</span> <span class="n">Manager</span><span class="o">.</span><span class="n">match</span>
+    <span class="sd">&quot;&quot;&quot;This method is used to wait for the availability of a single label.</span>
+
+<span class="sd">    If the expression of the synchronizer is not able to generate the given object then the execution is blocked until the presence of another label in another task advances the associated expression&#39;s automata, so it can generate the label given in this method.</span>
+
+<span class="sd">    The direct use of this method should be exercised with caution, because it leads to non structured code. In fact, in an object oriented design, its use should be discouraged. This method is public just because it might be usefull in a very specific and extraordinary use case where an structured approach may be too expensive, harder to design or to maintain.</span>
+
+<span class="sd">    For an structured approach use the decorator :meth:`register` or the context manager :meth:`region`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        label (object): The label to wait for.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_when_requested_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>  <span class="c1"># protect the entire procedure</span>
+        <span class="n">label_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
+            <span class="n">label</span><span class="p">,</span> <span class="n">LabelInfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lock_class</span><span class="p">()))</span>
+        <span class="n">label_info</span><span class="o">.</span><span class="n">inc_requests</span><span class="p">()</span>
+        <span class="c1"># print(f&#39;requested {label}&#39;)</span>
+        <span class="k">return</span> <span class="n">label_info</span>
+
+    <span class="k">def</span> <span class="nf">_when_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">label_info</span><span class="p">:</span> <span class="n">LabelInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># print(f&#39;matched {label}&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_waiting_labels</span><span class="p">()</span>
+        <span class="n">label_info</span><span class="o">.</span><span class="n">inc_permits</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_when_not_matched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">label_info</span><span class="p">:</span> <span class="n">LabelInfo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># print(f&#39;not_matched {label}&#39;)</span>
+        <span class="c1"># release the procedure&#39;s protection lock in order to get blocked in the following line, so the blocking will be because this task being waiting for some other task, not because of the procedure&#39;s protection lock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sync_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+
+        <span class="c1"># lock.acquire in order to block.</span>
+        <span class="c1"># lock.release must be done by another task.</span>
+        <span class="k">with</span> <span class="n">label_info</span><span class="p">:</span>
+            <span class="n">label_info</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_check_waiting_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">:</span>
+                <span class="n">lock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+                <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">lock</span><span class="o">.</span><span class="n">waiting_count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_advance</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+                            <span class="c1"># print(f&#39;releasing {label}&#39;)</span>
+                            <span class="n">lock</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+                            <span class="c1"># print(f&#39;{label} released&#39;)</span>
+                            <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+
+<div class="viewcode-block" id="Synchronizer.requests"><a class="viewcode-back" href="../../../API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.requests">[docs]</a>    <span class="k">def</span> <span class="nf">requests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sync_lock</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">label_info</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">label_info</span><span class="o">.</span><span class="n">get_requests</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="Synchronizer.permits"><a class="viewcode-back" href="../../../API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.permits">[docs]</a>    <span class="k">def</span> <span class="nf">permits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sync_lock</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">label_info</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">label</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">label_info</span><span class="o">.</span><span class="n">get_permits</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span></div></div>
+</pre></div>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Ernesto Soto Gómez<br/>
+        
+            &copy; Copyright 2019-2021, Ernesto Soto Gómez.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

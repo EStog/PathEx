@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pathex.adts.concurrency.shared_lock &#8212; PathEx 0.1 documentation</title>
+    
+  <link rel="stylesheet" href="../../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" />
+    
+  <link rel="preload" as="script" href="../../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">PathEx 0.1 documentation</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../overview.html">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../../generalities/index.html">
+   Generalities
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../../generalities/expressions/index.html">
+     Expressions
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../generalities/expressions/empty_word.html">
+       Empty word
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../generalities/expressions/union.html">
+       Union
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../../semantics/index.html">
+   Semantics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../../semantics/expressions/index.html">
+     Expressions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../../references.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../../API/pathex.html">
+   pathex package
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../../API/pathex.adts.html">
+     pathex.adts package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../../API/pathex.adts.cached_generators.html">
+       pathex.adts.cached_generators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../../API/pathex.adts.concurrency.html">
+       pathex.adts.concurrency package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="../../../../API/pathex.adts.concurrency.atomics.html">
+         pathex.adts.concurrency.atomics package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../../API/pathex.adts.containers.html">
+       pathex.adts.containers package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../API/pathex.adts.singleton.html">
+       Singleton decorator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../API/pathex.adts.util.html">
+       Useful functions and constants
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../../API/pathex.expressions.html">
+     pathex.expressions package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../../API/pathex.expressions.nary_operators.html">
+       pathex.expressions.nary_operators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../../API/pathex.expressions.repetitions.html">
+       pathex.expressions.repetitions package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../../API/pathex.expressions.terms.html">
+       pathex.expressions.terms package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../../API/pathex.expressions.expression.html">
+       Expressions abstract base class
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../../API/pathex.generation.html">
+     pathex.generation package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../../API/pathex.machines.html">
+     pathex.machines package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../../API/pathex.machines.decomposers.html">
+       pathex.machines.decomposers package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="../../../../API/pathex.machines.decomposers.visitors.html">
+         pathex.machines.decomposers.visitors package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../../API/pathex.managing.html">
+     pathex.managing package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <h1>Source code for pathex.adts.concurrency.shared_lock</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">wraps</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SharedLock&#39;</span><span class="p">]</span>
+
+<span class="n">OPERATION_NOT_EFFECTED</span> <span class="o">=</span> <span class="nb">object</span>
+
+
+<span class="k">def</span> <span class="nf">_do_operation</span><span class="p">(</span><span class="n">lock_instance</span><span class="p">,</span> <span class="n">acquire</span><span class="p">,</span> <span class="n">release</span><span class="p">,</span> <span class="n">l_kwargs</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">f_args</span><span class="p">,</span> <span class="n">f_kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This method is meant to be a wrapper to an operation.</span>
+
+<span class="sd">    The method just call `f` function after effecting an acquire. If the acquire is successful, release is called and the result of the call of `f` is returned. If the acquire was not successful then OPERATION_NOT_EFFECTED is returned.</span>
+
+<span class="sd">    Acquire and release operations must be in accord to `lock_instance` class. Currently, it is expected the acquire and release operations to be only those of `threading` and `multiprocessing` Lock. Note: `multiprocessing` is in process.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lock_instance (threading.Lock | multiprocessing.Lock): a lock instance to be call acquire and release on.</span>
+<span class="sd">        acquire (threading.Lock.acquire | multiprocessing.Lock.acquire): An acquire operation.</span>
+<span class="sd">        release (threading.Lock.release | multiprocessing.Lock.release): A release operation.</span>
+<span class="sd">        l_kwargs (Mapping): additional keyword arguments to be passed to acquire operation</span>
+<span class="sd">        f (Callable[..., Any]): a function to be executed.</span>
+<span class="sd">        f_args (Sequence): additional positional arguments to be passed to the function `f`</span>
+<span class="sd">        f_kwargs (Mapping): additional keyword arguments to be passed to the function `f`</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Any: Returns the same as `f` if acquire operation is success, else OPERATION_NOT_EFFECTED is returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">acquired</span> <span class="o">=</span> <span class="n">acquire</span><span class="p">(</span><span class="n">lock_instance</span><span class="p">,</span> <span class="o">**</span><span class="n">l_kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">acquired</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">f_args</span><span class="p">,</span> <span class="o">**</span><span class="n">f_kwargs</span><span class="p">)</span>
+        <span class="n">release</span><span class="p">(</span><span class="n">lock_instance</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>  <span class="c1"># &lt;- only return when acquired is successful</span>
+    <span class="k">return</span> <span class="n">OPERATION_NOT_EFFECTED</span>
+
+
+<span class="k">class</span> <span class="nc">_Operation</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;This class represents object operations to be synchronized.</span>
+<span class="sd">    It acts as a context manager and as a decorator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">acquire</span><span class="p">,</span> <span class="n">release</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acquire</span> <span class="o">=</span> <span class="n">acquire</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">release</span> <span class="o">=</span> <span class="n">release</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="n">instance</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">f_args</span><span class="p">,</span> <span class="o">**</span><span class="n">f_kwargs</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">_do_operation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">acquire</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">release</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span>
+                                     <span class="n">f</span><span class="p">,</span> <span class="n">f_args</span><span class="p">,</span> <span class="n">f_kwargs</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">wrapped</span>
+
+        <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">release</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">class</span> <span class="nc">_OperationDescriptor</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;This class represents class operations to be synchronized.</span>
+<span class="sd">    It acts as a descriptor and as a decorator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acquire</span><span class="p">,</span> <span class="n">release</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acquire</span> <span class="o">=</span> <span class="n">acquire</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">release</span> <span class="o">=</span> <span class="n">release</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">owner</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_Operation</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">acquire</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">release</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="n">f_args</span><span class="p">,</span> <span class="o">**</span><span class="n">f_kwargs</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">_do_operation</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">acquire</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">release</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span>
+                                     <span class="n">partial</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">instance</span><span class="p">),</span> <span class="n">f_args</span><span class="p">,</span> <span class="n">f_kwargs</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">wrapped</span>
+
+        <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s1">&#39;Non bounded operation, can not be used as context manager&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># Just for the type checker</span>
+
+
+<div class="viewcode-block" id="SharedLock"><a class="viewcode-back" href="../../../../API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock">[docs]</a><span class="k">class</span> <span class="nc">SharedLock</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;A shared (read-write) lock without a defined priority between read and write tasks.</span>
+
+<span class="sd">    You may use the lock as a usual lock, but the operations of acquire and release are per</span>
+<span class="sd">    each kind of operation. You must also specify an underlying kind of lock.</span>
+
+<span class="sd">        .. testsetup::</span>
+
+<span class="sd">           from pathex.adts.concurrency.shared_lock import SharedLock</span>
+
+<span class="sd">        &gt;&gt;&gt; from threading import Lock</span>
+
+<span class="sd">        &gt;&gt;&gt; lock = SharedLock(Lock)</span>
+
+<span class="sd">        &gt;&gt;&gt; def append(l, x):</span>
+<span class="sd">        ...     lock.acquire_write()</span>
+<span class="sd">        ...     l.append(x)</span>
+<span class="sd">        ...     lock.release_write()</span>
+<span class="sd">        ...     return f&#39;{x}_write&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; def get_value(l, i):</span>
+<span class="sd">        ...     lock.acquire_read()</span>
+<span class="sd">        ...     x = l[i]</span>
+<span class="sd">        ...     lock.release_read()</span>
+<span class="sd">        ...     return f&#39;{x}_read&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; from concurrent.futures import ThreadPoolExecutor, as_completed</span>
+
+<span class="sd">        &gt;&gt;&gt; def execute(read, write):</span>
+<span class="sd">        ...     l = [1, 2, 3]</span>
+<span class="sd">        ...     p = {&#39;1_read&#39;, &#39;2_read&#39;, &#39;4_write&#39;, &#39;5_write&#39;}</span>
+<span class="sd">        ...     with ThreadPoolExecutor(max_workers=4) as executor:</span>
+<span class="sd">        ...         f1 = executor.submit(write, l, 4)</span>
+<span class="sd">        ...         f2 = executor.submit(read, l, 0)</span>
+<span class="sd">        ...         f3 = executor.submit(write, l, 5)</span>
+<span class="sd">        ...         f4 = executor.submit(read, l, 1)</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...         for fut in as_completed([f1, f2, f3, f4]):</span>
+<span class="sd">        ...             assert fut.result() in p</span>
+
+<span class="sd">        &gt;&gt;&gt; execute(get_value, append)</span>
+
+
+<span class="sd">    `write_operation` and `read_operation` can also be used as context managing:</span>
+
+<span class="sd">        &gt;&gt;&gt; def append(l, x):</span>
+<span class="sd">        ...     with lock.write_operation:</span>
+<span class="sd">        ...         l.append(x)</span>
+<span class="sd">        ...     return f&#39;{x}_write&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; def get_value(l, i):</span>
+<span class="sd">        ...     with lock.read_operation:</span>
+<span class="sd">        ...         x = l[i]</span>
+<span class="sd">        ...     return f&#39;{x}_read&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; execute(get_value, append)</span>
+
+
+<span class="sd">    As an alternative, `write_operation` and `read_operator` can be used as decorators:</span>
+
+<span class="sd">        &gt;&gt;&gt; @lock.write_operation</span>
+<span class="sd">        ... def append(l, x):</span>
+<span class="sd">        ...     l.append(x)</span>
+<span class="sd">        ...     return f&#39;{x}_write&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; @lock.read_operation</span>
+<span class="sd">        ... def get_value(l, i):</span>
+<span class="sd">        ...     x = l[i]</span>
+<span class="sd">        ...     return f&#39;{x}_read&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; execute(get_value, append)</span>
+
+
+<span class="sd">    Also, method decorators can be used to achieve the same result.</span>
+<span class="sd">    In this case subclassing must be used.</span>
+
+<span class="sd">        &gt;&gt;&gt; class A(SharedLock): # &lt;-- Don&#39;t forget to subclass from SharedLock</span>
+<span class="sd">        ...     # SharedLock.__init__ must be called explícitly if overwritten</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...     @SharedLock.write_operation</span>
+<span class="sd">        ...     def append(self, l, x):</span>
+<span class="sd">        ...         l.append(x)</span>
+<span class="sd">        ...         return f&#39;{x}_write&#39;</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...     @SharedLock.read_operation</span>
+<span class="sd">        ...     def get_value(self, l, i):</span>
+<span class="sd">        ...         x = l[i]</span>
+<span class="sd">        ...         return f&#39;{x}_read&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; a = A(Lock)</span>
+<span class="sd">        &gt;&gt;&gt; execute(a.get_value, a.append)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lock_class</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the SharedLock.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            lock_class (LockType): The underlying locks type.</span>
+<span class="sd">            *args, **kwargs: Additional arguments to be passed to the underlying lock constructor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Used to ensure no priority between reads and writes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_write_lock</span> <span class="o">=</span> <span class="n">lock_class</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_readers_counter_lock</span> <span class="o">=</span> <span class="n">lock_class</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_readers</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Used to ensure interwriting and read-write mutual exclusiveness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exclusion_lock</span> <span class="o">=</span> <span class="n">lock_class</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writers_counter_lock</span> <span class="o">=</span> <span class="n">lock_class</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_writers</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock_class</span> <span class="o">=</span> <span class="n">lock_class</span>
+
+<div class="viewcode-block" id="SharedLock.acquire_read"><a class="viewcode-back" href="../../../../API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.acquire_read">[docs]</a>    <span class="k">def</span> <span class="nf">acquire_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Acquires the lock for a read operation.</span>
+
+<span class="sd">        This method should be called before any read-like operation, to specify that a new read operation is beginning.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *args, **kwargs: Arguments to be passed to underlying locks `acquire` methods.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: A value telling if the acquisition was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if there are no writers waiting</span>
+        <span class="n">acquired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_write_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">acquired</span><span class="p">:</span>
+            <span class="c1"># Increment the amount of running readers</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readers_counter_lock</span><span class="p">:</span>  <span class="c1"># &lt;- this should never indefinably block</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_current_readers</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_readers</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Ensure exclusivity with writers</span>
+                    <span class="n">acquired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exclusion_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">acquired</span><span class="p">:</span>  <span class="c1"># Undo readers amount incrementing</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_current_readers</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_read_write_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">acquired</span></div>
+
+<div class="viewcode-block" id="SharedLock.release_read"><a class="viewcode-back" href="../../../../API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.release_read">[docs]</a>    <span class="k">def</span> <span class="nf">release_read</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Releases the lock for a read operation.</span>
+
+<span class="sd">        This method should be called after any read-like operation, to specify that a read operation is ended. Any exception raised by the underlying locks is not caught.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Decrement the amount of running readers</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readers_counter_lock</span><span class="p">:</span>  <span class="c1"># &lt;- this should never indefinably block</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_readers</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_readers</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># Release the exclusivity so a writer or a new group of readers can begin</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_exclusion_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SharedLock.acquire_write"><a class="viewcode-back" href="../../../../API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.acquire_write">[docs]</a>    <span class="k">def</span> <span class="nf">acquire_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Acquires the lock for a write operation.</span>
+
+<span class="sd">        This method should be called before any write-like operation, to specify that a new write operation is beginning.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *args, **kwargs: Arguments to be passed to underlying locks `acquire` methods.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: A value telling if the acquisition was successful.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">acquired</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Increment the amount of writers waiting to be executed</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writers_counter_lock</span><span class="p">:</span>  <span class="c1"># &lt;- this should never indefinably block</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_writers</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_writers</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Ensure that no readers may begin</span>
+                <span class="n">acquired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_write_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">acquired</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_writers</span> <span class="o">-=</span> <span class="mi">1</span>  <span class="c1"># Undo writers amount incrementing</span>
+        <span class="k">if</span> <span class="n">acquired</span><span class="p">:</span>
+            <span class="c1"># Ensure exclusivity with other writers and readers</span>
+            <span class="n">acquired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exclusion_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">acquired</span><span class="p">:</span>
+                <span class="c1"># Decrement the amount of writers waiting to be executed</span>
+                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writers_counter_lock</span><span class="p">:</span>  <span class="c1"># &lt;- this should never indefinably block</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_writers</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_writers</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="c1"># Let group of readers to begin</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_read_write_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">acquired</span></div>
+
+<div class="viewcode-block" id="SharedLock.release_write"><a class="viewcode-back" href="../../../../API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.release_write">[docs]</a>    <span class="k">def</span> <span class="nf">release_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Releases the lock for a write operation.</span>
+
+<span class="sd">        This method should be called after any write-like operation, to specify that a write operation is ended. Any exception raised by the underlying locks is not caught.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Release the exclusivity so a writer or a new group of readers can begin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exclusion_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+    <span class="n">read_operation</span> <span class="o">=</span> <span class="n">_OperationDescriptor</span><span class="p">(</span><span class="n">acquire_read</span><span class="p">,</span> <span class="n">release_read</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Decorator and context manager for a read operation.</span>
+<span class="sd">    Any additional data to the underlying locks must be passed as keyword arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">write_operation</span> <span class="o">=</span> <span class="n">_OperationDescriptor</span><span class="p">(</span><span class="n">acquire_write</span><span class="p">,</span> <span class="n">release_write</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Decorator and context manager for a write operation.</span>
+<span class="sd">    Any additional data to the underlying locks must be passed as keyword arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+</pre></div>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Ernesto Soto Gómez<br/>
+        
+            &copy; Copyright 2019-2021, Ernesto Soto Gómez.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,4 @@
+.. automodule:: pathex.adts.concurrency.atomics.atomic
+   :members:
+   :undoc-members:
+   :show-inheritance:

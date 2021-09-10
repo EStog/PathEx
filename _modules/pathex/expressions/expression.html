@@ -1,0 +1,580 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pathex.expressions.expression &#8212; PathEx 0.1 documentation</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">PathEx 0.1 documentation</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../overview.html">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../generalities/index.html">
+   Generalities
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../generalities/expressions/index.html">
+     Expressions
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../generalities/expressions/empty_word.html">
+       Empty word
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../generalities/expressions/union.html">
+       Union
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../semantics/index.html">
+   Semantics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../../semantics/expressions/index.html">
+     Expressions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../../references.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../../API/pathex.html">
+   pathex package
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.adts.html">
+     pathex.adts package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.adts.cached_generators.html">
+       pathex.adts.cached_generators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.adts.concurrency.html">
+       pathex.adts.concurrency package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="../../../API/pathex.adts.concurrency.atomics.html">
+         pathex.adts.concurrency.atomics package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.adts.containers.html">
+       pathex.adts.containers package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../API/pathex.adts.singleton.html">
+       Singleton decorator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../API/pathex.adts.util.html">
+       Useful functions and constants
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.expressions.html">
+     pathex.expressions package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.expressions.nary_operators.html">
+       pathex.expressions.nary_operators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.expressions.repetitions.html">
+       pathex.expressions.repetitions package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.expressions.terms.html">
+       pathex.expressions.terms package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../../../API/pathex.expressions.expression.html">
+       Expressions abstract base class
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.generation.html">
+     pathex.generation package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.machines.html">
+     pathex.machines package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../../../API/pathex.machines.decomposers.html">
+       pathex.machines.decomposers package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="../../../API/pathex.machines.decomposers.visitors.html">
+         pathex.machines.decomposers.visitors package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../../../API/pathex.managing.html">
+     pathex.managing package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <h1>Source code for pathex.expressions.expression</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">inf</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">TypeVar</span>
+
+<span class="kn">from</span> <span class="nn">pathex.adts.collection_wrapper</span> <span class="kn">import</span> <span class="n">CollectionWrapper</span>
+<span class="kn">from</span> <span class="nn">pathex.generation.defaults</span> <span class="kn">import</span> <span class="n">COMPLETE_WORDS</span><span class="p">,</span> <span class="n">LANGUAGE_TYPE</span><span class="p">,</span> <span class="n">WORD_TYPE</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">Decomposer</span>
+
+<span class="vm">__doc__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">Expressions abstract base class</span>
+<span class="s2">===============================</span>
+
+<span class="s2">:Module: ``</span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">``</span>
+
+<span class="s2">.. sectionauthor:: Ernesto Soto Gómez &lt;esto.yinyang@gmail.com&gt;</span>
+<span class="s2">.. codeauthor:: Ernesto Soto Gómez &lt;esto.yinyang@gmail.com&gt;</span>
+
+<span class="s2">---------------------------------------------------------------</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># TODO: __str__ y __repr__ de todas las expresiones</span>
+
+<span class="c1"># TODO: Refactory operators overloading</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Expression&#39;</span><span class="p">]</span>
+
+<span class="n">ellipsis</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">CollectionWrapper</span><span class="p">)</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">CollectionWrapper</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_non_optional_repetition_or_binary_op</span><span class="p">(</span><span class="n">binary_op</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pathex</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="bp">Ellipsis</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pathex</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">binary_op</span><span class="si">}</span><span class="s1">Repetition&#39;</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inf</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pathex</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">binary_op</span><span class="si">}</span><span class="s1">Repetition&#39;</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pathex</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">binary_op</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+
+<span class="k">def</span> <span class="nf">_get_optional_repetition_or_binary_op</span><span class="p">(</span><span class="n">binary_op</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pathex</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pathex</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">binary_op</span><span class="si">}</span><span class="s1">Repetition&#39;</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="n">inf</span><span class="p">,</span> <span class="bp">Ellipsis</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pathex</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">binary_op</span><span class="si">}</span><span class="s1">Repetition&#39;</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">optional</span>
+            <span class="k">return</span> <span class="n">pathex</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">binary_op</span><span class="p">](</span><span class="n">optional</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+
+<div class="viewcode-block" id="Expression"><a class="viewcode-back" href="../../../API/pathex.expressions.expression.html#pathex.expressions.expression.Expression">[docs]</a><span class="k">class</span> <span class="nc">Expression</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Expressions abstract base class.</span>
+
+<span class="sd">    In |pe| objects of any other kind different from :class:`Expression` are interpreted as an identity terminal expression. :class:`Expression` is meant to grouping those kind of expressions that has a special meaning and to provide general methods and Python operator overloading.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Expression.get_generator"><a class="viewcode-back" href="../../../API/pathex.expressions.expression.html#pathex.expressions.expression.Expression.get_generator">[docs]</a>    <span class="k">def</span> <span class="nf">get_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decomposer</span><span class="p">:</span> <span class="n">Decomposer</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get_generator(machine: pathex.generation.machines.machine.Machine | None = None) -&gt; pathex.generation.words_generator.WordsGenerator</span>
+
+<span class="sd">        Gives a :class:`~.WordsGenerator` with default values for the actual expression.</span>
+
+<span class="sd">        This method is meant as a handy shortcut for :class:`WordsGenerator(expression, machine) &lt;.WordsGenerator&gt;`.</span>
+
+<span class="sd">        ``machine`` is the machine to be used to interpret the expression. If it is :obj:`None` then an instance of :class:`~.ExtendedMachineCompalphabet` will be used. Defaults to :obj:`None`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">decomposer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">pathex.machines.decomposers.extended_decomposer_compalphabet</span> <span class="kn">import</span> \
+                <span class="n">ExtendedDecomposerCompalphabet</span>
+            <span class="n">decomposer</span> <span class="o">=</span> <span class="n">ExtendedDecomposerCompalphabet</span><span class="p">()</span>
+        <span class="kn">from</span> <span class="nn">pathex.generation.words_generator</span> <span class="kn">import</span> <span class="n">WordsGenerator</span>
+        <span class="k">return</span> <span class="n">WordsGenerator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decomposer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Expression.get_eager_generator"><a class="viewcode-back" href="../../../API/pathex.expressions.expression.html#pathex.expressions.expression.Expression.get_eager_generator">[docs]</a>    <span class="k">def</span> <span class="nf">get_eager_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decomposer</span><span class="p">:</span> <span class="n">Decomposer</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                            <span class="n">complete_words</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">COMPLETE_WORDS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">decomposer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">pathex.machines.decomposers.extended_decomposer_compalphabet</span> <span class="kn">import</span> \
+                <span class="n">ExtendedDecomposerCompalphabet</span>
+            <span class="n">decomposer</span> <span class="o">=</span> <span class="n">ExtendedDecomposerCompalphabet</span><span class="p">()</span>
+        <span class="kn">from</span> <span class="nn">pathex.generation.eager</span> <span class="kn">import</span> <span class="n">words_generator</span>
+        <span class="k">return</span> <span class="n">words_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decomposer</span><span class="p">,</span> <span class="n">complete_words</span><span class="p">)</span></div>
+    <span class="n">get_eager_generator</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        get_eager_generator(self, machine: pathex.generation.machines.machine.Machine | None = None, word_type: type[T] = </span><span class="si">{</span><span class="n">WORD_TYPE</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, complete_words: bool = </span><span class="si">{</span><span class="n">COMPLETE_WORDS</span><span class="si">}</span><span class="s2">) -&gt; typing.Generator[T, None, None]</span>
+
+<span class="s2">        Gives a generator of :class:`~.CollectionWrapper` object that represent the words generated by the expression.</span>
+
+<span class="s2">        This method is meant as a handy shortcut for :func:`words_generator(self, machine, word_type, complete_words) &lt;.words_generator&gt;`.</span>
+
+<span class="s2">        ``machine`` is The machine to be used to interpret the expression. If it is :obj:`None` then an instance of :class:`~.ExtendedMachineCompalphabet` will be used. Defaults to :obj:`None`.</span>
+
+<span class="s2">        ``word_type`` is a :class:`~.CollectionWrapper` subtype that will be the type of collection to be used to represent words. Defaults to :class:`</span><span class="si">{</span><span class="n">WORD_TYPE</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &lt;.CollectionWrapper&gt;`.</span>
+
+<span class="s2">        ``complete_words`` is a flag indicating if only complete words are to be given. Defaults to :obj:`</span><span class="si">{</span><span class="n">COMPLETE_WORDS</span><span class="si">}</span><span class="s2">`.</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Expression.get_language"><a class="viewcode-back" href="../../../API/pathex.expressions.expression.html#pathex.expressions.expression.Expression.get_language">[docs]</a>    <span class="k">def</span> <span class="nf">get_language</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">language_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">]</span> <span class="o">=</span> <span class="n">LANGUAGE_TYPE</span><span class="p">,</span>
+                     <span class="n">decomposer</span><span class="p">:</span> <span class="n">Decomposer</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                     <span class="n">complete_words</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">COMPLETE_WORDS</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">decomposer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">pathex.machines.decomposers.extended_decomposer_compalphabet</span> <span class="kn">import</span> \
+                <span class="n">ExtendedDecomposerCompalphabet</span>
+            <span class="n">decomposer</span> <span class="o">=</span> <span class="n">ExtendedDecomposerCompalphabet</span><span class="p">()</span>
+        <span class="kn">from</span> <span class="nn">pathex.generation.eager</span> <span class="kn">import</span> <span class="n">words_generator</span>
+        <span class="n">language</span> <span class="o">=</span> <span class="n">language_type</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">words_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decomposer</span><span class="p">,</span> <span class="n">complete_words</span><span class="p">):</span>
+            <span class="n">language</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">language</span></div>
+    <span class="n">get_language</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        get_language(language_type: type[T] = </span><span class="si">{</span><span class="n">LANGUAGE_TYPE</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, machine: pathex.generation.machines.machine.Machine | None = None, word_type: type[pathex.adts.collection_wrapper.CollectionWrapper] = </span><span class="si">{</span><span class="n">WORD_TYPE</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">, complete_words: bool = </span><span class="si">{</span><span class="n">COMPLETE_WORDS</span><span class="si">}</span><span class="s2">) -&gt; T</span>
+
+<span class="s2">        Gives a :class:`~.CollectionWrapper` object that contains :class:`~.CollectionWrapper` objects that represent the words generated by the expression.</span>
+
+<span class="s2">        ``language_type`` is a subtype of :class:`~.CollectionWrapper` that will be used as the type of the object to be returned. Defaults to :class:`</span><span class="si">{</span><span class="n">LANGUAGE_TYPE</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &lt;.CollectionWrapper&gt;`.</span>
+
+<span class="s2">        ``machine`` is the machine to be used to interpret the expression. If it is :obj:`None` then an instance of :class:`~.ExtendedMachineCompalphabet` will be used. Defaults to :obj:`None`.</span>
+
+<span class="s2">        ``word_type`` is a :class:`~.CollectionWrapper` subtype that will be the type of collection to be used to represent words. Defaults to :class:`</span><span class="si">{</span><span class="n">WORD_TYPE</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &lt;.CollectionWrapper&gt;`.</span>
+
+<span class="s2">        ``complete_words`` is a flag indicating if only complete words are to be given. Defaults to :obj:`</span><span class="si">{</span><span class="n">COMPLETE_WORDS</span><span class="si">}</span><span class="s2">`.</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+    <span class="c1"># self | other</span>
+    <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Union</span>
+        <span class="k">return</span> <span class="n">Union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="c1"># other | self</span>
+    <span class="k">def</span> <span class="fm">__ror__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Union</span>
+        <span class="k">return</span> <span class="n">Union</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># self &amp; other</span>
+    <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Intersection</span>
+        <span class="k">return</span> <span class="n">Intersection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="c1"># other &amp; self</span>
+    <span class="k">def</span> <span class="fm">__rand__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Intersection</span>
+        <span class="k">return</span> <span class="n">Intersection</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># self @ other</span>
+    <span class="k">def</span> <span class="fm">__matmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Synchronization</span>
+        <span class="k">return</span> <span class="n">Synchronization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="c1"># other @ self</span>
+    <span class="k">def</span> <span class="fm">__rmatmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Synchronization</span>
+        <span class="k">return</span> <span class="n">Synchronization</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># self - other</span>
+    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Difference</span>
+        <span class="k">return</span> <span class="n">Difference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    <span class="c1"># other - self</span>
+    <span class="k">def</span> <span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Difference</span>
+        <span class="k">return</span> <span class="n">Difference</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># self+...</span>
+    <span class="c1"># self+inf</span>
+    <span class="c1"># self+number</span>
+    <span class="c1"># self + other</span>
+    <span class="fm">__add__</span> <span class="o">=</span> <span class="n">_get_non_optional_repetition_or_binary_op</span><span class="p">(</span><span class="s1">&#39;Concatenation&#39;</span><span class="p">)</span>
+
+    <span class="c1"># other + self</span>
+    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Concatenation</span>
+        <span class="k">return</span> <span class="n">Concatenation</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># +self</span>
+    <span class="k">def</span> <span class="fm">__pos__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">ConcatenationRepetition</span>
+        <span class="k">return</span> <span class="n">ConcatenationRepetition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inf</span><span class="p">)</span>
+
+    <span class="c1"># self*[lb,ub]</span>
+    <span class="c1"># self*number</span>
+    <span class="c1"># self * other</span>
+    <span class="fm">__mul__</span> <span class="o">=</span> <span class="n">_get_optional_repetition_or_binary_op</span><span class="p">(</span><span class="s1">&#39;Concatenation&#39;</span><span class="p">)</span>
+
+    <span class="c1"># other * self</span>
+    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Concatenation</span><span class="p">,</span> <span class="n">optional</span>
+        <span class="k">return</span> <span class="n">Concatenation</span><span class="p">(</span><span class="n">optional</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># self//...</span>
+    <span class="c1"># self//inf</span>
+    <span class="c1"># self//number</span>
+    <span class="c1"># self // other</span>
+    <span class="fm">__floordiv__</span> <span class="o">=</span> <span class="n">_get_non_optional_repetition_or_binary_op</span><span class="p">(</span><span class="s1">&#39;Shuffle&#39;</span><span class="p">)</span>
+
+    <span class="c1"># other // self</span>
+    <span class="k">def</span> <span class="fm">__rfloordiv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Shuffle</span>
+        <span class="k">return</span> <span class="n">Shuffle</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+    <span class="c1"># self%[lb, ub]</span>
+    <span class="c1"># self%number</span>
+    <span class="c1"># self % other</span>
+    <span class="fm">__mod__</span> <span class="o">=</span> <span class="n">_get_optional_repetition_or_binary_op</span><span class="p">(</span><span class="s1">&#39;Shuffle&#39;</span><span class="p">)</span>
+
+    <span class="c1"># other % self</span>
+    <span class="k">def</span> <span class="fm">__rmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Shuffle</span><span class="p">,</span> <span class="n">optional</span>
+        <span class="k">return</span> <span class="n">Shuffle</span><span class="p">(</span><span class="n">optional</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="bp">self</span><span class="p">)</span></div>
+</pre></div>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Ernesto Soto Gómez<br/>
+        
+            &copy; Copyright 2019-2021, Ernesto Soto Gómez.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

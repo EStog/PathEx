@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Overview &#8212; PathEx 0.1 documentation</title>
+    
+  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Generalities" href="generalities/index.html" />
+    <link rel="prev" title="Welcome to PathEx’s documentation!" href="index.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">PathEx 0.1 documentation</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="generalities/index.html">
+   Generalities
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="generalities/expressions/index.html">
+     Expressions
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="generalities/expressions/empty_word.html">
+       Empty word
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="generalities/expressions/union.html">
+       Union
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="semantics/index.html">
+   Semantics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="semantics/expressions/index.html">
+     Expressions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="references.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="API/pathex.html">
+   pathex package
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="API/pathex.adts.html">
+     pathex.adts package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="API/pathex.adts.cached_generators.html">
+       pathex.adts.cached_generators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="API/pathex.adts.concurrency.html">
+       pathex.adts.concurrency package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="API/pathex.adts.concurrency.atomics.html">
+         pathex.adts.concurrency.atomics package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="API/pathex.adts.containers.html">
+       pathex.adts.containers package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="API/pathex.adts.singleton.html">
+       Singleton decorator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="API/pathex.adts.util.html">
+       Useful functions and constants
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="API/pathex.expressions.html">
+     pathex.expressions package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="API/pathex.expressions.nary_operators.html">
+       pathex.expressions.nary_operators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="API/pathex.expressions.repetitions.html">
+       pathex.expressions.repetitions package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="API/pathex.expressions.terms.html">
+       pathex.expressions.terms package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="API/pathex.expressions.expression.html">
+       Expressions abstract base class
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="API/pathex.generation.html">
+     pathex.generation package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="API/pathex.machines.html">
+     pathex.machines package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="API/pathex.machines.decomposers.html">
+       pathex.machines.decomposers package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="API/pathex.machines.decomposers.visitors.html">
+         pathex.machines.decomposers.visitors package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="API/pathex.managing.html">
+     pathex.managing package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/overview.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#usage">
+   Usage
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-threads">
+     Using threads
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-processes">
+     Using processes
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<p>This section roughly presents the main features of PathEx.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt>Document <a class="reference internal" href="generalities/index.html"><span class="doc">Generalities</span></a></dt><dd><p>A more in depth explanation of PathEx features.</p>
+</dd>
+<dt>Document <a class="reference internal" href="semantics/index.html"><span class="doc">Semantics</span></a></dt><dd><p>A more rigorous explanation of PathEx features.</p>
+</dd>
+</dl>
+</div>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>First, construct some tags that will represent the regions to be synchronized:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Tag</span>
+
+<span class="n">writer</span><span class="p">,</span> <span class="n">reader</span> <span class="o">=</span> <span class="n">Tag</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s1">&#39;writer&#39;</span><span class="p">,</span> <span class="s1">&#39;reader&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, create an expression that specify the allowed paths of execution:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">exp</span> <span class="o">=</span> <span class="p">(</span><span class="n">writer</span> <span class="o">|</span> <span class="n">reader</span><span class="o">//...</span><span class="p">)</span><span class="o">+...</span>
+</pre></div>
+</div>
+<p>In this case the expression specify that a single writer or a set of concurrent readers may be executed. Also, these paths of execution may be repeated many times in sequence. For example, the following is an allowed path <a class="footnote-reference brackets" href="#id2" id="id1">1</a>: <code class="docutils literal notranslate"><span class="pre">reader</span> <span class="pre">writer</span> <span class="pre">writer</span> <span class="pre">{reader,</span> <span class="pre">reader}</span> <span class="pre">writer</span></code>, but the following is not: <code class="docutils literal notranslate"><span class="pre">{reader</span> <span class="pre">writer}</span> <span class="pre">writer</span> <span class="pre">{reader,</span> <span class="pre">reader}</span> <span class="pre">writer</span></code>.</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">{</span></code> and <code class="docutils literal notranslate"><span class="pre">}</span></code> are used to specify a set of concurrent tasks.</p>
+</dd>
+</dl>
+<section id="using-threads">
+<h3>Using threads<a class="headerlink" href="#using-threads" title="Permalink to this headline">¶</a></h3>
+<p>Next, create a <a class="reference internal" href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a> that will serve as a manager of the execution flow. Threads as execution units will be explained in this section. The case of processes will be explained in <a class="reference internal" href="#using-processes"><span class="std std-ref">another</span></a>.</p>
+<p>In the case of threads as execution units, create a direct instance of <a class="reference internal" href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Synchronizer</span>
+
+<span class="n">sync</span> <span class="o">=</span> <span class="n">Synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are two recommended ways of marking portions of code as tasks code to be synchronized. The first is by decorating functions with <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.register" title="pathex.managing.manager.Manager.register"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register()</span></code></a>. For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="n">shared_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+
+<span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_top</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+       <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+       <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="k">return</span> <span class="n">x</span>
+
+<span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The other way is by using context manager style with <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="n">shared_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
+       <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_top</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">reader</span><span class="p">):</span>
+       <span class="k">try</span><span class="p">:</span>
+          <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+       <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="k">return</span> <span class="kc">None</span>
+       <span class="k">else</span><span class="p">:</span>
+          <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
+       <span class="n">shared_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once the regions to be synchronized are specified, threads may be started by using any of the known standard methods. For example, by using <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">concurrent.futures.ThreadPoolExecutor</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+
+<span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">append</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">get_top</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">appendleft</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+
+<span class="k">assert</span> <span class="n">shared_buffer</span> <span class="o">==</span> <span class="n">deque</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The synchronizer will manage any request of execution and will allow only those in accord with the given expression and the current state of execution. The not allowed requests are suspended until the proper execution conditions are met.</p>
+</section>
+<section id="using-processes">
+<h3>Using processes<a class="headerlink" href="#using-processes" title="Permalink to this headline">¶</a></h3>
+<p>If processes are to be used as execution units, the same general steps are to be followed but with some differences.</p>
+<p>To decorate functions use <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_register" title="pathex.managing.process_synchronizer.process_register"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_register()</span></code></a> instead of <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.register" title="pathex.managing.manager.Manager.register"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register()</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">process_register</span>
+
+<span class="nd">@process_register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nd">@process_register</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_top</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+       <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+       <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="k">return</span> <span class="n">x</span>
+
+<span class="nd">@process_register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To use context manager style use <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_region" title="pathex.managing.process_synchronizer.process_region"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_region()</span></code></a> instead of <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">process_region</span>
+
+<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">process_region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
+        <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_top</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">process_region</span><span class="p">(</span><span class="n">reader</span><span class="p">):</span>
+       <span class="k">try</span><span class="p">:</span>
+          <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+       <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="k">return</span> <span class="kc">None</span>
+       <span class="k">else</span><span class="p">:</span>
+          <span class="k">return</span> <span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">process_region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
+       <span class="n">shared_buffer</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> module get a <code class="xref py py-class docutils literal notranslate"><span class="pre">SynchronizerProxy</span></code> by using <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_synchronizer" title="pathex.managing.process_synchronizer.process_synchronizer"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_synchronizer()</span></code></a> and start processes by using any of the ways provided by PathEx. For example, with <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.ProcessPoolExecutor" title="pathex.managing.process_synchronizer.ProcessPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+   <span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">SyncManager</span>
+
+   <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">process_synchronizer</span><span class="p">,</span> <span class="n">ProcessPoolExecutor</span>
+
+   <span class="n">psync</span> <span class="o">=</span> <span class="n">process_synchronizer</span><span class="p">(</span>
+       <span class="n">exp</span><span class="p">,</span> <span class="n">manager_class</span><span class="o">=</span><span class="n">SyncManager</span><span class="p">)</span>
+
+   <span class="n">shared_buffer</span> <span class="o">=</span> <span class="n">psync</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+
+   <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">psync</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+       <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">append</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+       <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">get_top</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+       <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">appendleft</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+
+   <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">Welcome to PathEx’s documentation!</a>
+    <a class='right-next' id="next-link" href="generalities/index.html" title="next page">Generalities</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Ernesto Soto Gómez<br/>
+        
+            &copy; Copyright 2019-2021, Ernesto Soto Gómez.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

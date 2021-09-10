@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overview: module code &#8212; PathEx 0.1 documentation</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">PathEx 0.1 documentation</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview.html">
+   Overview
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../generalities/index.html">
+   Generalities
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../generalities/expressions/index.html">
+     Expressions
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3">
+      <a class="reference internal" href="../generalities/expressions/empty_word.html">
+       Empty word
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../generalities/expressions/union.html">
+       Union
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../semantics/index.html">
+   Semantics
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../semantics/expressions/index.html">
+     Expressions
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../references.html">
+   Bibliography
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../API/pathex.html">
+   pathex package
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../API/pathex.adts.html">
+     pathex.adts package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../API/pathex.adts.cached_generators.html">
+       pathex.adts.cached_generators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../API/pathex.adts.concurrency.html">
+       pathex.adts.concurrency package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="../API/pathex.adts.concurrency.atomics.html">
+         pathex.adts.concurrency.atomics package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../API/pathex.adts.containers.html">
+       pathex.adts.containers package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../API/pathex.adts.singleton.html">
+       Singleton decorator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../API/pathex.adts.util.html">
+       Useful functions and constants
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../API/pathex.expressions.html">
+     pathex.expressions package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../API/pathex.expressions.nary_operators.html">
+       pathex.expressions.nary_operators package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../API/pathex.expressions.repetitions.html">
+       pathex.expressions.repetitions package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../API/pathex.expressions.terms.html">
+       pathex.expressions.terms package
+      </a>
+      <ul class="simple collapse-ul">
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../API/pathex.expressions.expression.html">
+       Expressions abstract base class
+      </a>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../API/pathex.generation.html">
+     pathex.generation package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../API/pathex.machines.html">
+     pathex.machines package
+    </a>
+    <ul class="collapse-ul">
+     <li class="toctree-l3 collapsible-parent">
+      <a class="reference internal" href="../API/pathex.machines.decomposers.html">
+       pathex.machines.decomposers package
+      </a>
+      <ul class="collapse-ul">
+       <li class="toctree-l4 collapsible-parent">
+        <a class="reference internal" href="../API/pathex.machines.decomposers.visitors.html">
+         pathex.machines.decomposers.visitors package
+        </a>
+        <ul class="simple collapse-ul">
+        </ul>
+        <i class="fas fa-chevron-down">
+        </i>
+       </li>
+      </ul>
+      <i class="fas fa-chevron-down">
+      </i>
+     </li>
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+   <li class="toctree-l2 collapsible-parent">
+    <a class="reference internal" href="../API/pathex.managing.html">
+     pathex.managing package
+    </a>
+    <ul class="simple collapse-ul">
+    </ul>
+    <i class="fas fa-chevron-down">
+    </i>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <h1>All modules for which code is available</h1>
+<ul><li><a href="builtins.html">builtins</a></li>
+<li><a href="pathex/adts/cached_generators/cached_generator.html">pathex.adts.cached_generators.cached_generator</a></li>
+<li><a href="pathex/adts/cached_generators/cached_generator_method.html">pathex.adts.cached_generators.cached_generator_method</a></li>
+<li><a href="pathex/adts/cached_generators/cached_iterator.html">pathex.adts.cached_generators.cached_iterator</a></li>
+<li><a href="pathex/adts/cached_generators/type_defs.html">pathex.adts.cached_generators.type_defs</a></li>
+<li><a href="pathex/adts/chain.html">pathex.adts.chain</a></li>
+<li><a href="pathex/adts/collection_wrapper.html">pathex.adts.collection_wrapper</a></li>
+<li><a href="pathex/adts/concurrency/acquired_lock.html">pathex.adts.concurrency.acquired_lock</a></li>
+<li><a href="pathex/adts/concurrency/atomics/atomic.html">pathex.adts.concurrency.atomics.atomic</a></li>
+<li><a href="pathex/adts/concurrency/atomics/atomic_attribute.html">pathex.adts.concurrency.atomics.atomic_attribute</a></li>
+<li><a href="pathex/adts/concurrency/atomics/atomic_integer.html">pathex.adts.concurrency.atomics.atomic_integer</a></li>
+<li><a href="pathex/adts/concurrency/counted_condition.html">pathex.adts.concurrency.counted_condition</a></li>
+<li><a href="pathex/adts/concurrency/shared_lock.html">pathex.adts.concurrency.shared_lock</a></li>
+<li><a href="pathex/adts/containers/head_tail_iterable.html">pathex.adts.containers.head_tail_iterable</a></li>
+<li><a href="pathex/adts/containers/ordered_set.html">pathex.adts.containers.ordered_set</a></li>
+<li><a href="pathex/adts/singleton.html">pathex.adts.singleton</a></li>
+<li><a href="pathex/adts/util.html">pathex.adts.util</a></li>
+<li><a href="pathex/expressions/expression.html">pathex.expressions.expression</a></li>
+<li><a href="pathex/expressions/nary_operators/concatenation.html">pathex.expressions.nary_operators.concatenation</a></li>
+<li><a href="pathex/expressions/nary_operators/difference.html">pathex.expressions.nary_operators.difference</a></li>
+<li><a href="pathex/expressions/nary_operators/intersection.html">pathex.expressions.nary_operators.intersection</a></li>
+<li><a href="pathex/expressions/nary_operators/nary_operator.html">pathex.expressions.nary_operators.nary_operator</a></li>
+<li><a href="pathex/expressions/nary_operators/shuffle.html">pathex.expressions.nary_operators.shuffle</a></li>
+<li><a href="pathex/expressions/nary_operators/synchronization.html">pathex.expressions.nary_operators.synchronization</a></li>
+<li><a href="pathex/expressions/nary_operators/union.html">pathex.expressions.nary_operators.union</a></li>
+<li><a href="pathex/expressions/non_fundamentals.html">pathex.expressions.non_fundamentals</a></li>
+<li><a href="pathex/expressions/repetitions/concatenation_repetition.html">pathex.expressions.repetitions.concatenation_repetition</a></li>
+<li><a href="pathex/expressions/repetitions/repetition.html">pathex.expressions.repetitions.repetition</a></li>
+<li><a href="pathex/expressions/repetitions/shuffle_repetition.html">pathex.expressions.repetitions.shuffle_repetition</a></li>
+<li><a href="pathex/expressions/terms/alphabet.html">pathex.expressions.terms.alphabet</a></li>
+<li><a href="pathex/expressions/terms/empty_word.html">pathex.expressions.terms.empty_word</a></li>
+<li><a href="pathex/expressions/terms/letter.html">pathex.expressions.terms.letter</a></li>
+<li><a href="pathex/expressions/terms/letters_complement.html">pathex.expressions.terms.letters_complement</a></li>
+<li><a href="pathex/expressions/terms/term.html">pathex.expressions.terms.term</a></li>
+<li><a href="pathex/generation/eager.html">pathex.generation.eager</a></li>
+<li><a href="pathex/generation/letters_generator.html">pathex.generation.letters_generator</a></li>
+<li><a href="pathex/generation/words_generator.html">pathex.generation.words_generator</a></li>
+<li><a href="pathex/machines/decomposers/decomposer.html">pathex.machines.decomposers.decomposer</a></li>
+<li><a href="pathex/machines/decomposers/extended_decomposer.html">pathex.machines.decomposers.extended_decomposer</a></li>
+<li><a href="pathex/machines/decomposers/extended_decomposer_alphabet.html">pathex.machines.decomposers.extended_decomposer_alphabet</a></li>
+<li><a href="pathex/machines/decomposers/extended_decomposer_compalphabet.html">pathex.machines.decomposers.extended_decomposer_compalphabet</a></li>
+<li><a href="pathex/machines/decomposers/match_functions.html">pathex.machines.decomposers.match_functions</a></li>
+<li><a href="pathex/machines/decomposers/mismatch_functions.html">pathex.machines.decomposers.mismatch_functions</a></li>
+<li><a href="pathex/machines/decomposers/simple_decomposer.html">pathex.machines.decomposers.simple_decomposer</a></li>
+<li><a href="pathex/machines/decomposers/visitors/concatenation_repetition_visitor.html">pathex.machines.decomposers.visitors.concatenation_repetition_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/concatenation_visitor.html">pathex.machines.decomposers.visitors.concatenation_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/decorators.html">pathex.machines.decomposers.visitors.decorators</a></li>
+<li><a href="pathex/machines/decomposers/visitors/difference_visitor.html">pathex.machines.decomposers.visitors.difference_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/intersection_visitor.html">pathex.machines.decomposers.visitors.intersection_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/letter_visitor.html">pathex.machines.decomposers.visitors.letter_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/object_visitor.html">pathex.machines.decomposers.visitors.object_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/shuffle_repetition_visitor.html">pathex.machines.decomposers.visitors.shuffle_repetition_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/shuffle_visitor.html">pathex.machines.decomposers.visitors.shuffle_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/synchronization_visitor.html">pathex.machines.decomposers.visitors.synchronization_visitor</a></li>
+<li><a href="pathex/machines/decomposers/visitors/union_visitor.html">pathex.machines.decomposers.visitors.union_visitor</a></li>
+<li><a href="pathex/machines/machine.html">pathex.machines.machine</a></li>
+<li><a href="pathex/machines/simplifier.html">pathex.machines.simplifier</a></li>
+<li><a href="pathex/managing/manager.html">pathex.managing.manager</a></li>
+<li><a href="pathex/managing/process_synchronizer.html">pathex.managing.process_synchronizer</a></li>
+<li><a href="pathex/managing/synchronizer.html">pathex.managing.synchronizer</a></li>
+<li><a href="pathex/managing/tag.html">pathex.managing.tag</a></li>
+<li><a href="pathex/managing/trace_checker.html">pathex.managing.trace_checker</a></li>
+</ul>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Ernesto Soto Gómez<br/>
+        
+            &copy; Copyright 2019-2021, Ernesto Soto Gómez.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

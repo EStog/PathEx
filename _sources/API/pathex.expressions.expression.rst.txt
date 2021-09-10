@@ -1,0 +1,4 @@
+.. automodule:: pathex.expressions.expression
+   :members:
+   :undoc-members:
+   :show-inheritance:
