@@ -11,6 +11,10 @@ __all__ = ['AtomicInteger']
 class AtomicInteger(Atomic):
     """An atomic integer. It has the same operation than Atomic, with comparison, sum and substraction.
 
+    .. testsetup::
+
+       from pathex.adts.concurrency.atomics.atomic_integer import AtomicInteger
+
     >>> a = AtomicInteger() # default to cero
     >>> a += 3
     >>> assert a == 3

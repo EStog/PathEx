@@ -12,6 +12,10 @@ class Chain(Iterator[_T]):
     """A chain that can be expanded to the right and to the left.
     Chains behave like Python iterators. That means that they support `next` operation and can not be restarted once they are exhausted.
 
+    .. testsetup::
+
+       from pathex.adts.chain import Chain
+
     >>> c = Chain()
     >>> c.expand_right([1, 2, 3])
     >>> c.expand_left(['a', 'b', 'c'])

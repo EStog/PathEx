@@ -9,6 +9,10 @@ class AtomicAttribute:
     """An attribute (a descriptor) that holds a variable whose value can be changed in concurrent-safe manner.
     In order to avoid race conditions, the first use of the attribute must be done in a concurrent-safe moment, for example, in object creation (__new__) or customization (__init__).
 
+    .. testsetup::
+
+       from pathex.adts.concurrency.atomics.atomic_attribute import AtomicAttribute
+
     >>> from threading import Lock, Thread
     >>> class A:
     ...     atomic_attr = AtomicAttribute(5)

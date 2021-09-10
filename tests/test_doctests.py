@@ -15,15 +15,15 @@ def load_tests(loader, tests, ignore):
     tests.addTests(doctest.DocTestSuite(
         'pathex.adts.collection_wrapper'))
     tests.addTests(doctest.DocTestSuite(
-        'pathex.adts.multitask.counted_condition'))
+        'pathex.adts.concurrency.counted_condition'))
     tests.addTests(doctest.DocTestSuite(
-        'pathex.adts.multitask.atomics.atomic'))
+        'pathex.adts.concurrency.atomics.atomic'))
     tests.addTests(doctest.DocTestSuite(
-        'pathex.adts.multitask.atomics.atomic_attribute'))
+        'pathex.adts.concurrency.atomics.atomic_attribute'))
     tests.addTests(doctest.DocTestSuite(
-        'pathex.adts.multitask.atomics.atomic_integer'))
+        'pathex.adts.concurrency.atomics.atomic_integer'))
     tests.addTests(doctest.DocTestSuite(
-        'pathex.adts.multitask.shared_lock'))
+        'pathex.adts.concurrency.shared_lock'))
     tests.addTests(doctest.DocTestSuite(
         'pathex.adts.singleton'))
     tests.addTests(doctest.DocTestSuite(

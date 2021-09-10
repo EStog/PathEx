@@ -6,6 +6,10 @@ __all__ = ['AcquiredLock']
 class AcquiredLock:
     """This class represents a lock which is created locked and only makes a ``release`` operation if some ``acquire`` operation is waiting for a ``release`` operation.
 
+    .. testsetup::
+
+       from pathex.adts.concurrency.acquired_lock import AcquiredLock
+
     >>> from threading import Lock, Thread
     >>> from time import sleep
     >>> lock = AcquiredLock(Lock)

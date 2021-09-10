@@ -12,6 +12,10 @@ __all__ = ['TraceChecker']
 class TraceChecker(Manager):
     """This class is just to demonstrate the use of manager for other tasks different than task synchronization.
 
+    .. testsetup::
+
+       from pathex.managing.trace_checker import TraceChecker
+
     >>> from pathex import Tag
     >>> a, b, c = Tag.named('func_a', 'func_b', 'func_c')
     >>> trace_checker = TraceChecker((a+b+c)*...)

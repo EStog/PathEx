@@ -55,7 +55,9 @@ There are various kinds of expressions, which general documentation may be found
     Empty word <empty_word>
     Union <union>
 
-.. todo:: Add reference to external documentation about formal languages
+.. todo:: development
+
+   .. todo:: Add reference to external documentation about formal  languages
 
 .. rubric:: Footnotes
 

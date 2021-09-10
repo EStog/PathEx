@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import threading
 
-from pathex.adts.multitask.counted_condition import CountedCondition
+from pathex.adts.concurrency.counted_condition import CountedCondition
 from pathex.expressions.expression import Expression
 from pathex.machines.decomposers.extended_decomposer_compalphabet import \
     ExtendedDecomposerCompalphabet

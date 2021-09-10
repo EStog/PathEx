@@ -23,6 +23,12 @@ class CachedGenerator(Generic[_E_co]):
 
     The class can be used as a function decorator:
 
+    .. testsetup::
+
+       from pathex.adts.cached_generators.cached_generator import cached_generator
+
+    >>> from pathex.adts.containers.ordered_set import OrderedSet
+
     >>> @cached_generator
     ... def f(o):
     ...     for x in o:

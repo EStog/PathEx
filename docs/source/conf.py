@@ -76,8 +76,8 @@ modindex_common_prefix = [
     'pathex.adts.',
     'pathex.adts.cached_generators.',
     'pathex.adts.containers.',
-    'pathex.adts.multitask.',
-    'pathex.adts.multitask.atomics.',
+    'pathex.adts.concurrency.',
+    'pathex.adts.concurrency.atomics.',
     'pathex.expressions.',
     'pathex.expressions.nary_operators.',
     'pathex.expressions.terms.',
@@ -88,20 +88,11 @@ modindex_common_prefix = [
 ]
 
 # other general options
-# nitpicky = True
 add_module_names = False
 python_use_unqualified_type_names = True
-show_authors = True
-#default_role = 'any'
 rst_epilog = f"""
 .. |pe| replace:: {project}
 """
-
-
-# sphinx.ext.todo options
-todo_include_todos = True
-todo_emit_warnings = True
-
 
 # sphinx.ext.autodoc options
 autoclass_content = 'both'

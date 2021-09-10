@@ -4,5 +4,3 @@ from .collection_wrapper import *
 from .containers import *
 from .singleton import *
 from .util import *
-
-# from .multifunction_by_equality import *

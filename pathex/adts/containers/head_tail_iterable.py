@@ -19,6 +19,10 @@ _E = TypeVar('_E')
 class HeadTailIterable(Iterable[_E]):
     """An iterable with head and tail.
 
+    .. testsetup::
+
+       from pathex.adts.containers.head_tail_iterable import HeadTailIterable
+
     >>> x = HeadTailIterable([2, 3, 4, 5])
     >>> assert x.head == 2
     >>> assert list(x.tail) == [3, 4, 5]

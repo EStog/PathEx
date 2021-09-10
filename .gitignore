@@ -1,10 +1,8 @@
-.vscode/
-**/__pycache__/**
-.python-version
 *.pyc
-test.ipynb
-test.py
-test1.py
+**/__pycache__/**
+
+.coverage
+.python-version
 
 docs/build
-matching negation.txt
+docs/source/API

@@ -13,8 +13,8 @@ Subpackages
    :maxdepth: 4
 
    pathex.adts.cached_generators
+   pathex.adts.concurrency
    pathex.adts.containers
-   pathex.adts.multitask
 
 Submodules
 ----------

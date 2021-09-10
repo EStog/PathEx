@@ -20,7 +20,7 @@ Useful functions and constants
 
 This module contains some useful little functions and constants.
 
-.. include:: non_essential_disclamer.txt
+.. include:: ../non_essential_disclamer.txt
 """
 
 
@@ -37,7 +37,7 @@ def take(n: int, iterable: Iterable[T]) -> Iterator[T]:
 
     .. testsetup::
 
-        >>> from pathex.adts.util import take
+       from pathex.adts.util import take
 
     Example:
 
@@ -57,7 +57,7 @@ def get_head_tail(iterable: Iterable[T]) -> tuple[object, Iterator[T] | None]:
 
     .. testsetup::
 
-       >>> from pathex.adts.util import get_head_tail
+       from pathex.adts.util import get_head_tail
 
     Example:
 

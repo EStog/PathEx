@@ -107,6 +107,10 @@ class SharedLock:
     You may use the lock as a usual lock, but the operations of acquire and release are per
     each kind of operation. You must also specify an underlying kind of lock.
 
+        .. testsetup::
+
+           from pathex.adts.concurrency.shared_lock import SharedLock
+
         >>> from threading import Lock
 
         >>> lock = SharedLock(Lock)

@@ -18,6 +18,12 @@ _E = TypeVar('_E')
 
 class CachedGeneratorMethod(CachedGenerator[_E_co]):
     """
+
+    .. testsetup::
+
+       from pathex.adts.cached_generators.cached_generator_method import cached_generator_method
+       from pathex.adts.collection_wrapper import get_collection_wrapper
+
     >>> class A:
     ...     @cached_generator_method(cache_type= get_collection_wrapper(list, put=list.append))
     ...     def f(self, o):

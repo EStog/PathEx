@@ -4,6 +4,10 @@ pushd %~dp0
 
 REM Command file for Sphinx documentation
 
+if "%SPHINXOPTS%" == "" (
+	set SPHINXOPTS="-D todo_include_todos=0 -D todo_emit_warnings=0 -D show_authors=0"
+)
+
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )

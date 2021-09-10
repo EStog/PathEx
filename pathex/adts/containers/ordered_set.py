@@ -14,6 +14,11 @@ class OrderedSet(Collection[_T]):
 
     def __new__(cls, queue=()) -> OrderedSet[_T]:
         """
+
+        .. testsetup::
+
+           from pathex.adts.containers.ordered_set import OrderedSet
+
         >>> s = OrderedSet([1, 2, 3, 4, 3, 5])
         >>> assert s.as_set() == {1, 2, 3, 4, 5}
         >>> assert s.as_tuple() == (1, 2, 3, 4, 5)
@@ -36,6 +41,10 @@ class OrderedSet(Collection[_T]):
 
     def add(self, element: _T) -> None:
         """
+        .. testsetup::
+
+           from pathex.adts.containers.ordered_set import OrderedSet
+
         >>> x = OrderedSet()
         >>> l = [3, 5, 2, 5, 6, 6]
         >>> for e in l:
@@ -47,6 +56,10 @@ class OrderedSet(Collection[_T]):
 
     def addleft(self, element: _T) -> None:
         """
+        .. testsetup::
+
+           from pathex.adts.containers.ordered_set import OrderedSet
+
         >>> x = OrderedSet()
         >>> l = [3, 5, 2, 5, 6, 6]
         >>> for e in l:
@@ -80,6 +93,10 @@ class OrderedSet(Collection[_T]):
 
     def pop(self) -> _T:
         """
+        .. testsetup::
+
+           from pathex.adts.containers.ordered_set import OrderedSet
+
         >>> l = [1, 2, 3, 4]
         >>> x = OrderedSet(l)
         >>> l1 = []
@@ -91,6 +108,10 @@ class OrderedSet(Collection[_T]):
 
     def popleft(self) -> _T:
         """
+        .. testsetup::
+
+           from pathex.adts.containers.ordered_set import OrderedSet
+
         >>> l = [1, 2, 3, 4]
         >>> x = OrderedSet(l)
         >>> l1 = []

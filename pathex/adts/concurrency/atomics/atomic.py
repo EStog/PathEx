@@ -9,6 +9,10 @@ class Atomic:
 
     The value may be consulted and assigned using `obj.value`. Also `obj.get_value` and `obj.set_value` may be used to consult and assign the value.
 
+    .. testsetup::
+
+       from pathex.adts.concurrency.atomics import Atomic
+
     >>> from threading import Thread
     >>> a = Atomic(1)
     >>> assert a == 1 # using __eq__
