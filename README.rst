@@ -7,6 +7,6 @@ The main goal of PathEx library is to ease concurrent programming in Python by s
 
    This library is currently **in development**, and it is not recommended being used in production environments.
 
-An overview may be found in https://estog.github.io/pathex/overview.html.
+An overview may be found in https://estog.github.io/PathEx/overview.html.
 
-Full documentation may be found in https://estog.github.io/pathex/.
+Full documentation may be found in https://estog.github.io/PathEx.
