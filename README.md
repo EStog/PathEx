@@ -1,4 +1,4 @@
-![tests](https://github.com/EStog/PathEx/actions/workflows/tests.yml/badge.svg) ![docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg)
+![license|AGPL-3.0](https://img.shields.io/github/license/EStog/PathEx) ![tests](https://github.com/EStog/PathEx/actions/workflows/tests.yml/badge.svg) ![docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg)
 
 PathEx
 ======
