@@ -1,4 +1,4 @@
-name: Build, test and deploy docs with sphinx
+name: docs
 
 on:
   push:
