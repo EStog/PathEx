@@ -1,4 +1,4 @@
-![docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg)
+![tests](https://github.com/EStog/PathEx/actions/workflows/tests.yml/badge.svg) ![docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg)
 
 PathEx
 ======
