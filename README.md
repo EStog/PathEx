@@ -1,3 +1,5 @@
+![docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg)
+
 PathEx
 ======
 
