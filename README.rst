@@ -7,4 +7,4 @@ An overview (*in construction*) can be found at https://estog.github.io/PathEx/o
 
 Full documentation (*in construction*) can be found at https://estog.github.io/PathEx.
 
-**Caution!**: This library is currently **in development**, and it is not recommended being used in production environments.
+**Caution!** This library is currently **in development**, and it is not recommended being used in production environments.
