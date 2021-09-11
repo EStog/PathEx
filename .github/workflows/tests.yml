@@ -9,7 +9,7 @@ on:
   #   branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  testing:
     runs-on: ubuntu-latest
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
