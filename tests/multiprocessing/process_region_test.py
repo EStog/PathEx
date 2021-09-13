@@ -2,8 +2,6 @@
 Example using :meth:`process_region`
 """
 
-#XXX: DO NOT AUTOMATICALLY FORMAT THIS FILE!
-
 import os
 import os.path
 import sys
@@ -17,38 +15,39 @@ from pathex.adts.util import SET_OF_TUPLES
 from pathex.managing.process_synchronizer import process_region
 
 # Tags must be named and visible for import
-a, b, c = Tag.named('a', 'b', 'c')
+a, b, c = Tag.named("a", "b", "c")
 
 
 def func_a(address, shared_list):
     with process_region(a, address):
         shared_list.append(a.enter)
-        print('Func a')
+        # print("Func a")
         shared_list.append(a.exit)
 
 
 def func_b(address, shared_list):
     with process_region(b, address):
         shared_list.append(b.enter)
-        print('Func b')
+        # print("Func b")
         shared_list.append(b.exit)
 
 
 def func_c(address, shared_list):
     with process_region(c, address):
         shared_list.append(c.enter)
-        print('Func c')
+        # print("Func c")
         shared_list.append(c.exit)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    print('testing ``process_region``...')
+
     # logger = multiprocessing.log_to_stderr()
     # logger.setLevel(logging.INFO)
 
-    exp = (a + (b | c))+2
+    exp = (a + (b | c)) + 2
 
-    psync = process_synchronizer(
-        exp, manager_class=SyncManager)
+    psync = process_synchronizer(exp, manager_class=SyncManager)
 
     shared = psync.list()
 

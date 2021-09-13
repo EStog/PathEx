@@ -2,8 +2,6 @@
 Example using :meth:`process_register`
 """
 
-#XXX: DO NOT AUTOMATICALLY FORMAT THIS FILE!
-
 import os
 import os.path
 import sys
@@ -17,38 +15,39 @@ from pathex import (ProcessPoolExecutor, Tag, process_register,
 from pathex.adts.util import SET_OF_TUPLES
 
 # Tags must be named and visible for import
-a, b, c = Tag.named('a', 'b', 'c')
+a, b, c = Tag.named("a", "b", "c")
 
 
 @process_register(a)
 def func_a(shared_list):
     shared_list.append(a.enter)
-    print('Func a')
+    # print("Func a")
     shared_list.append(a.exit)
 
 
 @process_register(b)
 def func_b(shared_list):
     shared_list.append(b.enter)
-    print('Func b')
+    # print("Func b")
     shared_list.append(b.exit)
 
 
 @process_register(c)
 def func_c(shared_list):
     shared_list.append(c.enter)
-    print('Func c')
+    # print("Func c")
     shared_list.append(c.exit)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    print('testing ``process_register``...')
+
     # logger = multiprocessing.log_to_stderr()
     # logger.setLevel(logging.INFO)
 
-    exp = (a + (b | c))+2
+    exp = (a + (b | c)) + 2
 
-    psync = process_synchronizer(
-        exp, manager_class=SyncManager)
+    psync = process_synchronizer(exp, manager_class=SyncManager)
 
     shared = psync.list()
 

@@ -24,9 +24,7 @@ jobs:
           python -m pip install --upgrade pip
           cd ./docs
           pip install -r requirements.txt
-      - name: Run unittests
-        run: python -m unittest discover
-      - name: Run doctests
-        run: |
-          cd ./docs
-          make doctest
+          cd ../tests
+          pip install -r requirements.txt
+      - name: Run tests
+        run: ./run_tests.sh

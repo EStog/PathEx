@@ -2,8 +2,6 @@
 Example of *readers* and *writers* processes
 """
 
-# XXX: DO NOT AUTOMATICALLY FORMAT THIS FILE!
-
 import os
 import sys
 from multiprocessing.managers import SyncManager
@@ -11,11 +9,10 @@ from multiprocessing.managers import SyncManager
 # this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
 sys.path.append(os.getcwd())
 
-from pathex import (ProcessPoolExecutor, Tag, process_register,
-                    process_synchronizer)
+from pathex import ProcessPoolExecutor, Tag, process_register, process_synchronizer
 
 # Tags must be named and visible for import
-writer, reader = Tag.named('writer', 'reader')
+writer, reader = Tag.named("writer", "reader")
 
 
 @process_register(writer)
@@ -38,12 +35,13 @@ def appendleft(shared_buffer, x):
     shared_buffer.insert(0, x)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    exp = (writer | reader//...)+...
+    print('testing ``process_register`` with readers-writers...')
 
-    psync = process_synchronizer(
-        exp, manager_class=SyncManager)
+    exp = (writer | reader // ...) + ...
+
+    psync = process_synchronizer(exp, manager_class=SyncManager)
 
     shared_buffer = psync.list()
 

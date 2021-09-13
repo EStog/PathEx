@@ -2,8 +2,6 @@
 Example using :meth:`match`:
 """
 
-#XXX: DO NOT AUTOMATICALLY FORMAT THIS FILE!
-
 import os
 import os.path
 import sys
@@ -20,21 +18,23 @@ from pathex.managing.process_synchronizer import (get_synchronizer,
 
 def producer(address, produced, x):
     sync = get_synchronizer(address)
-    sync.match('Pi')
+    sync.match("Pi")
     produced.append(x)
-    sync.match('Pf')
+    sync.match("Pf")
 
 
 def consumer(address, produced, consumed):
     sync = get_synchronizer(address)
-    sync.match('Ci')
+    sync.match("Ci")
     consumed.append(produced.pop())
-    sync.match('Cf')
+    sync.match("Cf")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    print('testing ``Synchronizer.match`` in multiprocessing...')
+
     # The following expression generates 'PiPfCiCf' | 'PiPfCiCfPiPfCiCf' | ...
-    exp = +C('Pi', 'Pf', 'Ci', 'Cf')
+    exp = +C("Pi", "Pf", "Ci", "Cf")
     psync = process_synchronizer(exp, manager_class=SyncManager)
     produced = psync.list()
     consumed = psync.list()
@@ -48,5 +48,10 @@ if __name__ == '__main__':
     assert list(produced) == []
     assert set(consumed) == {0, 1, 2, 3}
     sync = get_synchronizer(psync.address)
-    assert sync.requests('Pi') == sync.permits(
-        'Pf') == sync.requests('Ci') == sync.permits('Cf') == 4
+    assert (
+        sync.requests("Pi")
+        == sync.permits("Pf")
+        == sync.requests("Ci")
+        == sync.permits("Cf")
+        == 4
+    )
