@@ -26,7 +26,7 @@ jobs:
           pip install -r requirements.txt
       - name: Build
         run: |
-          ./build_docs.sh
+          ./build_docs.sh html
           cp .gitignore build/html/
       - name: Prepare tag
         id: prepare_tag
