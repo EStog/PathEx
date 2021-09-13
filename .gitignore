@@ -1,4 +1,8 @@
 *.pyc
 **/__pycache__/**
-**/.doctrees/**
-*.doctree
+
+.coverage
+.python-version
+
+docs/build
+docs/source/API
