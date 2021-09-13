@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="&lt;no title&gt;" href="pathex.adts.chain.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="pathex.adts.containers.head_tail_iterable.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="pathex.adts.containers.linked_list.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -371,7 +371,12 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.adts.containers.ordered_set.OrderedSet.__new__">
 <em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#pathex.adts.containers.ordered_set.OrderedSet" title="pathex.adts.containers.ordered_set.OrderedSet"><span class="pre">OrderedSet</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pathex.adts.containers.ordered_set._T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pathex/adts/containers/ordered_set.html#OrderedSet.__new__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.ordered_set.OrderedSet.__new__" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">OrderedSet</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">s</span><span class="o">.</span><span class="n">as_set</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">s</span><span class="o">.</span><span class="n">as_tuple</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
 </dl>
 </dd></dl>
 
@@ -437,14 +442,14 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.adts.containers.ordered_set.OrderedSet.as_set">
-<span class="sig-name descname"><span class="pre">as_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#frozenset" title="(in Python v3.9)"><span class="pre">frozenset</span></a></span></span><a class="reference internal" href="../_modules/pathex/adts/containers/ordered_set.html#OrderedSet.as_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.ordered_set.OrderedSet.as_set" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">as_set</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">frozenset[~_T]</span></span></span><a class="reference internal" href="../_modules/pathex/adts/containers/ordered_set.html#OrderedSet.as_set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.ordered_set.OrderedSet.as_set" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.adts.containers.ordered_set.OrderedSet.as_tuple">
-<span class="sig-name descname"><span class="pre">as_tuple</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><span class="pre">tuple</span></a></span></span><a class="reference internal" href="../_modules/pathex/adts/containers/ordered_set.html#OrderedSet.as_tuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.ordered_set.OrderedSet.as_tuple" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">as_tuple</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple[~_T,</span> <span class="pre">...]</span></span></span><a class="reference internal" href="../_modules/pathex/adts/containers/ordered_set.html#OrderedSet.as_tuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.ordered_set.OrderedSet.as_tuple" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 </dl>
 </dd></dl>
@@ -535,7 +540,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="pathex.adts.containers.head_tail_iterable.html" title="previous page">&lt;no title&gt;</a>
+    <a class='left-prev' id="prev-link" href="pathex.adts.containers.linked_list.html" title="previous page">&lt;no title&gt;</a>
     <a class='right-next' id="next-link" href="pathex.adts.chain.html" title="next page">&lt;no title&gt;</a>
 
     </div>
