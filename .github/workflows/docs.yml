@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: |
           ./build_docs.sh html
-          cp .gitignore build/html/
+          cp .gitignore ./docs/build/html/
       - name: Prepare tag
         id: prepare_tag
         if: startsWith(github.ref, 'refs/tags/')
