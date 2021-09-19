@@ -12,6 +12,5 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   pathex.adts.containers.head_tail_iterable
    pathex.adts.containers.onion_collection
    pathex.adts.containers.ordered_set
