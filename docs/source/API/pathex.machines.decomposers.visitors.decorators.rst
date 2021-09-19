@@ -1,4 +1,0 @@
-.. automodule:: pathex.machines.decomposers.visitors.decorators
-   :members:
-   :undoc-members:
-   :show-inheritance:

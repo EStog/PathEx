@@ -1,4 +1,0 @@
-.. automodule:: pathex.expressions.terms.letters_complement
-   :members:
-   :undoc-members:
-   :show-inheritance:
