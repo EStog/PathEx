@@ -1,0 +1,4 @@
+.. automodule:: pathex.adts.containers.onion_collection
+   :members:
+   :undoc-members:
+   :show-inheritance:

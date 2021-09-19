@@ -330,26 +330,25 @@
   <h1>Source code for pathex.generation.eager</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generator</span>
 
 <span class="kn">from</span> <span class="nn">pathex.adts.collection_wrapper</span> <span class="kn">import</span> <span class="n">CollectionWrapper</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.terms.empty_word</span> <span class="kn">import</span> <span class="n">EMPTY_WORD</span>
 <span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">Decomposer</span>
 
-<span class="kn">from</span> <span class="nn">.defaults</span> <span class="kn">import</span> <span class="p">(</span><span class="n">COLLECTION_TYPE</span><span class="p">,</span> <span class="n">COMPLETE_WORDS</span><span class="p">,</span> <span class="n">WORD_MAX_LENGTH</span><span class="p">,</span>
-                       <span class="n">WORD_TYPE</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.defaults</span> <span class="kn">import</span> <span class="n">COLLECTION_TYPE</span><span class="p">,</span> <span class="n">COMPLETE_WORDS</span><span class="p">,</span> <span class="n">WORD_MAX_LENGTH</span>
+<span class="kn">from</span> <span class="nn">pathex.adts.containers.onion_collection</span> <span class="kn">import</span> <span class="n">EmptyOnionCollection</span><span class="p">,</span> <span class="n">NonemptyOnionCollection</span><span class="p">,</span> <span class="n">OnionCollection</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;words_generator&#39;</span><span class="p">]</span>
 
-<span class="c1">#TODO: a more efficient manner of constructing prefixes by using an immutable linked list</span>
 
 <div class="viewcode-block" id="words_generator"><a class="viewcode-back" href="../../../API/pathex.generation.eager.html#pathex.generation.eager.words_generator">[docs]</a><span class="k">def</span> <span class="nf">words_generator</span><span class="p">(</span><span class="n">expression</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">machine</span><span class="p">:</span> <span class="n">Decomposer</span><span class="p">,</span>
                     <span class="n">complete_words</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">COMPLETE_WORDS</span><span class="p">,</span>
                     <span class="n">word_max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">WORD_MAX_LENGTH</span><span class="p">,</span>
-                    <span class="n">partial_words_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">CollectionWrapper</span><span class="p">]</span> <span class="o">=</span> <span class="n">COLLECTION_TYPE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+                    <span class="n">partial_words_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">CollectionWrapper</span><span class="p">]</span> <span class="o">=</span> <span class="n">COLLECTION_TYPE</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">OnionCollection</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
 
     <span class="n">partial_words</span> <span class="o">=</span> <span class="n">partial_words_type</span><span class="p">()</span>
-    <span class="n">partial_words</span><span class="o">.</span><span class="n">put</span><span class="p">(((),</span> <span class="n">expression</span><span class="p">))</span>
+    <span class="n">partial_words</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">EmptyOnionCollection</span><span class="p">(),</span> <span class="n">expression</span><span class="p">))</span>
 
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -362,7 +361,7 @@
             <span class="k">if</span> <span class="n">word_max_length</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">word_max_length</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">head</span><span class="p">,</span> <span class="n">tail</span> <span class="ow">in</span> <span class="n">alts</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">head</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">EMPTY_WORD</span><span class="p">:</span>
-                        <span class="n">new_prefix</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="p">(</span><span class="n">head</span><span class="p">,)</span>
+                        <span class="n">new_prefix</span> <span class="o">=</span> <span class="n">NonemptyOnionCollection</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">head</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">new_prefix</span> <span class="o">=</span> <span class="n">prefix</span>
                     <span class="k">if</span> <span class="n">tail</span> <span class="ow">is</span> <span class="n">EMPTY_WORD</span><span class="p">:</span>

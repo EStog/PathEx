@@ -402,11 +402,10 @@
 <span class="sd">    ...     print(&#39;Wrong!&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">instance</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">instance_hash</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">firstnew</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">init_args</span><span class="p">,</span> <span class="o">**</span><span class="n">init_kwargs</span><span class="p">):</span>
-        <span class="k">nonlocal</span> <span class="n">instance</span><span class="p">,</span> <span class="n">instance_hash</span>
+        <span class="k">nonlocal</span> <span class="n">instance</span>
         <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>  <span class="c1"># just in case the very remote possibility of a race condition</span>
             <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="s1">&#39;__old_new__&#39;</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
@@ -419,12 +418,6 @@
                     <span class="n">instance</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># rollback changes</span>
                     <span class="k">raise</span>
 
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">instance_hash</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                    <span class="k">pass</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">cls</span><span class="o">.</span><span class="fm">__hash__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">instance_hash</span>
 
                 <span class="c1"># All destructions must be done after initializations finished properly,</span>
                 <span class="c1"># that is, without unexpected exceptions.</span>
@@ -442,6 +435,9 @@
     <span class="k">def</span> <span class="nf">__init_subclass__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Singleton class can not be subclassed&#39;</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -458,6 +454,7 @@
     <span class="n">wrapped_class</span><span class="o">.</span><span class="fm">__new__</span> <span class="o">=</span> <span class="n">firstnew</span>
     <span class="n">wrapped_class</span><span class="o">.</span><span class="n">__init_subclass__</span> <span class="o">=</span> <span class="n">__init_subclass__</span>
     <span class="n">wrapped_class</span><span class="o">.</span><span class="fm">__repr__</span> <span class="o">=</span> <span class="fm">__repr__</span>
+    <span class="n">wrapped_class</span><span class="o">.</span><span class="fm">__hash__</span> <span class="o">=</span> <span class="fm">__hash__</span>
 
     <span class="k">return</span> <span class="n">wrapped_class</span></div>
 </pre></div>

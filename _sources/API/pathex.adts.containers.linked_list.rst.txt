@@ -1,4 +1,0 @@
-.. automodule:: pathex.adts.containers.linked_list
-   :members:
-   :undoc-members:
-   :show-inheritance:
