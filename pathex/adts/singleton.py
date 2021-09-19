@@ -72,11 +72,10 @@ def singleton(wrapped_class: type[T]) -> type[T]:
     ...     print('Wrong!')
     """
     instance = None
-    instance_hash = None
     lock = threading.Lock()
 
     def firstnew(cls, *init_args, **init_kwargs):
-        nonlocal instance, instance_hash
+        nonlocal instance
         with lock:  # just in case the very remote possibility of a race condition
             if instance is None:
                 if '__old_new__' in cls.__dict__:
@@ -89,12 +88,6 @@ def singleton(wrapped_class: type[T]) -> type[T]:
                     instance = None  # rollback changes
                     raise
 
-                try:
-                    instance_hash = hash(instance)
-                except TypeError:
-                    pass
-                else:
-                    cls.__hash__ = lambda self: instance_hash
 
                 # All destructions must be done after initializations finished properly,
                 # that is, without unexpected exceptions.
@@ -112,6 +105,9 @@ def singleton(wrapped_class: type[T]) -> type[T]:
     def __init_subclass__(cls, /, *args, **kwargs):
         raise TypeError('Singleton class can not be subclassed')
 
+    def __hash__(self):
+        return hash(id(self))
+
     def __repr__(self):
         name = self.__class__.__name__
         i = 0
@@ -128,5 +124,6 @@ def singleton(wrapped_class: type[T]) -> type[T]:
     wrapped_class.__new__ = firstnew
     wrapped_class.__init_subclass__ = __init_subclass__
     wrapped_class.__repr__ = __repr__
+    wrapped_class.__hash__ = __hash__
 
     return wrapped_class

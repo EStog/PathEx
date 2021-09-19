@@ -1,25 +1,24 @@
 from __future__ import annotations
 
-from typing import Generator, TypeVar
+from typing import Generator
 
 from pathex.adts.collection_wrapper import CollectionWrapper
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 from pathex.machines.decomposers.decomposer import Decomposer
 
-from .defaults import (COLLECTION_TYPE, COMPLETE_WORDS, WORD_MAX_LENGTH,
-                       WORD_TYPE)
+from .defaults import COLLECTION_TYPE, COMPLETE_WORDS, WORD_MAX_LENGTH
+from pathex.adts.containers.onion_collection import EmptyOnionCollection, NonemptyOnionCollection, OnionCollection
 
 __all__ = ['words_generator']
 
-#TODO: a more efficient manner of constructing prefixes by using an immutable linked list
 
 def words_generator(expression: object, machine: Decomposer,
                     complete_words: bool = COMPLETE_WORDS,
                     word_max_length: int = WORD_MAX_LENGTH,
-                    partial_words_type: type[CollectionWrapper] = COLLECTION_TYPE) -> Generator[tuple, None, None]:
+                    partial_words_type: type[CollectionWrapper] = COLLECTION_TYPE) -> Generator[OnionCollection, None, None]:
 
     partial_words = partial_words_type()
-    partial_words.put(((), expression))
+    partial_words.put((EmptyOnionCollection(), expression))
 
     while True:
         try:
@@ -32,7 +31,7 @@ def words_generator(expression: object, machine: Decomposer,
             if word_max_length <= 0 or len(prefix) < word_max_length:
                 for head, tail in alts:
                     if head is not EMPTY_WORD:
-                        new_prefix = prefix + (head,)
+                        new_prefix = NonemptyOnionCollection(prefix, head)
                     else:
                         new_prefix = prefix
                     if tail is EMPTY_WORD:
