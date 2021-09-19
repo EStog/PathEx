@@ -4,6 +4,3 @@
 .coverage
 coverage.xml
 .python-version
-
-docs/build
-docs/source/API
