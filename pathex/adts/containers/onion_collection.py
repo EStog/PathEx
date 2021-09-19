@@ -64,6 +64,7 @@ class NonemptyOnionCollection(OnionCollection[_E]):
     >>> s = {c}
     >>> c1 = from_iterable(l)
     >>> assert c == c1
+    >>> assert len(c) == len(c1) == len(l)
     >>> assert c1 in s
     >>> assert 4 not in EmptyOnionCollection()
     >>> assert list(EmptyOnionCollection()) == []
