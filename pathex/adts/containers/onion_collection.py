@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sys
 from collections import deque
-from collections.abc import Collection, Hashable, Iterator, Reversible
+from collections.abc import Collection, Iterator, Reversible
 from dataclasses import dataclass, field
 from typing import Generic, Iterable, TypeVar
 

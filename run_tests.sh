@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo running unittests...
-pytest --doctest-modules --cov= --cov-report=xml
+pytest --doctest-modules
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 
