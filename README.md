@@ -1,4 +1,4 @@
-![stage|development](https://img.shields.io/badge/stage-development-red) ![stage|development](https://img.shields.io/badge/python-3.9-blue) ![repo size](https://img.shields.io/github/repo-size/EStog/PathEx) ![license|AGPL-3.0](https://img.shields.io/github/license/EStog/PathEx) ![tests](https://github.com/EStog/PathEx/actions/workflows/tests.yml/badge.svg) ![docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg)
+![stage|development](https://img.shields.io/badge/stage-development-red) ![python|3.9](https://img.shields.io/badge/python-3.9-blue) ![repo size](https://img.shields.io/github/repo-size/EStog/PathEx) ![license|AGPL-3.0](https://img.shields.io/github/license/EStog/PathEx) ![tests](https://github.com/EStog/PathEx/actions/workflows/tests.yml/badge.svg) ![docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg) ![github-pages](https://img.shields.io/github/deployments/estog/pathex/github-pages?label=github-pages)
 
 # PathEx
 
