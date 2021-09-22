@@ -35,7 +35,6 @@ needs_sphinx = '3.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinxcontrib.bibtex',
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.doctest',
@@ -46,8 +45,10 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'sphinx.ext.autosectionlabel'
-    # 'sphinx.ext.duration'
+    'sphinx.ext.autosectionlabel',
+    # 'sphinx.ext.duration',
+    'sphinxcontrib.bibtex',
+    'sphinxcontrib.apidoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -121,3 +122,12 @@ intersphinx_mapping = {'python': ('https://docs.python.org/3',
 
 # sphinxcontrib-bibtex options
 bibtex_bibfiles = ['refs.bib']
+
+
+# sphinxcontrib-apidoc options
+apidoc_module_dir = '../../pathex'
+apidoc_output_dir = './API'
+apidoc_separate_modules = True
+apidoc_toc_file = False
+apidoc_module_first = True
+apidoc_extra_args = ['-f', '-E']

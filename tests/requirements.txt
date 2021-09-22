@@ -3,3 +3,4 @@ pytest-cov
 sphinx>=4.0.0
 sphinx-book-theme
 sphinxcontrib-bibtex
+sphinxcontrib-apidoc
