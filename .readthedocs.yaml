@@ -2,6 +2,9 @@ version: 2
 
 formats: all
 
+build:
+  image: testing
+
 python:
   version: "3.9"
   install:
