@@ -1,402 +1,80 @@
-
 <!DOCTYPE html>
-
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; PathEx 0.1 documentation</title>
-    
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
-
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-
-    
-      
-
-    
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" />
-    
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
-
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; PathEx 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="&lt;no title&gt;" href="pathex.adts.cached_generators.cached_iterator.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="pathex.adts.cached_generators.cached_generator.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-    
-  </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+    <link rel="prev" title="&lt;no title&gt;" href="pathex.adts.cached_generators.cached_generator.html" /> 
+</head>
 
-    
-
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">PathEx 0.1 documentation</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p class="caption" role="heading">
- <span class="caption-text">
-  Contents:
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../overview.html">
-   Overview
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../generalities/index.html">
-   Generalities
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../generalities/expressions/index.html">
-     Expressions
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-    <label for="toctree-checkbox-2">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../generalities/expressions/empty_word.html">
-       Empty word
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../generalities/expressions/union.html">
-       Union
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../semantics/index.html">
-   Semantics
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../semantics/expressions/index.html">
-     Expressions
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../references.html">
-   Bibliography
-  </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="pathex.html">
-   pathex package
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-  <label for="toctree-checkbox-4">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="pathex.adts.html">
-     pathex.adts package
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-    <label for="toctree-checkbox-5">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="pathex.adts.cached_generators.html">
-       pathex.adts.cached_generators package
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-      <label for="toctree-checkbox-6">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul class="simple">
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="pathex.adts.concurrency.html">
-       pathex.adts.concurrency package
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-      <label for="toctree-checkbox-7">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="pathex.adts.concurrency.atomics.html">
-         pathex.adts.concurrency.atomics package
-        </a>
-       </li>
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="pathex.adts.containers.html">
-       pathex.adts.containers package
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-      <label for="toctree-checkbox-8">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul class="simple">
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="pathex.adts.singleton.html">
-       Singleton decorator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="pathex.adts.util.html">
-       Useful functions and constants
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="pathex.expressions.html">
-     pathex.expressions package
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/>
-    <label for="toctree-checkbox-9">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="pathex.expressions.nary_operators.html">
-       pathex.expressions.nary_operators package
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/>
-      <label for="toctree-checkbox-10">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul class="simple">
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="pathex.expressions.repetitions.html">
-       pathex.expressions.repetitions package
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/>
-      <label for="toctree-checkbox-11">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul class="simple">
-      </ul>
-     </li>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="pathex.expressions.terms.html">
-       pathex.expressions.terms package
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/>
-      <label for="toctree-checkbox-12">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul class="simple">
-      </ul>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="pathex.expressions.expression.html">
-       Expressions abstract base class
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="pathex.generation.html">
-     pathex.generation package
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/>
-    <label for="toctree-checkbox-13">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul class="simple">
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="pathex.machines.html">
-     pathex.machines package
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/>
-    <label for="toctree-checkbox-14">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3 has-children">
-      <a class="reference internal" href="pathex.machines.decomposers.html">
-       pathex.machines.decomposers package
-      </a>
-      <input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/>
-      <label for="toctree-checkbox-15">
-       <i class="fas fa-chevron-down">
-       </i>
-      </label>
-      <ul>
-       <li class="toctree-l4">
-        <a class="reference internal" href="pathex.machines.decomposers.visitors.html">
-         pathex.machines.decomposers.visitors package
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="pathex.managing.html">
-     pathex.managing package
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/>
-    <label for="toctree-checkbox-16">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul class="simple">
-    </ul>
-   </li>
-  </ul>
- </li>
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> PathEx
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../generalities/index.html">Generalities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../semantics/index.html">Semantics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.html">pathex package</a></li>
 </ul>
 
-    </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/API/pathex.adts.cached_generators.cached_generator_method.rst.txt"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
         </div>
+      </div>
+    </nav>
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PathEx</a>
+      </nav>
 
-            </nav>
-        </div>
-    </div>
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="pathex.html">pathex package</a> &raquo;</li>
+          <li><a href="pathex.adts.html">pathex.adts package</a> &raquo;</li>
+          <li><a href="pathex.adts.cached_generators.html">pathex.adts.cached_generators package</a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/API/pathex.adts.cached_generators.cached_generator_method.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
-                
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <span class="target" id="module-pathex.adts.cached_generators.cached_generator_method"></span><dl class="py class">
 <dt class="sig sig-object py" id="pathex.adts.cached_generators.cached_generator_method.CachedGeneratorMethod">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CachedGeneratorMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">function:</span> <span class="pre">pathex.adts.cached_generators.type_defs.TDecorableDescriptorGenerator[pathex.adts.cached_generators.cached_generator_method._E_co],</span> <span class="pre">cache_type:</span> <span class="pre">pathex.adts.collection_wrapper.CollectionWrapper</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pathex.adts.containers.ordered_set.OrderedSetWrapper'&gt;,</span> <span class="pre">non_repeated=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/adts/cached_generators/cached_generator_method.html#CachedGeneratorMethod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.cached_generators.cached_generator_method.CachedGeneratorMethod" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CachedGeneratorMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">function:</span> <span class="pre">pathex.adts.cached_generators.type_defs.TDecorableDescriptorGenerator[pathex.adts.cached_generators.cached_generator_method._E_co],</span> <span class="pre">cache_type:</span> <span class="pre">pathex.adts.collection_wrapper.CollectionWrapper</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pathex.adts.containers.ordered_set.OrderedSetWrapper'&gt;,</span> <span class="pre">non_repeated=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/adts/cached_generators/cached_generator_method.html#CachedGeneratorMethod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.cached_generators.cached_generator_method.CachedGeneratorMethod" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="pathex.adts.cached_generators.cached_generator.html#pathex.adts.cached_generators.cached_generator.CachedGenerator" title="pathex.adts.cached_generators.cached_generator.CachedGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.adts.cached_generators.cached_generator.CachedGenerator</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">pathex.adts.cached_generators.cached_generator_method._E_co</span></code>]</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nd">@cached_generator_method</span><span class="p">(</span><span class="n">cache_type</span><span class="o">=</span> <span class="n">get_collection_wrapper</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">put</span><span class="o">=</span><span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">))</span>
@@ -422,63 +100,41 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pathex.adts.cached_generators.cached_generator_method.cached_generator_method">
-<span class="sig-name descname"><span class="pre">cached_generator_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">function:</span> <span class="pre">Optional[TDecorableGenerator[_E]]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">/</span></em>, <em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">cache_type:</span> <span class="pre">CollectionWrapper</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pathex.adts.containers.ordered_set.OrderedSetWrapper'&gt;</span></em>, <em class="sig-param"><span class="pre">non_repeated=None</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CachedGenerator</span><span class="p"><span class="pre">[</span></span><span class="pre">_E</span><span class="p"><span class="pre">]</span></span> <span class="p"><span class="pre">|</span></span> <span class="pre">partial</span></span></span><a class="reference internal" href="../_modules/pathex/adts/cached_generators/cached_generator_method.html#cached_generator_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.cached_generators.cached_generator_method.cached_generator_method" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cached_generator_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">function:</span> <span class="pre">Optional[TDecorableGenerator[_E]]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">/</span></em>, <em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">cache_type:</span> <span class="pre">CollectionWrapper</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pathex.adts.containers.ordered_set.OrderedSetWrapper'&gt;</span></em>, <em class="sig-param"><span class="pre">non_repeated=None</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CachedGenerator</span><span class="p"><span class="pre">[</span></span><span class="pre">_E</span><span class="p"><span class="pre">]</span></span> <span class="p"><span class="pre">|</span></span> <span class="pre">partial</span></span></span><a class="reference internal" href="../_modules/pathex/adts/cached_generators/cached_generator_method.html#cached_generator_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.cached_generators.cached_generator_method.cached_generator_method" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 </dl>
 </dd></dl>
 
 
 
-              </div>
-              
-        
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="pathex.adts.cached_generators.cached_generator.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
-            </div>
-        </a>
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pathex.adts.cached_generators.cached_generator.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pathex.adts.cached_generators.cached_iterator.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-     <div id="next">
-        <a class="right-next" href="pathex.adts.cached_generators.cached_iterator.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">&lt;no title&gt;</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
 
-</div>
-        
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
-    </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Ernesto Soto Gómez<br/>
-        
-            &copy; Copyright 2019-2021, Ernesto Soto Gómez.<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
       </div>
-    </div>
-  
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-  
-  </body>
+</body>
 </html>
