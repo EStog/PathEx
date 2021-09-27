@@ -4,7 +4,6 @@ Generalities
 .. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
 .. codeauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
 
-------------
 
 This section contains general explanations of each entity that |pe| provides.
 

@@ -1,3 +1,6 @@
+pathex.machines.decomposers.visitors.synchronization\_visitor module
+====================================================================
+
 .. automodule:: pathex.machines.decomposers.visitors.synchronization_visitor
    :members:
    :undoc-members:

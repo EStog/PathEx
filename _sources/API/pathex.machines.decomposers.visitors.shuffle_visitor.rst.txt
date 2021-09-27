@@ -1,3 +1,6 @@
+pathex.machines.decomposers.visitors.shuffle\_visitor module
+============================================================
+
 .. automodule:: pathex.machines.decomposers.visitors.shuffle_visitor
    :members:
    :undoc-members:

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; PathEx 0.1 documentation</title>
+  <title>pathex.expressions.nary_operators.synchronization module &mdash; PathEx 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -17,8 +17,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="pathex.expressions.nary_operators.union.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="pathex.expressions.nary_operators.shuffle.html" /> 
+    <link rel="next" title="pathex.expressions.nary_operators.union module" href="pathex.expressions.nary_operators.union.html" />
+    <link rel="prev" title="pathex.expressions.nary_operators.shuffle module" href="pathex.expressions.nary_operators.shuffle.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -37,12 +37,26 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../generalities/index.html">Generalities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../semantics/index.html">Semantics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">Bibliography</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.html">pathex package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pathex.html">pathex package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pathex.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.html">pathex.adts package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="pathex.expressions.html">pathex.expressions package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="pathex.expressions.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.html">pathex.generation package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.html">pathex.machines package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.html">pathex.managing package</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -62,7 +76,7 @@
           <li><a href="pathex.html">pathex package</a> &raquo;</li>
           <li><a href="pathex.expressions.html">pathex.expressions package</a> &raquo;</li>
           <li><a href="pathex.expressions.nary_operators.html">pathex.expressions.nary_operators package</a> &raquo;</li>
-      <li>&lt;no title&gt;</li>
+      <li>pathex.expressions.nary_operators.synchronization module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.expressions.nary_operators.synchronization.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -72,11 +86,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <span class="target" id="module-pathex.expressions.nary_operators.synchronization"></span><dl class="py class">
+  <div class="section" id="module-pathex.expressions.nary_operators.synchronization">
+<span id="pathex-expressions-nary-operators-synchronization-module"></span><h1>pathex.expressions.nary_operators.synchronization module<a class="headerlink" href="#module-pathex.expressions.nary_operators.synchronization" title="Permalink to this headline"></a></h1>
+<dl class="py class">
 <dt class="sig sig-object py" id="pathex.expressions.nary_operators.synchronization.Synchronization">
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Synchronization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/expressions/nary_operators/synchronization.html#Synchronization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.expressions.nary_operators.synchronization.Synchronization" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html#pathex.expressions.nary_operators.nary_operator.NAryOperator" title="pathex.expressions.nary_operators.nary_operator.NAryOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.expressions.nary_operators.nary_operator.NAryOperator</span></code></a></p>
-<p class="rubric">Example</p>
+<p>Example:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathex.expressions.aliases</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathex.adts.util</span> <span class="kn">import</span> <span class="n">SET_OF_TUPLES</span>
 </pre></div>
@@ -91,20 +107,6 @@
 <span class="gp">... </span>    <span class="s1">&#39;axyw&#39;</span><span class="p">,</span> <span class="s1">&#39;ayxw&#39;</span><span class="p">,</span> <span class="s1">&#39;axzw&#39;</span><span class="p">,</span> <span class="s1">&#39;azxw&#39;</span><span class="p">,</span> <span class="s1">&#39;ayw&#39;</span><span class="p">,</span> <span class="s1">&#39;ayzw&#39;</span><span class="p">,</span> <span class="s1">&#39;azyw&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<p># &gt;&gt;&gt; exp = ( _ + U(‘xy’) ) &#64; ( ‘a’ + U(‘yz’) )
-# &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == { ‘azx’, ‘-aayx’, ‘a-azy’, ‘a-axy’, ‘axz’, ‘-aaxz’, ‘ayz’, ‘a-axz’, ‘azy’, ‘axy’, ‘-aaxy’, ‘-aazy’, ‘-aazx’, ‘-aayz’, ‘a-azx’, ‘a-ayz’, ‘a-ayx’, ‘ay’, ‘a-ay’, ‘-aay’, ‘ayx’ }</p>
-<p># &gt;&gt;&gt; exp = ( _ + U(‘xy’) ) &#64; ( ‘a’ + (_|’z’) )
-# &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {‘a-xx’, ‘ax-x’, ‘a-azx’, ‘a-axz’, ‘-aay-y’, ‘-aazx’, ‘a-a-xx’, ‘a-ay’, ‘-aax’, ‘axz’, ‘a-ax-x’, ‘a-azy’, ‘-aa-xx’, ‘a-ax’, ‘a-yy’, ‘-aay’, ‘a-a-yy’, ‘-aax-x’, ‘-aa-yy’, ‘-aaxz’, ‘a-ayz’, ‘a-ay-y’, ‘azx’, ‘ay’, ‘ax’, ‘-aazy’, ‘ay-y’, ‘-aayz’, ‘ayz’, ‘azy’}</p>
-<p># &gt;&gt;&gt; exp = C(‘xabx’)[‘x’:_] &#64; ( C(‘a’, _, _, ‘a’) | C(<a href="#id1"><span class="problematic" id="id2">*</span></a>’bab’, _) )
-# &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {‘a-aab-ba’, ‘aa-aba’, ‘a-aaba’, ‘aab-ba’, ‘aaba’, ‘aa-bba’, ‘babb’, ‘bab-bb’, ‘aa-a-bba’, ‘a-aa-bba’, ‘aa-ab-ba’, ‘babb-b’}</p>
-<p># &gt;&gt;&gt; exp = C(‘xab’)[‘x’:_] &#64; C(‘yby’)[‘y’:_]
-# &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {‘babb’, ‘bbab’}</p>
-<p># &gt;&gt;&gt; exp = (NLs(‘abc’) + C(‘xyz’)) &#64; C(‘qxyz’)
-# &gt;&gt;&gt; assert exp.get_language(SET_OF_TUPLES) == exp.get_generator().get_language(SET_OF_TUPLES) == {(‘q’, NLs(‘a’, ‘c’, ‘q’, ‘b’), ‘x’, ‘y’, ‘z’), (NLs(‘a’, ‘c’, ‘q’, ‘b’), ‘q’, ‘x’, ‘y’, ‘z’), (‘q’, ‘x’, ‘y’, ‘z’)}</p>
-<p># &gt;&gt;&gt; exp = (NLs(‘abc’) + C(‘xyz’)) &#64; C(‘axyz’)
-# &gt;&gt;&gt; assert exp.get_language(SET_OF_TUPLES) == exp.get_generator().get_language(SET_OF_TUPLES) == {(NLs(‘b’, ‘a’, ‘c’), ‘a’, ‘x’, ‘y’, ‘z’), (‘a’, NLs(‘b’, ‘a’, ‘c’), ‘x’, ‘y’, ‘z’)}</p>
-<p># &gt;&gt;&gt; exp = C(Ls(‘xyz’) , ‘b’, Ls(‘yz’)) &amp; C(‘v’, ‘b’, ‘v’)[‘v’:_]
-# &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {‘yby’, ‘zbz’}</p>
 <dl class="field-list simple">
 </dl>
 <dl class="py attribute">
@@ -114,13 +116,14 @@
 
 </dd></dl>
 
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="pathex.expressions.nary_operators.shuffle.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="pathex.expressions.nary_operators.union.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pathex.expressions.nary_operators.shuffle.html" class="btn btn-neutral float-left" title="pathex.expressions.nary_operators.shuffle module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pathex.expressions.nary_operators.union.html" class="btn btn-neutral float-right" title="pathex.expressions.nary_operators.union module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

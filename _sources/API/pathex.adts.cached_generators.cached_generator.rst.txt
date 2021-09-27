@@ -1,3 +1,6 @@
+pathex.adts.cached\_generators.cached\_generator module
+=======================================================
+
 .. automodule:: pathex.adts.cached_generators.cached_generator
    :members:
    :undoc-members:

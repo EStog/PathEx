@@ -78,37 +78,17 @@
 
 
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; from pathex.expressions.aliases import *</span>
-<span class="sd">        &gt;&gt;&gt; from pathex.adts.util import SET_OF_TUPLES</span>
 
-<span class="sd">        &gt;&gt;&gt; exp = ( &#39;a&#39; + U(&#39;xy&#39;) ) @ ( &#39;a&#39; + U(&#39;yz&#39;) )</span>
-<span class="sd">        &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {</span>
-<span class="sd">        ...     &#39;axy&#39;, &#39;ayx&#39;, &#39;axz&#39;, &#39;azx&#39;, &#39;ay&#39;, &#39;ayz&#39;, &#39;azy&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; from pathex.expressions.aliases import *</span>
+<span class="sd">    &gt;&gt;&gt; from pathex.adts.util import SET_OF_TUPLES</span>
 
-<span class="sd">        &gt;&gt;&gt; exp = ( &#39;a&#39; + U(&#39;xy&#39;) ) @ ( &#39;a&#39; + U(&#39;yz&#39;) + &#39;w&#39; )</span>
-<span class="sd">        &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {</span>
-<span class="sd">        ...     &#39;axyw&#39;, &#39;ayxw&#39;, &#39;axzw&#39;, &#39;azxw&#39;, &#39;ayw&#39;, &#39;ayzw&#39;, &#39;azyw&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; exp = ( &#39;a&#39; + U(&#39;xy&#39;) ) @ ( &#39;a&#39; + U(&#39;yz&#39;) )</span>
+<span class="sd">    &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {</span>
+<span class="sd">    ...     &#39;axy&#39;, &#39;ayx&#39;, &#39;axz&#39;, &#39;azx&#39;, &#39;ay&#39;, &#39;ayz&#39;, &#39;azy&#39;}</span>
 
-<span class="sd">        # &gt;&gt;&gt; exp = ( _ + U(&#39;xy&#39;) ) @ ( &#39;a&#39; + U(&#39;yz&#39;) )</span>
-<span class="sd">        # &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == { &#39;azx&#39;, &#39;-aayx&#39;, &#39;a-azy&#39;, &#39;a-axy&#39;, &#39;axz&#39;, &#39;-aaxz&#39;, &#39;ayz&#39;, &#39;a-axz&#39;, &#39;azy&#39;, &#39;axy&#39;, &#39;-aaxy&#39;, &#39;-aazy&#39;, &#39;-aazx&#39;, &#39;-aayz&#39;, &#39;a-azx&#39;, &#39;a-ayz&#39;, &#39;a-ayx&#39;, &#39;ay&#39;, &#39;a-ay&#39;, &#39;-aay&#39;, &#39;ayx&#39; }</span>
-
-<span class="sd">        # &gt;&gt;&gt; exp = ( _ + U(&#39;xy&#39;) ) @ ( &#39;a&#39; + (_|&#39;z&#39;) )</span>
-<span class="sd">        # &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {&#39;a-xx&#39;, &#39;ax-x&#39;, &#39;a-azx&#39;, &#39;a-axz&#39;, &#39;-aay-y&#39;, &#39;-aazx&#39;, &#39;a-a-xx&#39;, &#39;a-ay&#39;, &#39;-aax&#39;, &#39;axz&#39;, &#39;a-ax-x&#39;, &#39;a-azy&#39;, &#39;-aa-xx&#39;, &#39;a-ax&#39;, &#39;a-yy&#39;, &#39;-aay&#39;, &#39;a-a-yy&#39;, &#39;-aax-x&#39;, &#39;-aa-yy&#39;, &#39;-aaxz&#39;, &#39;a-ayz&#39;, &#39;a-ay-y&#39;, &#39;azx&#39;, &#39;ay&#39;, &#39;ax&#39;, &#39;-aazy&#39;, &#39;ay-y&#39;, &#39;-aayz&#39;, &#39;ayz&#39;, &#39;azy&#39;}</span>
-
-<span class="sd">        # &gt;&gt;&gt; exp = C(&#39;xabx&#39;)[&#39;x&#39;:_] @ ( C(&#39;a&#39;, _, _, &#39;a&#39;) | C(*&#39;bab&#39;, _) )</span>
-<span class="sd">        # &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {&#39;a-aab-ba&#39;, &#39;aa-aba&#39;, &#39;a-aaba&#39;, &#39;aab-ba&#39;, &#39;aaba&#39;, &#39;aa-bba&#39;, &#39;babb&#39;, &#39;bab-bb&#39;, &#39;aa-a-bba&#39;, &#39;a-aa-bba&#39;, &#39;aa-ab-ba&#39;, &#39;babb-b&#39;}</span>
-
-<span class="sd">        # &gt;&gt;&gt; exp = C(&#39;xab&#39;)[&#39;x&#39;:_] @ C(&#39;yby&#39;)[&#39;y&#39;:_]</span>
-<span class="sd">        # &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {&#39;babb&#39;, &#39;bbab&#39;}</span>
-
-<span class="sd">        # &gt;&gt;&gt; exp = (NLs(&#39;abc&#39;) + C(&#39;xyz&#39;)) @ C(&#39;qxyz&#39;)</span>
-<span class="sd">        # &gt;&gt;&gt; assert exp.get_language(SET_OF_TUPLES) == exp.get_generator().get_language(SET_OF_TUPLES) == {(&#39;q&#39;, NLs(&#39;a&#39;, &#39;c&#39;, &#39;q&#39;, &#39;b&#39;), &#39;x&#39;, &#39;y&#39;, &#39;z&#39;), (NLs(&#39;a&#39;, &#39;c&#39;, &#39;q&#39;, &#39;b&#39;), &#39;q&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;), (&#39;q&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;)}</span>
-
-<span class="sd">        # &gt;&gt;&gt; exp = (NLs(&#39;abc&#39;) + C(&#39;xyz&#39;)) @ C(&#39;axyz&#39;)</span>
-<span class="sd">        # &gt;&gt;&gt; assert exp.get_language(SET_OF_TUPLES) == exp.get_generator().get_language(SET_OF_TUPLES) == {(NLs(&#39;b&#39;, &#39;a&#39;, &#39;c&#39;), &#39;a&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;), (&#39;a&#39;, NLs(&#39;b&#39;, &#39;a&#39;, &#39;c&#39;), &#39;x&#39;, &#39;y&#39;, &#39;z&#39;)}</span>
-
-<span class="sd">        # &gt;&gt;&gt; exp = C(Ls(&#39;xyz&#39;) , &#39;b&#39;, Ls(&#39;yz&#39;)) &amp; C(&#39;v&#39;, &#39;b&#39;, &#39;v&#39;)[&#39;v&#39;:_]</span>
-<span class="sd">        # &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {&#39;yby&#39;, &#39;zbz&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; exp = ( &#39;a&#39; + U(&#39;xy&#39;) ) @ ( &#39;a&#39; + U(&#39;yz&#39;) + &#39;w&#39; )</span>
+<span class="sd">    &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {</span>
+<span class="sd">    ...     &#39;axyw&#39;, &#39;ayxw&#39;, &#39;axzw&#39;, &#39;azxw&#39;, &#39;ayw&#39;, &#39;ayzw&#39;, &#39;azyw&#39;}</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 </pre></div>
 

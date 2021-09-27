@@ -1,3 +1,6 @@
+pathex.expressions.repetitions.concatenation\_repetition module
+===============================================================
+
 .. automodule:: pathex.expressions.repetitions.concatenation_repetition
    :members:
    :undoc-members:

@@ -1,3 +1,6 @@
+pathex.adts.collection\_wrapper module
+======================================
+
 .. automodule:: pathex.adts.collection_wrapper
    :members:
    :undoc-members:

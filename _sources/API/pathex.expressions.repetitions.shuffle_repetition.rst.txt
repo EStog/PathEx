@@ -1,3 +1,6 @@
+pathex.expressions.repetitions.shuffle\_repetition module
+=========================================================
+
 .. automodule:: pathex.expressions.repetitions.shuffle_repetition
    :members:
    :undoc-members:

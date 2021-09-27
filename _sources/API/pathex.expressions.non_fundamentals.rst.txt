@@ -1,3 +1,6 @@
+pathex.expressions.non\_fundamentals module
+===========================================
+
 .. automodule:: pathex.expressions.non_fundamentals
    :members:
    :undoc-members:

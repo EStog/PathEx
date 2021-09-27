@@ -77,6 +77,7 @@
  | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
@@ -101,10 +102,6 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.acquire_read">acquire_read() (SharedLock method)</a>
-</li>
-      <li><a href="API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.acquire_write">acquire_write() (SharedLock method)</a>
-</li>
       <li><a href="API/pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.add">add() (OrderedSet method)</a>
 </li>
       <li><a href="API/pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.addleft">addleft() (OrderedSet method)</a>
@@ -189,9 +186,11 @@
 </li>
       <li><a href="API/pathex.adts.cached_generators.cached_iterator.html#pathex.adts.cached_generators.cached_iterator.CachedIterator">CachedIterator (class in pathex.adts.cached_generators.cached_iterator)</a>
 </li>
+      <li><a href="API/pathex.adts.chain.html#pathex.adts.chain.Chain">Chain (class in pathex.adts.chain)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/pathex.adts.chain.html#pathex.adts.chain.Chain">Chain (class in pathex.adts.chain)</a>
+      <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.Pool.close">close() (Pool method)</a>
 </li>
       <li><a href="API/pathex.adts.collection_wrapper.html#pathex.adts.collection_wrapper.CollectionWrapper">CollectionWrapper (class in pathex.adts.collection_wrapper)</a>
 </li>
@@ -322,6 +321,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.Pool.join">join() (Pool method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -432,8 +439,6 @@
         <li><a href="API/pathex.adts.concurrency.atomics.atomic_integer.html#module-pathex.adts.concurrency.atomics.atomic_integer">pathex.adts.concurrency.atomics.atomic_integer</a>
 </li>
         <li><a href="API/pathex.adts.concurrency.counted_condition.html#module-pathex.adts.concurrency.counted_condition">pathex.adts.concurrency.counted_condition</a>
-</li>
-        <li><a href="API/pathex.adts.concurrency.shared_lock.html#module-pathex.adts.concurrency.shared_lock">pathex.adts.concurrency.shared_lock</a>
 </li>
         <li><a href="API/pathex.adts.containers.html#module-pathex.adts.containers">pathex.adts.containers</a>
 </li>
@@ -712,13 +717,6 @@
 </li>
       </ul></li>
       <li>
-    pathex.adts.concurrency.shared_lock
-
-      <ul>
-        <li><a href="API/pathex.adts.concurrency.shared_lock.html#module-pathex.adts.concurrency.shared_lock">module</a>
-</li>
-      </ul></li>
-      <li>
     pathex.adts.containers
 
       <ul>
@@ -900,8 +898,6 @@
         <li><a href="API/pathex.expressions.terms.letters_complement.html#module-pathex.expressions.terms.letters_complement">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pathex.expressions.terms.term
 
@@ -909,6 +905,8 @@
         <li><a href="API/pathex.expressions.terms.term.html#module-pathex.expressions.terms.term">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     pathex.generation
 
@@ -1170,11 +1168,11 @@
 </li>
       <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process">process() (in module pathex.managing.process_synchronizer)</a>
 </li>
+      <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_manager">process_manager() (in module pathex.managing.process_synchronizer)</a>
+</li>
       <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_region">process_region() (in module pathex.managing.process_synchronizer)</a>
 </li>
       <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_register">process_register() (in module pathex.managing.process_synchronizer)</a>
-</li>
-      <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_synchronizer">process_synchronizer() (in module pathex.managing.process_synchronizer)</a>
 </li>
       <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.ProcessPoolExecutor">ProcessPoolExecutor (class in pathex.managing.process_synchronizer)</a>
 </li>
@@ -1190,22 +1188,16 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.read_operation">read_operation (SharedLock attribute)</a>
-</li>
       <li><a href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region">region() (Manager method)</a>
 </li>
       <li><a href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.register">register() (Manager method)</a>
 </li>
       <li><a href="API/pathex.generation.words_generator.html#pathex.generation.words_generator.WordsGenerator.register_partial_word">register_partial_word() (WordsGenerator method)</a>
 </li>
-      <li><a href="API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.release_read">release_read() (SharedLock method)</a>
+      <li><a href="API/pathex.expressions.repetitions.repetition.html#pathex.expressions.repetitions.repetition.Repetition">Repetition (class in pathex.expressions.repetitions.repetition)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.release_write">release_write() (SharedLock method)</a>
-</li>
-      <li><a href="API/pathex.expressions.repetitions.repetition.html#pathex.expressions.repetitions.repetition.Repetition">Repetition (class in pathex.expressions.repetitions.repetition)</a>
-</li>
       <li><a href="API/pathex.machines.decomposers.visitors.decorators.html#pathex.machines.decomposers.visitors.decorators.repetition_visitor">repetition_visitor() (in module pathex.machines.decomposers.visitors.decorators)</a>
 </li>
       <li><a href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.requests">requests() (Synchronizer method)</a>
@@ -1226,8 +1218,6 @@
 </li>
       <li><a href="API/pathex.adts.util.html#pathex.adts.util.SET_OF_TUPLES">SET_OF_TUPLES (in module pathex.adts.util)</a>
 </li>
-      <li><a href="API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock">SharedLock (class in pathex.adts.concurrency.shared_lock)</a>
-</li>
       <li><a href="API/pathex.expressions.nary_operators.shuffle.html#pathex.expressions.nary_operators.shuffle.Shuffle">Shuffle (class in pathex.expressions.nary_operators.shuffle)</a>
 </li>
       <li><a href="API/pathex.machines.decomposers.visitors.shuffle_repetition_visitor.html#pathex.machines.decomposers.visitors.shuffle_repetition_visitor.shuffle_repetition_visitor">shuffle_repetition_visitor() (in module pathex.machines.decomposers.visitors.shuffle_repetition_visitor)</a>
@@ -1235,6 +1225,8 @@
       <li><a href="API/pathex.machines.decomposers.visitors.shuffle_visitor.html#pathex.machines.decomposers.visitors.shuffle_visitor.shuffle_visitor">shuffle_visitor() (in module pathex.machines.decomposers.visitors.shuffle_visitor)</a>
 </li>
       <li><a href="API/pathex.expressions.repetitions.shuffle_repetition.html#pathex.expressions.repetitions.shuffle_repetition.ShuffleRepetition">ShuffleRepetition (class in pathex.expressions.repetitions.shuffle_repetition)</a>
+</li>
+      <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.ProcessPoolExecutor.shutdown">shutdown() (ProcessPoolExecutor method)</a>
 </li>
       <li><a href="API/pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.simple_match">simple_match() (in module pathex.machines.decomposers.match_functions)</a>
 </li>
@@ -1276,9 +1268,11 @@
 </li>
       <li><a href="API/pathex.adts.cached_generators.type_defs.html#pathex.adts.cached_generators.type_defs.TDecorableDescriptorGenerator">TDecorableDescriptorGenerator (class in pathex.adts.cached_generators.type_defs)</a>
 </li>
+      <li><a href="API/pathex.expressions.terms.term.html#pathex.expressions.terms.term.Term">Term (class in pathex.expressions.terms.term)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/pathex.expressions.terms.term.html#pathex.expressions.terms.term.Term">Term (class in pathex.expressions.terms.term)</a>
+      <li><a href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.Pool.terminate">terminate() (Pool method)</a>
 </li>
       <li><a href="API/pathex.managing.trace_checker.html#pathex.managing.trace_checker.TraceChecker">TraceChecker (class in pathex.managing.trace_checker)</a>
 </li>
@@ -1333,8 +1327,6 @@
       <li><a href="API/pathex.generation.eager.html#pathex.generation.eager.words_generator">words_generator() (in module pathex.generation.eager)</a>
 </li>
       <li><a href="API/pathex.generation.words_generator.html#pathex.generation.words_generator.WordsGenerator">WordsGenerator (class in pathex.generation.words_generator)</a>
-</li>
-      <li><a href="API/pathex.adts.concurrency.shared_lock.html#pathex.adts.concurrency.shared_lock.SharedLock.write_operation">write_operation (SharedLock attribute)</a>
 </li>
   </ul></td>
 </tr></table>

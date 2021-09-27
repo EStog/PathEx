@@ -21,4 +21,3 @@ Submodules
    :maxdepth: 4
 
    pathex.adts.concurrency.counted_condition
-   pathex.adts.concurrency.shared_lock

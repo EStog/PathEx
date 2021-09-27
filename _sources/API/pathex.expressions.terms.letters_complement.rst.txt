@@ -1,3 +1,6 @@
+pathex.expressions.terms.letters\_complement module
+===================================================
+
 .. automodule:: pathex.expressions.terms.letters_complement
    :members:
    :undoc-members:

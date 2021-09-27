@@ -1,3 +1,6 @@
+pathex.machines.machine module
+==============================
+
 .. automodule:: pathex.machines.machine
    :members:
    :undoc-members:

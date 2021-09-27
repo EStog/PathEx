@@ -1,4 +1,0 @@
-.. automodule:: pathex.adts.concurrency.shared_lock
-   :members:
-   :undoc-members:
-   :show-inheritance:

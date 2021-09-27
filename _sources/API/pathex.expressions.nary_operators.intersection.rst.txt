@@ -1,3 +1,6 @@
+pathex.expressions.nary\_operators.intersection module
+======================================================
+
 .. automodule:: pathex.expressions.nary_operators.intersection
    :members:
    :undoc-members:

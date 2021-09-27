@@ -1,3 +1,6 @@
+pathex.generation.words\_generator module
+=========================================
+
 .. automodule:: pathex.generation.words_generator
    :members:
    :undoc-members:

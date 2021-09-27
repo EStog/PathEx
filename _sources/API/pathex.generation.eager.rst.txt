@@ -1,3 +1,6 @@
+pathex.generation.eager module
+==============================
+
 .. automodule:: pathex.generation.eager
    :members:
    :undoc-members:

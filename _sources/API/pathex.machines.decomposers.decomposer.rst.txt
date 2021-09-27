@@ -1,3 +1,6 @@
+pathex.machines.decomposers.decomposer module
+=============================================
+
 .. automodule:: pathex.machines.decomposers.decomposer
    :members:
    :undoc-members:

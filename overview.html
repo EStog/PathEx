@@ -78,7 +78,6 @@
              
   <div class="section" id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h1>
-<hr class="docutils" />
 <p>This section roughly presents the main features of PathEx.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -176,7 +175,7 @@
 <p>The synchronizer will manage any request of execution and will allow only those in accord with the given expression and the current state of execution. The not allowed requests are suspended until the proper execution conditions are met.</p>
 </div>
 <div class="section" id="using-processes">
-<h3>Using processes<a class="headerlink" href="#using-processes" title="Permalink to this headline"></a></h3>
+<span id="id3"></span><h3>Using processes<a class="headerlink" href="#using-processes" title="Permalink to this headline"></a></h3>
 <p>If processes are to be used as execution units, the same general steps are to be followed but with some differences.</p>
 <p>To decorate functions use <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_register" title="pathex.managing.process_synchronizer.process_register"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_register()</span></code></a> instead of <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.register" title="pathex.managing.manager.Manager.register"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register()</span></code></a>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">process_register</span>
@@ -220,14 +219,14 @@
        <span class="n">shared_buffer</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Then, in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> module get a <code class="xref py py-class docutils literal notranslate"><span class="pre">SynchronizerProxy</span></code> by using <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_synchronizer" title="pathex.managing.process_synchronizer.process_synchronizer"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_synchronizer()</span></code></a> and start processes by using any of the ways provided by PathEx. For example, with <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.ProcessPoolExecutor" title="pathex.managing.process_synchronizer.ProcessPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code></a>:</p>
+<p>Then, in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> module get a <code class="xref py py-class docutils literal notranslate"><span class="pre">SynchronizerProxy</span></code> by using <code class="xref py py-func docutils literal notranslate"><span class="pre">process_synchronizer()</span></code> and start processes by using any of the ways provided by PathEx. For example, with <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.ProcessPoolExecutor" title="pathex.managing.process_synchronizer.ProcessPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code></a>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
    <span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">SyncManager</span>
 
    <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">process_synchronizer</span><span class="p">,</span> <span class="n">ProcessPoolExecutor</span>
 
-   <span class="n">psync</span> <span class="o">=</span> <span class="n">process_synchronizer</span><span class="p">(</span>
+   <span class="n">psync</span> <span class="o">=</span> <span class="n">process_manager</span><span class="p">(</span>
        <span class="n">exp</span><span class="p">,</span> <span class="n">manager_class</span><span class="o">=</span><span class="n">SyncManager</span><span class="p">)</span>
 
    <span class="n">shared_buffer</span> <span class="o">=</span> <span class="n">psync</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>

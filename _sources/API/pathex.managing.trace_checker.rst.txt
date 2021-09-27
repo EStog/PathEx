@@ -1,3 +1,6 @@
+pathex.managing.trace\_checker module
+=====================================
+
 .. automodule:: pathex.managing.trace_checker
    :members:
    :undoc-members:

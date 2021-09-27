@@ -1,3 +1,6 @@
+pathex.managing.synchronizer module
+===================================
+
 .. automodule:: pathex.managing.synchronizer
    :members:
    :undoc-members:

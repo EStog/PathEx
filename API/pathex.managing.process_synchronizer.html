@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; PathEx 0.1 documentation</title>
+  <title>pathex.managing.process_synchronizer module &mdash; PathEx 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -17,8 +17,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="pathex.managing.synchronizer.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="pathex.managing.manager.html" /> 
+    <link rel="next" title="pathex.managing.synchronizer module" href="pathex.managing.synchronizer.html" />
+    <link rel="prev" title="pathex.managing.manager module" href="pathex.managing.manager.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -37,12 +37,25 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../generalities/index.html">Generalities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../semantics/index.html">Semantics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../references.html">Bibliography</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.html">pathex package</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pathex.html">pathex package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pathex.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.html">pathex.adts package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.html">pathex.expressions package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.html">pathex.generation package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.html">pathex.machines package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="pathex.managing.html">pathex.managing package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="pathex.managing.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -61,7 +74,7 @@
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="pathex.html">pathex package</a> &raquo;</li>
           <li><a href="pathex.managing.html">pathex.managing package</a> &raquo;</li>
-      <li>&lt;no title&gt;</li>
+      <li>pathex.managing.process_synchronizer module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.managing.process_synchronizer.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -71,61 +84,64 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <span class="target" id="module-pathex.managing.process_synchronizer"></span><dl class="py class">
+  <div class="section" id="module-pathex.managing.process_synchronizer">
+<span id="pathex-managing-process-synchronizer-module"></span><h1>pathex.managing.process_synchronizer module<a class="headerlink" href="#module-pathex.managing.process_synchronizer" title="Permalink to this headline"></a></h1>
+<dl class="py class">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.Pool">
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#Pool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.Pool" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a></p>
-<p>This class is the analog to <code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.Pool</span></code> but it provides <a class="reference internal" href="#pathex.managing.process_synchronizer.Pool.apply" title="pathex.managing.process_synchronizer.Pool.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply()</span></code></a> and <a class="reference internal" href="#pathex.managing.process_synchronizer.Pool.apply_async" title="pathex.managing.process_synchronizer.Pool.apply_async"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply_async()</span></code></a> methods that automatically set <em>address</em> and <em>authkey</em> as proper positional arguments</p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class is the analog to <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a> but it provides <a class="reference internal" href="#pathex.managing.process_synchronizer.Pool.apply" title="pathex.managing.process_synchronizer.Pool.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply()</span></code></a> and <a class="reference internal" href="#pathex.managing.process_synchronizer.Pool.apply_async" title="pathex.managing.process_synchronizer.Pool.apply_async"><code class="xref py py-meth docutils literal notranslate"><span class="pre">apply_async()</span></code></a> methods that automatically set <code class="docutils literal notranslate"><span class="pre">address</span></code> and <code class="docutils literal notranslate"><span class="pre">authkey</span></code> as proper positional arguments.</p>
 <dl class="field-list simple">
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.Pool.apply">
 <span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">pathex.managing.process_synchronizer._T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">a_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pathex.managing.process_synchronizer._T</span></span></span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#Pool.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.Pool.apply" title="Permalink to this definition"></a></dt>
-<dd><p>Equivalent of <cite>func(*args, **kwds)</cite>.
-Pool must be running.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.Pool.apply_async">
 <span class="sig-name descname"><span class="pre">apply_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">pathex.managing.process_synchronizer._T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">a_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">a_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">multiprocessing.pool.ApplyResult</span><span class="p"><span class="pre">[</span></span><span class="pre">pathex.managing.process_synchronizer._T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#Pool.apply_async"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.Pool.apply_async" title="Permalink to this definition"></a></dt>
-<dd><p>Asynchronous version of <cite>apply()</cite> method.</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pathex.managing.process_synchronizer.Pool.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#Pool.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.Pool.close" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pathex.managing.process_synchronizer.Pool.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#Pool.join"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.Pool.join" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pathex.managing.process_synchronizer.Pool.terminate">
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#Pool.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.Pool.terminate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.ProcessPoolExecutor">
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">ProcessPoolExecutor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#ProcessPoolExecutor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.ProcessPoolExecutor" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">concurrent.futures.process.ProcessPoolExecutor</span></code></p>
-<p>This class is the analog to <code class="xref py py-class docutils literal notranslate"><span class="pre">concurrent.futures.Pool</span></code> but it provides a <a class="reference internal" href="#pathex.managing.process_synchronizer.ProcessPoolExecutor.submit" title="pathex.managing.process_synchronizer.ProcessPoolExecutor.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a> method that automatically set <em>address</em> and <em>authkey</em> as proper positional arguments</p>
-<p>Initializes a new ProcessPoolExecutor instance.</p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class is the analog to <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">concurrent.futures.ProcessPoolExecutor</span></code></a> but it provides a <a class="reference internal" href="#pathex.managing.process_synchronizer.ProcessPoolExecutor.submit" title="pathex.managing.process_synchronizer.ProcessPoolExecutor.submit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">submit()</span></code></a> method that automatically set <code class="docutils literal notranslate"><span class="pre">address</span></code> and <code class="docutils literal notranslate"><span class="pre">authkey</span></code> as proper positional arguments.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>max_workers</strong> – The maximum number of processes that can be used to
-execute the given calls. If None or not given then as many
-worker processes will be created as the machine has processors.</p></li>
-<li><p><strong>mp_context</strong> – A multiprocessing context to launch the workers. This
-object should provide SimpleQueue, Queue and Process.</p></li>
-<li><p><strong>initializer</strong> – A callable used to initialize worker processes.</p></li>
-<li><p><strong>initargs</strong> – A tuple of arguments to pass to the initializer.</p></li>
-</ul>
-</dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pathex.managing.process_synchronizer.ProcessPoolExecutor.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">Ellipsis</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel_futures</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#ProcessPoolExecutor.shutdown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.ProcessPoolExecutor.shutdown" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.ProcessPoolExecutor.submit">
 <span class="sig-name descname"><span class="pre">submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">pathex.managing.process_synchronizer._T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">concurrent.futures._base.Future</span><span class="p"><span class="pre">[</span></span><span class="pre">pathex.managing.process_synchronizer._T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#ProcessPoolExecutor.submit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.ProcessPoolExecutor.submit" title="Permalink to this definition"></a></dt>
-<dd><p>Submits a callable to be executed with the given arguments.</p>
-<p>Schedules the callable to be executed as fn(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) and returns
-a Future instance representing the execution of the callable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A Future representing the given call.</p>
-</dd>
+<dd><dl class="field-list simple">
 </dl>
 </dd></dl>
 
@@ -134,61 +150,59 @@ a Future instance representing the execution of the callable.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.get_synchronizer">
 <span class="sig-name descname"><span class="pre">get_synchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authkey</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.9)"><span class="pre">bytes</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SynchronizerProxy</span></span></span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#get_synchronizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.get_synchronizer" title="Permalink to this definition"></a></dt>
-<dd><p>Obtains a <span class="xref std std-ref">proxy</span> to a <a class="reference internal" href="pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a> retrieved from <em>address</em> and with the given <em>authkey</em>.</p>
+<dd><p>Obtains a <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing-proxy-objects" title="(in Python v3.9)"><span class="xref std std-ref">proxy</span></a> to a <a class="reference internal" href="pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a> retrieved from <code class="docutils literal notranslate"><span class="pre">address</span></code> and with the given <code class="docutils literal notranslate"><span class="pre">authkey</span></code>.</p>
 <dl class="field-list simple">
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.process">
-<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">p_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">p_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.process" title="Permalink to this definition"></a></dt>
-<dd><p>This is just a <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.Process</span></code></a> factory function that sets <em>address</em> and <em>authkey</em> as proper positional parameters to the given <em>target</em></p>
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authkey</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.9)"><span class="pre">bytes</span></a> <span class="p"><span class="pre">|</span></span> <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><span class="pre">None</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">p_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">p_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.process" title="Permalink to this definition"></a></dt>
+<dd><p>This is just a <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.Process</span></code></a> factory function that sets <code class="docutils literal notranslate"><span class="pre">address</span></code> and <code class="docutils literal notranslate"><span class="pre">authkey</span></code> as proper positional parameters to the given <code class="docutils literal notranslate"><span class="pre">target</span></code>. It is expected that this <code class="docutils literal notranslate"><span class="pre">target</span></code> has been properly prepared to be used with PathEx, for example, by using <a class="reference internal" href="#pathex.managing.process_synchronizer.process_register" title="pathex.managing.process_synchronizer.process_register"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_register()</span></code></a>.</p>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pathex.managing.process_synchronizer.process_manager">
+<span class="sig-name descname"><span class="pre">process_manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">exp:</span> <span class="pre">Expression</span></em>, <em class="sig-param"><span class="pre">decomposer:</span> <span class="pre">DecomposerMatch</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">lock_class=&lt;built-in</span> <span class="pre">function</span> <span class="pre">allocate_lock&gt;</span></em>, <em class="sig-param"><span class="pre">address=None</span></em>, <em class="sig-param"><span class="pre">authkey=None</span></em>, <em class="sig-param"><span class="pre">manager_class=&lt;class</span> <span class="pre">'multiprocessing.managers.BaseManager'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SyncManager</span></span></span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#process_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.process_manager" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a new <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.managers.BaseManager" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.managers.BaseManager</span></code></a> to be used to store shared data. This function should be called in the main process after initializing other processes. The address of the returned object should be passed to the mechanisms that PathEx provides to initialize subprocesses, aka, <a class="reference internal" href="#pathex.managing.process_synchronizer.ProcessPoolExecutor" title="pathex.managing.process_synchronizer.ProcessPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code></a>, <a class="reference internal" href="#pathex.managing.process_synchronizer.Pool" title="pathex.managing.process_synchronizer.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> and <a class="reference internal" href="#pathex.managing.process_synchronizer.process" title="pathex.managing.process_synchronizer.process"><code class="xref py py-class docutils literal notranslate"><span class="pre">process</span></code></a>.</p>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.process_region">
 <span class="sig-name descname"><span class="pre">process_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag" title="pathex.managing.tag.Tag"><span class="pre">Tag</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#process_region"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.process_region" title="Permalink to this definition"></a></dt>
-<dd><p>Context manager to mark a piece of code as a region.</p>
+<dd><p>Context manager to mark a piece of code named by <code class="docutils literal notranslate"><span class="pre">tag</span></code> as a region.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This version is meant to be used with <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing" title="(in Python v3.9)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a> only.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tag</strong> (<a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag" title="pathex.managing.tag.Tag"><em>Tag</em></a>) – A tag to mark the corresponding block with.</p>
-</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pathex.managing.process_synchronizer.process_register">
 <span class="sig-name descname"><span class="pre">process_register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag" title="pathex.managing.tag.Tag"><span class="pre">Tag</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#process_register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.process_register" title="Permalink to this definition"></a></dt>
-<dd><p>Decorator to mark a method as a region (this version is for using with <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing" title="(in Python v3.9)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a>).</p>
+<dd><p>Decorator to mark a method as a region. The <code class="docutils literal notranslate"><span class="pre">tag</span></code> is the name of the region.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This version is meant to be used with <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing" title="(in Python v3.9)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code></a> only.</p>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>tag</strong> (<a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag" title="pathex.managing.tag.Tag"><em>Tag</em></a>) – A tag to mark the given funcion with.</p>
-</dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="pathex.managing.process_synchronizer.process_synchronizer">
-<span class="sig-name descname"><span class="pre">process_synchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">exp:</span> <span class="pre">Expression</span></em>, <em class="sig-param"><span class="pre">decomposer:</span> <span class="pre">DecomposerMatch</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">lock_class=&lt;built-in</span> <span class="pre">function</span> <span class="pre">allocate_lock&gt;</span></em>, <em class="sig-param"><span class="pre">address=None</span></em>, <em class="sig-param"><span class="pre">authkey=None</span></em>, <em class="sig-param"><span class="pre">manager_class=&lt;class</span> <span class="pre">'multiprocessing.managers.BaseManager'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SyncManager</span></span></span><a class="reference internal" href="../_modules/pathex/managing/process_synchronizer.html#process_synchronizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.process_synchronizer.process_synchronizer" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-</dl>
-</dd></dl>
-
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="pathex.managing.manager.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="pathex.managing.synchronizer.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pathex.managing.manager.html" class="btn btn-neutral float-left" title="pathex.managing.manager module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pathex.managing.synchronizer.html" class="btn btn-neutral float-right" title="pathex.managing.synchronizer module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

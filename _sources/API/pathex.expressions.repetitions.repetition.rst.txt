@@ -1,3 +1,6 @@
+pathex.expressions.repetitions.repetition module
+================================================
+
 .. automodule:: pathex.expressions.repetitions.repetition
    :members:
    :undoc-members:

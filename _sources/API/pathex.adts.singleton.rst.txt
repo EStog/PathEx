@@ -1,3 +1,6 @@
+pathex.adts.singleton module
+============================
+
 .. automodule:: pathex.adts.singleton
    :members:
    :undoc-members:

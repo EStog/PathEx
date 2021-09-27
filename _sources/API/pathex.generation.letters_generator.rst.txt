@@ -1,3 +1,6 @@
+pathex.generation.letters\_generator module
+===========================================
+
 .. automodule:: pathex.generation.letters_generator
    :members:
    :undoc-members:

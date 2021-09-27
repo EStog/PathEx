@@ -1,3 +1,6 @@
+pathex.expressions.nary\_operators.union module
+===============================================
+
 .. automodule:: pathex.expressions.nary_operators.union
    :members:
    :undoc-members:

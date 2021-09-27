@@ -1,3 +1,6 @@
+pathex.adts.containers.ordered\_set module
+==========================================
+
 .. automodule:: pathex.adts.containers.ordered_set
    :members:
    :undoc-members:

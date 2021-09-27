@@ -4,7 +4,6 @@ Overview
 .. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
 .. codeauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
 
-------------
 
 This section roughly presents the main features of |pe|.
 
@@ -39,7 +38,7 @@ In this case the expression specify that a single writer or a set of concurrent 
 Using threads
 ^^^^^^^^^^^^^
 
-Next, create a :class:`~.Synchronizer` that will serve as a manager of the execution flow. Threads as execution units will be explained in this section. The case of processes will be explained in :ref:`another <Using processes>`.
+Next, create a :class:`~.Synchronizer` that will serve as a manager of the execution flow. Threads as execution units will be explained in this section. The case of processes will be explained in :ref:`another <using-processes>`.
 
 In the case of threads as execution units, create a direct instance of :class:`~.Synchronizer`.
 
@@ -114,6 +113,8 @@ Once the regions to be synchronized are specified, threads may be started by usi
 
 The synchronizer will manage any request of execution and will allow only those in accord with the given expression and the current state of execution. The not allowed requests are suspended until the proper execution conditions are met.
 
+.. _using-processes:
+
 Using processes
 ^^^^^^^^^^^^^^^
 
@@ -175,7 +176,7 @@ Then, in the ``__main__`` module get a :class:`~pathex.managing.process_synchron
 
       from pathex import process_synchronizer, ProcessPoolExecutor
 
-      psync = process_synchronizer(
+      psync = process_manager(
           exp, manager_class=SyncManager)
 
       shared_buffer = psync.list()
@@ -186,5 +187,3 @@ Then, in the ``__main__`` module get a :class:`~pathex.managing.process_synchron
           _ = [executor.submit(appendleft, shared_buffer, 3) for _ in range(5)]
 
       assert list(shared_buffer) == [3, 3, 3, 3, 3, 4, 4, 4, 4, 4]
-
-.. include:: ./docs/source/references.rst

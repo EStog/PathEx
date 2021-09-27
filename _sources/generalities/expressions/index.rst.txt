@@ -4,7 +4,6 @@ Generalities of expressions
 .. sectionauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
 .. codeauthor:: Ernesto Soto Gómez <esto.yinyang@gmail.com>
 
-------------------------
 
 .. todo:: document here how to use overloaded operators
 
@@ -40,10 +39,6 @@ The previous example shows a case that generates a finite language. However, the
 ...   {'', 'ab', 'abab', 'ababab', 'abababab', 'ababababab', 'abababababab'}
 
 In this case ``C`` is a :mod:`short alias <pathex.expressions.aliases>` of :class:`~.Concatenation`, and the overloaded operator :meth:`* <pathex.expressions.expression.Expression.__mul__>` with operand :data:`... <Ellipsis>` is used to construct an unbounded repetition. Because the generated language is infinite, helper function :func:`~.take` has being used to select specific amounts of words. The words are taken from the generator returned by :meth:`~.get_eager_generator`.
-
-Other expressions generate undetermined languages. This occurs in the presence of one or various :doc:`negations <negation>` that can not be simplified to a concrete set of values. For example, the expression :math:`-(a|b)*` generates a language which words do not contain :math:`a` nor :math:`b` as elements. In this case, although it is clear what any word of the language can not have, it is not clear what it may have, so possible constituent words can not be given specifically. In |pe| idiom this may be expressed as:
-
-
 
 ------------------------
 

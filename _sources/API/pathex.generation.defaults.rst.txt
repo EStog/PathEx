@@ -1,3 +1,6 @@
+pathex.generation.defaults module
+=================================
+
 .. automodule:: pathex.generation.defaults
    :members:
    :undoc-members:

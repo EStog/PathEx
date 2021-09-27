@@ -1,3 +1,6 @@
+pathex.machines.decomposers.mismatch\_functions module
+======================================================
+
 .. automodule:: pathex.machines.decomposers.mismatch_functions
    :members:
    :undoc-members:

@@ -1,3 +1,6 @@
+pathex.machines.simplifier module
+=================================
+
 .. automodule:: pathex.machines.simplifier
    :members:
    :undoc-members:

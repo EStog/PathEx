@@ -1,3 +1,6 @@
+pathex.expressions.aliases module
+=================================
+
 .. automodule:: pathex.expressions.aliases
    :members:
    :undoc-members:

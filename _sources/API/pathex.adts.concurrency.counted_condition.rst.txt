@@ -1,3 +1,6 @@
+pathex.adts.concurrency.counted\_condition module
+=================================================
+
 .. automodule:: pathex.adts.concurrency.counted_condition
    :members:
    :undoc-members:

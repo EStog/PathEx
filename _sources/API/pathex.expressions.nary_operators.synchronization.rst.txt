@@ -1,3 +1,6 @@
+pathex.expressions.nary\_operators.synchronization module
+=========================================================
+
 .. automodule:: pathex.expressions.nary_operators.synchronization
    :members:
    :undoc-members:

@@ -79,7 +79,6 @@
              
   <div class="section" id="generalities-of-expressions">
 <h1>Generalities of expressions<a class="headerlink" href="#generalities-of-expressions" title="Permalink to this headline"></a></h1>
-<hr class="docutils" />
 <p>This section explains the concept of “expression” in general terms and in the context of PathEx.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -109,7 +108,6 @@
 </pre></div>
 </div>
 <p>In this case <code class="docutils literal notranslate"><span class="pre">C</span></code> is a <a class="reference internal" href="../../API/pathex.expressions.aliases.html#module-pathex.expressions.aliases" title="pathex.expressions.aliases"><code class="xref py py-mod docutils literal notranslate"><span class="pre">short</span> <span class="pre">alias</span></code></a> of <a class="reference internal" href="../../API/pathex.expressions.nary_operators.concatenation.html#pathex.expressions.nary_operators.concatenation.Concatenation" title="pathex.expressions.nary_operators.concatenation.Concatenation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Concatenation</span></code></a>, and the overloaded operator <code class="xref py py-meth docutils literal notranslate"><span class="pre">*</span></code> with operand <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">...</span></code></a> is used to construct an unbounded repetition. Because the generated language is infinite, helper function <a class="reference internal" href="../../API/pathex.adts.util.html#pathex.adts.util.take" title="pathex.adts.util.take"><code class="xref py py-func docutils literal notranslate"><span class="pre">take()</span></code></a> has being used to select specific amounts of words. The words are taken from the generator returned by <a class="reference internal" href="../../API/pathex.expressions.expression.html#pathex.expressions.expression.Expression.get_eager_generator" title="pathex.expressions.expression.Expression.get_eager_generator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_eager_generator()</span></code></a>.</p>
-<p>Other expressions generate undetermined languages. This occurs in the presence of one or various <span class="xref std std-doc">negations</span> that can not be simplified to a concrete set of values. For example, the expression <span class="math">-(a|b)*</span> generates a language which words do not contain <span class="math">a</span> nor <span class="math">b</span> as elements. In this case, although it is clear what any word of the language can not have, it is not clear what it may have, so possible constituent words can not be given specifically. In PathEx idiom this may be expressed as:</p>
 <hr class="docutils" />
 <p>There are various kinds of expressions, which general documentation may be found in the following list:</p>
 <div class="toctree-wrapper compound">

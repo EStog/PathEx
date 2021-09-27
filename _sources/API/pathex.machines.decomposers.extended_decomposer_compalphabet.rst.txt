@@ -1,3 +1,6 @@
+pathex.machines.decomposers.extended\_decomposer\_compalphabet module
+=====================================================================
+
 .. automodule:: pathex.machines.decomposers.extended_decomposer_compalphabet
    :members:
    :undoc-members:

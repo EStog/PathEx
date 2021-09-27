@@ -1,3 +1,6 @@
+pathex.expressions.terms.term module
+====================================
+
 .. automodule:: pathex.expressions.terms.term
    :members:
    :undoc-members:

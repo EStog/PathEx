@@ -1,3 +1,6 @@
+pathex.adts.chain module
+========================
+
 .. automodule:: pathex.adts.chain
    :members:
    :undoc-members:

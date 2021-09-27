@@ -1,3 +1,6 @@
+pathex.machines.decomposers.visitors.letter\_visitor module
+===========================================================
+
 .. automodule:: pathex.machines.decomposers.visitors.letter_visitor
    :members:
    :undoc-members:

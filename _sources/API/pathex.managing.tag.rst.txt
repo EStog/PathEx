@@ -1,3 +1,6 @@
+pathex.managing.tag module
+==========================
+
 .. automodule:: pathex.managing.tag
    :members:
    :undoc-members:

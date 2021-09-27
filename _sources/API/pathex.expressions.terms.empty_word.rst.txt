@@ -1,3 +1,6 @@
+pathex.expressions.terms.empty\_word module
+===========================================
+
 .. automodule:: pathex.expressions.terms.empty_word
    :members:
    :undoc-members:

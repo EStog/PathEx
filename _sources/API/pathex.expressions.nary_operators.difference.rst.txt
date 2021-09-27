@@ -1,3 +1,6 @@
+pathex.expressions.nary\_operators.difference module
+====================================================
+
 .. automodule:: pathex.expressions.nary_operators.difference
    :members:
    :undoc-members:

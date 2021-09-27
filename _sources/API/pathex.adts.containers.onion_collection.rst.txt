@@ -1,3 +1,6 @@
+pathex.adts.containers.onion\_collection module
+===============================================
+
 .. automodule:: pathex.adts.containers.onion_collection
    :members:
    :undoc-members:

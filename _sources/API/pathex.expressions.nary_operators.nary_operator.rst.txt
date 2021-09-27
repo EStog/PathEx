@@ -1,3 +1,6 @@
+pathex.expressions.nary\_operators.nary\_operator module
+========================================================
+
 .. automodule:: pathex.expressions.nary_operators.nary_operator
    :members:
    :undoc-members:

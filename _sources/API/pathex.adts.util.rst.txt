@@ -1,3 +1,6 @@
+pathex.adts.util module
+=======================
+
 .. automodule:: pathex.adts.util
    :members:
    :undoc-members:

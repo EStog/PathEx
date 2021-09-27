@@ -1,3 +1,6 @@
+pathex.managing.process\_synchronizer module
+============================================
+
 .. automodule:: pathex.managing.process_synchronizer
    :members:
    :undoc-members:

@@ -1,3 +1,6 @@
+pathex.expressions.nary\_operators.shuffle module
+=================================================
+
 .. automodule:: pathex.expressions.nary_operators.shuffle
    :members:
    :undoc-members:

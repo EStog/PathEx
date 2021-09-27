@@ -1,3 +1,6 @@
+pathex.managing.manager module
+==============================
+
 .. automodule:: pathex.managing.manager
    :members:
    :undoc-members:
