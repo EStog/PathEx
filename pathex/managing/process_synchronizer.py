@@ -17,14 +17,14 @@ from pathex.machines.decomposers.decomposer import DecomposerMatch
 from .synchronizer import Synchronizer
 from .tag import Tag
 
-__all__ = ['process_synchronizer', 'get_synchronizer', 'process_register',
+__all__ = ['process_manager', 'get_synchronizer', 'process_register',
            'process_region', 'process', 'Pool', 'ProcessPoolExecutor']
 
 Address = tuple[str, int]
 
 
 class SynchronizerProxy(BaseProxy):
-    """This class represents is a :class:`proxy <BaseProxy>` to a :class:`Synchronizer` object"""
+    """This class represents is a :class:`proxy <multiprocessing.managers.BaseProxy>` to a :class:`~.Synchronizer` object."""
 
     _exposed_ = ['match', 'requests', 'permits']
 
@@ -38,8 +38,9 @@ class SynchronizerProxy(BaseProxy):
         return self._callmethod('permits', (label,))
 
 
-def process_synchronizer(exp: Expression, decomposer: DecomposerMatch | None = None,
-                         lock_class=threading.Lock, address=None, authkey=None, manager_class=BaseManager) -> SyncManager:
+def process_manager(exp: Expression, decomposer: DecomposerMatch | None = None,
+                    lock_class=threading.Lock, address=None, authkey=None, manager_class=BaseManager) -> SyncManager:
+    """Returns a new :class:`multiprocessing.managers.BaseManager` to be used to store shared data. This function should be called in the main process after initializing other processes. The address of the returned object should be passed to the mechanisms that PathEx provides to initialize subprocesses, aka, :class:`~pathex.managing.process_synchronizer.ProcessPoolExecutor`, :class:`~pathex.managing.process_synchronizer.Pool` and :class:`~pathex.managing.process_synchronizer.process`."""
 
     synchronizer = Synchronizer(exp, decomposer, lock_class)
 
@@ -56,7 +57,7 @@ def process_synchronizer(exp: Expression, decomposer: DecomposerMatch | None = N
 
 
 def get_synchronizer(address: Address, authkey: bytes | None = None) -> SynchronizerProxy:
-    """Obtains a :ref:`proxy <multiprocessing-proxy-objects>` to a :class:`~.Synchronizer` retrieved from *address* and with the given *authkey*.
+    """Obtains a :ref:`proxy <multiprocessing-proxy_objects>` to a :class:`~.Synchronizer` retrieved from ``address`` and with the given ``authkey``.
     """
     class ProcessManager(BaseManager):
         pass
@@ -68,14 +69,11 @@ def get_synchronizer(address: Address, authkey: bytes | None = None) -> Synchron
 
 
 def process_register(tag: Tag, func=None, /, *, authkey=None):
-    """Decorator to mark a method as a region (this version is for using with :mod:`multiprocessing`).
+    """Decorator to mark a method as a region. The ``tag`` is the name of the region.
 
     .. warning::
 
        This version is meant to be used with :mod:`multiprocessing` only.
-
-    Args:
-        tag (Tag): A tag to mark the given funcion with.
     """
     def wrapper(wrapped):
         @wraps(wrapped)
@@ -95,14 +93,11 @@ def process_register(tag: Tag, func=None, /, *, authkey=None):
 
 @contextmanager
 def process_region(tag: Tag, address, authkey=None):
-    """Context manager to mark a piece of code as a region.
+    """Context manager to mark a piece of code named by ``tag`` as a region.
 
     .. warning::
 
        This version is meant to be used with :mod:`multiprocessing` only.
-
-    Args:
-        tag (Tag): A tag to mark the corresponding block with.
     """
     synchronizer = get_synchronizer(address, authkey)
     synchronizer.match(tag.enter)
@@ -112,36 +107,64 @@ def process_region(tag: Tag, address, authkey=None):
         synchronizer.match(tag.exit)
 
 
-def process(address, authkey=None, target=None, args=(), *p_args, **p_kwargs):
-    """This is just a :class:`multiprocessing.Process` factory function that sets *address* and *authkey* as proper positional parameters to the given *target*"""
-    return mp.Process(target=target, args=(address,)+tuple(args), *p_args, **p_kwargs)
+def process(address, authkey: bytes | None = None, target=None, args=(), *p_args, **p_kwargs):
+    """This is just a :class:`multiprocessing.Process` factory function that sets ``address`` and ``authkey`` as proper positional parameters to the given ``target``. It is expected that this ``target`` has been properly prepared to be used with PathEx, for example, by using :func:`~.process_register`."""
+    return mp.Process(target=target, args=(address, )+tuple(args), *p_args, **p_kwargs)
 
 
 _T = TypeVar('_T')
 
 
-class Pool(mpPool):
-    """This class is the analog to :class:`multiprocessing.Pool` but it provides :meth:`apply` and :meth:`apply_async` methods that automatically set *address* and *authkey* as proper positional arguments"""
+class Pool:
+    """This class is the analog to :class:`multiprocessing.pool.Pool` but it provides :meth:`~.apply` and :meth:`~.apply_async` methods that automatically set ``address`` and ``authkey`` as proper positional arguments."""
 
     def __init__(self, address, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+        self._pool = mpPool(*args, **kwargs)
         self._address = address
 
     def apply(self, func: Callable[..., _T], args: Iterable[Any], *a_args, **a_kwargs) -> _T:
-        return super().apply(func, args=(self._address,)+tuple(args),
-                             *a_args, **a_kwargs)
+        return self._pool.apply(func, args=(self._address,)+tuple(args),
+                                *a_args, **a_kwargs)
 
     def apply_async(self, func: Callable[..., _T], args: Iterable[Any], *a_args, **a_kwargs) -> AsyncResult[_T]:
-        return super().apply_async(func, args=(self._address,)+tuple(args),
-                                   *a_args, **a_kwargs)
+        return self._pool.apply_async(func, args=(self._address,)+tuple(args),
+                                      *a_args, **a_kwargs)
+
+    def __enter__(self):
+        self._pool.__enter__()
+        return self
+
+    def __exit__(self, *args, **kwargs):
+        self._pool.__exit__(*args, **kwargs)
+
+    def close(self):
+        return self._pool.close()
+
+    def terminate(self):
+        return self._pool.terminate()
+
+    def join(self):
+        return self._pool.join()
 
 
-class ProcessPoolExecutor(cfProcessPoolExecutor):
-    """This class is the analog to :class:`concurrent.futures.Pool` but it provides a :meth:`submit` method that automatically set *address* and *authkey* as proper positional arguments"""
+
+class ProcessPoolExecutor:
+    """This class is the analog to :class:`concurrent.futures.ProcessPoolExecutor` but it provides a :meth:`~.submit` method that automatically set ``address`` and ``authkey`` as proper positional arguments."""
 
     def __init__(self, address, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+        """"""
+        self._pool = cfProcessPoolExecutor(*args, **kwargs)
         self._address = address
 
     def submit(self, fn: Callable[..., _T], *args: Any, **kwargs: Any) -> Future[_T]:
-        return super().submit(fn, *((self._address,)+args), **kwargs)
+        return self._pool.submit(fn, *((self._address,)+args), **kwargs)
+
+    def shutdown(self, wait: bool = ..., *, cancel_futures: bool = ...) -> None:
+        return self._pool.shutdown(wait=wait, cancel_futures=cancel_futures)
+
+    def __enter__(self):
+        self._pool.__enter__()
+        return self
+
+    def __exit__(self, *args, **kwargs):
+        self._pool.__exit__(*args, **kwargs)

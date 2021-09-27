@@ -45,7 +45,7 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'sphinx.ext.autosectionlabel',
+    # 'sphinx.ext.autosectionlabel',
     # 'sphinx.ext.duration',
     'sphinxcontrib.bibtex',
     'sphinxcontrib.apidoc',
@@ -74,19 +74,19 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 modindex_common_prefix = [
-    'pathex.',
-    'pathex.adts.',
-    'pathex.adts.cached_generators.',
-    'pathex.adts.containers.',
-    'pathex.adts.concurrency.',
-    'pathex.adts.concurrency.atomics.',
-    'pathex.expressions.',
-    'pathex.expressions.nary_operators.',
-    'pathex.expressions.terms.',
-    'pathex.expressions.terms.letters_unions.',
-    'pathex.expressions.repetitions.',
-    'pathex.generation.',
-    'pathex.managing.'
+    # 'pathex.',
+    # 'pathex.adts.',
+    # 'pathex.adts.cached_generators.',
+    # 'pathex.adts.containers.',
+    # 'pathex.adts.concurrency.',
+    # 'pathex.adts.concurrency.atomics.',
+    # 'pathex.expressions.',
+    # 'pathex.expressions.nary_operators.',
+    # 'pathex.expressions.terms.',
+    # 'pathex.expressions.terms.letters_unions.',
+    # 'pathex.expressions.repetitions.',
+    # 'pathex.generation.',
+    # 'pathex.managing.'
 ]
 
 # other general options
@@ -131,4 +131,4 @@ apidoc_output_dir = './API'
 apidoc_separate_modules = True
 apidoc_toc_file = False
 apidoc_module_first = True
-apidoc_extra_args = ['-f', '-E']
+apidoc_extra_args = ['-f']

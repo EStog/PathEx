@@ -13,7 +13,7 @@ sys.path.append(os.getcwd())
 
 from pathex.expressions.aliases import *
 from pathex.managing.process_synchronizer import (get_synchronizer,
-                                                  process_synchronizer)
+                                                  process_manager)
 
 
 def producer(address, produced, x):
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # The following expression generates 'PiPfCiCf' | 'PiPfCiCfPiPfCiCf' | ...
     exp = +C("Pi", "Pf", "Ci", "Cf")
-    psync = process_synchronizer(exp, manager_class=SyncManager)
+    psync = process_manager(exp, manager_class=SyncManager)
     produced = psync.list()
     consumed = psync.list()
 

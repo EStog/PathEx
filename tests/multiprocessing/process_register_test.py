@@ -11,7 +11,7 @@ from multiprocessing.managers import SyncManager
 sys.path.append(os.getcwd())
 
 from pathex import (ProcessPoolExecutor, Tag, process_register,
-                    process_synchronizer)
+                    process_manager)
 from pathex.adts.util import SET_OF_TUPLES
 
 # Tags must be named and visible for import
@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     exp = (a + (b | c)) + 2
 
-    psync = process_synchronizer(exp, manager_class=SyncManager)
+    psync = process_manager(exp, manager_class=SyncManager)
 
     shared = psync.list()
 

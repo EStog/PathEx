@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo running unittests...
-pytest --doctest-modules
+pytest --doctest-modules || exit 1
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 

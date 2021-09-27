@@ -10,7 +10,7 @@ from multiprocessing.managers import SyncManager
 # this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
 sys.path.append(os.getcwd())
 
-from pathex import ProcessPoolExecutor, Tag, process_synchronizer
+from pathex import ProcessPoolExecutor, Tag, process_manager
 from pathex.adts.util import SET_OF_TUPLES
 from pathex.managing.process_synchronizer import process_region
 
@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     exp = (a + (b | c)) + 2
 
-    psync = process_synchronizer(exp, manager_class=SyncManager)
+    psync = process_manager(exp, manager_class=SyncManager)
 
     shared = psync.list()
 
