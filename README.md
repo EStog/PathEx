@@ -1,16 +1,12 @@
-![stage|development](https://img.shields.io/badge/stage-development-red) ![python|3.9](https://img.shields.io/badge/python-3.9-blue) ![repo size](https://img.shields.io/github/repo-size/EStog/PathEx) ![license|AGPL-3.0](https://img.shields.io/github/license/EStog/PathEx) ![tests](https://github.com/EStog/PathEx/actions/workflows/tests.yml/badge.svg)
-
-![build docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg) ![github pages](https://img.shields.io/github/deployments/estog/pathex/github-pages?label=github%20pages) ![Read the Docs](https://img.shields.io/readthedocs/pathex?label=readthedocs)
+![stage|development](https://img.shields.io/badge/stage-development-red) ![python|3.9](https://img.shields.io/badge/python-3.9-blue) ![repo size](https://img.shields.io/github/repo-size/EStog/PathEx) ![license|AGPL-3.0](https://img.shields.io/github/license/EStog/PathEx) ![tests](https://github.com/EStog/PathEx/actions/workflows/tests.yml/badge.svg) ![build docs](https://github.com/EStog/PathEx/actions/workflows/docs.yml/badge.svg) ![github pages](https://img.shields.io/github/deployments/estog/pathex/github-pages?label=github%20pages) <!--![Read the Docs](https://img.shields.io/readthedocs/pathex?label=readthedocs) -->
 
 # PathEx
 
 The main goal of PathEx library is to ease concurrent programming in Python by separating the specification of synchronization from the main logic aspect. In this model, the allowed execution paths are specified declaratively by using constructions similar to regular expressions.
 
-An overview (*in construction*) can be found at https://pathex.readthedocs.io/en/latest/overview.html.
+An overview (*in construction*) can be found at https://estog.github.io/PathEx/overview.html.
 
-Full documentation (*in construction*) can be found at https://pathex.readthedocs.io.
-
-The documentation is also available at https://estog.github.io/PathEx.
+Full documentation (*in construction*) can be found at https://estog.github.io/PathEx.
 
 **Caution!** This library is currently **in development**, and it is not recommended being used in production environments.
 
