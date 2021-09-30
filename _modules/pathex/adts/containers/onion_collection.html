@@ -179,7 +179,7 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_power</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_HASH_BASE</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MAX_NUMBER</span></div>
+        <span class="k">return</span> <span class="nb">pow</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_HASH_BASE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MAX_NUMBER</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
