@@ -109,4 +109,4 @@ class NonemptyOnionCollection(OnionCollection[_E]):
         return False
 
     def _power(self):
-        return len(self.parent)*self._HASH_BASE % self._MAX_NUMBER
+        return pow(len(self.parent), self._HASH_BASE, self._MAX_NUMBER)

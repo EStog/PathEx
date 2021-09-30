@@ -14,14 +14,14 @@ class Repetition(Expression):
     """
     argument: object
     """The expression to be repeated"""
-    lower_bound: int | float = 0
+    lower_bound: int = 0
     """The minimum amount of repetitions to be produced"""
     upper_bound: int | float | ... = inf
     """The amount of repetitions to be produced.
     If it is math.inf, it is assumed to be infinite"""
 
     def __init__(self, argument: object,
-                 lower_bound: int | float = 0,
+                 lower_bound: int = 0,
                  upper_bound: int | float | ... = inf):
 
         if upper_bound is ...:

@@ -1,7 +1,7 @@
 from pathex.expressions.nary_operators.shuffle import Shuffle
 from pathex.expressions.repetitions.shuffle_repetition import ShuffleRepetition
 from pathex.expressions.terms.empty_word import EMPTY_WORD
-from pathex.machines.decomposers.visitors.decorators import nary_operator_visitor, repetition_visitor
+from pathex.machines.decomposers.visitors.decorators import repetition_visitor
 
 from ..decomposer import Branches, Decomposer
 
