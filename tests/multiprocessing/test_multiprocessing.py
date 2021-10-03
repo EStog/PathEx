@@ -12,5 +12,5 @@ def test_multiprocessing():
         if file != file_name and re.match(pattern, file):
             subprocess.run(['python', f'{root}/{file}'], check=True)
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     test_multiprocessing()

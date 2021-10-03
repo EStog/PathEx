@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+rm ./.coverage ./coverage.xml
+
 echo running unittests...
-pytest --doctest-modules || exit 1
+pytest --doctest-modules --cov=./ --cov-report=xml || exit 1
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 
