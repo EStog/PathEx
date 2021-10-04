@@ -122,8 +122,11 @@
 <span class="gp">... </span>    <span class="n">exp</span><span class="o">.</span><span class="n">get_generator</span><span class="p">()</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;axyz&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<p># &gt;&gt;&gt; exp = Ls(‘axy’) + C(‘xyz’) &amp; NLs(‘abc’) + C(‘xyz’)
-# &gt;&gt;&gt; assert exp.get_language() == {‘xxyz’, ‘yxyz’}</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exp</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="s1">&#39;axy&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">LC</span><span class="p">(</span><span class="s1">&#39;abc&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> \
+<span class="gp">... </span>    <span class="n">exp</span><span class="o">.</span><span class="n">get_generator</span><span class="p">()</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;xxyz&#39;</span><span class="p">,</span> <span class="s1">&#39;yxyz&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 </dl>
 <dl class="py attribute">

@@ -70,15 +70,14 @@
   <h1>Source code for pathex.generation.words_generator</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span>
 
 <span class="kn">from</span> <span class="nn">pathex.adts.collection_wrapper</span> <span class="kn">import</span> <span class="n">CollectionWrapper</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.expression</span> <span class="kn">import</span> <span class="n">Expression</span>
 <span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">Branches</span><span class="p">,</span> <span class="n">Decomposer</span>
 
-<span class="kn">from</span> <span class="nn">.defaults</span> <span class="kn">import</span> <span class="p">(</span><span class="n">COLLECTION_TYPE</span><span class="p">,</span> <span class="n">COMPLETE_WORDS</span><span class="p">,</span> <span class="n">ALTERNATIVES_TYPE</span><span class="p">,</span> <span class="n">LANGUAGE_TYPE</span><span class="p">,</span>
-                       <span class="n">WORD_MAX_LENGTH</span><span class="p">,</span> <span class="n">WORD_TYPE</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.defaults</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ALTERNATIVES_TYPE</span><span class="p">,</span> <span class="n">COLLECTION_TYPE</span><span class="p">,</span> <span class="n">COMPLETE_WORDS</span><span class="p">,</span>
+                       <span class="n">LANGUAGE_TYPE</span><span class="p">,</span> <span class="n">WORD_MAX_LENGTH</span><span class="p">,</span> <span class="n">WORD_TYPE</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">.letters_generator</span> <span class="kn">import</span> <span class="n">LettersGenerator</span>
 
 <span class="c1"># TODO: Concurrent-safe version.</span>

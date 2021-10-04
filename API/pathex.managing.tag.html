@@ -88,14 +88,36 @@
 <span id="pathex-managing-tag-module"></span><h1>pathex.managing.tag module<a class="headerlink" href="#module-pathex.managing.tag" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.managing.tag.Tag">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/tag.html#Tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.tag.Tag" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/tag.html#Tag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.tag.Tag" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html#pathex.expressions.nary_operators.concatenation.Concatenation" title="pathex.expressions.nary_operators.concatenation.Concatenation"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.expressions.nary_operators.concatenation.Concatenation</span></code></a></p>
 <p>A Tag identifies a region, where traces needs to be managed.</p>
 <p>A Tag is just a concatenation of two Labels objects, identifying the beginning and the end of the region.</p>
+<p>They compare as concatenations:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Tag</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Concatenation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">Concatenation</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">enter</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">hash</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">hash</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However the representation is different to ease debugging:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">repr</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">&quot;Tag(&#39;a&#39;)&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">repr</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">&quot;Concatenation(&#39;a.enter&#39;, &#39;a.exit&#39;)&quot;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.managing.tag.Tag.anonym">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">anonym</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pathex.managing.tag.Tag" title="pathex.managing.tag.Tag"><span class="pre">Tag</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pathex/managing/tag.html#Tag.anonym"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.tag.Tag.anonym" title="Permalink to this definition"></a></dt>
 <dd><p>Factory method that gives <cite>n</cite> tags.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Tag</span><span class="o">.</span><span class="n">anonym</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">b</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>The names of the tags are the same as its object ids.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -114,6 +136,12 @@
 <dt class="sig sig-object py" id="pathex.managing.tag.Tag.named">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">named</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#pathex.managing.tag.Tag" title="pathex.managing.tag.Tag"><span class="pre">Tag</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pathex/managing/tag.html#Tag.named"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.tag.Tag.named" title="Permalink to this definition"></a></dt>
 <dd><p>Factory method that gives named tags.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Tag</span><span class="o">.</span><span class="n">named</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;a&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">b</span><span class="o">.</span><span class="n">enter</span> <span class="o">==</span> <span class="s1">&#39;b.enter&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">b</span><span class="o">.</span><span class="n">exit</span> <span class="o">==</span> <span class="s1">&#39;b.exit&#39;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><em>object</em></a><em>]</em>) – The names for the constructed tags</p>
@@ -137,9 +165,9 @@
 <span class="sig-name descname"><span class="pre">exit</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#pathex.managing.tag.Tag.exit" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-<dl class="py property">
+<dl class="py attribute">
 <dt class="sig sig-object py" id="pathex.managing.tag.Tag.name">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pathex.managing.tag.Tag.name" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="pre">:</span> <span class="pre">Hashable</span></em><a class="headerlink" href="#pathex.managing.tag.Tag.name" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

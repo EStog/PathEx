@@ -69,13 +69,28 @@
              
   <h1>Source code for pathex.expressions.terms.letter</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">pathex.expressions.expression</span> <span class="kn">import</span> <span class="n">Expression</span>
 
-<span class="kn">from</span> <span class="nn">.term</span> <span class="kn">import</span> <span class="n">Term</span>
+<span class="kn">from</span> <span class="nn">pathex.expressions.expression</span> <span class="kn">import</span> <span class="n">Expression</span>
+<span class="kn">from</span> <span class="nn">pathex.expressions.terms.term</span> <span class="kn">import</span> <span class="n">Term</span>
 
 
 <div class="viewcode-block" id="Letter"><a class="viewcode-back" href="../../../../API/pathex.expressions.terms.letter.html#pathex.expressions.terms.letter.Letter">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Letter</span><span class="p">(</span><span class="n">Term</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Represents a single letter</span>
+
+<span class="sd">    This class is just for convenience, to convert any object into a letter</span>
+
+<span class="sd">    .. testsetup::</span>
+
+<span class="sd">       from pathex import Letter</span>
+
+<span class="sd">    &gt;&gt;&gt; assert Letter(&#39;a&#39;) == Letter(&#39;a&#39;) == &#39;a&#39;</span>
+<span class="sd">    &gt;&gt;&gt; from pathex import Concatenation</span>
+<span class="sd">    &gt;&gt;&gt; assert Letter(&#39;a&#39;) not in (&#39;b&#39;, Letter(&#39;b&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; assert Letter(&#39;a&#39;) !=  Concatenation(&#39;a&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; assert hash(Letter(&#39;a&#39;)) == hash(&#39;a&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; assert repr(&#39;a&#39;) == repr(Letter(&#39;a&#39;))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">value</span><span class="p">:</span> <span class="nb">object</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>

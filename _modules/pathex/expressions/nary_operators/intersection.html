@@ -68,13 +68,17 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pathex.expressions.nary_operators.intersection</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.nary_operator</span> <span class="kn">import</span> <span class="n">NAryOperator</span>
+<span></span><span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.nary_operator</span> <span class="kn">import</span> <span class="n">NAryOperator</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intersection&#39;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="Intersection"><a class="viewcode-back" href="../../../../API/pathex.expressions.nary_operators.intersection.html#pathex.expressions.nary_operators.intersection.Intersection">[docs]</a><span class="k">class</span> <span class="nc">Intersection</span><span class="p">(</span><span class="n">NAryOperator</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    .. todo::</span>
+
+<span class="sd">       Check commutative property.</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from pathex.expressions.aliases import *</span>
@@ -101,8 +105,9 @@
 <span class="sd">        &gt;&gt;&gt; assert exp.get_language() == \</span>
 <span class="sd">        ...     exp.get_generator().get_language() == {&#39;axyz&#39;}</span>
 
-<span class="sd">        # &gt;&gt;&gt; exp = Ls(&#39;axy&#39;) + C(&#39;xyz&#39;) &amp; NLs(&#39;abc&#39;) + C(&#39;xyz&#39;)</span>
-<span class="sd">        # &gt;&gt;&gt; assert exp.get_language() == {&#39;xxyz&#39;, &#39;yxyz&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; exp = U(&#39;axy&#39;) + C(&#39;xyz&#39;) &amp; LC(&#39;abc&#39;) + C(&#39;xyz&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; assert exp.get_language() == \</span>
+<span class="sd">        ...     exp.get_generator().get_language() == {&#39;xxyz&#39;, &#39;yxyz&#39;}</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 </pre></div>
 

@@ -71,7 +71,7 @@
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterator</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Hashable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.concatenation</span> <span class="kn">import</span> <span class="n">Concatenation</span>
 
@@ -83,41 +83,59 @@
     <span class="sd">&quot;&quot;&quot;A Tag identifies a region, where traces needs to be managed.</span>
 
 <span class="sd">    A Tag is just a concatenation of two Labels objects, identifying the beginning and the end of the region.</span>
+
+<span class="sd">    They compare as concatenations:</span>
+
+<span class="sd">    .. testsetup::</span>
+
+<span class="sd">       from pathex import Tag</span>
+
+<span class="sd">    &gt;&gt;&gt; a = Tag(&#39;a&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; from pathex import Concatenation</span>
+<span class="sd">    &gt;&gt;&gt; b = Concatenation(a.enter, a.exit)</span>
+<span class="sd">    &gt;&gt;&gt; assert a == b</span>
+<span class="sd">    &gt;&gt;&gt; assert hash(a) == hash(b)</span>
+
+<span class="sd">    However the representation is different to ease debugging:</span>
+
+<span class="sd">    &gt;&gt;&gt; repr(a)</span>
+<span class="sd">    &quot;Tag(&#39;a&#39;)&quot;</span>
+<span class="sd">    &gt;&gt;&gt; repr(b)</span>
+<span class="sd">    &quot;Concatenation(&#39;a.enter&#39;, &#39;a.exit&#39;)&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">enter</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">exit</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Hashable</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Hashable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
         <span class="n">enter</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.enter&#39;</span>
-        <span class="n">exit</span> <span class="o">=</span>  <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.exit&#39;</span>
+        <span class="n">exit</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.exit&#39;</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">((</span><span class="n">enter</span><span class="p">,</span> <span class="n">exit</span><span class="p">))</span>
 
         <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;enter&#39;</span><span class="p">,</span> <span class="n">enter</span><span class="p">)</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;exit&#39;</span><span class="p">,</span> <span class="n">exit</span><span class="p">)</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_name&#39;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s1">)&#39;</span>
-
-    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Tag.anonym"><a class="viewcode-back" href="../../../API/pathex.managing.tag.html#pathex.managing.tag.Tag.anonym">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">anonym</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tag</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Factory method that gives `n` tags.</span>
+
+<span class="sd">        .. testsetup::</span>
+
+<span class="sd">           from pathex import Tag</span>
+
+<span class="sd">        &gt;&gt;&gt; a, b = Tag.anonym(2)</span>
+<span class="sd">        &gt;&gt;&gt; assert a.name == id(a)</span>
+<span class="sd">        &gt;&gt;&gt; assert b.name == id(b)</span>
 
 <span class="sd">        The names of the tags are the same as its object ids.</span>
 
@@ -132,6 +150,15 @@
 <div class="viewcode-block" id="Tag.named"><a class="viewcode-back" href="../../../API/pathex.managing.tag.html#pathex.managing.tag.Tag.named">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">named</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tag</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Factory method that gives named tags.</span>
+
+<span class="sd">        .. testsetup::</span>
+
+<span class="sd">           from pathex import Tag</span>
+
+<span class="sd">        &gt;&gt;&gt; a, b = Tag.named(&#39;a&#39;, &#39;b&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; assert a.name == &#39;a&#39;</span>
+<span class="sd">        &gt;&gt;&gt; assert b.enter == &#39;b.enter&#39;</span>
+<span class="sd">        &gt;&gt;&gt; assert b.exit == &#39;b.exit&#39;</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            names (tuple[object]): The names for the constructed tags</span>

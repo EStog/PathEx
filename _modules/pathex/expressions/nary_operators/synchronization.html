@@ -68,7 +68,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pathex.expressions.nary_operators.synchronization</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.nary_operator</span> <span class="kn">import</span> <span class="n">NAryOperator</span>
+<span></span><span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.nary_operator</span> <span class="kn">import</span> <span class="n">NAryOperator</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Synchronization&#39;</span><span class="p">]</span>
 
@@ -76,19 +76,66 @@
 <div class="viewcode-block" id="Synchronization"><a class="viewcode-back" href="../../../../API/pathex.expressions.nary_operators.synchronization.html#pathex.expressions.nary_operators.synchronization.Synchronization">[docs]</a><span class="k">class</span> <span class="nc">Synchronization</span><span class="p">(</span><span class="n">NAryOperator</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="sd">    .. todo::</span>
+
+<span class="sd">       Make the examples simpler and move this examples to unittests.</span>
 
 <span class="sd">    Example:</span>
 
 <span class="sd">    &gt;&gt;&gt; from pathex.expressions.aliases import *</span>
 <span class="sd">    &gt;&gt;&gt; from pathex.adts.util import SET_OF_TUPLES</span>
+<span class="sd">    &gt;&gt;&gt; from pathex.generation.defaults import LANGUAGE_TYPE</span>
 
-<span class="sd">    &gt;&gt;&gt; exp = ( &#39;a&#39; + U(&#39;xy&#39;) ) @ ( &#39;a&#39; + U(&#39;yz&#39;) )</span>
-<span class="sd">    &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {</span>
-<span class="sd">    ...     &#39;axy&#39;, &#39;ayx&#39;, &#39;axz&#39;, &#39;azx&#39;, &#39;ay&#39;, &#39;ayz&#39;, &#39;azy&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; def test(exp1, exp2, language, language_type=LANGUAGE_TYPE):</span>
+<span class="sd">    ...     assert (exp1 @ exp2).get_language(language_type) == (exp1 @ exp2).get_generator().get_language(language_type) == \</span>
+<span class="sd">            (exp2 @ exp1).get_language(language_type) == (exp2 @ exp1).get_generator().get_language(language_type) == language</span>
 
-<span class="sd">    &gt;&gt;&gt; exp = ( &#39;a&#39; + U(&#39;xy&#39;) ) @ ( &#39;a&#39; + U(&#39;yz&#39;) + &#39;w&#39; )</span>
-<span class="sd">    &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {</span>
-<span class="sd">    ...     &#39;axyw&#39;, &#39;ayxw&#39;, &#39;axzw&#39;, &#39;azxw&#39;, &#39;ayw&#39;, &#39;ayzw&#39;, &#39;azyw&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; exp1 = ( &#39;a&#39; + U(&#39;xy&#39;) )</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = ( &#39;a&#39; + U(&#39;yz&#39;) )</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {&#39;axy&#39;, &#39;ayx&#39;, &#39;axz&#39;, &#39;azx&#39;, &#39;ay&#39;, &#39;ayz&#39;, &#39;azy&#39;})</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = ( &#39;a&#39; + U(&#39;xy&#39;) )</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = ( &#39;a&#39; + U(&#39;yz&#39;) + &#39;w&#39; )</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {&#39;axyw&#39;, &#39;ayxw&#39;, &#39;axzw&#39;, &#39;azxw&#39;, &#39;ayw&#39;, &#39;ayzw&#39;, &#39;azyw&#39;})</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = ( _ + U(&#39;xy&#39;) )</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = ( &#39;a&#39; + U(&#39;yz&#39;) )</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, { &#39;azx&#39;, &#39;-aayx&#39;, &#39;a-azy&#39;, &#39;a-axy&#39;, &#39;axz&#39;, &#39;-aaxz&#39;, &#39;ayz&#39;, &#39;a-axz&#39;, &#39;azy&#39;, &#39;axy&#39;, &#39;-aaxy&#39;, &#39;-aazy&#39;, &#39;-aazx&#39;, &#39;-aayz&#39;, &#39;a-azx&#39;, &#39;a-ayz&#39;, &#39;a-ayx&#39;, &#39;ay&#39;, &#39;a-ay&#39;, &#39;-aay&#39;, &#39;ayx&#39; })</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = ( _ + U(&#39;xy&#39;) )</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = ( &#39;a&#39; + (_|&#39;z&#39;) )</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {&#39;a-xx&#39;, &#39;ax-x&#39;, &#39;a-azx&#39;, &#39;a-axz&#39;, &#39;-aay-y&#39;, &#39;-aazx&#39;, &#39;a-a-xx&#39;, &#39;a-ay&#39;, &#39;-aax&#39;, &#39;axz&#39;, &#39;a-ax-x&#39;, &#39;a-azy&#39;, &#39;-aa-xx&#39;, &#39;a-ax&#39;, &#39;a-yy&#39;, &#39;-aay&#39;, &#39;a-a-yy&#39;, &#39;-aax-x&#39;, &#39;-aa-yy&#39;, &#39;-aaxz&#39;, &#39;a-ayz&#39;, &#39;a-ay-y&#39;, &#39;azx&#39;, &#39;ay&#39;, &#39;ax&#39;, &#39;-aazy&#39;, &#39;ay-y&#39;, &#39;-aayz&#39;, &#39;ayz&#39;, &#39;azy&#39;})</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = (LC(&#39;abc&#39;) + C(&#39;xyz&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = C(&#39;qxyz&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {(&#39;q&#39;, LC(&#39;a&#39;, &#39;c&#39;, &#39;q&#39;, &#39;b&#39;), &#39;x&#39;, &#39;y&#39;, &#39;z&#39;), (LC(&#39;a&#39;, &#39;c&#39;, &#39;q&#39;, &#39;b&#39;), &#39;q&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;), (&#39;q&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;)}, SET_OF_TUPLES)</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = (LC(&#39;abc&#39;) + C(&#39;xyz&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = C(&#39;axyz&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {(LC(&#39;b&#39;, &#39;a&#39;, &#39;c&#39;), &#39;a&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;), (&#39;a&#39;, LC(&#39;b&#39;, &#39;a&#39;, &#39;c&#39;), &#39;x&#39;, &#39;y&#39;, &#39;z&#39;)}, SET_OF_TUPLES)</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = _ + C(&#39;abc&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = C(&#39;wabc&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {&#39;wabc&#39;, &#39;-wwabc&#39;, &#39;w-wabc&#39;})</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = _ + C(&#39;abc&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = LC(&#39;w&#39;) + C(&#39;ab&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {&#39;w-wabc&#39;, &#39;-wwabc&#39;, &#39;-wabc&#39;})</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = _ + C(&#39;abc&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = _ + C(&#39;ab&#39;) + U(&#39;cd&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {&#39;_abc&#39;, &#39;_abcd&#39;, &#39;_abdc&#39;})</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = LC(&#39;w&#39;) + C(&#39;abc&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = LC(&#39;w&#39;) + C(&#39;abc&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {&#39;-wabc&#39;})</span>
+
+<span class="sd">    &gt;&gt;&gt; exp1 = LC(&#39;x&#39;) + C(&#39;abc&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; exp2 = LC(&#39;w&#39;) + C(&#39;abc&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; test(exp1, exp2, {(LC(&#39;w&#39;),&#39;w&#39;,&#39;a&#39;,&#39;b&#39;,&#39;c&#39;), (LC(&#39;w&#39;,&#39;x&#39;),&#39;a&#39;, &#39;b&#39;, &#39;c&#39;),</span>
+<span class="sd">    ...                   (LC(&#39;x&#39;), &#39;x&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;), (&#39;w&#39;, LC(&#39;w&#39;), &#39;a&#39;, &#39;b&#39;, &#39;c&#39;),</span>
+<span class="sd">    ...                   (&#39;x&#39;, LC(&#39;x&#39;), &#39;a&#39;, &#39;b&#39;, &#39;c&#39;)},</span>
+<span class="sd">    ...      SET_OF_TUPLES)</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 </pre></div>
 

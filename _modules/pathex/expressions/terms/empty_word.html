@@ -69,8 +69,7 @@
              
   <h1>Source code for pathex.expressions.terms.empty_word</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">pathex.adts.singleton</span> <span class="kn">import</span> <span class="n">singleton</span>
-
-<span class="kn">from</span> <span class="nn">.term</span> <span class="kn">import</span> <span class="n">Term</span>
+<span class="kn">from</span> <span class="nn">pathex.expressions.terms.term</span> <span class="kn">import</span> <span class="n">Term</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;EmptyWord&#39;</span><span class="p">,</span> <span class="s1">&#39;EMPTY_WORD&#39;</span><span class="p">]</span>
 
@@ -79,6 +78,14 @@
 <span class="k">class</span> <span class="nc">EmptyWord</span><span class="p">(</span><span class="n">Term</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This is a singleton class that represents the</span>
 <span class="sd">    expression that generates the empty string.</span>
+
+<span class="sd">    The string representation of the empty word is the empty string:</span>
+
+<span class="sd">    .. testsetup::</span>
+
+<span class="sd">       from pathex import EMPTY_WORD</span>
+
+<span class="sd">    &gt;&gt;&gt; assert str(EMPTY_WORD) == &#39;&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>
 

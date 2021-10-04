@@ -1,7 +1,0 @@
-pathex.adts.concurrency.atomics.atomic\_attribute module
-========================================================
-
-.. automodule:: pathex.adts.concurrency.atomics.atomic_attribute
-   :members:
-   :undoc-members:
-   :show-inheritance:

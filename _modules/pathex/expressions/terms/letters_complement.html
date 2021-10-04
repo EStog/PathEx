@@ -69,9 +69,7 @@
              
   <h1>Source code for pathex.expressions.terms.letters_complement</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span>
-
-<span class="kn">from</span> <span class="nn">.term</span> <span class="kn">import</span> <span class="n">Term</span>
+<span class="kn">from</span> <span class="nn">pathex.expressions.terms.term</span> <span class="kn">import</span> <span class="n">Term</span>
 
 
 <div class="viewcode-block" id="LettersComplement"><a class="viewcode-back" href="../../../../API/pathex.expressions.terms.letters_complement.html#pathex.expressions.terms.letters_complement.LettersComplement">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -81,13 +79,16 @@
 <span class="sd">    &gt;&gt;&gt; from pathex.expressions.aliases import *</span>
 <span class="sd">    &gt;&gt;&gt; exp = ( LC(&#39;a&#39;)+&#39;a&#39; ) &amp; ( C(&#39;ab&#39;)|C(&#39;ba&#39;)|C(&#39;aa&#39;)|C(&#39;xa&#39;) )</span>
 <span class="sd">    &gt;&gt;&gt; assert exp.get_language() == exp.get_generator().get_language() == {&#39;ba&#39;, &#39;xa&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; assert str(LC(&#39;abc&#39;)) in {&#39;-(a|b|c)&#39;, &#39;-(a|c|b)&#39;, &#39;-(b|a|c)&#39;, &#39;-(b|c|a)&#39;, &#39;-(c|a|b)&#39;, &#39;-(c|b|a)&#39;}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">letters</span><span class="p">:</span> <span class="nb">frozenset</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">letters</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">letters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">letters</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">letters</span><span class="p">))</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;letters&#39;</span><span class="p">,</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">letters</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
         <span class="n">t</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> \
             <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">letters</span><span class="p">))[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;)&#39;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}{</span><span class="n">t</span><span class="si">}</span><span class="s1">&#39;</span>

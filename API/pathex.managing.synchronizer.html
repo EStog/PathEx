@@ -120,6 +120,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">produced</span> <span class="o">==</span> <span class="p">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">consumed</span><span class="p">)</span> <span class="o">==</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">sync</span><span class="o">.</span><span class="n">requests</span><span class="p">(</span><span class="s1">&#39;Pi&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sync</span><span class="o">.</span><span class="n">permits</span><span class="p">(</span><span class="s1">&#39;Pf&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sync</span><span class="o">.</span><span class="n">requests</span><span class="p">(</span><span class="s1">&#39;Ci&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sync</span><span class="o">.</span><span class="n">permits</span><span class="p">(</span><span class="s1">&#39;Cf&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">sync</span><span class="o">.</span><span class="n">permits</span><span class="p">(</span><span class="s1">&#39;WrongTag&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sync</span><span class="o">.</span><span class="n">requests</span><span class="p">(</span><span class="s1">&#39;WrongTag&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
 </pre></div>
 </div>
 <p>Example using <code class="xref py py-meth docutils literal notranslate"><span class="pre">register()</span></code>:</p>
@@ -146,11 +147,12 @@
 <span class="gp">... </span>    <span class="c1"># print(&#39;Func b&#39;)</span>
 <span class="gp">... </span>    <span class="n">shared_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">def</span> <span class="nf">func_c</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">func_c</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="n">shared_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">enter</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="c1"># print(&#39;Func c&#39;)</span>
 <span class="gp">... </span>    <span class="n">shared_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">func_c</span> <span class="o">=</span> <span class="n">sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">func_c</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">func_c</span><span class="p">)</span>

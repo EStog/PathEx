@@ -110,6 +110,12 @@
 <span class="gp">... </span>    <span class="k">return</span> <span class="s1">&#39;func_c&#39;</span>
 </pre></div>
 </div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">func_b</span><span class="p">(),</span> <span class="n">func_a</span><span class="p">(),</span> <span class="n">func_c</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">AssertionError</span>: <span class="n">func_b.enter is not allowed as first label</span>
+</pre></div>
+</div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">func_a</span><span class="p">(),</span> <span class="n">func_b</span><span class="p">(),</span> <span class="n">func_c</span><span class="p">()</span>
 <span class="go">(&#39;func_a&#39;, &#39;func_b&#39;, &#39;func_c&#39;)</span>
 </pre></div>
@@ -118,6 +124,10 @@
 <span class="gt">Traceback (most recent call last):</span>
     <span class="o">...</span>
 <span class="gr">AssertionError</span>: <span class="n">func_c.enter is not allowed after func_a.exit</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">func_b</span><span class="p">(),</span> <span class="n">func_c</span><span class="p">()</span>
+<span class="go">(&#39;func_b&#39;, &#39;func_c&#39;)</span>
 </pre></div>
 </div>
 <dl class="field-list simple">

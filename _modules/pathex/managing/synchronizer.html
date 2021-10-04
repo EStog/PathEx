@@ -142,6 +142,7 @@
 <span class="sd">        &gt;&gt;&gt; assert produced == []</span>
 <span class="sd">        &gt;&gt;&gt; assert set(consumed) == {0, 1, 2, 3}</span>
 <span class="sd">        &gt;&gt;&gt; assert sync.requests(&#39;Pi&#39;) == sync.permits(&#39;Pf&#39;) == sync.requests(&#39;Ci&#39;) == sync.permits(&#39;Cf&#39;) == 4</span>
+<span class="sd">        &gt;&gt;&gt; assert sync.permits(&#39;WrongTag&#39;) == sync.requests(&#39;WrongTag&#39;) == 0</span>
 
 <span class="sd">    Example using :meth:`register`::</span>
 
@@ -168,11 +169,12 @@
 <span class="sd">        ...     # print(&#39;Func b&#39;)</span>
 <span class="sd">        ...     shared_list.append(b.exit)</span>
 
-<span class="sd">        &gt;&gt;&gt; @sync.register(c)</span>
-<span class="sd">        ... def func_c():</span>
+<span class="sd">        &gt;&gt;&gt; def func_c():</span>
 <span class="sd">        ...     shared_list.append(c.enter)</span>
 <span class="sd">        ...     # print(&#39;Func c&#39;)</span>
 <span class="sd">        ...     shared_list.append(c.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; func_c = sync.register(c, func_c)</span>
 
 <span class="sd">        &gt;&gt;&gt; with ThreadPoolExecutor(max_workers=4) as executor:</span>
 <span class="sd">        ...     _ = executor.submit(func_c)</span>
