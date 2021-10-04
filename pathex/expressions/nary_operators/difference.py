@@ -1,4 +1,4 @@
-from .nary_operator import NAryOperator
+from pathex.expressions.nary_operators.nary_operator import NAryOperator
 
 __all__ = ['Difference']
 
@@ -22,5 +22,7 @@ class Difference(NAryOperator):
     In the case of the presence of :class:`SingletonWords` object the difference may be given in a decomposed manner.
 
     >>> exp = _+3 - C('ab')
-    >>> assert exp.get_language() == exp.get_generator().get_language() == {'-ab_', 'ab_', 'a-b_', '-a-b_'} # this is the same as {'___'}, but this is given descomposed.
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'-ab_', 'ab_', 'a-b_', '-a-b_'} # this is the same as {'___'}, but it is given decomposed.
+
+    >>> assert {''.join([str(c) for c in w]) for w in exp.get_eager_generator()} == {'-ab_', 'ab_', 'a-b_', '-a-b_'}
     """

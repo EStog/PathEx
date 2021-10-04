@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-from collections import deque
 from typing import Iterator
 
 from pathex.adts.collection_wrapper import CollectionWrapper
 from pathex.expressions.expression import Expression
 from pathex.machines.decomposers.decomposer import Branches, Decomposer
 
-from .defaults import (COLLECTION_TYPE, COMPLETE_WORDS, ALTERNATIVES_TYPE, LANGUAGE_TYPE,
-                       WORD_MAX_LENGTH, WORD_TYPE)
+from .defaults import (ALTERNATIVES_TYPE, COLLECTION_TYPE, COMPLETE_WORDS,
+                       LANGUAGE_TYPE, WORD_MAX_LENGTH, WORD_TYPE)
 from .letters_generator import LettersGenerator
 
 # TODO: Concurrent-safe version.

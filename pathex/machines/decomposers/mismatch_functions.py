@@ -17,7 +17,7 @@ def simple_mismatch(self: DecomposerMismatch, value1: object, value2: object) ->
 
 
 def _get_list_union(v1, v2, op, kind, second):
-    s = op(v1)
+    s = op(v1, v2)
     return [(kind(s), second)] if s else []
 
 
@@ -37,23 +37,23 @@ def general_mismatch_completters(value1: object, value2: object,
                                  type1, type2) -> Mismatches:
     if EmptyWord not in (type1, type2):
         if type1 == type2 == LettersComplement:
-            return (_get_list_union(value2.letters, value1.letters, sub, Union, value2) +
-                    _get_list_union(value1.letters, value2.letters, sub, Union, value1))
+            return [*_get_list_union(value2.letters, value1.letters, sub, Union, value2),
+                    *_get_list_union(value1.letters, value2.letters, sub, Union, value1)]
         elif type1 == LettersComplement:
-            return (_get_list_union(value1.letters, {value2}, or_, Union, value2) +
-                    _get_list_union({value2}, value1.letters, and_, Union, value1))
+            return [*_get_list_union(value1.letters, {value2}, or_, LettersComplement, value2),
+                    *_get_list_union({value2}, value1.letters, and_, Union, value1)]
         elif type2 == LettersComplement:
-            return (_get_list_union({value1}, value2.letters, and_, Union, value2) +
-                    _get_list_union({value2}, value1.letters, or_, Union, value1))
+            return [*_get_list_union({value1}, value2.letters, and_, Union, value2),
+                    *_get_list_union(value2.letters, {value1}, or_, LettersComplement, value1)]
     return []
 
 
 def general_mismatch_compalphabet(value1: object, value2: object,
                                   type1, type2) -> Mismatches:
     if type1 == LettersComplement and type2 == Alphabet:
-        return [(value1.letters, value1)]
+        return [(Union(value1.letters), value1)]
     elif type1 == Alphabet and type2 == LettersComplement:
-        return [(value2.letters, value2)]
+        return [(Union(value2.letters), value2)]
     elif r := general_mismatch_alphabet(value1, value2, type1, type2):
         return r
     elif r := general_mismatch_completters(value1, value2, type1, type2):

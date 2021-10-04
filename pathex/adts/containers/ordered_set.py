@@ -20,6 +20,7 @@ class OrderedSet(Collection[_T]):
            from pathex.adts.containers.ordered_set import OrderedSet
 
         >>> s = OrderedSet([1, 2, 3, 4, 3, 5])
+        >>> assert s is OrderedSet(s)
         >>> assert s.as_set() == {1, 2, 3, 4, 5}
         >>> assert s.as_tuple() == (1, 2, 3, 4, 5)
         """
@@ -73,10 +74,30 @@ class OrderedSet(Collection[_T]):
     appendleft = addleft
 
     def extend(self, other: Iterable[_T]):
+        """
+        .. testsetup::
+
+           from pathex.adts.containers.ordered_set import OrderedSet
+
+
+        >>> o = OrderedSet([1, 2, 3])
+        >>> o.extend([3, 4, 5])
+        >>> assert o.as_tuple() == (1, 2, 3, 4, 5)        """
+
         for e in other:
             self.append(e)
 
     def extendleft(self, other: Iterable[_T]):
+        """
+        .. testsetup::
+
+           from pathex.adts.containers.ordered_set import OrderedSet
+
+
+        >>> o = OrderedSet([1, 2, 3])
+        >>> o.extendleft([3, 4, 5])
+        >>> assert o.as_tuple() == (5, 4, 1, 2, 3)
+        """
         for e in other:
             self.appendleft(e)
 
@@ -134,6 +155,17 @@ class OrderedSet(Collection[_T]):
         return iter(self._queue)
 
     def __eq__(self, other: object) -> bool:
+        """
+        .. testsetup::
+
+           from pathex.adts.containers.ordered_set import OrderedSet
+
+        >>> l = [1, 2, 3, 4]
+        >>> o = OrderedSet(l)
+        >>> assert o == [1, 2, 3, 4]
+        >>> assert o != [1, 2, 3, 4, 5]
+        >>> assert o != 25
+        """
         if isinstance(other, Iterable):
             return self._queue == deque(other)
         else:
@@ -145,5 +177,5 @@ class OrderedSet(Collection[_T]):
     def __bool__(self):
         return self._set != set()
 
-    def __str__(self):
+    def __repr__(self): # pragma: no cover
         return f'{self.__class__.__name__}({self._queue})'

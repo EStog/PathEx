@@ -1,10 +1,14 @@
-from .nary_operator import NAryOperator
+from pathex.expressions.nary_operators.nary_operator import NAryOperator
 
 __all__ = ['Intersection']
 
 
 class Intersection(NAryOperator):
     r"""
+
+    .. todo::
+
+       Check commutative property.
 
     Examples:
         >>> from pathex.expressions.aliases import *
@@ -31,6 +35,7 @@ class Intersection(NAryOperator):
         >>> assert exp.get_language() == \
         ...     exp.get_generator().get_language() == {'axyz'}
 
-        # >>> exp = Ls('axy') + C('xyz') & NLs('abc') + C('xyz')
-        # >>> assert exp.get_language() == {'xxyz', 'yxyz'}
+        >>> exp = U('axy') + C('xyz') & LC('abc') + C('xyz')
+        >>> assert exp.get_language() == \
+        ...     exp.get_generator().get_language() == {'xxyz', 'yxyz'}
     """
