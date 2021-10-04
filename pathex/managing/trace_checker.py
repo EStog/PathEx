@@ -4,7 +4,7 @@ from pathex.expressions.expression import Expression
 from pathex.machines.decomposers.extended_decomposer_compalphabet import \
     ExtendedDecomposerCompalphabet
 from pathex.machines.decomposers.decomposer import DecomposerMatch
-from .manager import Manager
+from pathex.managing.manager import Manager
 
 __all__ = ['TraceChecker']
 
@@ -32,6 +32,11 @@ class TraceChecker(Manager):
     ... def func_c():
     ...     return 'func_c'
 
+    >>> func_b(), func_a(), func_c()
+    Traceback (most recent call last):
+        ...
+    AssertionError: func_b.enter is not allowed as first label
+
     >>> func_a(), func_b(), func_c()
     ('func_a', 'func_b', 'func_c')
 
@@ -39,6 +44,9 @@ class TraceChecker(Manager):
     Traceback (most recent call last):
         ...
     AssertionError: func_c.enter is not allowed after func_a.exit
+
+    >>> func_b(), func_c()
+    ('func_b', 'func_c')
     """
 
     def __init__(self, expression: Expression, machine: DecomposerMatch | None = None):

@@ -10,7 +10,7 @@ __all__ = ['Repetition']
 
 @dataclass(frozen=True, repr=False, init=False)
 class Repetition(Expression):
-    """This class represents a repetition
+    """This class represents a repetition.
     """
     argument: object
     """The expression to be repeated"""
@@ -39,13 +39,5 @@ class Repetition(Expression):
         object.__setattr__(self, 'lower_bound', lower_bound)
         object.__setattr__(self, 'upper_bound', upper_bound)
 
-    def __repr__(self):
+    def __repr__(self): # pragma: no cover
         return f'{self.__class__.__name__}({self.argument!r}, {self.lower_bound!r}, {self.upper_bound!r})'
-
-    def as_concatenation_repetition(self):
-        from .concatenation_repetition import ConcatenationRepetition
-        return ConcatenationRepetition(self.argument, self.lower_bound, self.upper_bound)
-
-    def as_shuffle_repetition(self):
-        from .shuffle_repetition import ShuffleRepetition
-        return ShuffleRepetition(self.argument, self.lower_bound, self.upper_bound)

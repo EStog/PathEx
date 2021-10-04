@@ -1,5 +1,9 @@
 import random
-from pathex.adts.containers.onion_collection import EmptyOnionCollection, NonemptyOnionCollection, from_iterable
+
+from pathex.adts.containers.onion_collection import (EmptyOnionCollection,
+                                                     NonemptyOnionCollection,
+                                                     from_iterable)
+
 
 def test_adition():
     random.seed()
@@ -15,5 +19,6 @@ def test_adition():
     assert c == c1
     assert hash(c) == hash(c1)
 
-if __name__ == '__main__':
+
+if __name__ == '__main__':  # pragma: no cover
     test_adition()

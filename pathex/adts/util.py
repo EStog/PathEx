@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from collections.abc import Iterator as Iter
+from collections.abc import Iterator
 from copy import copy
-from typing import Iterable, Iterator, TypeVar
+from typing import Iterable, TypeVar
 
 from pathex.adts.collection_wrapper import get_collection_wrapper
 
@@ -65,12 +65,17 @@ def get_head_tail(iterable: Iterable[T]) -> tuple[object, Iterator[T] | None]:
     >>> assert head == 1
     >>> assert list(tail) == [2, 3, 4]
 
+    >>> assert (None, None) == get_head_tail(())
+    >>> head, tail = get_head_tail(iter([1, 2, 3, 4]))
+    >>> assert head == 1
+    >>> assert list(tail) == [2, 3, 4]
+
     :param Iterable[T] iterable: The iterable to be decomposed. If it is an iterator it must also be :mod:`copiable <copy>`.
     :return: A tuple ``(head, tail)`` where ``head`` is the first element and ``tail`` is the rest of the iterable.
     :rtype: tuple[object, Iterator[T] | None]
     """
 
-    if isinstance(iterable, Iter):
+    if isinstance(iterable, Iterator):
         # must be copiable. Standard generators are NOT copiable.
         it = copy(iterable)
     else:

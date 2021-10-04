@@ -1,4 +1,4 @@
-from .repetition import Repetition
+from pathex.expressions.repetitions.repetition import Repetition
 
 __all__ = ['ShuffleRepetition']
 
@@ -15,4 +15,12 @@ class ShuffleRepetition(Repetition):
 
         >>> exp &= C('ab')%...
         >>> assert exp.get_language() == exp.get_generator().get_language() == {'ab', 'abab', 'aabb'}
+
+        >>> exp = L('a')%[3, 4]
+        >>> exp1 = L('a')*[3, 4]
+        >>> assert exp.get_language() == exp.get_generator().get_language() == exp1.get_language() == exp1.get_generator().get_language() == {'aaa', 'aaaa'}
+
+        >>> exp = L('a')//1
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'a'}
+
     """

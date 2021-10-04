@@ -1,6 +1,7 @@
-from .repetition import Repetition
+from pathex.expressions.repetitions.repetition import Repetition
 
 __all__ = ['ConcatenationRepetition']
+
 
 class ConcatenationRepetition(Repetition):
     """
@@ -21,4 +22,11 @@ class ConcatenationRepetition(Repetition):
         >>> exp1 = optional(C('ab')) + 'x'
         >>> exp2 = C('ab') * 'x'
         >>> assert exp1.get_language() == exp2.get_language() == exp1.get_generator().get_language()  == exp2.get_generator().get_language() == {'x', 'abx'}
+
+        >>> exp = L('a')%[0, 2]
+        >>> exp1 = L('a')*[0, 2]
+        >>> assert exp.get_language() == exp.get_generator().get_language() == exp1.get_language() == exp1.get_generator().get_language() == {'', 'a', 'aa'}
+
+        >>> exp = L('a')+1
+        >>> assert exp.get_language() == exp.get_generator().get_language() == {'a'}
     """

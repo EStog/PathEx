@@ -67,9 +67,6 @@ class LettersGenerator(Iterator[object]):
     def complete(self):
         return self._complete
 
-    def _set_complete(self):
-        self._complete = True
-
     def restart(self):
         self._pos = 0
 

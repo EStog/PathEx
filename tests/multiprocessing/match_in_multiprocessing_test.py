@@ -2,6 +2,7 @@
 Example using :meth:`match`:
 """
 
+import concurrent.futures as cf
 import os
 import os.path
 import sys
@@ -39,11 +40,16 @@ if __name__ == "__main__":
     produced = psync.list()
     consumed = psync.list()
 
+    tasks = []
+
     with ProcessPoolExecutor(max_workers=8) as executor:
         for _ in range(4):
-            executor.submit(consumer, psync.address, produced, consumed)
+            tasks.append(executor.submit(consumer, psync.address, produced, consumed))
         for i in range(4):
-            executor.submit(producer, psync.address, produced, i)
+            tasks.append(executor.submit(producer, psync.address, produced, i))
+
+        done, not_done = cf.wait(tasks, timeout=None, return_when=cf.ALL_COMPLETED)
+        assert not not_done
 
     assert list(produced) == []
     assert set(consumed) == {0, 1, 2, 3}

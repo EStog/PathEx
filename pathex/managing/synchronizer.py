@@ -72,6 +72,7 @@ class Synchronizer(Manager):
         >>> assert produced == []
         >>> assert set(consumed) == {0, 1, 2, 3}
         >>> assert sync.requests('Pi') == sync.permits('Pf') == sync.requests('Ci') == sync.permits('Cf') == 4
+        >>> assert sync.permits('WrongTag') == sync.requests('WrongTag') == 0
 
     Example using :meth:`register`::
 
@@ -98,11 +99,12 @@ class Synchronizer(Manager):
         ...     # print('Func b')
         ...     shared_list.append(b.exit)
 
-        >>> @sync.register(c)
-        ... def func_c():
+        >>> def func_c():
         ...     shared_list.append(c.enter)
         ...     # print('Func c')
         ...     shared_list.append(c.exit)
+
+        >>> func_c = sync.register(c, func_c)
 
         >>> with ThreadPoolExecutor(max_workers=4) as executor:
         ...     _ = executor.submit(func_c)

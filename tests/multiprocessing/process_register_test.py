@@ -2,16 +2,16 @@
 Example using :meth:`process_register`
 """
 
+import concurrent.futures as cf
 import os
 import os.path
 import sys
 from multiprocessing.managers import SyncManager
 
 # this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
-sys.path.append(os.getcwd())
+sys.path.append(os.getcwd())  # noqa
 
-from pathex import (ProcessPoolExecutor, Tag, process_register,
-                    process_manager)
+from pathex import ProcessPoolExecutor, Tag, process_manager, process_register
 from pathex.adts.util import SET_OF_TUPLES
 
 # Tags must be named and visible for import
@@ -32,11 +32,13 @@ def func_b(shared_list):
     shared_list.append(b.exit)
 
 
-@process_register(c)
 def func_c(shared_list):
     shared_list.append(c.enter)
     # print("Func c")
     shared_list.append(c.exit)
+
+
+func_c = process_register(c, func_c)
 
 
 if __name__ == "__main__":
@@ -51,13 +53,16 @@ if __name__ == "__main__":
 
     shared = psync.list()
 
-    with ProcessPoolExecutor(psync.address, max_workers=4) as executor:
-        r1 = executor.submit(func_c, shared)
-        r2 = executor.submit(func_a, shared)
-        r3 = executor.submit(func_b, shared)
-        r4 = executor.submit(func_a, shared)
+    tasks = []
 
-        # r1.result(), r2.result(), r3.result(), r4.result()
+    with ProcessPoolExecutor(psync.address, max_workers=4) as executor:
+        tasks.append(executor.submit(func_c, shared))
+        tasks.append(executor.submit(func_a, shared))
+        tasks.append(executor.submit(func_b, shared))
+        tasks.append(executor.submit(func_a, shared))
+
+        done, not_done = cf.wait(tasks, timeout=None, return_when=cf.ALL_COMPLETED)
+        assert not not_done
 
     allowed_paths = exp.get_language(SET_OF_TUPLES)
     assert tuple(shared) in allowed_paths
