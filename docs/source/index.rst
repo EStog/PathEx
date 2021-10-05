@@ -8,6 +8,8 @@ Welcome to |pe|'s documentation!
 
 The main goal of |pe| library is to ease concurrent programming in Python by separating the specification of synchronization from the main logic aspect. Path expressions [#pe_ref]_ is the selected theoretical framework to achieve this goal. In this model, the allowed execution paths are specified declaratively by using constructions similar to regular expressions.
 
+Code is available at `GitHub <https://github.com/EStog/PathEx>`_.
+
 .. caution:: **Library in development**
 
    This library is currently **in development**, and it is not recommended being used in production environments.
