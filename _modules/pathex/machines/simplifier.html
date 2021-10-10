@@ -79,7 +79,6 @@
 <span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.concatenation</span> <span class="kn">import</span> <span class="n">Concatenation</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.intersection</span> <span class="kn">import</span> <span class="n">Intersection</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.nary_operator</span> <span class="kn">import</span> <span class="n">NAryOperator</span>
-<span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.synchronization</span> <span class="kn">import</span> <span class="n">Synchronization</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.union</span> <span class="kn">import</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.repetitions.repetition</span> <span class="kn">import</span> <span class="n">Repetition</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.repetitions.concatenation_repetition</span> <span class="kn">import</span> <span class="n">ConcatenationRepetition</span>
@@ -140,7 +139,7 @@
                     <span class="c1"># )</span>
             <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_transform_aci</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp</span><span class="p">:</span> <span class="n">Union</span> <span class="o">|</span> <span class="n">Intersection</span> <span class="o">|</span> <span class="n">Synchronization</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_transform_aci</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp</span><span class="p">:</span> <span class="n">Union</span> <span class="o">|</span> <span class="n">Intersection</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Makes transformations considering the expression as an associative, conmutative and idempotent nary operator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">cls</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="vm">__class__</span>
@@ -155,7 +154,6 @@
 
     <span class="n">transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Union</span><span class="p">,</span> <span class="n">_transform_aci</span><span class="p">)</span>
     <span class="n">transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Intersection</span><span class="p">,</span> <span class="n">_transform_aci</span><span class="p">)</span>
-    <span class="n">transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Synchronization</span><span class="p">,</span> <span class="n">_transform_aci</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_transform_repetition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp</span><span class="p">:</span> <span class="n">Repetition</span><span class="p">):</span>
         <span class="n">arg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">exp</span><span class="o">.</span><span class="n">argument</span><span class="p">)</span>

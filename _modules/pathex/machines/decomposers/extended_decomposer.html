@@ -71,7 +71,6 @@
 <span></span><span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.difference</span> <span class="kn">import</span> <span class="n">Difference</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.intersection</span> <span class="kn">import</span> <span class="n">Intersection</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.shuffle</span> <span class="kn">import</span> <span class="n">Shuffle</span>
-<span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.synchronization</span> <span class="kn">import</span> <span class="n">Synchronization</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.repetitions.shuffle_repetition</span> <span class="kn">import</span> <span class="n">ShuffleRepetition</span>
 
 <span class="kn">from</span> <span class="nn">.decomposer</span> <span class="kn">import</span> <span class="n">DecomposerMatchMismatch</span>
@@ -93,7 +92,6 @@
     <span class="k">def</span> <span class="nf">_populate_transformer</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_populate_transformer</span><span class="p">()</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Intersection</span><span class="p">,</span> <span class="n">intersection_visitor</span><span class="p">)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Synchronization</span><span class="p">,</span> <span class="n">synchronization_visitor</span><span class="p">)</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Shuffle</span><span class="p">,</span> <span class="n">shuffle_visitor</span><span class="p">)</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span>
             <span class="n">ShuffleRepetition</span><span class="p">,</span> <span class="n">shuffle_repetition_visitor</span><span class="p">)</span>

@@ -17,5 +17,4 @@ Submodules
    pathex.expressions.nary_operators.intersection
    pathex.expressions.nary_operators.nary_operator
    pathex.expressions.nary_operators.shuffle
-   pathex.expressions.nary_operators.synchronization
    pathex.expressions.nary_operators.union
