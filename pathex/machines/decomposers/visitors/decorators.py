@@ -5,7 +5,6 @@ from typing import Callable, TypeVar
 
 from pathex.expressions.nary_operators.concatenation import Concatenation
 from pathex.expressions.nary_operators.intersection import Intersection
-from pathex.expressions.nary_operators.synchronization import Synchronization
 from pathex.expressions.nary_operators.union import Union
 from pathex.expressions.repetitions.repetition import Repetition
 from pathex.expressions.terms.empty_word import EMPTY_WORD
@@ -30,7 +29,7 @@ def nary_operator_visitor(visitor: Callable[[_Decomposer, _NAryOperator], Branch
 def matching_operator_visitor(match_func: Callable[[DecomposerMatchMismatch,
                                                     object, object, object], Branches]):
     @wraps(match_func)
-    def f(decomposer: DecomposerMatchMismatch, exp: Intersection | Synchronization) -> Branches:
+    def f(decomposer: DecomposerMatchMismatch, exp: Intersection) -> Branches:
         for head1, tail1 in decomposer._transform(exp.args_head):
             if head1 is EMPTY_WORD and tail1 is not EMPTY_WORD:
                 yield EMPTY_WORD, exp.__class__(tail1, *exp.args_tail)

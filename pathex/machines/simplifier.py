@@ -9,7 +9,6 @@ from pathex.adts.collection_wrapper import (CollectionWrapper,
 from pathex.expressions.nary_operators.concatenation import Concatenation
 from pathex.expressions.nary_operators.intersection import Intersection
 from pathex.expressions.nary_operators.nary_operator import NAryOperator
-from pathex.expressions.nary_operators.synchronization import Synchronization
 from pathex.expressions.nary_operators.union import Union
 from pathex.expressions.repetitions.repetition import Repetition
 from pathex.expressions.repetitions.concatenation_repetition import ConcatenationRepetition
@@ -70,7 +69,7 @@ class Simplifier(Machine):
                     # )
             )
 
-    def _transform_aci(self, exp: Union | Intersection | Synchronization):
+    def _transform_aci(self, exp: Union | Intersection):
         """Makes transformations considering the expression as an associative, conmutative and idempotent nary operator.
         """
         cls = exp.__class__
@@ -85,7 +84,6 @@ class Simplifier(Machine):
 
     transform.register(Union, _transform_aci)
     transform.register(Intersection, _transform_aci)
-    transform.register(Synchronization, _transform_aci)
 
     def _transform_repetition(self, exp: Repetition):
         arg = self.transform(exp.argument)

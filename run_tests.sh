@@ -3,7 +3,7 @@
 rm ./.coverage ./coverage.xml
 
 echo running unittests...
-pytest --doctest-modules --cov=./ --cov-report=xml || exit 1
+pytest --ignore=.local/ -n=logical --doctest-modules --cov=./ --cov-report=xml || exit 1
 
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 

@@ -5,6 +5,7 @@ from math import inf
 from typing import Generator, TypeVar
 
 from pathex.adts.collection_wrapper import CollectionWrapper
+from pathex.adts.containers.onion_collection import OnionCollection
 from pathex.generation.defaults import COMPLETE_WORDS, LANGUAGE_TYPE, WORD_TYPE
 from pathex.machines.decomposers.decomposer import Decomposer
 
@@ -80,7 +81,7 @@ class Expression(ABC):
         return WordsGenerator(self, decomposer)
 
     def get_eager_generator(self, decomposer: Decomposer | None = None,
-                            complete_words: bool = COMPLETE_WORDS) -> Generator[tuple, None, None]:
+                            complete_words: bool = COMPLETE_WORDS) -> Generator[OnionCollection, None, None]:
         if decomposer is None:
             from pathex.machines.decomposers.extended_decomposer_compalphabet import \
                 ExtendedDecomposerCompalphabet
@@ -146,16 +147,6 @@ class Expression(ABC):
     def __rand__(self, other: object):
         from pathex import Intersection
         return Intersection(other, self)
-
-    # self @ other
-    def __matmul__(self, other):
-        from pathex import Synchronization
-        return Synchronization(self, other)
-
-    # other @ self
-    def __rmatmul__(self, other):
-        from pathex import Synchronization
-        return Synchronization(other, self)
 
     # self - other
     def __sub__(self, other):

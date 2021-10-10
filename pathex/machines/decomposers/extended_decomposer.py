@@ -1,7 +1,6 @@
 from pathex.expressions.nary_operators.difference import Difference
 from pathex.expressions.nary_operators.intersection import Intersection
 from pathex.expressions.nary_operators.shuffle import Shuffle
-from pathex.expressions.nary_operators.synchronization import Synchronization
 from pathex.expressions.repetitions.shuffle_repetition import ShuffleRepetition
 
 from .decomposer import DecomposerMatchMismatch
@@ -23,7 +22,6 @@ class ExtendedDecomposer(SimpleDecomposer, DecomposerMatchMismatch):
     def _populate_transformer(cls):
         super()._populate_transformer()
         cls._transform.register(Intersection, intersection_visitor)
-        cls._transform.register(Synchronization, synchronization_visitor)
         cls._transform.register(Shuffle, shuffle_visitor)
         cls._transform.register(
             ShuffleRepetition, shuffle_repetition_visitor)

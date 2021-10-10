@@ -1,7 +1,2 @@
-*.pyc
-**/__pycache__/**
 **/.doctrees/**
 *.doctree
-
-build
-source/API

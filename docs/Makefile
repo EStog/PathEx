@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line, and also
 # from the environment for the first two.
-SPHINXOPTS    ?= -D todo_include_todos=0 -D todo_emit_warnings=0 -D show_authors=0
+SPHINXOPTS    ?= -D todo_include_todos=0 -D todo_emit_warnings=0 -D show_authors=0 -j auto
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
