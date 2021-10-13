@@ -19,44 +19,43 @@ from .tag import Tag
 
 __all__ = ['Manager']
 
-# TODO: refactor by using Shuffle and Intersection
-
 
 class Manager(ABC):
     """A generic abstract manager.
     """
     @singleton
-    class _WaitingLabels:
+    class _WaitingLabelsFigure:
         """The instance of this class is used to represent future labels to be matched with. The idea is to use an abstract replacement object that is to be concretized with the current waiting-labels expression.
         """
         pass
 
-    @staticmethod
-    def _waiting_labels_visitor(machine, exp):
-        # return a visitor to the current waiting-labels expression
-        return machine.transform(machine.waiting_labels_expression)
-
     def __init__(self, expression: Expression, decomposer: DecomposerMatch):
-        self._waiting_labels = self._WaitingLabels()
+        self._waiting_labels = self._WaitingLabelsFigure()
         self._expression: object = Intersection(
             self._waiting_labels, expression)
 
-        class CustomDecomposer(decomposer.__class__):
-            waiting_labels_expression: object
+        class ManagerDecomposer(decomposer.__class__):
+            waiting_label: object
+            waiting_labels_figure = self._WaitingLabelsFigure()
+
+            def _waiting_labels_visitor(self, exp):
+                # return a visitor to the current waiting-labels expression
+                return self.transform(
+                    Concatenation(self.waiting_label, self.waiting_labels_figure))
 
             @classmethod
             def _populate_transformer(cls):
                 super()._populate_transformer()
-                cls._transform.register(self._WaitingLabels,
-                                        self._waiting_labels_visitor)
+                cls._transform.register(self._WaitingLabelsFigure,
+                                        cls._waiting_labels_visitor)
 
         # Just in case ``machine`` has some attributes:
         decomposer = copy(decomposer)
 
         # Expand ``machine.branch`` with ``_waiting_labels_visitor``:
-        decomposer.__class__ = CustomDecomposer
+        decomposer.__class__ = ManagerDecomposer
 
-        self._decomposer: CustomDecomposer = decomposer
+        self._decomposer: ManagerDecomposer = decomposer
 
     @abstractmethod
     def _when_requested_match(self, label: object) -> object: ...
@@ -86,8 +85,7 @@ class Manager(ABC):
     def _advance(self, label: object) -> bool:
         new_alternatives = deque()
         # the waiting-labels expression is setted as a sequence consisting of the current label to be matched, followed by the rest of the labels that are to be matched
-        self._decomposer.waiting_labels_expression = Concatenation(
-            label, self._waiting_labels)
+        self._decomposer.waiting_label = label
         alts = OrderedSet([self._expression])
         while alts:
             exp = alts.popleft()
