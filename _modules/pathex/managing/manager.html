@@ -89,44 +89,43 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Manager&#39;</span><span class="p">]</span>
 
-<span class="c1"># TODO: refactor by using Shuffle and Intersection</span>
-
 
 <div class="viewcode-block" id="Manager"><a class="viewcode-back" href="../../../API/pathex.managing.manager.html#pathex.managing.manager.Manager">[docs]</a><span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A generic abstract manager.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nd">@singleton</span>
-    <span class="k">class</span> <span class="nc">_WaitingLabels</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">_WaitingLabelsFigure</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;The instance of this class is used to represent future labels to be matched with. The idea is to use an abstract replacement object that is to be concretized with the current waiting-labels expression.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_waiting_labels_visitor</span><span class="p">(</span><span class="n">machine</span><span class="p">,</span> <span class="n">exp</span><span class="p">):</span>
-        <span class="c1"># return a visitor to the current waiting-labels expression</span>
-        <span class="k">return</span> <span class="n">machine</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">machine</span><span class="o">.</span><span class="n">waiting_labels_expression</span><span class="p">)</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">:</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">decomposer</span><span class="p">:</span> <span class="n">DecomposerMatch</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WaitingLabels</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WaitingLabelsFigure</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="n">Intersection</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_labels</span><span class="p">,</span> <span class="n">expression</span><span class="p">)</span>
 
-        <span class="k">class</span> <span class="nc">CustomDecomposer</span><span class="p">(</span><span class="n">decomposer</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
-            <span class="n">waiting_labels_expression</span><span class="p">:</span> <span class="nb">object</span>
+        <span class="k">class</span> <span class="nc">ManagerDecomposer</span><span class="p">(</span><span class="n">decomposer</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
+            <span class="n">waiting_label</span><span class="p">:</span> <span class="nb">object</span>
+            <span class="n">waiting_labels_figure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_WaitingLabelsFigure</span><span class="p">()</span>
+
+            <span class="k">def</span> <span class="nf">_waiting_labels_visitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp</span><span class="p">):</span>
+                <span class="c1"># return a visitor to the current waiting-labels expression</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+                    <span class="n">Concatenation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">waiting_label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">waiting_labels_figure</span><span class="p">))</span>
 
             <span class="nd">@classmethod</span>
             <span class="k">def</span> <span class="nf">_populate_transformer</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
                 <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_populate_transformer</span><span class="p">()</span>
-                <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_WaitingLabels</span><span class="p">,</span>
-                                        <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_labels_visitor</span><span class="p">)</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_WaitingLabelsFigure</span><span class="p">,</span>
+                                        <span class="bp">cls</span><span class="o">.</span><span class="n">_waiting_labels_visitor</span><span class="p">)</span>
 
         <span class="c1"># Just in case ``machine`` has some attributes:</span>
         <span class="n">decomposer</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">decomposer</span><span class="p">)</span>
 
         <span class="c1"># Expand ``machine.branch`` with ``_waiting_labels_visitor``:</span>
-        <span class="n">decomposer</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">CustomDecomposer</span>
+        <span class="n">decomposer</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">ManagerDecomposer</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_decomposer</span><span class="p">:</span> <span class="n">CustomDecomposer</span> <span class="o">=</span> <span class="n">decomposer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_decomposer</span><span class="p">:</span> <span class="n">ManagerDecomposer</span> <span class="o">=</span> <span class="n">decomposer</span>
 
     <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">_when_requested_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span> <span class="o">...</span>
@@ -156,8 +155,7 @@
     <span class="k">def</span> <span class="nf">_advance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">new_alternatives</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
         <span class="c1"># the waiting-labels expression is setted as a sequence consisting of the current label to be matched, followed by the rest of the labels that are to be matched</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_decomposer</span><span class="o">.</span><span class="n">waiting_labels_expression</span> <span class="o">=</span> <span class="n">Concatenation</span><span class="p">(</span>
-            <span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_labels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_decomposer</span><span class="o">.</span><span class="n">waiting_label</span> <span class="o">=</span> <span class="n">label</span>
         <span class="n">alts</span> <span class="o">=</span> <span class="n">OrderedSet</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_expression</span><span class="p">])</span>
         <span class="k">while</span> <span class="n">alts</span><span class="p">:</span>
             <span class="n">exp</span> <span class="o">=</span> <span class="n">alts</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
