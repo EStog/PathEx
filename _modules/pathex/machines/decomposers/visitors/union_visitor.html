@@ -68,13 +68,14 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pathex.machines.decomposers.visitors.union_visitor</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.decorators</span> <span class="kn">import</span> <span class="n">nary_operator_visitor</span>
-<span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.union</span> <span class="kn">import</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.union</span> <span class="kn">import</span> <span class="n">Union</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.terms.empty_word</span> <span class="kn">import</span> <span class="n">EMPTY_WORD</span>
-
-<span class="kn">from</span> <span class="nn">..decomposer</span> <span class="kn">import</span> <span class="n">Branches</span><span class="p">,</span> <span class="n">Decomposer</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">Branches</span><span class="p">,</span> <span class="n">Decomposer</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.decorators</span> <span class="kn">import</span> \
+    <span class="n">nary_operator_visitor</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;union_visitor&#39;</span><span class="p">]</span>
+
 
 <div class="viewcode-block" id="union_visitor"><a class="viewcode-back" href="../../../../../API/pathex.machines.decomposers.visitors.union_visitor.html#pathex.machines.decomposers.visitors.union_visitor.union_visitor">[docs]</a><span class="nd">@nary_operator_visitor</span>
 <span class="k">def</span> <span class="nf">union_visitor</span><span class="p">(</span><span class="n">machine</span><span class="p">:</span> <span class="n">Decomposer</span><span class="p">,</span> <span class="n">exp</span><span class="p">:</span> <span class="n">Union</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Branches</span><span class="p">:</span>

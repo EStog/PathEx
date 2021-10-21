@@ -70,10 +70,12 @@
   <h1>Source code for pathex.machines.decomposers.visitors.intersection_visitor</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">..decomposer</span> <span class="kn">import</span> <span class="n">Branches</span><span class="p">,</span> <span class="n">DecomposerMatch</span>
-<span class="kn">from</span> <span class="nn">.decorators</span> <span class="kn">import</span> <span class="n">matching_operator_visitor</span><span class="p">,</span> <span class="n">nary_operator_visitor</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">Branches</span><span class="p">,</span> <span class="n">DecomposerMatch</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.decorators</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">matching_operator_visitor</span><span class="p">,</span> <span class="n">nary_operator_visitor</span><span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;intersection_visitor&#39;</span><span class="p">]</span>
+
 
 <div class="viewcode-block" id="intersection_visitor"><a class="viewcode-back" href="../../../../../API/pathex.machines.decomposers.visitors.intersection_visitor.html#pathex.machines.decomposers.visitors.intersection_visitor.intersection_visitor">[docs]</a><span class="nd">@nary_operator_visitor</span>
 <span class="nd">@matching_operator_visitor</span>

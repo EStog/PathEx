@@ -1,0 +1,7 @@
+pathex.managing.processes module
+================================
+
+.. automodule:: pathex.managing.processes
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pathex.adts.singleton module &mdash; PathEx 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -85,9 +86,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-pathex.adts.singleton">
+  <section id="module-pathex.adts.singleton">
 <span id="pathex-adts-singleton-module"></span><h1>pathex.adts.singleton module<a class="headerlink" href="#module-pathex.adts.singleton" title="Permalink to this headline"></a></h1>
-<div class="section" id="singleton-decorator">
+<section id="singleton-decorator">
 <h2>Singleton decorator<a class="headerlink" href="#singleton-decorator" title="Permalink to this headline"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Module</dt>
@@ -110,7 +111,7 @@
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@singleton</span>
 <span class="gp">... </span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="gp">... </span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">SingletonClass</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">attribute</span><span class="p">:</span> <span class="nb">int</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
@@ -119,20 +120,20 @@
 </div>
 <p>Any call to the class will return the same object. The first call will make proper initialization, but subsequent calls will ignore the arguments. It is allowed to call the class without arguments after the first call. Use the class call instead or a previously assigned variable.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">A</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">SingletonClass</span><span class="p">()</span>
 <span class="gp">... </span><span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="k">pass</span> <span class="c1"># Right!</span>
 <span class="gp">... </span><span class="k">else</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wrong&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">instance</span> <span class="ow">is</span> <span class="n">A</span><span class="p">(</span><span class="mi">44</span><span class="p">)</span> <span class="ow">is</span> <span class="n">A</span><span class="p">()</span> <span class="ow">is</span> <span class="n">A</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">A</span><span class="p">()</span><span class="o">.</span><span class="n">attribute</span> <span class="o">==</span> <span class="n">instance</span><span class="o">.</span><span class="n">attribute</span> <span class="o">==</span> <span class="mi">24</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">A</span><span class="p">(),</span> <span class="s1">&#39;instance&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">SingletonClass</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">instance</span> <span class="ow">is</span> <span class="n">SingletonClass</span><span class="p">(</span><span class="mi">44</span><span class="p">)</span> <span class="ow">is</span> <span class="n">SingletonClass</span><span class="p">()</span> <span class="ow">is</span> <span class="n">SingletonClass</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">SingletonClass</span><span class="p">()</span><span class="o">.</span><span class="n">attribute</span> <span class="o">==</span> <span class="n">instance</span><span class="o">.</span><span class="n">attribute</span> <span class="o">==</span> <span class="mi">24</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">SingletonClass</span><span class="p">(),</span> <span class="s1">&#39;instance&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Singleton classes can not be subclassed:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">SingletonClass</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="k">pass</span>
 <span class="gp">... </span><span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="k">pass</span> <span class="c1"># Right!</span>
@@ -140,12 +141,20 @@
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Wrong!&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>The representation of the singleton instance is constructed from the name of the class:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">repr</span><span class="p">(</span><span class="n">SingletonClass</span><span class="p">())</span> <span class="o">==</span> <span class="s1">&#39;&lt;SINGLETON_CLASS&gt;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@singleton</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">_A_Class</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">repr</span><span class="p">(</span><span class="n">_A_Class</span><span class="p">())</span> <span class="o">==</span> <span class="s1">&#39;&lt;_A_CLASS&gt;&#39;</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 </dl>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

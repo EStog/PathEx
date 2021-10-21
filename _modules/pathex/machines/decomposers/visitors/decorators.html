@@ -81,7 +81,7 @@
 <span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.misc</span> <span class="kn">import</span> <span class="n">NOT_EMPTY_WORD_MESSAGE</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.nary_operators.nary_operator</span> <span class="kn">import</span> <span class="n">NAryOperator</span>
 
-<span class="kn">from</span> <span class="nn">..decomposer</span> <span class="kn">import</span> <span class="n">Branches</span><span class="p">,</span> <span class="n">Decomposer</span><span class="p">,</span> <span class="n">DecomposerMatchMismatch</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">Branches</span><span class="p">,</span> <span class="n">Decomposer</span><span class="p">,</span> <span class="n">DecomposerMatchMismatch</span>
 
 <span class="n">_Decomposer</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;_Decomposer&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Decomposer</span><span class="p">)</span>
 <span class="n">_NAryOperator</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;_NAryOperator&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">NAryOperator</span><span class="p">)</span>

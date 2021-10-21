@@ -13,7 +13,8 @@ Submodules
    :maxdepth: 4
 
    pathex.managing.manager
-   pathex.managing.process_synchronizer
+   pathex.managing.mixins
+   pathex.managing.processes
    pathex.managing.synchronizer
    pathex.managing.tag
    pathex.managing.trace_checker

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Overview &mdash; PathEx 0.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -39,11 +40,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#using-threads">Using threads</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#using-processes">Using processes</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="generalities/index.html">Generalities</a></li>
@@ -76,7 +73,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="overview">
+  <section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h1>
 <p>This section roughly presents the main features of PathEx.</p>
 <div class="admonition seealso">
@@ -88,7 +85,7 @@
 </dd>
 </dl>
 </div>
-<div class="section" id="usage">
+<section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
 <p>First, construct some tags that will represent the regions to be synchronized:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Tag</span>
@@ -106,26 +103,25 @@
 <dd><p><code class="docutils literal notranslate"><span class="pre">{</span></code> and <code class="docutils literal notranslate"><span class="pre">}</span></code> are used to specify a set of concurrent tasks.</p>
 </dd>
 </dl>
-<div class="section" id="using-threads">
-<h3>Using threads<a class="headerlink" href="#using-threads" title="Permalink to this headline"></a></h3>
-<p>Next, create a <a class="reference internal" href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a> that will serve as a manager of the execution flow. Threads as execution units will be explained in this section. The case of processes will be explained in <a class="reference internal" href="#using-processes"><span class="std std-ref">another</span></a>.</p>
-<p>In the case of threads as execution units, create a direct instance of <a class="reference internal" href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a>.</p>
+<p>Next, if you are using threads, create a <a class="reference internal" href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a> that will serve as a manager of the execution flow.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Synchronizer</span>
 
 <span class="n">sync</span> <span class="o">=</span> <span class="n">Synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>There are two recommended ways of marking portions of code as tasks code to be synchronized. The first is by decorating functions with <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.register" title="pathex.managing.manager.Manager.register"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register()</span></code></a>. For example:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+<p>In the case of processes, use <a class="reference internal" href="API/pathex.managing.processes.html#pathex.managing.processes.get_synchronizer" title="pathex.managing.processes.get_synchronizer"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_synchronizer()</span></code></a> instead:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">get_synchronizer</span>
 
-<span class="n">shared_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
-
-<span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="n">sync</span> <span class="o">=</span> <span class="n">get_synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To mark a function as a region to be synchronized use <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a>. It can be used in the case of threads as well as in the case of processes. For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">get_top</span><span class="p">():</span>
+<span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_top</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
        <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -133,21 +129,17 @@
     <span class="k">else</span><span class="p">:</span>
        <span class="k">return</span> <span class="n">x</span>
 
-<span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The other way is by using context manager style with <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
-
-<span class="n">shared_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<p><a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a> can be used as a context manager as well:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
        <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">get_top</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">get_top</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">reader</span><span class="p">):</span>
        <span class="k">try</span><span class="p">:</span>
           <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -156,92 +148,54 @@
        <span class="k">else</span><span class="p">:</span>
           <span class="k">return</span> <span class="n">x</span>
 
-<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
-       <span class="n">shared_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Once the regions to be synchronized are specified, threads may be started by using any of the known standard methods. For example, by using <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">concurrent.futures.ThreadPoolExecutor</span></code></a>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
-
-<span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">append</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">get_top</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-    <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">appendleft</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-
-<span class="k">assert</span> <span class="n">shared_buffer</span> <span class="o">==</span> <span class="n">deque</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-</pre></div>
-</div>
-<p>The synchronizer will manage any request of execution and will allow only those in accord with the given expression and the current state of execution. The not allowed requests are suspended until the proper execution conditions are met.</p>
-</div>
-<div class="section" id="using-processes">
-<span id="id3"></span><h3>Using processes<a class="headerlink" href="#using-processes" title="Permalink to this headline"></a></h3>
-<p>If processes are to be used as execution units, the same general steps are to be followed but with some differences.</p>
-<p>To decorate functions use <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_register" title="pathex.managing.process_synchronizer.process_register"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_register()</span></code></a> instead of <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.register" title="pathex.managing.manager.Manager.register"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register()</span></code></a>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">process_register</span>
-
-<span class="nd">@process_register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-<span class="nd">@process_register</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">get_top</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-       <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-       <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">else</span><span class="p">:</span>
-       <span class="k">return</span> <span class="n">x</span>
-
-<span class="nd">@process_register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>To use context manager style use <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.process_region" title="pathex.managing.process_synchronizer.process_region"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_region()</span></code></a> instead of <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">process_region</span>
-
-<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">process_region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
-        <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">get_top</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">process_region</span><span class="p">(</span><span class="n">reader</span><span class="p">):</span>
-       <span class="k">try</span><span class="p">:</span>
-          <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-       <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-          <span class="k">return</span> <span class="kc">None</span>
-       <span class="k">else</span><span class="p">:</span>
-          <span class="k">return</span> <span class="n">x</span>
-
-<span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">process_region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
        <span class="n">shared_buffer</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Then, in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> module get a <code class="xref py py-class docutils literal notranslate"><span class="pre">SynchronizerProxy</span></code> by using <code class="xref py py-func docutils literal notranslate"><span class="pre">process_synchronizer()</span></code> and start processes by using any of the ways provided by PathEx. For example, with <a class="reference internal" href="API/pathex.managing.process_synchronizer.html#pathex.managing.process_synchronizer.ProcessPoolExecutor" title="pathex.managing.process_synchronizer.ProcessPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code></a>:</p>
+<p>In the shown examples <code class="docutils literal notranslate"><span class="pre">shared_buffer</span></code> may be specified as a global variable, but it is a good practice to define it as a parameter to use a common idiom no matter we are using threads or processes.</p>
+<p>Once the regions to be synchronized are specified, threads (or processes) may be started by using any of the known standard methods. For example, we may define a function to spawn the concurrent tasks, that takes an <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.Executor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Executor</span></code></a> class and a shared buffer:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">spawn_tasks</span><span class="p">(</span><span class="n">Executor</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">):</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">with</span> <span class="n">Executor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+       <span class="n">tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">append</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+       <span class="n">tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">get_top</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+       <span class="n">tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">appendleft</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+
+       <span class="n">done</span><span class="p">,</span> <span class="n">not_done</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_when</span><span class="o">=</span><span class="n">cf</span><span class="o">.</span><span class="n">ALL_COMPLETED</span><span class="p">)</span>
+       <span class="k">assert</span> <span class="ow">not</span> <span class="n">not_done</span>
+</pre></div>
+</div>
+<p>In the case of threads we use <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code></a> and a simple <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> as a shared buffer:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
-   <span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">SyncManager</span>
+   <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
 
-   <span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">process_synchronizer</span><span class="p">,</span> <span class="n">ProcessPoolExecutor</span>
+   <span class="n">shared_buffer</span> <span class="o">=</span> <span class="p">[]</span>
 
-   <span class="n">psync</span> <span class="o">=</span> <span class="n">process_manager</span><span class="p">(</span>
-       <span class="n">exp</span><span class="p">,</span> <span class="n">manager_class</span><span class="o">=</span><span class="n">SyncManager</span><span class="p">)</span>
+   <span class="n">spawn_tasks</span><span class="p">(</span><span class="n">ThreadPoolExecutor</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span>
 
-   <span class="n">shared_buffer</span> <span class="o">=</span> <span class="n">psync</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+   <span class="k">assert</span> <span class="n">shared_buffer</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The condition <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span> <span class="pre">...</span></code> is not necessary for threads, but it is a good practice to use it as a common idiom for threads and processes.</p>
+<p>In the case of processes <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code></a> may be used and a <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing-proxy-objects" title="(in Python v3.10)"><span class="xref std std-ref">proxy</span></a> to a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> obtained from the underlain <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.managers.SyncManager" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SyncManager</span></code></a> as the shared proxy.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
-   <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">psync</span><span class="o">.</span><span class="n">address</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-       <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">append</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-       <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">get_top</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-       <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">appendleft</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+   <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span>
+
+   <span class="n">manager</span> <span class="o">=</span> <span class="n">sync</span><span class="o">.</span><span class="n">get_mp_manager</span><span class="p">()</span>
+   <span class="n">shared</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+
+   <span class="n">spawn_tasks</span><span class="p">(</span><span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span>
 
    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+<p>In any case, the synchronizer will manage any request of execution and will allow only those in accord with the given expression and the current state of execution. Disallowed requests are suspended until the appropriate execution conditions are met.</p>
+</section>
+</section>
 
 
            </div>

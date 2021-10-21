@@ -90,15 +90,15 @@
 <span class="sd">    &gt;&gt;&gt; a, b, c = Tag.named(&#39;func_a&#39;, &#39;func_b&#39;, &#39;func_c&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; trace_checker = TraceChecker((a+b+c)*...)</span>
 
-<span class="sd">    &gt;&gt;&gt; @trace_checker.register(a)</span>
+<span class="sd">    &gt;&gt;&gt; @trace_checker.region(a)</span>
 <span class="sd">    ... def func_a():</span>
 <span class="sd">    ...     return &#39;func_a&#39;</span>
 
-<span class="sd">    &gt;&gt;&gt; @trace_checker.register(b)</span>
+<span class="sd">    &gt;&gt;&gt; @trace_checker.region(b)</span>
 <span class="sd">    ... def func_b():</span>
 <span class="sd">    ...     return &#39;func_b&#39;</span>
 
-<span class="sd">    &gt;&gt;&gt; @trace_checker.register(c)</span>
+<span class="sd">    &gt;&gt;&gt; @trace_checker.region(c)</span>
 <span class="sd">    ... def func_c():</span>
 <span class="sd">    ...     return &#39;func_c&#39;</span>
 

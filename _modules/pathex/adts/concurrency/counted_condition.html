@@ -84,7 +84,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_count</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">waiting_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">waiting_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_waiting_count</span>
 
 <div class="viewcode-block" id="CountedCondition.wait"><a class="viewcode-back" href="../../../../API/pathex.adts.concurrency.counted_condition.html#pathex.adts.concurrency.counted_condition.CountedCondition.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pathex.expressions.nary_operators.union module &mdash; PathEx 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -86,7 +87,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-pathex.expressions.nary_operators.union">
+  <section id="module-pathex.expressions.nary_operators.union">
 <span id="pathex-expressions-nary-operators-union-module"></span><h1>pathex.expressions.nary_operators.union module<a class="headerlink" href="#module-pathex.expressions.nary_operators.union" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.expressions.nary_operators.union.Union">
@@ -94,7 +95,7 @@
 <dd><p>Bases: <a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html#pathex.expressions.nary_operators.nary_operator.NAryOperator" title="pathex.expressions.nary_operators.nary_operator.NAryOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.expressions.nary_operators.nary_operator.NAryOperator</span></code></a></p>
 <p>This class represents a union of languages.</p>
 <p>A union of languages is equivalent to the union of the sets.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Union</span> <span class="k">as</span> <span class="n">U</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathex.expressions.aliases</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">exp</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="s1">&#39;abcd&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_generator</span><span class="p">()</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">}</span>
 </pre></div>
@@ -102,6 +103,14 @@
 <p>A union may also be constructed by using the | operator.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exp</span> <span class="o">=</span> <span class="n">U</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">U</span><span class="p">(</span><span class="s1">&#39;cd&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_generator</span><span class="p">()</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exp</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">C</span><span class="p">(</span><span class="s1">&#39;cd&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_generator</span><span class="p">()</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;cd&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">exp</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span> <span class="o">|</span> <span class="p">(</span> <span class="s1">&#39;b&#39;</span> <span class="o">+</span> <span class="n">U</span><span class="p">(</span><span class="s1">&#39;cd&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="n">exp</span><span class="o">.</span><span class="n">get_generator</span><span class="p">()</span><span class="o">.</span><span class="n">get_language</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;bc&#39;</span><span class="p">,</span> <span class="s1">&#39;bd&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
@@ -113,7 +122,7 @@
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pathex.managing.synchronizer module &mdash; PathEx 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -18,7 +19,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pathex.managing.tag module" href="pathex.managing.tag.html" />
-    <link rel="prev" title="pathex.managing.process_synchronizer module" href="pathex.managing.process_synchronizer.html" /> 
+    <link rel="prev" title="pathex.managing.processes module" href="pathex.managing.processes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -84,12 +85,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-pathex.managing.synchronizer">
+  <section id="module-pathex.managing.synchronizer">
 <span id="pathex-managing-synchronizer-module"></span><h1>pathex.managing.synchronizer module<a class="headerlink" href="#module-pathex.managing.synchronizer" title="Permalink to this headline"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.managing.synchronizer.Synchronizer">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Synchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">exp:</span> <span class="pre">Expression</span></em>, <em class="sig-param"><span class="pre">machine:</span> <span class="pre">DecomposerMatch</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">lock_class=&lt;built-in</span> <span class="pre">function</span> <span class="pre">allocate_lock&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/synchronizer.html#Synchronizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.synchronizer.Synchronizer" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="pathex.managing.manager.html#pathex.managing.manager.Manager" title="pathex.managing.manager.Manager"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.managing.manager.Manager</span></code></a></p>
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Synchronizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">exp:</span> <span class="pre">Expression</span></em>, <em class="sig-param"><span class="pre">decomposer:</span> <span class="pre">DecomposerMatch</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">lock_class=&lt;built-in</span> <span class="pre">function</span> <span class="pre">allocate_lock&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/synchronizer.html#Synchronizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.synchronizer.Synchronizer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="pathex.managing.manager.html#pathex.managing.manager.Manager" title="pathex.managing.manager.Manager"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.managing.manager.Manager</span></code></a>, <a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.LogbookMixin" title="pathex.managing.mixins.LogbookMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.managing.mixins.LogbookMixin</span></code></a></p>
 <p>This class is a manager that controls the execution of its registered threads.</p>
 <p>Example using <a class="reference internal" href="#pathex.managing.synchronizer.Synchronizer.match" title="pathex.managing.synchronizer.Synchronizer.match"><code class="xref py py-meth docutils literal notranslate"><span class="pre">match()</span></code></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
@@ -135,13 +136,13 @@
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sync</span> <span class="o">=</span> <span class="n">Synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">func_a</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="n">shared_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">enter</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="c1"># print(&#39;Func a&#39;)</span>
 <span class="gp">... </span>    <span class="n">shared_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">func_b</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="n">shared_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">enter</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="c1"># print(&#39;Func b&#39;)</span>
@@ -152,7 +153,7 @@
 <span class="gp">... </span>    <span class="c1"># print(&#39;Func c&#39;)</span>
 <span class="gp">... </span>    <span class="n">shared_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">func_c</span> <span class="o">=</span> <span class="n">sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">func_c</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">func_c</span> <span class="o">=</span> <span class="n">sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">c</span><span class="p">)(</span><span class="n">func_c</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">func_c</span><span class="p">)</span>
@@ -223,12 +224,12 @@
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shared_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">get_top</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="n">x</span> <span class="o">=</span> <span class="n">shared_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -238,7 +239,7 @@
 <span class="gp">... </span>        <span class="k">return</span> <span class="n">x</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
 <span class="gp">... </span><span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">shared_buffer</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
@@ -256,7 +257,7 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.managing.synchronizer.Synchronizer.match">
-<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></span><a class="headerlink" href="#pathex.managing.synchronizer.Synchronizer.match" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></span><a class="headerlink" href="#pathex.managing.synchronizer.Synchronizer.match" title="Permalink to this definition"></a></dt>
 <dd><p>This method is used to wait for the availability of a single label.</p>
 <p>If the expression of the synchronizer is not able to generate the given object then the execution is blocked until the presence of another label in another task advances the associated expression’s automata, so it can generate the label given in this method.</p>
 <p>The direct use of this method should be exercised with caution, because it leads to non structured code. In fact, in an object oriented design, its use should be discouraged. This method is public just because it might be usefull in a very specific and extraordinary use case where an structured approach may be too expensive, harder to design or to maintain.</p>
@@ -270,27 +271,27 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.managing.synchronizer.Synchronizer.permits">
-<span class="sig-name descname"><span class="pre">permits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/synchronizer.html#Synchronizer.permits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.synchronizer.Synchronizer.permits" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">permits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/pathex/managing/synchronizer.html#Synchronizer.permits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.synchronizer.Synchronizer.permits" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.managing.synchronizer.Synchronizer.requests">
-<span class="sig-name descname"><span class="pre">requests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/synchronizer.html#Synchronizer.requests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.synchronizer.Synchronizer.requests" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">requests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/pathex/managing/synchronizer.html#Synchronizer.requests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.synchronizer.Synchronizer.requests" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="pathex.managing.process_synchronizer.html" class="btn btn-neutral float-left" title="pathex.managing.process_synchronizer module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pathex.managing.processes.html" class="btn btn-neutral float-left" title="pathex.managing.processes module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="pathex.managing.tag.html" class="btn btn-neutral float-right" title="pathex.managing.tag module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

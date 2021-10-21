@@ -1,0 +1,7 @@
+pathex.managing.mixins module
+=============================
+
+.. automodule:: pathex.managing.mixins
+   :members:
+   :undoc-members:
+   :show-inheritance:

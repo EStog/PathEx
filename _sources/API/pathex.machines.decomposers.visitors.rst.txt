@@ -22,5 +22,4 @@ Submodules
    pathex.machines.decomposers.visitors.object_visitor
    pathex.machines.decomposers.visitors.shuffle_repetition_visitor
    pathex.machines.decomposers.visitors.shuffle_visitor
-   pathex.machines.decomposers.visitors.synchronization_visitor
    pathex.machines.decomposers.visitors.union_visitor

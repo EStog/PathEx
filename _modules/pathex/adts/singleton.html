@@ -112,7 +112,7 @@
 
 <span class="sd">    &gt;&gt;&gt; @singleton</span>
 <span class="sd">    ... @dataclass(init=False)</span>
-<span class="sd">    ... class A:</span>
+<span class="sd">    ... class SingletonClass:</span>
 <span class="sd">    ...     attribute: int</span>
 <span class="sd">    ...</span>
 <span class="sd">    ...     def __init__(self, attribute: int):</span>
@@ -121,25 +121,33 @@
 <span class="sd">    Any call to the class will return the same object. The first call will make proper initialization, but subsequent calls will ignore the arguments. It is allowed to call the class without arguments after the first call. Use the class call instead or a previously assigned variable.</span>
 
 <span class="sd">    &gt;&gt;&gt; try:</span>
-<span class="sd">    ...     A()</span>
+<span class="sd">    ...     SingletonClass()</span>
 <span class="sd">    ... except TypeError:</span>
 <span class="sd">    ...     pass # Right!</span>
 <span class="sd">    ... else:</span>
 <span class="sd">    ...     print(&#39;Wrong&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; instance = A(23)</span>
-<span class="sd">    &gt;&gt;&gt; assert instance is A(44) is A() is A(11)</span>
-<span class="sd">    &gt;&gt;&gt; assert A().attribute == instance.attribute == 24</span>
-<span class="sd">    &gt;&gt;&gt; assert not hasattr(A(), &#39;instance&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; instance = SingletonClass(23)</span>
+<span class="sd">    &gt;&gt;&gt; assert instance is SingletonClass(44) is SingletonClass() is SingletonClass(11)</span>
+<span class="sd">    &gt;&gt;&gt; assert SingletonClass().attribute == instance.attribute == 24</span>
+<span class="sd">    &gt;&gt;&gt; assert not hasattr(SingletonClass(), &#39;instance&#39;)</span>
 
 <span class="sd">    Singleton classes can not be subclassed:</span>
 
 <span class="sd">    &gt;&gt;&gt; try:</span>
-<span class="sd">    ...     class B(A):</span>
+<span class="sd">    ...     class B(SingletonClass):</span>
 <span class="sd">    ...         pass</span>
 <span class="sd">    ... except TypeError:</span>
 <span class="sd">    ...     pass # Right!</span>
 <span class="sd">    ... else:</span>
 <span class="sd">    ...     print(&#39;Wrong!&#39;)</span>
+
+<span class="sd">    The representation of the singleton instance is constructed from the name of the class:</span>
+
+<span class="sd">    &gt;&gt;&gt; assert repr(SingletonClass()) == &#39;&lt;SINGLETON_CLASS&gt;&#39;</span>
+<span class="sd">    &gt;&gt;&gt; @singleton</span>
+<span class="sd">    ... class _A_Class:</span>
+<span class="sd">    ...     pass</span>
+<span class="sd">    &gt;&gt;&gt; assert repr(_A_Class()) == &#39;&lt;_A_CLASS&gt;&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">instance</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
@@ -180,14 +188,8 @@
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;_&#39;</span><span class="p">:</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">prefix</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[A-Z]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;_\g&lt;0&gt;&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}{</span><span class="n">s</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?&lt;!^)(?&lt;!_)[A-Z]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;_\g&lt;0&gt;&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="s1">&#39;__new__&#39;</span> <span class="ow">in</span> <span class="n">wrapped_class</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">:</span>
         <span class="n">wrapped_class</span><span class="o">.</span><span class="n">__old_new__</span> <span class="o">=</span> <span class="n">wrapped_class</span><span class="o">.</span><span class="fm">__new__</span>

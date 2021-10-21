@@ -77,14 +77,14 @@
 <span class="kn">from</span> <span class="nn">pathex.expressions.repetitions.concatenation_repetition</span> <span class="kn">import</span> \
     <span class="n">ConcatenationRepetition</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.terms.letter</span> <span class="kn">import</span> <span class="n">Letter</span>
-
-<span class="kn">from</span> <span class="nn">.decomposer</span> <span class="kn">import</span> <span class="n">Decomposer</span>
-<span class="kn">from</span> <span class="nn">.visitors.concatenation_repetition_visitor</span> <span class="kn">import</span> \
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">Decomposer</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.concatenation_repetition_visitor</span> <span class="kn">import</span> \
     <span class="n">concatenation_repetition_visitor</span>
-<span class="kn">from</span> <span class="nn">.visitors.concatenation_visitor</span> <span class="kn">import</span> <span class="n">concatenation_visitor</span>
-<span class="kn">from</span> <span class="nn">.visitors.letter_visitor</span> <span class="kn">import</span> <span class="n">letter_visitor</span>
-<span class="kn">from</span> <span class="nn">.visitors.object_visitor</span> <span class="kn">import</span> <span class="n">object_visitor</span>
-<span class="kn">from</span> <span class="nn">.visitors.union_visitor</span> <span class="kn">import</span> <span class="n">union_visitor</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.concatenation_visitor</span> <span class="kn">import</span> \
+    <span class="n">concatenation_visitor</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.letter_visitor</span> <span class="kn">import</span> <span class="n">letter_visitor</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.object_visitor</span> <span class="kn">import</span> <span class="n">object_visitor</span>
+<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.visitors.union_visitor</span> <span class="kn">import</span> <span class="n">union_visitor</span>
 
 
 <div class="viewcode-block" id="SimpleDecomposer"><a class="viewcode-back" href="../../../../API/pathex.machines.decomposers.simple_decomposer.html#pathex.machines.decomposers.simple_decomposer.SimpleDecomposer">[docs]</a><span class="k">class</span> <span class="nc">SimpleDecomposer</span><span class="p">(</span><span class="n">Decomposer</span><span class="p">):</span>
@@ -95,7 +95,7 @@
         <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Concatenation</span><span class="p">,</span> <span class="n">concatenation_visitor</span><span class="p">)</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Union</span><span class="p">,</span> <span class="n">union_visitor</span><span class="p">)</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">_transform</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">ConcatenationRepetition</span><span class="p">,</span>
-                              <span class="n">concatenation_repetition_visitor</span><span class="p">)</span></div>
+                                <span class="n">concatenation_repetition_visitor</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

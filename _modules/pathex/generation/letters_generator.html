@@ -90,7 +90,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
                  <span class="n">branches</span><span class="p">:</span> <span class="n">Branches</span><span class="p">,</span>
                  <span class="n">decomposer</span><span class="p">:</span> <span class="n">Decomposer</span><span class="p">,</span> <span class="n">words_generator</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">.words_generator</span> <span class="kn">import</span> <span class="n">WordsGenerator</span>
+        <span class="kn">from</span> <span class="nn">pathex.generation.words_generator</span> <span class="kn">import</span> <span class="n">WordsGenerator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="n">prefix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_decomposed</span> <span class="o">=</span> <span class="n">decomposer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_branches</span> <span class="o">=</span> <span class="n">branches</span>
