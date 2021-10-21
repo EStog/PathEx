@@ -20,15 +20,15 @@ class TraceChecker(Manager):
     >>> a, b, c = Tag.named('func_a', 'func_b', 'func_c')
     >>> trace_checker = TraceChecker((a+b+c)*...)
 
-    >>> @trace_checker.register(a)
+    >>> @trace_checker.region(a)
     ... def func_a():
     ...     return 'func_a'
 
-    >>> @trace_checker.register(b)
+    >>> @trace_checker.region(b)
     ... def func_b():
     ...     return 'func_b'
 
-    >>> @trace_checker.register(c)
+    >>> @trace_checker.region(c)
     ... def func_c():
     ...     return 'func_c'
 

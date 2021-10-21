@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from pathex.machines.simplifier import Simplifier as S
-
 from .nary_operators.concatenation import Concatenation as C
 from .nary_operators.difference import Difference as D
 from .nary_operators.intersection import Intersection as I

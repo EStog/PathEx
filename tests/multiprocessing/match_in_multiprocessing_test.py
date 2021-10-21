@@ -4,30 +4,33 @@ Example using :meth:`match`:
 
 import concurrent.futures as cf
 import os
-import os.path
 import sys
-from concurrent.futures import ProcessPoolExecutor
-from multiprocessing.managers import SyncManager
 
 # this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
 sys.path.append(os.getcwd())  # noqa
 
+from pathex import get_synchronizer
 from pathex.expressions.aliases import *
-from pathex.managing.process_synchronizer import (get_synchronizer,
-                                                  process_manager)
+
+exp = +C("Pi", "Pf", "Ci", "Cf")
+sync = get_synchronizer(exp, module_name=__name__)
 
 
-def producer(address, produced, x):
-    sync = get_synchronizer(address)
+def producer(produced, x):
     sync.match("Pi")
     produced.append(x)
+    print(f'Produced {x}')
+    print(f'produced={produced}')
     sync.match("Pf")
 
 
-def consumer(address, produced, consumed):
-    sync = get_synchronizer(address)
+def consumer(produced, consumed):
     sync.match("Ci")
-    consumed.append(produced.pop())
+    x = produced.pop()
+    consumed.append(x)
+    print(f'consumed {x}')
+    print(f'produced={produced}')
+    print(f'consumed={consumed}')
     sync.match("Cf")
 
 
@@ -35,25 +38,24 @@ if __name__ == "__main__":
     print('testing ``Synchronizer.match`` in multiprocessing...')
 
     # The following expression generates 'PiPfCiCf' | 'PiPfCiCfPiPfCiCf' | ...
-    exp = +C("Pi", "Pf", "Ci", "Cf")
-    psync = process_manager(exp, manager_class=SyncManager)
-    produced = psync.list()
-    consumed = psync.list()
+
+    manager = sync.get_mp_manager()
+    produced = manager.list()
+    consumed = manager.list()
 
     tasks = []
 
-    with ProcessPoolExecutor(max_workers=8) as executor:
+    with cf.ProcessPoolExecutor(max_workers=8) as executor:
         for _ in range(4):
-            tasks.append(executor.submit(consumer, psync.address, produced, consumed))
+            tasks.append(executor.submit(consumer, produced, consumed))
         for i in range(4):
-            tasks.append(executor.submit(producer, psync.address, produced, i))
+            tasks.append(executor.submit(producer, produced, i))
 
         done, not_done = cf.wait(tasks, timeout=None, return_when=cf.ALL_COMPLETED)
         assert not not_done
 
     assert list(produced) == []
     assert set(consumed) == {0, 1, 2, 3}
-    sync = get_synchronizer(psync.address)
     assert (
         sync.requests("Pi")
         == sync.permits("Pf")
@@ -61,3 +63,5 @@ if __name__ == "__main__":
         == sync.permits("Cf")
         == 4
     )
+
+    print('All right!')

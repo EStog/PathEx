@@ -2,7 +2,7 @@ from pathex.machines.decomposers.visitors.decorators import nary_operator_visito
 from pathex.expressions.nary_operators.concatenation import Concatenation
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 
-from ..decomposer import Branches, Decomposer
+from pathex.machines.decomposers.decomposer import Branches, Decomposer
 
 __all__ = ['concatenation_visitor']
 

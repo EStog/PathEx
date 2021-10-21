@@ -2,10 +2,9 @@ from __future__ import annotations
 
 from abc import ABC
 from math import inf
-from typing import Generator, TypeVar
+from typing import Collection, Generator, TypeVar
 
 from pathex.adts.collection_wrapper import CollectionWrapper
-from pathex.adts.containers.onion_collection import OnionCollection
 from pathex.generation.defaults import COMPLETE_WORDS, LANGUAGE_TYPE, WORD_TYPE
 from pathex.machines.decomposers.decomposer import Decomposer
 
@@ -81,7 +80,7 @@ class Expression(ABC):
         return WordsGenerator(self, decomposer)
 
     def get_eager_generator(self, decomposer: Decomposer | None = None,
-                            complete_words: bool = COMPLETE_WORDS) -> Generator[OnionCollection, None, None]:
+                            complete_words: bool = COMPLETE_WORDS) -> Generator[Collection, None, None]:
         if decomposer is None:
             from pathex.machines.decomposers.extended_decomposer_compalphabet import \
                 ExtendedDecomposerCompalphabet

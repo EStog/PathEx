@@ -1,12 +1,11 @@
 
 from pathex.expressions.nary_operators.concatenation import Concatenation
-from pathex.expressions.nary_operators.union import Union
 from pathex.expressions.repetitions.concatenation_repetition import \
     ConcatenationRepetition
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 from pathex.machines.decomposers.visitors.decorators import repetition_visitor
 
-from ..decomposer import Branches, Decomposer
+from pathex.machines.decomposers.decomposer import Branches, Decomposer
 
 __all__ = ['concatenation_repetition_visitor']
 

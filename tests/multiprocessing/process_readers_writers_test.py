@@ -5,45 +5,49 @@ Example of *readers* and *writers* processes
 import concurrent.futures as cf
 import os
 import sys
-from multiprocessing.managers import SyncManager
 
 # this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
 sys.path.append(os.getcwd())  # noqa
 
-from pathex import ProcessPoolExecutor, Tag, process_manager, process_register
+from pathex import Tag, get_synchronizer
 
 # Tags must be named and visible for import
 writer, reader = Tag.named("writer", "reader")
+exp = (writer | reader//...)+...
+sync = get_synchronizer(exp, module_name=__name__)
 
 
-@process_register(writer)
+@sync.region(writer)
 def append(shared_buffer, x):
     shared_buffer.append(x)
+    print(f'Appended {x}')
+    print(f'buffer={shared_buffer}')
 
 
-@process_register(reader)
+@sync.region(reader)
 def get_len(shared_buffer):
-    return len(shared_buffer)
+    length = len(shared_buffer)
+    print(f'Getting length: {length}')
+    return length
 
 
-@process_register(writer)
+@sync.region(writer)
 def appendleft(shared_buffer, x):
     shared_buffer.insert(0, x)
+    print(f'Inserted {x} in pos cero')
+    print(f'buffer={shared_buffer}')
 
 
 if __name__ == "__main__":
 
     print('testing ``process_register`` with readers-writers...')
 
-    exp = (writer | reader//...)+...
-
-    psync = process_manager(exp, manager_class=SyncManager)
-
-    shared_buffer = psync.list()
+    manager = sync.get_mp_manager()
+    shared_buffer = manager.list()
 
     tasks = []
 
-    with ProcessPoolExecutor(psync.address, max_workers=4) as executor:
+    with cf.ProcessPoolExecutor(max_workers=4) as executor:
         tasks.extend([executor.submit(get_len, shared_buffer) for _ in range(5)])
         tasks.extend([executor.submit(append, shared_buffer, 4) for _ in range(5)])
         tasks.extend([executor.submit(appendleft, shared_buffer, 3) for _ in range(5)])
@@ -52,3 +56,5 @@ if __name__ == "__main__":
         assert not not_done
 
     assert list(shared_buffer) == [3, 3, 3, 3, 3, 4, 4, 4, 4, 4]
+
+    print('All right!')

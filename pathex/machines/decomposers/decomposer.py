@@ -2,7 +2,7 @@ from abc import abstractmethod
 from functools import singledispatchmethod
 from typing import Iterable, Iterator, Sequence
 
-from ..machine import Machine
+from pathex.machines.machine import Machine
 
 __all__ = ['Branches', 'Decomposer', 'DecomposerMatch',
            'DecomposerMismatch', 'DecomposerMatchMismatch']
@@ -20,7 +20,7 @@ class Decomposer(Machine):
 
     def __init__(self, simplifier=None):
         if simplifier is None:
-            from ..simplifier import Simplifier
+            from pathex.machines.simplifier import Simplifier
             simplifier = Simplifier()
         self._simplifier = simplifier
 

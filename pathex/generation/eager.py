@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from typing import Generator
+from typing import Collection, Generator
 
 from pathex.adts.collection_wrapper import CollectionWrapper
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 from pathex.machines.decomposers.decomposer import Decomposer
 
-from .defaults import COLLECTION_TYPE, COMPLETE_WORDS, WORD_MAX_LENGTH
-from pathex.adts.containers.onion_collection import EmptyOnionCollection, NonemptyOnionCollection, OnionCollection
+from pathex.generation.defaults import COLLECTION_TYPE, COMPLETE_WORDS, WORD_MAX_LENGTH
+from pathex.adts.containers.onion_collection import EmptyOnionCollection, NonemptyOnionCollection
 
 __all__ = ['words_generator']
 
@@ -15,7 +15,7 @@ __all__ = ['words_generator']
 def words_generator(expression: object, machine: Decomposer,
                     complete_words: bool = COMPLETE_WORDS,
                     word_max_length: int = WORD_MAX_LENGTH,
-                    partial_words_type: type[CollectionWrapper] = COLLECTION_TYPE) -> Generator[OnionCollection, None, None]:
+                    partial_words_type: type[CollectionWrapper] = COLLECTION_TYPE) -> Generator[Collection, None, None]:
 
     partial_words = partial_words_type()
     partial_words.put((EmptyOnionCollection(), expression))

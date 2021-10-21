@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import inf
 
-from ..expression import Expression
+from pathex.expressions.expression import Expression
 
 __all__ = ['Repetition']
 

@@ -1,4 +1,4 @@
-from .nary_operator import NAryOperator
+from pathex.expressions.nary_operators.nary_operator import NAryOperator
 
 __all__ = ['Shuffle']
 

@@ -11,7 +11,7 @@ from pathex.expressions.terms.empty_word import EMPTY_WORD
 from pathex.machines.decomposers.visitors.misc import NOT_EMPTY_WORD_MESSAGE
 from pathex.expressions.nary_operators.nary_operator import NAryOperator
 
-from ..decomposer import Branches, Decomposer, DecomposerMatchMismatch
+from pathex.machines.decomposers.decomposer import Branches, Decomposer, DecomposerMatchMismatch
 
 _Decomposer = TypeVar('_Decomposer', bound=Decomposer)
 _NAryOperator = TypeVar('_NAryOperator', bound=NAryOperator)

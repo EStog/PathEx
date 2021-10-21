@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from collections import deque
 from contextlib import contextmanager
 from copy import copy
-from functools import wraps
+from typing import Hashable, Iterator
 
 from pathex.adts.containers.ordered_set import OrderedSet
 from pathex.adts.singleton import singleton
@@ -14,13 +14,15 @@ from pathex.expressions.nary_operators.intersection import Intersection
 from pathex.expressions.nary_operators.union import Union
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 from pathex.machines.decomposers.decomposer import DecomposerMatch
-
-from .tag import Tag
+from pathex.machines.decomposers.extended_decomposer_compalphabet import \
+    ExtendedDecomposerCompalphabet
+from pathex.managing.mixins import ManagerMixin
+from pathex.managing.tag import Tag
 
 __all__ = ['Manager']
 
 
-class Manager(ABC):
+class Manager(ManagerMixin):
     """A generic abstract manager.
     """
     @singleton
@@ -29,7 +31,9 @@ class Manager(ABC):
         """
         pass
 
-    def __init__(self, expression: Expression, decomposer: DecomposerMatch):
+    def __init__(self, expression: Expression, decomposer: DecomposerMatch | None):
+        if decomposer is None:
+            decomposer = ExtendedDecomposerCompalphabet()
         self._waiting_labels = self._WaitingLabelsFigure()
         self._expression: object = Intersection(
             self._waiting_labels, expression)
@@ -38,7 +42,7 @@ class Manager(ABC):
             waiting_label: object
             waiting_labels_figure = self._WaitingLabelsFigure()
 
-            def _waiting_labels_visitor(self, exp):
+            def _waiting_labels_visitor(self, _):
                 # return a visitor to the current waiting-labels expression
                 return self.transform(
                     Concatenation(self.waiting_label, self.waiting_labels_figure))
@@ -67,14 +71,14 @@ class Manager(ABC):
     def _when_not_matched(self, label: object,
                           label_info: object) -> object: ...
 
-    def match(self, label: object) -> object:
-        """ This method is used to notify to the manager the presence of a given label.
+    def match(self, label: Hashable) -> object:
+        """This method is used to notify to the manager the presence of a given label.
 
         The manager then see if this label is allowed by checking if the internal expression can generate the given label.
         If the label is allowed or not, a respective action is taken.
 
         Args:
-            label (object): The label to check for.
+            label (Hashable): The label to check for.
         """
         label_info = self._when_requested_match(label)
         if self._advance(label):
@@ -101,28 +105,8 @@ class Manager(ABC):
         else:
             return False
 
-    def register(self, tag: Tag, func=None):
-        """Decorator to mark a method as a region.
-
-        Args:
-            tag (Tag): A tag to mark the given funcion with.
-        """
-        def wrapper(wrapped):
-            @wraps(wrapped)
-            def f(*args, **kwargs):
-                self.match(tag.enter)
-                x = wrapped(*args, **kwargs)
-                self.match(tag.exit)
-                return x
-            return f
-
-        if func is None:
-            return wrapper
-        else:
-            return wrapper(func)
-
     @contextmanager
-    def region(self, tag: Tag):
+    def region(self, tag: Tag) -> Iterator[Manager]:
         """Context manager to mark a piece of code as a region.
 
         Args:

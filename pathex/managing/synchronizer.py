@@ -4,10 +4,10 @@ import threading
 
 from pathex.adts.concurrency.counted_condition import CountedCondition
 from pathex.expressions.expression import Expression
-from pathex.machines.decomposers.extended_decomposer_compalphabet import \
-    ExtendedDecomposerCompalphabet
+
 from pathex.machines.decomposers.decomposer import DecomposerMatch
 from pathex.managing.manager import Manager
+from pathex.managing.mixins import LogbookMixin
 
 __all__ = ['Synchronizer']
 
@@ -39,7 +39,7 @@ class LabelInfo(CountedCondition):
         self._permits += 1
 
 
-class Synchronizer(Manager):
+class Synchronizer(Manager, LogbookMixin):
     """This class is a manager that controls the execution of its registered threads.
 
     Example using :meth:`match`::
@@ -87,13 +87,13 @@ class Synchronizer(Manager):
 
         >>> sync = Synchronizer(exp)
 
-        >>> @sync.register(a)
+        >>> @sync.region(a)
         ... def func_a():
         ...     shared_list.append(a.enter)
         ...     # print('Func a')
         ...     shared_list.append(a.exit)
 
-        >>> @sync.register(b)
+        >>> @sync.region(b)
         ... def func_b():
         ...     shared_list.append(b.enter)
         ...     # print('Func b')
@@ -104,7 +104,7 @@ class Synchronizer(Manager):
         ...     # print('Func c')
         ...     shared_list.append(c.exit)
 
-        >>> func_c = sync.register(c, func_c)
+        >>> func_c = sync.region(c)(func_c)
 
         >>> with ThreadPoolExecutor(max_workers=4) as executor:
         ...     _ = executor.submit(func_c)
@@ -170,11 +170,11 @@ class Synchronizer(Manager):
 
         >>> shared_buffer = deque()
 
-        >>> @sync.register(writer)
+        >>> @sync.region(writer)
         ... def append(x):
         ...     shared_buffer.append(x)
 
-        >>> @sync.register(reader)
+        >>> @sync.region(reader)
         ... def get_top():
         ...     try:
         ...         x = shared_buffer[0]
@@ -183,7 +183,7 @@ class Synchronizer(Manager):
         ...     else:
         ...         return x
 
-        >>> @sync.register(writer)
+        >>> @sync.region(writer)
         ... def appendleft(x):
         ...     shared_buffer.appendleft(x)
 
@@ -196,11 +196,9 @@ class Synchronizer(Manager):
     """
 
     def __init__(self, exp: Expression,
-                 machine: DecomposerMatch | None = None,
+                 decomposer: DecomposerMatch | None = None,
                  lock_class=threading.Lock):
-        if machine is None:
-            machine = ExtendedDecomposerCompalphabet()
-        super().__init__(exp, machine)
+        super().__init__(exp, decomposer)
         self._lock_class = lock_class
         self._sync_lock = lock_class()
         self._labels: dict[object, LabelInfo] = {}
@@ -256,14 +254,14 @@ class Synchronizer(Manager):
             else:
                 break
 
-    def requests(self, label: object):
+    def requests(self, label: object) -> int:
         with self._sync_lock:
             if label_info := self._labels.get(label):
                 return label_info.get_requests()
             else:
                 return 0
 
-    def permits(self, label: object):
+    def permits(self, label: object) -> int:
         with self._sync_lock:
             if label_info := self._labels.get(label):
                 return label_info.get_permits()

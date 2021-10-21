@@ -2,16 +2,18 @@ from pathex.expressions.nary_operators.difference import Difference
 from pathex.expressions.nary_operators.intersection import Intersection
 from pathex.expressions.nary_operators.shuffle import Shuffle
 from pathex.expressions.repetitions.shuffle_repetition import ShuffleRepetition
-
-from .decomposer import DecomposerMatchMismatch
-from .match_functions import simple_match
-from .mismatch_functions import simple_mismatch
-from .simple_decomposer import SimpleDecomposer
-from .visitors.difference_visitor import difference_visitor
-from .visitors.intersection_visitor import intersection_visitor
-from .visitors.shuffle_repetition_visitor import shuffle_repetition_visitor
-from .visitors.shuffle_visitor import shuffle_visitor
-from .visitors.synchronization_visitor import synchronization_visitor
+from pathex.machines.decomposers.decomposer import DecomposerMatchMismatch
+from pathex.machines.decomposers.match_functions import simple_match
+from pathex.machines.decomposers.mismatch_functions import simple_mismatch
+from pathex.machines.decomposers.simple_decomposer import SimpleDecomposer
+from pathex.machines.decomposers.visitors.difference_visitor import \
+    difference_visitor
+from pathex.machines.decomposers.visitors.intersection_visitor import \
+    intersection_visitor
+from pathex.machines.decomposers.visitors.shuffle_repetition_visitor import \
+    shuffle_repetition_visitor
+from pathex.machines.decomposers.visitors.shuffle_visitor import \
+    shuffle_visitor
 
 
 class ExtendedDecomposer(SimpleDecomposer, DecomposerMatchMismatch):

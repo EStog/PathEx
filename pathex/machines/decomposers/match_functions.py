@@ -6,8 +6,7 @@ from pathex.expressions.nary_operators.union import Union
 from pathex.expressions.terms.alphabet import ALPHABET, Alphabet
 from pathex.expressions.terms.empty_word import EmptyWord
 from pathex.expressions.terms.letters_complement import LettersComplement
-
-from .decomposer import DecomposerMatch, Matches
+from pathex.machines.decomposers.decomposer import DecomposerMatch, Matches
 
 
 def simple_match(self: DecomposerMatch, value1: object, value2: object) -> Matches:

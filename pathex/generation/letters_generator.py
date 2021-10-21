@@ -20,7 +20,7 @@ class LettersGenerator(Iterator[object]):
     def __init__(self, prefix: tuple,
                  branches: Branches,
                  decomposer: Decomposer, words_generator):
-        from .words_generator import WordsGenerator
+        from pathex.generation.words_generator import WordsGenerator
         self._prefix = prefix
         self._decomposed = decomposer
         self._branches = branches

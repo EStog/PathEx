@@ -1,20 +1,20 @@
 from __future__ import annotations
 
 from functools import singledispatchmethod
-from pathex.adts.containers.ordered_set import OrderedSet
 from typing import Collection
 
 from pathex.adts.collection_wrapper import (CollectionWrapper,
                                             get_collection_wrapper)
+from pathex.adts.containers.ordered_set import OrderedSet
 from pathex.expressions.nary_operators.concatenation import Concatenation
 from pathex.expressions.nary_operators.intersection import Intersection
 from pathex.expressions.nary_operators.nary_operator import NAryOperator
 from pathex.expressions.nary_operators.union import Union
+from pathex.expressions.repetitions.concatenation_repetition import \
+    ConcatenationRepetition
 from pathex.expressions.repetitions.repetition import Repetition
-from pathex.expressions.repetitions.concatenation_repetition import ConcatenationRepetition
 from pathex.expressions.repetitions.shuffle_repetition import ShuffleRepetition
-
-from .machine import Machine
+from pathex.machines.machine import Machine
 
 
 class Simplifier(Machine):
@@ -63,11 +63,11 @@ class Simplifier(Machine):
         return self._give_nary(
             Concatenation,
             # tuple( Not necessary if NAryOperator does this in its constructor
-                self._flattened_with_repetition(
-                    Concatenation,
-                    self._args_transformer(exp.arguments))
-                    # )
-            )
+            self._flattened_with_repetition(
+                Concatenation,
+                self._args_transformer(exp.arguments))
+            # )
+        )
 
     def _transform_aci(self, exp: Union | Intersection):
         """Makes transformations considering the expression as an associative, conmutative and idempotent nary operator.
@@ -76,11 +76,11 @@ class Simplifier(Machine):
         return self._give_nary(
             cls,
             # tuple( Not necessary if NAryOperator does this in its constructor
-                self._flattened_without_repetition(
-                    cls,
-                    self._args_transformer(exp.arguments))
-                    # )
-            )
+            self._flattened_without_repetition(
+                cls,
+                self._args_transformer(exp.arguments))
+            # )
+        )
 
     transform.register(Union, _transform_aci)
     transform.register(Intersection, _transform_aci)

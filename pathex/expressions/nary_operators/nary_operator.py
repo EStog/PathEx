@@ -8,15 +8,6 @@ from pathex.expressions.expression import Expression
 
 __all__ = ['NAryOperator']
 
-_T_co = TypeVar('_T_co', covariant=True)
-
-
-class HashableCollection(Protocol[_T_co]):
-    def __hash__(self) -> int: ...
-    def __len__(self) -> int: ...
-    def __iter__(self) -> Iterator[_T_co]: ...
-
-
 @dataclass(frozen=True)
 class NAryOperator(Expression):
     """Abstract base class for nary operators.

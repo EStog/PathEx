@@ -1,4 +1,4 @@
-from ..expression import Expression
+from pathex.expressions.expression import Expression
 
 __all__ = ['Term']
 

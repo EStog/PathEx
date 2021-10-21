@@ -1,4 +1,4 @@
-from .nary_operator import NAryOperator
+from pathex.expressions.nary_operators.nary_operator import NAryOperator
 
 __all__ = ['Union']
 
@@ -8,7 +8,7 @@ class Union(NAryOperator):
 
     A union of languages is equivalent to the union of the sets.
 
-    >>> from pathex import Union as U
+    >>> from pathex.expressions.aliases import *
     >>> exp = U('abcd')
     >>> assert exp.get_language() == exp.get_generator().get_language() == {'a', 'b', 'c', 'd'}
 
@@ -16,4 +16,10 @@ class Union(NAryOperator):
 
     >>> exp = U('ab') | U('cd')
     >>> assert exp.get_language() == exp.get_generator().get_language() == {'a', 'b', 'c', 'd'}
+
+    >>> exp = C('ab') | C('cd')
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'ab', 'cd'}
+
+    >>> exp = 'a' | ( 'b' + U('cd') )
+    >>> assert exp.get_language() == exp.get_generator().get_language() == {'a', 'bc', 'bd'}
     """

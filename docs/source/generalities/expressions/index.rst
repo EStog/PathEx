@@ -52,7 +52,7 @@ There are various kinds of expressions, which general documentation may be found
 
 .. todo:: development
 
-   .. todo:: Add reference to external documentation about formal  languages
+   .. todo:: Add reference to external documentation about formal languages
 
 .. rubric:: Footnotes
 

@@ -14,12 +14,14 @@ This section roughly presents the main features of |pe|.
    Document :doc:`/semantics/index`
      A more rigorous explanation of |pe| features.
 
+.. highlight:: python
+
 Usage
 -----
 
 First, construct some tags that will represent the regions to be synchronized:
 
-.. testcode:: threads_register,threads_region,process_register,process_region
+.. testcode:: threads_decorator,threads_contextmanager,processes_decorator,processes_contextmanager
 
    from pathex import Tag
 
@@ -27,7 +29,7 @@ First, construct some tags that will represent the regions to be synchronized:
 
 Then, create an expression that specify the allowed paths of execution:
 
-.. testcode:: threads_register,threads_region,process_register,process_region
+.. testcode:: threads_decorator,threads_contextmanager,processes_decorator,processes_contextmanager
 
    exp = (writer | reader//...)+...
 
@@ -35,33 +37,32 @@ In this case the expression specify that a single writer or a set of concurrent 
 
 .. [#] ``{`` and ``}`` are used to specify a set of concurrent tasks.
 
-Using threads
-^^^^^^^^^^^^^
+Next, if you are using threads, create a :class:`~.Synchronizer` that will serve as a manager of the execution flow.
 
-Next, create a :class:`~.Synchronizer` that will serve as a manager of the execution flow. Threads as execution units will be explained in this section. The case of processes will be explained in :ref:`another <using-processes>`.
-
-In the case of threads as execution units, create a direct instance of :class:`~.Synchronizer`.
-
-.. testcode:: threads_register,threads_region
+.. testcode:: threads_decorator,threads_contextmanager
 
    from pathex import Synchronizer
 
    sync = Synchronizer(exp)
 
-There are two recommended ways of marking portions of code as tasks code to be synchronized. The first is by decorating functions with :meth:`~pathex.managing.manager.Manager.register`. For example:
+In the case of processes, use :func:`~.get_synchronizer` instead:
 
-.. testcode:: threads_register
+.. testcode:: processes_decorator,processes_contextmanager
 
-   from collections import deque
+   from pathex import Tag, get_synchronizer
 
-   shared_buffer = deque()
+   sync = get_synchronizer(exp)
 
-   @sync.register(writer)
-   def append(x):
+To mark a function as a region to be synchronized use :meth:`~pathex.managing.manager.Manager.region`. It can be used in the case of threads as well as in the case of processes. For example:
+
+.. testcode:: threads_decorator,processes_decorator
+
+   @sync.region(writer)
+   def append(shared_buffer, x):
        shared_buffer.append(x)
 
-   @sync.register(reader)
-   def get_top():
+   @sync.region(reader)
+   def get_top(shared_buffer):
        try:
           x = shared_buffer[0]
        except Exception:
@@ -69,23 +70,19 @@ There are two recommended ways of marking portions of code as tasks code to be s
        else:
           return x
 
-   @sync.register(writer)
-   def appendleft(x):
-       shared_buffer.appendleft(x)
+   @sync.region(writer)
+   def appendleft(shared_buffer, x):
+       shared_buffer.insert(0, x)
 
-The other way is by using context manager style with :meth:`~pathex.managing.manager.Manager.region`:
+:meth:`~pathex.managing.manager.Manager.region` can be used as a context manager as well:
 
-.. testcode:: threads_region
+.. testcode:: threads_contextmanager,processes_contextmanager
 
-   from collections import deque
-
-   shared_buffer = deque()
-
-   def append(x):
+   def append(shared_buffer, x):
        with sync.region(writer):
           shared_buffer.append(x)
 
-   def get_top():
+   def get_top(shared_buffer):
        with sync.region(reader):
           try:
              x = shared_buffer[0]
@@ -94,96 +91,56 @@ The other way is by using context manager style with :meth:`~pathex.managing.man
           else:
              return x
 
-   def appendleft(x):
+   def appendleft(shared_buffer, x):
        with sync.region(writer):
-          shared_buffer.appendleft(x)
-
-Once the regions to be synchronized are specified, threads may be started by using any of the known standard methods. For example, by using :class:`concurrent.futures.ThreadPoolExecutor`:
-
-.. testcode:: threads_register,threads_region
-
-   from concurrent.futures import ThreadPoolExecutor
-
-   with ThreadPoolExecutor() as executor:
-       _ = [executor.submit(append, 4) for _ in range(5)]
-       _ = [executor.submit(get_top) for _ in range(5)]
-       _ = [executor.submit(appendleft, 3) for _ in range(5)]
-
-   assert shared_buffer == deque([3, 3, 3, 3, 3, 4, 4, 4, 4, 4])
-
-The synchronizer will manage any request of execution and will allow only those in accord with the given expression and the current state of execution. The not allowed requests are suspended until the proper execution conditions are met.
-
-.. _using-processes:
-
-Using processes
-^^^^^^^^^^^^^^^
-
-If processes are to be used as execution units, the same general steps are to be followed but with some differences.
-
-To decorate functions use :func:`~.process_register` instead of :meth:`~pathex.managing.manager.Manager.register`:
-
-.. testcode:: process_register
-
-   from pathex import process_register
-
-   @process_register(writer)
-   def append(shared_buffer, x):
-       shared_buffer.append(x)
-
-   @process_register(reader)
-   def get_top(shared_buffer):
-       try:
-          x = shared_buffer[0]
-       except Exception:
-          return None
-       else:
-          return x
-
-   @process_register(writer)
-   def appendleft(shared_buffer, x):
-       shared_buffer.insert(0, x)
-
-To use context manager style use :func:`~.process_region` instead of :meth:`~pathex.managing.manager.Manager.region`:
-
-.. testcode:: process_region
-
-   from pathex import process_region
-
-   def append(shared_buffer, x):
-       with process_region(writer):
-           shared_buffer.append(x)
-
-   def get_top(shared_buffer):
-       with process_region(reader):
-          try:
-             x = shared_buffer[0]
-          except Exception:
-             return None
-          else:
-             return x
-
-   def appendleft(shared_buffer, x):
-       with process_region(writer):
           shared_buffer.insert(0, x)
 
-Then, in the ``__main__`` module get a :class:`~pathex.managing.process_synchronizer.SynchronizerProxy` by using :func:`~.process_synchronizer` and start processes by using any of the ways provided by |pe|. For example, with :class:`~pathex.managing.process_synchronizer.ProcessPoolExecutor`:
+In the shown examples ``shared_buffer`` may be specified as a global variable, but it is a good practice to define it as a parameter to use a common idiom no matter we are using threads or processes.
 
-.. testcode:: process_register,process_region
+Once the regions to be synchronized are specified, threads (or processes) may be started by using any of the known standard methods. For example, we may define a function to spawn the concurrent tasks, that takes an :class:`~concurrent.futures.Executor` class and a shared buffer:
+
+.. testcode:: threads_decorator,threads_contextmanager,processes_decorator,processes_contextmanager
+
+   def spawn_tasks(Executor, shared_buffer):
+       tasks = []
+
+       with Executor() as executor:
+          tasks.extend([executor.submit(append, shared_buffer, 4) for _ in range(5)])
+          tasks.extend([executor.submit(get_top, shared_buffer) for _ in range(5)])
+          tasks.extend([executor.submit(appendleft, shared_buffer, 3) for _ in range(5)])
+
+          done, not_done = cf.wait(tasks, timeout=None, return_when=cf.ALL_COMPLETED)
+          assert not not_done
+
+In the case of threads we use :class:`~concurrent.futures.ThreadPoolExecutor` and a simple :class:`~list` as a shared buffer:
+
+.. testcode:: threads_decorator,threads_contextmanager
 
    if __name__ == '__main__':
 
-      from multiprocessing.managers import SyncManager
+      from concurrent.futures import ThreadPoolExecutor
 
-      from pathex import process_synchronizer, ProcessPoolExecutor
+      shared_buffer = []
 
-      psync = process_manager(
-          exp, manager_class=SyncManager)
+      spawn_tasks(ThreadPoolExecutor, shared_buffer)
 
-      shared_buffer = psync.list()
+      assert shared_buffer == [3, 3, 3, 3, 3, 4, 4, 4, 4, 4]
 
-      with ProcessPoolExecutor(psync.address, max_workers=4) as executor:
-          _ = [executor.submit(append, shared_buffer, 4) for _ in range(5)]
-          _ = [executor.submit(get_top, shared_buffer) for _ in range(5)]
-          _ = [executor.submit(appendleft, shared_buffer, 3) for _ in range(5)]
+The condition ``if __name__ == '__main__': ...`` is not necessary for threads, but it is a good practice to use it as a common idiom for threads and processes.
+
+In the case of processes :class:`~concurrent.futures.ProcessPoolExecutor` may be used and a :ref:`proxy <multiprocessing-proxy_objects>` to a :class:`~list` obtained from the underlain :class:`~multiprocessing.managers.SyncManager` as the shared proxy.
+
+.. testcode:: processes_decorator,processes_contextmanager
+
+   if __name__ == '__main__':
+
+      from concurrent.futures import ProcessPoolExecutor
+
+      manager = sync.get_mp_manager()
+      shared = manager.list()
+
+      spawn_tasks(ProcessPoolExecutor, shared_buffer)
 
       assert list(shared_buffer) == [3, 3, 3, 3, 3, 4, 4, 4, 4, 4]
+
+In any case, the synchronizer will manage any request of execution and will allow only those in accord with the given expression and the current state of execution. Disallowed requests are suspended until the appropriate execution conditions are met.

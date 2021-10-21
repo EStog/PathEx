@@ -3,7 +3,7 @@ from pathex.machines.decomposers.visitors.decorators import nary_operator_visito
 from pathex.expressions.nary_operators.difference import Difference
 from pathex.expressions.terms.empty_word import EMPTY_WORD
 
-from ..decomposer import Branches, DecomposerMatchMismatch
+from pathex.machines.decomposers.decomposer import Branches, DecomposerMatchMismatch
 
 __all__ = ['difference_visitor']
 

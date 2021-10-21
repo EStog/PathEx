@@ -1,6 +1,5 @@
 from pathex.adts.singleton import singleton
-
-from .term import Term
+from pathex.expressions.terms.term import Term
 
 
 @singleton

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from ..decomposer import Branches, DecomposerMatch
-from .decorators import matching_operator_visitor, nary_operator_visitor
+from pathex.machines.decomposers.decomposer import Branches, DecomposerMatch
+from pathex.machines.decomposers.visitors.decorators import (
+    matching_operator_visitor, nary_operator_visitor)
 
 __all__ = ['intersection_visitor']
+
 
 @nary_operator_visitor
 @matching_operator_visitor

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from .nary_operators.union import Union
-from .terms.empty_word import EMPTY_WORD
+from pathex.expressions.nary_operators.union import Union
+from pathex.expressions.terms.empty_word import EMPTY_WORD
 
 __all__ = ['optional']
 

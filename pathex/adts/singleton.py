@@ -42,7 +42,7 @@ def singleton(wrapped_class: type[T]) -> type[T]:
 
     >>> @singleton
     ... @dataclass(init=False)
-    ... class A:
+    ... class SingletonClass:
     ...     attribute: int
     ...
     ...     def __init__(self, attribute: int):
@@ -51,25 +51,33 @@ def singleton(wrapped_class: type[T]) -> type[T]:
     Any call to the class will return the same object. The first call will make proper initialization, but subsequent calls will ignore the arguments. It is allowed to call the class without arguments after the first call. Use the class call instead or a previously assigned variable.
 
     >>> try:
-    ...     A()
+    ...     SingletonClass()
     ... except TypeError:
     ...     pass # Right!
     ... else:
     ...     print('Wrong')
-    >>> instance = A(23)
-    >>> assert instance is A(44) is A() is A(11)
-    >>> assert A().attribute == instance.attribute == 24
-    >>> assert not hasattr(A(), 'instance')
+    >>> instance = SingletonClass(23)
+    >>> assert instance is SingletonClass(44) is SingletonClass() is SingletonClass(11)
+    >>> assert SingletonClass().attribute == instance.attribute == 24
+    >>> assert not hasattr(SingletonClass(), 'instance')
 
     Singleton classes can not be subclassed:
 
     >>> try:
-    ...     class B(A):
+    ...     class B(SingletonClass):
     ...         pass
     ... except TypeError:
     ...     pass # Right!
     ... else:
     ...     print('Wrong!')
+
+    The representation of the singleton instance is constructed from the name of the class:
+
+    >>> assert repr(SingletonClass()) == '<SINGLETON_CLASS>'
+    >>> @singleton
+    ... class _A_Class:
+    ...     pass
+    >>> assert repr(_A_Class()) == '<_A_CLASS>'
     """
     instance = None
     lock = threading.Lock()
@@ -110,14 +118,8 @@ def singleton(wrapped_class: type[T]) -> type[T]:
 
     def __repr__(self):
         name = self.__class__.__name__
-        i = 0
-        while name[i] == '_':
-            i += 1
-        i += 1
-        prefix = name[:i]
-        name = name[i:]
-        s = re.sub(r'[A-Z]', r'_\g<0>', name)
-        return f"<{prefix}{s}>".upper()
+        s = re.sub(r'(?<!^)(?<!_)[A-Z]', r'_\g<0>', name)
+        return f"<{s}>".upper()
 
     if '__new__' in wrapped_class.__dict__:
         wrapped_class.__old_new__ = wrapped_class.__new__

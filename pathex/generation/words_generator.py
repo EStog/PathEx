@@ -4,11 +4,11 @@ from typing import Iterator
 
 from pathex.adts.collection_wrapper import CollectionWrapper
 from pathex.expressions.expression import Expression
+from pathex.generation.defaults import (ALTERNATIVES_TYPE, COLLECTION_TYPE,
+                                        COMPLETE_WORDS, LANGUAGE_TYPE,
+                                        WORD_MAX_LENGTH, WORD_TYPE)
+from pathex.generation.letters_generator import LettersGenerator
 from pathex.machines.decomposers.decomposer import Branches, Decomposer
-
-from .defaults import (ALTERNATIVES_TYPE, COLLECTION_TYPE, COMPLETE_WORDS,
-                       LANGUAGE_TYPE, WORD_MAX_LENGTH, WORD_TYPE)
-from .letters_generator import LettersGenerator
 
 # TODO: Concurrent-safe version.
 

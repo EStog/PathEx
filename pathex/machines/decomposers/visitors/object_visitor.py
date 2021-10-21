@@ -1,6 +1,5 @@
 from pathex.expressions.terms.empty_word import EMPTY_WORD
-
-from ..decomposer import Branches, Decomposer
+from pathex.machines.decomposers.decomposer import Branches, Decomposer
 
 __all__ = ['object_visitor']
 

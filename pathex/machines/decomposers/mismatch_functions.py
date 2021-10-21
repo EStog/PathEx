@@ -5,8 +5,7 @@ from pathex.expressions.nary_operators.union import Union
 from pathex.expressions.terms.alphabet import Alphabet
 from pathex.expressions.terms.empty_word import EmptyWord
 from pathex.expressions.terms.letters_complement import LettersComplement
-
-from .decomposer import DecomposerMismatch
+from pathex.machines.decomposers.decomposer import DecomposerMismatch
 
 Mismatches = Sequence[tuple[object, object]]
 

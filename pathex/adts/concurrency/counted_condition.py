@@ -14,7 +14,7 @@ class CountedCondition(Condition):
         self._waiting_count = 0
 
     @property
-    def waiting_count(self):
+    def waiting_count(self) -> int:
         return self._waiting_count
 
     def wait(self) -> bool:
