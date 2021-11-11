@@ -74,7 +74,6 @@
 
 <span class="kn">from</span> <span class="nn">pathex.adts.concurrency.counted_condition</span> <span class="kn">import</span> <span class="n">CountedCondition</span>
 <span class="kn">from</span> <span class="nn">pathex.expressions.expression</span> <span class="kn">import</span> <span class="n">Expression</span>
-
 <span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">DecomposerMatch</span>
 <span class="kn">from</span> <span class="nn">pathex.managing.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
 <span class="kn">from</span> <span class="nn">pathex.managing.mixins</span> <span class="kn">import</span> <span class="n">LogbookMixin</span>
@@ -144,50 +143,10 @@
 <span class="sd">        &gt;&gt;&gt; assert sync.requests(&#39;Pi&#39;) == sync.permits(&#39;Pf&#39;) == sync.requests(&#39;Ci&#39;) == sync.permits(&#39;Cf&#39;) == 4</span>
 <span class="sd">        &gt;&gt;&gt; assert sync.permits(&#39;WrongTag&#39;) == sync.requests(&#39;WrongTag&#39;) == 0</span>
 
-<span class="sd">    Example using :meth:`register`::</span>
+<span class="sd">    Example using :meth:`region` as a context manager::</span>
 
 <span class="sd">        &gt;&gt;&gt; from concurrent.futures import ThreadPoolExecutor</span>
 <span class="sd">        &gt;&gt;&gt; from pathex import Synchronizer, Tag</span>
-
-<span class="sd">        &gt;&gt;&gt; a, b, c = Tag.anonym(3)</span>
-
-<span class="sd">        &gt;&gt;&gt; exp = ( a + (b|c) )+2</span>
-
-<span class="sd">        &gt;&gt;&gt; shared_list = []</span>
-
-<span class="sd">        &gt;&gt;&gt; sync = Synchronizer(exp)</span>
-
-<span class="sd">        &gt;&gt;&gt; @sync.region(a)</span>
-<span class="sd">        ... def func_a():</span>
-<span class="sd">        ...     shared_list.append(a.enter)</span>
-<span class="sd">        ...     # print(&#39;Func a&#39;)</span>
-<span class="sd">        ...     shared_list.append(a.exit)</span>
-
-<span class="sd">        &gt;&gt;&gt; @sync.region(b)</span>
-<span class="sd">        ... def func_b():</span>
-<span class="sd">        ...     shared_list.append(b.enter)</span>
-<span class="sd">        ...     # print(&#39;Func b&#39;)</span>
-<span class="sd">        ...     shared_list.append(b.exit)</span>
-
-<span class="sd">        &gt;&gt;&gt; def func_c():</span>
-<span class="sd">        ...     shared_list.append(c.enter)</span>
-<span class="sd">        ...     # print(&#39;Func c&#39;)</span>
-<span class="sd">        ...     shared_list.append(c.exit)</span>
-
-<span class="sd">        &gt;&gt;&gt; func_c = sync.region(c)(func_c)</span>
-
-<span class="sd">        &gt;&gt;&gt; with ThreadPoolExecutor(max_workers=4) as executor:</span>
-<span class="sd">        ...     _ = executor.submit(func_c)</span>
-<span class="sd">        ...     _ = executor.submit(func_a)</span>
-<span class="sd">        ...     _ = executor.submit(func_b)</span>
-<span class="sd">        ...     _ = executor.submit(func_a)</span>
-
-<span class="sd">        &gt;&gt;&gt; from pathex.adts.util import SET_OF_TUPLES</span>
-<span class="sd">        &gt;&gt;&gt; allowed_paths = exp.get_language(SET_OF_TUPLES)</span>
-
-<span class="sd">        &gt;&gt;&gt; assert tuple(shared_list) in allowed_paths</span>
-
-<span class="sd">    Example using :meth:`region`::</span>
 
 <span class="sd">        &gt;&gt;&gt; a, b, c = Tag.named(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)</span>
 
@@ -225,6 +184,97 @@
 <span class="sd">        &gt;&gt;&gt; allowed_paths = exp.get_language(SET_OF_TUPLES)</span>
 
 <span class="sd">        &gt;&gt;&gt; assert tuple(shared_list) in allowed_paths</span>
+
+<span class="sd">    Example using :meth:`region` as a function decorator::</span>
+
+<span class="sd">        &gt;&gt;&gt; a, b, c = Tag.anonym(3)</span>
+
+<span class="sd">        &gt;&gt;&gt; exp = ( a + (b|c) )+2</span>
+
+<span class="sd">        &gt;&gt;&gt; shared_list = []</span>
+
+<span class="sd">        &gt;&gt;&gt; sync = Synchronizer(exp)</span>
+
+<span class="sd">        &gt;&gt;&gt; @sync.region(a)</span>
+<span class="sd">        ... def func_a():</span>
+<span class="sd">        ...     shared_list.append(a.enter)</span>
+<span class="sd">        ...     # print(&#39;Func a&#39;)</span>
+<span class="sd">        ...     shared_list.append(a.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; @sync.region(b)</span>
+<span class="sd">        ... def func_b():</span>
+<span class="sd">        ...     shared_list.append(b.enter)</span>
+<span class="sd">        ...     # print(&#39;Func b&#39;)</span>
+<span class="sd">        ...     shared_list.append(b.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; def func_c():</span>
+<span class="sd">        ...     shared_list.append(c.enter)</span>
+<span class="sd">        ...     # print(&#39;Func c&#39;)</span>
+<span class="sd">        ...     shared_list.append(c.exit)</span>
+
+<span class="sd">        &gt;&gt;&gt; # Another way of applying decoration</span>
+<span class="sd">        &gt;&gt;&gt; func_c = sync.region(c)(func_c)</span>
+
+<span class="sd">        &gt;&gt;&gt; with ThreadPoolExecutor(max_workers=4) as executor:</span>
+<span class="sd">        ...     _ = executor.submit(func_c)</span>
+<span class="sd">        ...     _ = executor.submit(func_a)</span>
+<span class="sd">        ...     _ = executor.submit(func_b)</span>
+<span class="sd">        ...     _ = executor.submit(func_a)</span>
+
+<span class="sd">        &gt;&gt;&gt; from pathex.adts.util import SET_OF_TUPLES</span>
+<span class="sd">        &gt;&gt;&gt; allowed_paths = exp.get_language(SET_OF_TUPLES)</span>
+
+<span class="sd">        &gt;&gt;&gt; assert tuple(shared_list) in allowed_paths</span>
+
+<span class="sd">    Example using :meth:`region` as a method decorator::</span>
+
+<span class="sd">        &gt;&gt;&gt; from collections.abc import Iterable</span>
+
+<span class="sd">        &gt;&gt;&gt; class SharedList:</span>
+<span class="sd">        ...     # expression and synchronizer may be defined</span>
+<span class="sd">        ...     # outside the class if necessary. Here, it are</span>
+<span class="sd">        ...     # inside the class just for convenience.</span>
+<span class="sd">        ...     a, b, c = Tag.anonym(3)</span>
+<span class="sd">        ...     exp = ( a + (b|c) )+2</span>
+<span class="sd">        ...     sync = Synchronizer(exp)</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...     def __init__(self):</span>
+<span class="sd">        ...         self._l = []</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...     def __iter__(self):</span>
+<span class="sd">        ...         return iter(self._l)</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...     @sync.region(a)</span>
+<span class="sd">        ...     def func_a(self):</span>
+<span class="sd">        ...         self._l.append(self.a.enter)</span>
+<span class="sd">        ...         # print(&#39;Func a&#39;)</span>
+<span class="sd">        ...         self._l.append(self.a.exit)</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...     @sync.region(b)</span>
+<span class="sd">        ...     def func_b(self):</span>
+<span class="sd">        ...         self._l.append(self.b.enter)</span>
+<span class="sd">        ...         # print(&#39;Func b&#39;)</span>
+<span class="sd">        ...         self._l.append(self.b.exit)</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...     def func_c(self):</span>
+<span class="sd">        ...         self._l.append(self.c.enter)</span>
+<span class="sd">        ...         # print(&#39;Func c&#39;)</span>
+<span class="sd">        ...         self._l.append(self.c.exit)</span>
+<span class="sd">        ...</span>
+<span class="sd">        ...     # Another way of applying decoration</span>
+<span class="sd">        ...     func_c = sync.region(c)(func_c)</span>
+
+<span class="sd">        &gt;&gt;&gt; shared = SharedList()</span>
+<span class="sd">        &gt;&gt;&gt; with ThreadPoolExecutor(max_workers=4) as executor:</span>
+<span class="sd">        ...     _ = executor.submit(shared.func_c)</span>
+<span class="sd">        ...     _ = executor.submit(shared.func_a)</span>
+<span class="sd">        ...     _ = executor.submit(shared.func_b)</span>
+<span class="sd">        ...     _ = executor.submit(shared.func_a)</span>
+
+<span class="sd">        &gt;&gt;&gt; from pathex.adts.util import SET_OF_TUPLES</span>
+<span class="sd">        &gt;&gt;&gt; allowed_paths = shared.exp.get_language(SET_OF_TUPLES)</span>
+
+<span class="sd">        &gt;&gt;&gt; assert tuple(shared) in allowed_paths</span>
 
 <span class="sd">    Example of *readers* and *writers* threads:</span>
 

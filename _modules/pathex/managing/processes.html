@@ -142,14 +142,15 @@
 
 
 <div class="viewcode-block" id="get_synchronizer"><a class="viewcode-back" href="../../../API/pathex.managing.processes.html#pathex.managing.processes.get_synchronizer">[docs]</a><span class="k">def</span> <span class="nf">get_synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">:</span> <span class="n">Expression</span><span class="p">,</span>
+                     <span class="n">module_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
                      <span class="n">decomposer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecomposerMatch</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                      <span class="n">lock_class</span><span class="o">=</span><span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">,</span>
                      <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">authkey</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                      <span class="n">manager_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">_T</span><span class="p">]</span> <span class="o">=</span> <span class="n">mpSyncManager</span><span class="p">,</span>
-                     <span class="n">module_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">warn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                     <span class="n">warn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                      <span class="n">ensure_clean_call</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProcessSynchronizer</span><span class="p">[</span><span class="n">_T</span><span class="p">]:</span>
 
-    <span class="k">if</span> <span class="n">module_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">module_name</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">module_name</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
         <span class="n">process_synchronizer</span> <span class="o">=</span> <span class="n">ProcessSynchronizer</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">authkey</span><span class="p">,</span> <span class="n">manager_class</span><span class="p">)</span>
 
         <span class="k">class</span> <span class="nc">ProcessManager</span><span class="p">(</span><span class="n">manager_class</span><span class="p">):</span>

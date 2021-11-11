@@ -15,6 +15,7 @@ Submodules
    pathex.managing.manager
    pathex.managing.mixins
    pathex.managing.processes
+   pathex.managing.region
    pathex.managing.synchronizer
    pathex.managing.tag
    pathex.managing.trace_checker

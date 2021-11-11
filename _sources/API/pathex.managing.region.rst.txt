@@ -1,0 +1,7 @@
+pathex.managing.region module
+=============================
+
+.. automodule:: pathex.managing.region
+   :members:
+   :undoc-members:
+   :show-inheritance:

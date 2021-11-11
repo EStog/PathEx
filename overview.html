@@ -112,7 +112,7 @@
 <p>In the case of processes, use <a class="reference internal" href="API/pathex.managing.processes.html#pathex.managing.processes.get_synchronizer" title="pathex.managing.processes.get_synchronizer"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_synchronizer()</span></code></a> instead:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">get_synchronizer</span>
 
-<span class="n">sync</span> <span class="o">=</span> <span class="n">get_synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+<span class="n">sync</span> <span class="o">=</span> <span class="n">get_synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>To mark a function as a region to be synchronized use <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a>. It can be used in the case of threads as well as in the case of processes. For example:</p>
