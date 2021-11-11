@@ -4,7 +4,6 @@ import threading
 
 from pathex.adts.concurrency.counted_condition import CountedCondition
 from pathex.expressions.expression import Expression
-
 from pathex.machines.decomposers.decomposer import DecomposerMatch
 from pathex.managing.manager import Manager
 from pathex.managing.mixins import LogbookMixin
@@ -74,50 +73,10 @@ class Synchronizer(Manager, LogbookMixin):
         >>> assert sync.requests('Pi') == sync.permits('Pf') == sync.requests('Ci') == sync.permits('Cf') == 4
         >>> assert sync.permits('WrongTag') == sync.requests('WrongTag') == 0
 
-    Example using :meth:`register`::
+    Example using :meth:`region` as a context manager::
 
         >>> from concurrent.futures import ThreadPoolExecutor
         >>> from pathex import Synchronizer, Tag
-
-        >>> a, b, c = Tag.anonym(3)
-
-        >>> exp = ( a + (b|c) )+2
-
-        >>> shared_list = []
-
-        >>> sync = Synchronizer(exp)
-
-        >>> @sync.region(a)
-        ... def func_a():
-        ...     shared_list.append(a.enter)
-        ...     # print('Func a')
-        ...     shared_list.append(a.exit)
-
-        >>> @sync.region(b)
-        ... def func_b():
-        ...     shared_list.append(b.enter)
-        ...     # print('Func b')
-        ...     shared_list.append(b.exit)
-
-        >>> def func_c():
-        ...     shared_list.append(c.enter)
-        ...     # print('Func c')
-        ...     shared_list.append(c.exit)
-
-        >>> func_c = sync.region(c)(func_c)
-
-        >>> with ThreadPoolExecutor(max_workers=4) as executor:
-        ...     _ = executor.submit(func_c)
-        ...     _ = executor.submit(func_a)
-        ...     _ = executor.submit(func_b)
-        ...     _ = executor.submit(func_a)
-
-        >>> from pathex.adts.util import SET_OF_TUPLES
-        >>> allowed_paths = exp.get_language(SET_OF_TUPLES)
-
-        >>> assert tuple(shared_list) in allowed_paths
-
-    Example using :meth:`region`::
 
         >>> a, b, c = Tag.named('a', 'b', 'c')
 
@@ -155,6 +114,97 @@ class Synchronizer(Manager, LogbookMixin):
         >>> allowed_paths = exp.get_language(SET_OF_TUPLES)
 
         >>> assert tuple(shared_list) in allowed_paths
+
+    Example using :meth:`region` as a function decorator::
+
+        >>> a, b, c = Tag.anonym(3)
+
+        >>> exp = ( a + (b|c) )+2
+
+        >>> shared_list = []
+
+        >>> sync = Synchronizer(exp)
+
+        >>> @sync.region(a)
+        ... def func_a():
+        ...     shared_list.append(a.enter)
+        ...     # print('Func a')
+        ...     shared_list.append(a.exit)
+
+        >>> @sync.region(b)
+        ... def func_b():
+        ...     shared_list.append(b.enter)
+        ...     # print('Func b')
+        ...     shared_list.append(b.exit)
+
+        >>> def func_c():
+        ...     shared_list.append(c.enter)
+        ...     # print('Func c')
+        ...     shared_list.append(c.exit)
+
+        >>> # Another way of applying decoration
+        >>> func_c = sync.region(c)(func_c)
+
+        >>> with ThreadPoolExecutor(max_workers=4) as executor:
+        ...     _ = executor.submit(func_c)
+        ...     _ = executor.submit(func_a)
+        ...     _ = executor.submit(func_b)
+        ...     _ = executor.submit(func_a)
+
+        >>> from pathex.adts.util import SET_OF_TUPLES
+        >>> allowed_paths = exp.get_language(SET_OF_TUPLES)
+
+        >>> assert tuple(shared_list) in allowed_paths
+
+    Example using :meth:`region` as a method decorator::
+
+        >>> from collections.abc import Iterable
+
+        >>> class SharedList:
+        ...     # expression and synchronizer may be defined
+        ...     # outside the class if necessary. Here, it are
+        ...     # inside the class just for convenience.
+        ...     a, b, c = Tag.anonym(3)
+        ...     exp = ( a + (b|c) )+2
+        ...     sync = Synchronizer(exp)
+        ...
+        ...     def __init__(self):
+        ...         self._l = []
+        ...
+        ...     def __iter__(self):
+        ...         return iter(self._l)
+        ...
+        ...     @sync.region(a)
+        ...     def func_a(self):
+        ...         self._l.append(self.a.enter)
+        ...         # print('Func a')
+        ...         self._l.append(self.a.exit)
+        ...
+        ...     @sync.region(b)
+        ...     def func_b(self):
+        ...         self._l.append(self.b.enter)
+        ...         # print('Func b')
+        ...         self._l.append(self.b.exit)
+        ...
+        ...     def func_c(self):
+        ...         self._l.append(self.c.enter)
+        ...         # print('Func c')
+        ...         self._l.append(self.c.exit)
+        ...
+        ...     # Another way of applying decoration
+        ...     func_c = sync.region(c)(func_c)
+
+        >>> shared = SharedList()
+        >>> with ThreadPoolExecutor(max_workers=4) as executor:
+        ...     _ = executor.submit(shared.func_c)
+        ...     _ = executor.submit(shared.func_a)
+        ...     _ = executor.submit(shared.func_b)
+        ...     _ = executor.submit(shared.func_a)
+
+        >>> from pathex.adts.util import SET_OF_TUPLES
+        >>> allowed_paths = shared.exp.get_language(SET_OF_TUPLES)
+
+        >>> assert tuple(shared) in allowed_paths
 
     Example of *readers* and *writers* threads:
 

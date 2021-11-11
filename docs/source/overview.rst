@@ -51,7 +51,7 @@ In the case of processes, use :func:`~.get_synchronizer` instead:
 
    from pathex import Tag, get_synchronizer
 
-   sync = get_synchronizer(exp)
+   sync = get_synchronizer(exp, __name__)
 
 To mark a function as a region to be synchronized use :meth:`~pathex.managing.manager.Manager.region`. It can be used in the case of threads as well as in the case of processes. For example:
 

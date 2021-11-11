@@ -72,14 +72,15 @@ class ProcessSynchronizer(Generic[_T], ManagerMixin, LogbookMixin):
 
 
 def get_synchronizer(exp: Expression,
+                     module_name: Optional[str],
                      decomposer: Optional[DecomposerMatch] = None,
                      lock_class=threading.Lock,
                      address: Optional[Address] = None, authkey=None,
                      manager_class: type[_T] = mpSyncManager,
-                     module_name: Optional[str] = None, warn=False,
+                     warn=False,
                      ensure_clean_call=False) -> ProcessSynchronizer[_T]:
 
-    if module_name is None or module_name == '__main__':
+    if module_name == '__main__':
         process_synchronizer = ProcessSynchronizer(address, authkey, manager_class)
 
         class ProcessManager(manager_class):

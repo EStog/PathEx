@@ -1,5 +1,5 @@
 """
-Example using :meth:`process_region`
+Example using :meth:`region` as context manager for processes
 """
 
 import concurrent.futures as cf
