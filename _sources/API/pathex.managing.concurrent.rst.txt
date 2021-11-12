@@ -1,0 +1,7 @@
+pathex.managing.concurrent module
+=================================
+
+.. automodule:: pathex.managing.concurrent
+   :members:
+   :undoc-members:
+   :show-inheritance:

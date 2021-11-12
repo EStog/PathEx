@@ -173,20 +173,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="n">Union</span><span class="p">(</span><span class="n">new_alternatives</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-<div class="viewcode-block" id="Manager.region"><a class="viewcode-back" href="../../../API/pathex.managing.manager.html#pathex.managing.manager.Manager.region">[docs]</a>    <span class="nd">@contextmanager</span>
-    <span class="k">def</span> <span class="nf">region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Manager</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Context manager to mark a piece of code as a region.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            tag (Tag): A tag to mark the corresponding block with.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">enter</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="bp">self</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">exit</span><span class="p">)</span></div></div>
+            <span class="k">return</span> <span class="kc">False</span></div>
 </pre></div>
 
            </div>

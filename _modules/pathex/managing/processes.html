@@ -70,101 +70,58 @@
   <h1>Source code for pathex.managing.processes</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
 <span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">BaseManager</span> <span class="k">as</span> <span class="n">mpBaseManager</span>
 <span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">BaseProxy</span> <span class="k">as</span> <span class="n">mpBaseProxy</span>
 <span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">SyncManager</span> <span class="k">as</span> <span class="n">mpSyncManager</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Hashable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
 
-<span class="kn">from</span> <span class="nn">pathex.expressions.expression</span> <span class="kn">import</span> <span class="n">Expression</span>
-<span class="kn">from</span> <span class="nn">pathex.machines.decomposers.decomposer</span> <span class="kn">import</span> <span class="n">DecomposerMatch</span>
-<span class="kn">from</span> <span class="nn">pathex.managing.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
 <span class="kn">from</span> <span class="nn">pathex.managing.mixins</span> <span class="kn">import</span> <span class="n">LogbookMixin</span><span class="p">,</span> <span class="n">ManagerMixin</span>
-<span class="kn">from</span> <span class="nn">pathex.managing.synchronizer</span> <span class="kn">import</span> <span class="n">Synchronizer</span>
+<span class="kn">from</span> <span class="nn">pathex.managing.synchronizer</span> <span class="kn">import</span> <span class="n">Synchronizer</span> <span class="k">as</span> <span class="n">peSynchronizer</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;get_synchronizer&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;get_mp_process_manager&#39;</span><span class="p">,</span> <span class="s1">&#39;SynchronizerProxy&#39;</span><span class="p">]</span>
 
 <span class="n">Address</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
 
 
-<span class="k">class</span> <span class="nc">ThreadSynchronizerProxy</span><span class="p">(</span><span class="n">mpBaseProxy</span><span class="p">,</span> <span class="n">ManagerMixin</span><span class="p">,</span> <span class="n">LogbookMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="SynchronizerProxy"><a class="viewcode-back" href="../../../API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy">[docs]</a><span class="k">class</span> <span class="nc">SynchronizerProxy</span><span class="p">(</span><span class="n">mpBaseProxy</span><span class="p">,</span> <span class="n">ManagerMixin</span><span class="p">,</span> <span class="n">LogbookMixin</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class represents is a :class:`proxy &lt;multiprocessing.managers.BaseProxy&gt;` to a :class:`~.Synchronizer` object.&quot;&quot;&quot;</span>
 
     <span class="n">_exposed_</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;requests&#39;</span><span class="p">,</span> <span class="s1">&#39;permits&#39;</span><span class="p">]</span>
 
-    <span class="n">region</span> <span class="o">=</span> <span class="n">Manager</span><span class="o">.</span><span class="n">region</span>
+<div class="viewcode-block" id="SynchronizerProxy.match"><a class="viewcode-back" href="../../../API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.match">[docs]</a>    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callmethod</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,))</span></div>
 
-    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callmethod</span><span class="p">(</span><span class="s1">&#39;match&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,))</span>
+<div class="viewcode-block" id="SynchronizerProxy.requests"><a class="viewcode-back" href="../../../API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.requests">[docs]</a>    <span class="k">def</span> <span class="nf">requests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callmethod</span><span class="p">(</span><span class="s1">&#39;requests&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,))</span></div>
 
-    <span class="k">def</span> <span class="nf">requests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callmethod</span><span class="p">(</span><span class="s1">&#39;requests&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,))</span>
-
-    <span class="k">def</span> <span class="nf">permits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callmethod</span><span class="p">(</span><span class="s1">&#39;permits&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,))</span>
+<div class="viewcode-block" id="SynchronizerProxy.permits"><a class="viewcode-back" href="../../../API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.permits">[docs]</a>    <span class="k">def</span> <span class="nf">permits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callmethod</span><span class="p">(</span><span class="s1">&#39;permits&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,))</span></div></div>
 
 
 <span class="n">_T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;_T&#39;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">mpBaseManager</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">ProcessSynchronizer</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">_T</span><span class="p">],</span> <span class="n">ManagerMixin</span><span class="p">,</span> <span class="n">LogbookMixin</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">],</span> <span class="n">authkey</span><span class="p">,</span> <span class="n">manager_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">_T</span><span class="p">]):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="o">=</span> <span class="n">address</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_authkey</span> <span class="o">=</span> <span class="n">authkey</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_manager_class</span> <span class="o">=</span> <span class="n">manager_class</span>
+<div class="viewcode-block" id="get_mp_process_manager"><a class="viewcode-back" href="../../../API/pathex.managing.processes.html#pathex.managing.processes.get_mp_process_manager">[docs]</a><span class="k">def</span> <span class="nf">get_mp_process_manager</span><span class="p">(</span><span class="n">module_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                           <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">authkey</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">manager_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">_T</span><span class="p">]</span> <span class="o">=</span> <span class="n">mpSyncManager</span><span class="p">,</span>
+                           <span class="n">ensure_clean_call</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">warn</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a ``manager_class`` according with ``module_name``. If ``module_name`` is ``__main__`` then the manager will be :meth:`started &lt;multiprocessing.managers.BaseManager.start&gt;` in the given address with the given authkey. If ``module_name`` is not ``__main__`` then the manager will be :meth:`connected &lt;multiprocessing.managers.BaseManager.connect&gt;` to the given ``address`` with the given ``authkey``.</span>
 
-    <span class="k">def</span> <span class="nf">get_mp_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_T</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;No multiprocessing manager defined&#39;</span><span class="p">)</span>
-
-    <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">_synchronizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">class</span> <span class="nc">ProcessManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_manager_class</span><span class="p">):</span>
-            <span class="n">get_synchronizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">ThreadSynchronizerProxy</span><span class="p">]</span>
-
-        <span class="n">ProcessManager</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">typeid</span><span class="o">=</span><span class="s1">&#39;get_synchronizer&#39;</span><span class="p">,</span>
-                                <span class="n">proxytype</span><span class="o">=</span><span class="n">ThreadSynchronizerProxy</span><span class="p">)</span>
-        <span class="n">manager</span> <span class="o">=</span> <span class="n">ProcessManager</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_address</span><span class="p">,</span> <span class="n">authkey</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_authkey</span><span class="p">)</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_synchronizer</span><span class="p">()</span>
-
-    <span class="n">region</span> <span class="o">=</span> <span class="n">Manager</span><span class="o">.</span><span class="n">region</span>
-
-    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="n">Hashable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synchronizer</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">requests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synchronizer</span><span class="o">.</span><span class="n">requests</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">permits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synchronizer</span><span class="o">.</span><span class="n">permits</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="get_synchronizer"><a class="viewcode-back" href="../../../API/pathex.managing.processes.html#pathex.managing.processes.get_synchronizer">[docs]</a><span class="k">def</span> <span class="nf">get_synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">:</span> <span class="n">Expression</span><span class="p">,</span>
-                     <span class="n">module_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-                     <span class="n">decomposer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DecomposerMatch</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">lock_class</span><span class="o">=</span><span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">,</span>
-                     <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Address</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">authkey</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                     <span class="n">manager_class</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">_T</span><span class="p">]</span> <span class="o">=</span> <span class="n">mpSyncManager</span><span class="p">,</span>
-                     <span class="n">warn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                     <span class="n">ensure_clean_call</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProcessSynchronizer</span><span class="p">[</span><span class="n">_T</span><span class="p">]:</span>
+<span class="sd">    If ``ensure_clean`` is ``True``, a :class:`~.RuntimeError` will be raised if ``address`` is ``None``.</span>
+<span class="sd">    If ``ensure_clean`` is ``False`` and ``warn`` is ``True`` a :class:`~.RuntimeWarning` will be emitted instead.</span>
+<span class="sd">    If ``ensure_clean`` is ``False`` and ``warn`` is ``False`` no error or warning will be emitted.</span>
+<span class="sd">    If ``warn`` is ``True`` and ``authkey`` is ``None``, a :class:`~.RuntimeWarning` will be emitted.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">class</span> <span class="nc">ProcessManager</span><span class="p">(</span><span class="n">manager_class</span><span class="p">):</span>
+        <span class="n">Synchronizer</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">peSynchronizer</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">module_name</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-        <span class="n">process_synchronizer</span> <span class="o">=</span> <span class="n">ProcessSynchronizer</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">authkey</span><span class="p">,</span> <span class="n">manager_class</span><span class="p">)</span>
-
-        <span class="k">class</span> <span class="nc">ProcessManager</span><span class="p">(</span><span class="n">manager_class</span><span class="p">):</span>
-            <span class="n">get_synchronizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">ThreadSynchronizerProxy</span><span class="p">]</span>
-
-        <span class="n">synchronizer</span> <span class="o">=</span> <span class="n">Synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="n">decomposer</span><span class="p">,</span> <span class="n">lock_class</span><span class="p">)</span>
-
-        <span class="n">ProcessManager</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">typeid</span><span class="o">=</span><span class="s1">&#39;get_synchronizer&#39;</span><span class="p">,</span>
-                                <span class="n">proxytype</span><span class="o">=</span><span class="n">ThreadSynchronizerProxy</span><span class="p">,</span>
-                                <span class="n">callable</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">synchronizer</span><span class="p">)</span>
+        <span class="n">ProcessManager</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">typeid</span><span class="o">=</span><span class="s1">&#39;Synchronizer&#39;</span><span class="p">,</span>
+                                <span class="n">proxytype</span><span class="o">=</span><span class="n">SynchronizerProxy</span><span class="p">,</span>
+                                <span class="n">callable</span><span class="o">=</span><span class="n">peSynchronizer</span><span class="p">)</span>
         <span class="n">manager</span> <span class="o">=</span> <span class="n">ProcessManager</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="n">authkey</span><span class="o">=</span><span class="n">authkey</span><span class="p">)</span>
         <span class="n">manager</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="n">process_synchronizer</span><span class="o">.</span><span class="n">get_mp_manager</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">manager</span>
-        <span class="n">process_synchronizer</span><span class="o">.</span><span class="n">_address</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">address</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">address</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;address should not be None in a child process. Specify an explicit address if using &quot;spawn&quot; or &quot;forkserver&quot; start methods&#39;</span>
@@ -175,9 +132,13 @@
         <span class="k">if</span> <span class="n">authkey</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">warn</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
                 <span class="s1">&#39;authkey is None but it must be specified explicitly when using &quot;spawn&quot; or &quot;forkserver&quot; start methods&#39;</span><span class="p">,</span> <span class="ne">RuntimeWarning</span><span class="p">)</span>
-        <span class="n">process_synchronizer</span> <span class="o">=</span> <span class="n">ProcessSynchronizer</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">authkey</span><span class="p">,</span> <span class="n">manager_class</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">process_synchronizer</span></div>
+        <span class="n">ProcessManager</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">typeid</span><span class="o">=</span><span class="s1">&#39;Synchronizer&#39;</span><span class="p">,</span>
+                                <span class="n">proxytype</span><span class="o">=</span><span class="n">SynchronizerProxy</span><span class="p">)</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">ProcessManager</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span> <span class="n">authkey</span><span class="o">=</span><span class="n">authkey</span><span class="p">)</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">manager</span></div>
 </pre></div>
 
            </div>

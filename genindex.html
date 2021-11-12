@@ -165,13 +165,15 @@
 </li>
       <li><a href="API/pathex.expressions.nary_operators.concatenation.html#pathex.expressions.nary_operators.concatenation.Concatenation">Concatenation (class in pathex.expressions.nary_operators.concatenation)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="API/pathex.machines.decomposers.visitors.concatenation_repetition_visitor.html#pathex.machines.decomposers.visitors.concatenation_repetition_visitor.concatenation_repetition_visitor">concatenation_repetition_visitor() (in module pathex.machines.decomposers.visitors.concatenation_repetition_visitor)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="API/pathex.machines.decomposers.visitors.concatenation_visitor.html#pathex.machines.decomposers.visitors.concatenation_visitor.concatenation_visitor">concatenation_visitor() (in module pathex.machines.decomposers.visitors.concatenation_visitor)</a>
 </li>
       <li><a href="API/pathex.expressions.repetitions.concatenation_repetition.html#pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition">ConcatenationRepetition (class in pathex.expressions.repetitions.concatenation_repetition)</a>
+</li>
+      <li><a href="API/pathex.managing.concurrent.html#pathex.managing.concurrent.Concurrent">Concurrent (class in pathex.managing.concurrent)</a>
 </li>
       <li><a href="API/pathex.adts.concurrency.counted_condition.html#pathex.adts.concurrency.counted_condition.CountedCondition">CountedCondition (class in pathex.adts.concurrency.counted_condition)</a>
 </li>
@@ -265,7 +267,7 @@
         <li><a href="API/pathex.generation.words_generator.html#pathex.generation.words_generator.WordsGenerator.get_language">(WordsGenerator method)</a>
 </li>
       </ul></li>
-      <li><a href="API/pathex.managing.processes.html#pathex.managing.processes.get_synchronizer">get_synchronizer() (in module pathex.managing.processes)</a>
+      <li><a href="API/pathex.managing.processes.html#pathex.managing.processes.get_mp_process_manager">get_mp_process_manager() (in module pathex.managing.processes)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -337,6 +339,8 @@
         <li><a href="API/pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin.match">(ManagerMixin method)</a>
 </li>
         <li><a href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.match">(Synchronizer method)</a>
+</li>
+        <li><a href="API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.match">(SynchronizerProxy method)</a>
 </li>
         <li><a href="API/pathex.managing.trace_checker.html#pathex.managing.trace_checker.TraceChecker.match">(TraceChecker method)</a>
 </li>
@@ -493,13 +497,13 @@
 </li>
         <li><a href="API/pathex.managing.html#module-pathex.managing">pathex.managing</a>
 </li>
+        <li><a href="API/pathex.managing.concurrent.html#module-pathex.managing.concurrent">pathex.managing.concurrent</a>
+</li>
         <li><a href="API/pathex.managing.manager.html#module-pathex.managing.manager">pathex.managing.manager</a>
 </li>
         <li><a href="API/pathex.managing.mixins.html#module-pathex.managing.mixins">pathex.managing.mixins</a>
 </li>
         <li><a href="API/pathex.managing.processes.html#module-pathex.managing.processes">pathex.managing.processes</a>
-</li>
-        <li><a href="API/pathex.managing.region.html#module-pathex.managing.region">pathex.managing.region</a>
 </li>
         <li><a href="API/pathex.managing.synchronizer.html#module-pathex.managing.synchronizer">pathex.managing.synchronizer</a>
 </li>
@@ -975,6 +979,13 @@
 </li>
       </ul></li>
       <li>
+    pathex.managing.concurrent
+
+      <ul>
+        <li><a href="API/pathex.managing.concurrent.html#module-pathex.managing.concurrent">module</a>
+</li>
+      </ul></li>
+      <li>
     pathex.managing.manager
 
       <ul>
@@ -993,13 +1004,6 @@
 
       <ul>
         <li><a href="API/pathex.managing.processes.html#module-pathex.managing.processes">module</a>
-</li>
-      </ul></li>
-      <li>
-    pathex.managing.region
-
-      <ul>
-        <li><a href="API/pathex.managing.region.html#module-pathex.managing.region">module</a>
 </li>
       </ul></li>
       <li>
@@ -1028,6 +1032,8 @@
       <ul>
         <li><a href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.permits">(Synchronizer method)</a>
 </li>
+        <li><a href="API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.permits">(SynchronizerProxy method)</a>
+</li>
       </ul></li>
       <li><a href="API/pathex.adts.collection_wrapper.html#pathex.adts.collection_wrapper.CollectionWrapper.pop">pop() (CollectionWrapper method)</a>
 
@@ -1047,9 +1053,7 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API/pathex.managing.region.html#pathex.managing.region.Region">Region (class in pathex.managing.region)</a>
-</li>
-      <li><a href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region">region() (Manager method)</a>
+      <li><a href="API/pathex.managing.concurrent.html#pathex.managing.concurrent.Concurrent.region">region() (Concurrent static method)</a>
 
       <ul>
         <li><a href="API/pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin.region">(ManagerMixin method)</a>
@@ -1057,16 +1061,18 @@
       </ul></li>
       <li><a href="API/pathex.generation.words_generator.html#pathex.generation.words_generator.WordsGenerator.register_partial_word">register_partial_word() (WordsGenerator method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="API/pathex.expressions.repetitions.repetition.html#pathex.expressions.repetitions.repetition.Repetition">Repetition (class in pathex.expressions.repetitions.repetition)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="API/pathex.machines.decomposers.visitors.decorators.html#pathex.machines.decomposers.visitors.decorators.repetition_visitor">repetition_visitor() (in module pathex.machines.decomposers.visitors.decorators)</a>
 </li>
       <li><a href="API/pathex.managing.mixins.html#pathex.managing.mixins.LogbookMixin.requests">requests() (LogbookMixin method)</a>
 
       <ul>
         <li><a href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.requests">(Synchronizer method)</a>
+</li>
+        <li><a href="API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.requests">(SynchronizerProxy method)</a>
 </li>
       </ul></li>
       <li><a href="API/pathex.generation.letters_generator.html#pathex.generation.letters_generator.LettersGenerator.restart">restart() (LettersGenerator method)</a>
@@ -1106,6 +1112,8 @@
       <li><a href="API/pathex.expressions.aliases.html#pathex.expressions.aliases.SR">SR (in module pathex.expressions.aliases)</a>
 </li>
       <li><a href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer">Synchronizer (class in pathex.managing.synchronizer)</a>
+</li>
+      <li><a href="API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy">SynchronizerProxy (class in pathex.managing.processes)</a>
 </li>
   </ul></td>
 </tr></table>

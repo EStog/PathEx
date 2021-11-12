@@ -41,6 +41,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#object-orientation">Object orientation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="generalities/index.html">Generalities</a></li>
@@ -109,13 +110,14 @@
 <span class="n">sync</span> <span class="o">=</span> <span class="n">Synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In the case of processes, use <a class="reference internal" href="API/pathex.managing.processes.html#pathex.managing.processes.get_synchronizer" title="pathex.managing.processes.get_synchronizer"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_synchronizer()</span></code></a> instead:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">get_synchronizer</span>
+<p>In the case of processes, use <a class="reference internal" href="API/pathex.managing.processes.html#pathex.managing.processes.get_mp_process_manager" title="pathex.managing.processes.get_mp_process_manager"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_mp_process_manager()</span></code></a> first to get a <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.managers.BaseManager" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseManager</span></code></a> that can be used to obtain a <a class="reference internal" href="API/pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy" title="pathex.managing.processes.SynchronizerProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">SynchronizerProxy</span></code></a> to be used in the same manner as a <a class="reference internal" href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">get_mp_process_manager</span>
 
-<span class="n">sync</span> <span class="o">=</span> <span class="n">get_synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">,</span> <span class="vm">__name__</span><span class="p">)</span>
+<span class="n">manager</span> <span class="o">=</span> <span class="n">get_mp_process_manager</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">sync</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">Synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>To mark a function as a region to be synchronized use <a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a>. It can be used in the case of threads as well as in the case of processes. For example:</p>
+<p>To mark a function as a region to be synchronized use <a class="reference internal" href="API/pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin.region" title="pathex.managing.mixins.ManagerMixin.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a>. It can be used in the case of threads as well as in the case of processes. For example:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -134,7 +136,7 @@
     <span class="n">shared_buffer</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="API/pathex.managing.manager.html#pathex.managing.manager.Manager.region" title="pathex.managing.manager.Manager.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a> can be used as a context manager as well:</p>
+<p><a class="reference internal" href="API/pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin.region" title="pathex.managing.mixins.ManagerMixin.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a> can be used as a context manager as well:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">shared_buffer</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
        <span class="n">shared_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -163,29 +165,26 @@
        <span class="n">tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">get_top</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
        <span class="n">tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">appendleft</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
 
-       <span class="n">done</span><span class="p">,</span> <span class="n">not_done</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_when</span><span class="o">=</span><span class="n">cf</span><span class="o">.</span><span class="n">ALL_COMPLETED</span><span class="p">)</span>
+       <span class="n">done</span><span class="p">,</span> <span class="n">not_done</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_when</span><span class="o">=</span><span class="n">cf</span><span class="o">.</span><span class="n">FIRST_EXCEPTION</span><span class="p">)</span>
        <span class="k">assert</span> <span class="ow">not</span> <span class="n">not_done</span>
 </pre></div>
 </div>
 <p>In the case of threads we use <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code></a> and a simple <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> as a shared buffer:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
 
-   <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+    <span class="n">shared_buffer</span> <span class="o">=</span> <span class="p">[]</span>
 
-   <span class="n">shared_buffer</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">spawn_tasks</span><span class="p">(</span><span class="n">ThreadPoolExecutor</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span>
 
-   <span class="n">spawn_tasks</span><span class="p">(</span><span class="n">ThreadPoolExecutor</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span>
-
-   <span class="k">assert</span> <span class="n">shared_buffer</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">shared_buffer</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The condition <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">'__main__':</span> <span class="pre">...</span></code> is not necessary for threads, but it is a good practice to use it as a common idiom for threads and processes.</p>
 <p>In the case of processes <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code></a> may be used and a <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing-proxy-objects" title="(in Python v3.10)"><span class="xref std std-ref">proxy</span></a> to a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> obtained from the underlain <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.managers.SyncManager" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SyncManager</span></code></a> as the shared proxy.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-
    <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span>
 
-   <span class="n">manager</span> <span class="o">=</span> <span class="n">sync</span><span class="o">.</span><span class="n">get_mp_manager</span><span class="p">()</span>
    <span class="n">shared</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
 
    <span class="n">spawn_tasks</span><span class="p">(</span><span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">shared_buffer</span><span class="p">)</span>
@@ -194,6 +193,64 @@
 </pre></div>
 </div>
 <p>In any case, the synchronizer will manage any request of execution and will allow only those in accord with the given expression and the current state of execution. Disallowed requests are suspended until the appropriate execution conditions are met.</p>
+</section>
+<section id="object-orientation">
+<h2>Object orientation<a class="headerlink" href="#object-orientation" title="Permalink to this headline"></a></h2>
+<p><a class="reference internal" href="API/pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin.region" title="pathex.managing.mixins.ManagerMixin.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a> may be used also as a method decorator. This means that classes with a specific <a class="reference internal" href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a> instance is possible. Also, it is possible to include a <a class="reference internal" href="API/pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer" title="pathex.managing.synchronizer.Synchronizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synchronizer</span></code></a> per instance. This can be done by using <a class="reference internal" href="API/pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin.region" title="pathex.managing.mixins.ManagerMixin.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">region()</span></code></a> directly, but a class <a class="reference internal" href="API/pathex.managing.concurrent.html#pathex.managing.concurrent.Concurrent" title="pathex.managing.concurrent.Concurrent"><code class="xref py py-class docutils literal notranslate"><span class="pre">Concurrent</span></code></a> may be used instead to alleviate this manual specification. In this case <a class="reference internal" href="API/pathex.managing.concurrent.html#pathex.managing.concurrent.Concurrent.region" title="pathex.managing.concurrent.Concurrent.region"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Concurrent.region()</span></code></a> should be used to decorate methods.</p>
+<p>For example, for the case of processes, a <code class="docutils literal notranslate"><span class="pre">SharedBuffer</span></code> may be defined as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">get_mp_process_manager</span>
+
+<span class="n">manager</span> <span class="o">=</span> <span class="n">get_mp_process_manager</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathex</span> <span class="kn">import</span> <span class="n">Concurrent</span>
+
+<span class="k">class</span> <span class="nc">SharedBuffer</span><span class="p">(</span><span class="n">Concurrent</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">_list</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">list</span><span class="p">()</span>
+       <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">manager</span><span class="o">.</span><span class="n">Synchronizer</span><span class="p">(</span><span class="n">exp</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+       <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">)</span>
+
+    <span class="nd">@Concurrent</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="nd">@Concurrent</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+       <span class="k">try</span><span class="p">:</span>
+          <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+       <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+          <span class="k">return</span> <span class="kc">None</span>
+       <span class="k">else</span><span class="p">:</span>
+          <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">appendleft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+      <span class="c1"># context manager may be used through self._sync attribute</span>
+      <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sync</span><span class="o">.</span><span class="n">region</span><span class="p">(</span><span class="n">writer</span><span class="p">):</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span>
+
+    <span class="n">shared</span> <span class="o">=</span> <span class="n">SharedBuffer</span><span class="p">()</span>
+
+    <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">with</span> <span class="n">Executor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+       <span class="n">tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">shared</span><span class="o">.</span><span class="n">append</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+       <span class="n">tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">shared</span><span class="o">.</span><span class="n">get_top</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+       <span class="n">tasks</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">shared</span><span class="o">.</span><span class="n">appendleft</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+
+       <span class="n">done</span><span class="p">,</span> <span class="n">not_done</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_when</span><span class="o">=</span><span class="n">cf</span><span class="o">.</span><span class="n">FIRST_EXCEPTION</span><span class="p">)</span>
+       <span class="k">assert</span> <span class="ow">not</span> <span class="n">not_done</span>
+
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">shared</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
 </section>
 </section>
 
