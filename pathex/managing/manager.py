@@ -104,16 +104,3 @@ class Manager(ManagerMixin):
             return True
         else:
             return False
-
-    @contextmanager
-    def region(self, tag: Tag) -> Iterator[Manager]:
-        """Context manager to mark a piece of code as a region.
-
-        Args:
-            tag (Tag): A tag to mark the corresponding block with.
-        """
-        self.match(tag.enter)
-        try:
-            yield self
-        finally:
-            self.match(tag.exit)

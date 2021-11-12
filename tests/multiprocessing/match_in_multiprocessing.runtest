@@ -9,11 +9,13 @@ import sys
 # this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
 sys.path.append(os.getcwd())  # noqa
 
-from pathex import get_synchronizer
+from pathex import get_mp_process_manager
 from pathex.expressions.aliases import *
 
+manager = get_mp_process_manager(module_name=__name__)
+
 exp = +C("Pi", "Pf", "Ci", "Cf")
-sync = get_synchronizer(exp, module_name=__name__)
+sync = manager.Synchronizer(exp)
 
 
 def producer(produced, x):
@@ -39,7 +41,6 @@ if __name__ == "__main__":
 
     # The following expression generates 'PiPfCiCf' | 'PiPfCiCfPiPfCiCf' | ...
 
-    manager = sync.get_mp_manager()
     produced = manager.list()
     consumed = manager.list()
 
@@ -51,7 +52,7 @@ if __name__ == "__main__":
         for i in range(4):
             tasks.append(executor.submit(producer, produced, i))
 
-        done, not_done = cf.wait(tasks, timeout=None, return_when=cf.ALL_COMPLETED)
+        done, not_done = cf.wait(tasks, timeout=None, return_when=cf.FIRST_EXCEPTION)
         assert not not_done
 
     assert list(produced) == []

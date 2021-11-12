@@ -9,12 +9,14 @@ import sys
 # this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
 sys.path.append(os.getcwd())  # noqa
 
-from pathex import Tag, get_synchronizer
+from pathex import Tag, get_mp_process_manager
+
+manager = get_mp_process_manager(module_name=__name__)
 
 # Tags must be named and visible for import
 writer, reader = Tag.named("writer", "reader")
 exp = (writer | reader//...)+...
-sync = get_synchronizer(exp, module_name=__name__)
+sync = manager.Synchronizer(exp)
 
 
 @sync.region(writer)
@@ -42,7 +44,6 @@ if __name__ == "__main__":
 
     print('testing ``process_register`` with readers-writers...')
 
-    manager = sync.get_mp_manager()
     shared_buffer = manager.list()
 
     tasks = []
@@ -52,7 +53,7 @@ if __name__ == "__main__":
         tasks.extend([executor.submit(append, shared_buffer, 4) for _ in range(5)])
         tasks.extend([executor.submit(appendleft, shared_buffer, 3) for _ in range(5)])
 
-        done, not_done = cf.wait(tasks, timeout=None, return_when=cf.ALL_COMPLETED)
+        done, not_done = cf.wait(tasks, timeout=None, return_when=cf.FIRST_EXCEPTION)
         assert not not_done
 
     assert list(shared_buffer) == [3, 3, 3, 3, 3, 4, 4, 4, 4, 4]

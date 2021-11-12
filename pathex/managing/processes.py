@@ -1,30 +1,23 @@
 from __future__ import annotations
 
-import threading
 import warnings
-from functools import cached_property
 from multiprocessing.managers import BaseManager as mpBaseManager
 from multiprocessing.managers import BaseProxy as mpBaseProxy
 from multiprocessing.managers import SyncManager as mpSyncManager
-from typing import Callable, Generic, Hashable, Optional, TypeVar
+from typing import Optional, TypeVar
 
-from pathex.expressions.expression import Expression
-from pathex.machines.decomposers.decomposer import DecomposerMatch
-from pathex.managing.manager import Manager
 from pathex.managing.mixins import LogbookMixin, ManagerMixin
-from pathex.managing.synchronizer import Synchronizer
+from pathex.managing.synchronizer import Synchronizer as peSynchronizer
 
-__all__ = ['get_synchronizer']
+__all__ = ['get_mp_process_manager', 'SynchronizerProxy']
 
 Address = tuple[str, int]
 
 
-class ThreadSynchronizerProxy(mpBaseProxy, ManagerMixin, LogbookMixin):
+class SynchronizerProxy(mpBaseProxy, ManagerMixin, LogbookMixin):
     """This class represents is a :class:`proxy <multiprocessing.managers.BaseProxy>` to a :class:`~.Synchronizer` object."""
 
     _exposed_ = ['match', 'region', 'requests', 'permits']
-
-    region = Manager.region
 
     def match(self, label: object) -> object:
         return self._callmethod('match', (label,))
@@ -39,62 +32,26 @@ class ThreadSynchronizerProxy(mpBaseProxy, ManagerMixin, LogbookMixin):
 _T = TypeVar('_T', bound=mpBaseManager)
 
 
-class ProcessSynchronizer(Generic[_T], ManagerMixin, LogbookMixin):
-    def __init__(self, address: Optional[Address], authkey, manager_class: type[_T]):
-        self._address = address
-        self._authkey = authkey
-        self._manager_class = manager_class
+def get_mp_process_manager(module_name: Optional[str],
+                           address: Optional[Address] = None, authkey=None,
+                           manager_class: type[_T] = mpSyncManager,
+                           ensure_clean_call=False, warn=False):
+    """Returns a ``manager_class`` according with ``module_name``. If ``module_name`` is ``__main__`` then the manager will be :meth:`started <multiprocessing.managers.BaseManager.start>` in the given address with the given authkey. If ``module_name`` is not ``__main__`` then the manager will be :meth:`connected <multiprocessing.managers.BaseManager.connect>` to the given ``address`` with the given ``authkey``.
 
-    def get_mp_manager(self) -> _T:
-        raise RuntimeError('No multiprocessing manager defined')
-
-    @cached_property
-    def _synchronizer(self):
-        class ProcessManager(self._manager_class):
-            get_synchronizer: Callable[[], ThreadSynchronizerProxy]
-
-        ProcessManager.register(typeid='get_synchronizer',
-                                proxytype=ThreadSynchronizerProxy)
-        manager = ProcessManager(address=self._address, authkey=self._authkey)
-        manager.connect()
-        return manager.get_synchronizer()
-
-    region = Manager.region
-
-    def match(self, label: Hashable) -> object:
-        return self._synchronizer.match(label)
-
-    def requests(self, label: object) -> int:
-        return self._synchronizer.requests(label)
-
-    def permits(self, label: object) -> int:
-        return self._synchronizer.permits(label)
-
-
-def get_synchronizer(exp: Expression,
-                     module_name: Optional[str],
-                     decomposer: Optional[DecomposerMatch] = None,
-                     lock_class=threading.Lock,
-                     address: Optional[Address] = None, authkey=None,
-                     manager_class: type[_T] = mpSyncManager,
-                     warn=False,
-                     ensure_clean_call=False) -> ProcessSynchronizer[_T]:
+    If ``ensure_clean`` is ``True``, a :class:`~.RuntimeError` will be raised if ``address`` is ``None``.
+    If ``ensure_clean`` is ``False`` and ``warn`` is ``True`` a :class:`~.RuntimeWarning` will be emitted instead.
+    If ``ensure_clean`` is ``False`` and ``warn`` is ``False`` no error or warning will be emitted.
+    If ``warn`` is ``True`` and ``authkey`` is ``None``, a :class:`~.RuntimeWarning` will be emitted.
+    """
+    class ProcessManager(manager_class):
+        Synchronizer: type[peSynchronizer]
 
     if module_name == '__main__':
-        process_synchronizer = ProcessSynchronizer(address, authkey, manager_class)
-
-        class ProcessManager(manager_class):
-            get_synchronizer: Callable[[], ThreadSynchronizerProxy]
-
-        synchronizer = Synchronizer(exp, decomposer, lock_class)
-
-        ProcessManager.register(typeid='get_synchronizer',
-                                proxytype=ThreadSynchronizerProxy,
-                                callable=lambda: synchronizer)
+        ProcessManager.register(typeid='Synchronizer',
+                                proxytype=SynchronizerProxy,
+                                callable=peSynchronizer)
         manager = ProcessManager(address=address, authkey=authkey)
         manager.start()
-        process_synchronizer.get_mp_manager = lambda: manager
-        process_synchronizer._address = manager.address
     else:
         if address is None:
             msg = 'address should not be None in a child process. Specify an explicit address if using "spawn" or "forkserver" start methods'
@@ -105,6 +62,10 @@ def get_synchronizer(exp: Expression,
         if authkey is None and warn:
             warnings.warn(
                 'authkey is None but it must be specified explicitly when using "spawn" or "forkserver" start methods', RuntimeWarning)
-        process_synchronizer = ProcessSynchronizer(address, authkey, manager_class)
 
-    return process_synchronizer
+        ProcessManager.register(typeid='Synchronizer',
+                                proxytype=SynchronizerProxy)
+        manager = ProcessManager(address=address, authkey=authkey)
+        manager.connect()
+
+    return manager

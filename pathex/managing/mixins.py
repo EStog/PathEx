@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Hashable
+from contextlib import contextmanager
+from typing import Hashable, Iterator
 
 from pathex.managing.tag import Tag
 
@@ -11,14 +12,18 @@ class ManagerMixin(ABC):
     @abstractmethod
     def match(self, label: Hashable) -> object: ...
 
-    def region(self, tag: Tag):
-        """Context manager and decorator to mark a piece of code as a region.
+    @contextmanager
+    def region(self, tag: Tag) -> Iterator[ManagerMixin]:
+        """Context manager to mark a piece of code as a region.
 
         Args:
             tag (Tag): A tag to mark the corresponding block with.
         """
-        from pathex.managing.region import Region
-        return Region(self, tag)
+        self.match(tag.enter)
+        try:
+            yield self
+        finally:
+            self.match(tag.exit)
 
 
 class LogbookMixin(ABC):

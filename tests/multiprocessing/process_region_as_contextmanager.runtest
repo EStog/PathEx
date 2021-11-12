@@ -9,13 +9,15 @@ import sys
 # this line is necessary if pathex is not installed and the program will be runned from the main folder of the project.
 sys.path.append(os.getcwd())  # nopep8
 
-from pathex import Tag, get_synchronizer
+from pathex import Tag, get_mp_process_manager
 from pathex.adts.util import SET_OF_TUPLES
+
+manager = get_mp_process_manager(module_name=__name__)
 
 # Tags must be named and visible for import
 a, b, c = Tag.named("a", "b", "c")
 exp = (a + (b | c)) + 2
-sync = get_synchronizer(exp, module_name=__name__)
+sync = manager.Synchronizer(exp)
 
 
 def func_a(shared_list):
@@ -45,7 +47,6 @@ if __name__ == "__main__":
     # logger = multiprocessing.log_to_stderr()
     # logger.setLevel(logging.INFO)
 
-    manager = sync.get_mp_manager()
     shared = manager.list()
 
     tasks = []
@@ -56,7 +57,7 @@ if __name__ == "__main__":
         tasks.append(executor.submit(func_b, shared))
         tasks.append(executor.submit(func_a, shared))
 
-        done, not_done = cf.wait(tasks, timeout=None, return_when=cf.ALL_COMPLETED)
+        done, not_done = cf.wait(tasks, timeout=None, return_when=cf.FIRST_EXCEPTION)
         assert not not_done
 
     allowed_paths = exp.get_language(SET_OF_TUPLES)

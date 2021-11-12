@@ -6,7 +6,7 @@ import re
 def test_multiprocessing():
     root = path.dirname(__file__)
     file_name = path.basename(__file__)
-    pattern = re.compile(r'.*\.py')
+    pattern = re.compile(r'.*\.runtest')
 
     for file in os.listdir(root):
         if file != file_name and re.match(pattern, file):
