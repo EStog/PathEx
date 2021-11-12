@@ -3,6 +3,7 @@ Example of *readers* and *writers* processes
 """
 
 import concurrent.futures as cf
+import multiprocessing as mp
 import os
 import sys
 
@@ -11,7 +12,7 @@ sys.path.append(os.getcwd())  # noqa
 
 from pathex import Tag, get_mp_process_manager
 
-manager = get_mp_process_manager(module_name=__name__)
+manager = get_mp_process_manager(module_name=__name__, address=('127.0.0.1', 50000))
 
 # Tags must be named and visible for import
 writer, reader = Tag.named("writer", "reader")
@@ -41,6 +42,7 @@ def appendleft(shared_buffer, x):
 
 
 if __name__ == "__main__":
+    ctx = mp.get_context('spawn')
 
     print('testing ``process_register`` with readers-writers...')
 
@@ -48,7 +50,7 @@ if __name__ == "__main__":
 
     tasks = []
 
-    with cf.ProcessPoolExecutor(max_workers=4) as executor:
+    with cf.ProcessPoolExecutor(max_workers=4, mp_context=ctx) as executor:
         tasks.extend([executor.submit(get_len, shared_buffer) for _ in range(5)])
         tasks.extend([executor.submit(append, shared_buffer, 4) for _ in range(5)])
         tasks.extend([executor.submit(appendleft, shared_buffer, 3) for _ in range(5)])
