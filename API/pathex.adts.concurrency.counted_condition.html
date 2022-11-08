@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,11 +75,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.adts.html">pathex.adts package</a> &raquo;</li>
-          <li><a href="pathex.adts.concurrency.html">pathex.adts.concurrency package</a> &raquo;</li>
-      <li>pathex.adts.concurrency.counted_condition module</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.adts.html">pathex.adts package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.adts.concurrency.html">pathex.adts.concurrency package</a></li>
+      <li class="breadcrumb-item active">pathex.adts.concurrency.counted_condition module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.adts.concurrency.counted_condition.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,11 +90,11 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.adts.concurrency.counted_condition">
-<span id="pathex-adts-concurrency-counted-condition-module"></span><h1>pathex.adts.concurrency.counted_condition module<a class="headerlink" href="#module-pathex.adts.concurrency.counted_condition" title="Permalink to this headline"></a></h1>
+<span id="pathex-adts-concurrency-counted-condition-module"></span><h1>pathex.adts.concurrency.counted_condition module<a class="headerlink" href="#module-pathex.adts.concurrency.counted_condition" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.adts.concurrency.counted_condition.CountedCondition">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CountedCondition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lock</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/adts/concurrency/counted_condition.html#CountedCondition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.concurrency.counted_condition.CountedCondition" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Condition" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Condition</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Condition" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Condition</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>lock_class</strong> (<em>Lock</em>) – This is the class of the underlying lock.</p>
@@ -100,7 +102,7 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.adts.concurrency.counted_condition.CountedCondition.notify">
-<span class="sig-name descname"><span class="pre">notify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/pathex/adts/concurrency/counted_condition.html#CountedCondition.notify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.concurrency.counted_condition.CountedCondition.notify" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">notify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/pathex/adts/concurrency/counted_condition.html#CountedCondition.notify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.concurrency.counted_condition.CountedCondition.notify" title="Permalink to this definition"></a></dt>
 <dd><p>Wake up one or more threads waiting on this condition, if any.</p>
 <p>If the calling thread has not acquired the lock when this method is
 called, a RuntimeError is raised.</p>
@@ -112,7 +114,7 @@ variable; it is a no-op if no threads are waiting.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.adts.concurrency.counted_condition.CountedCondition.wait">
-<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/pathex/adts/concurrency/counted_condition.html#CountedCondition.wait"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.concurrency.counted_condition.CountedCondition.wait" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="../_modules/pathex/adts/concurrency/counted_condition.html#CountedCondition.wait"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.concurrency.counted_condition.CountedCondition.wait" title="Permalink to this definition"></a></dt>
 <dd><p>Wait until notified or until a timeout occurs.</p>
 <p>If the calling thread has not acquired the lock when this method is
 called, a RuntimeError is raised.</p>
@@ -135,7 +137,7 @@ then used to restore the recursion level when the lock is reacquired.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pathex.adts.concurrency.counted_condition.CountedCondition.waiting_count">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">waiting_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></em><a class="headerlink" href="#pathex.adts.concurrency.counted_condition.CountedCondition.waiting_count" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">waiting_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#pathex.adts.concurrency.counted_condition.CountedCondition.waiting_count" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -153,7 +155,7 @@ then used to restore the recursion level when the lock is reacquired.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

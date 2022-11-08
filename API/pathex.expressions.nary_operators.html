@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,10 +75,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.expressions.html">pathex.expressions package</a> &raquo;</li>
-      <li>pathex.expressions.nary_operators package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.expressions.html">pathex.expressions package</a></li>
+      <li class="breadcrumb-item active">pathex.expressions.nary_operators package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.expressions.nary_operators.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,17 +89,55 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.expressions.nary_operators">
-<span id="pathex-expressions-nary-operators-package"></span><h1>pathex.expressions.nary_operators package<a class="headerlink" href="#module-pathex.expressions.nary_operators" title="Permalink to this headline"></a></h1>
+<span id="pathex-expressions-nary-operators-package"></span><h1>pathex.expressions.nary_operators package<a class="headerlink" href="#module-pathex.expressions.nary_operators" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html">pathex.expressions.nary_operators.concatenation module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.difference.html">pathex.expressions.nary_operators.difference module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html">pathex.expressions.nary_operators.intersection module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html">pathex.expressions.nary_operators.nary_operator module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.shuffle.html">pathex.expressions.nary_operators.shuffle module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.union.html">pathex.expressions.nary_operators.union module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html">pathex.expressions.nary_operators.concatenation module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html#pathex.expressions.nary_operators.concatenation.Concatenation"><code class="docutils literal notranslate"><span class="pre">Concatenation</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html#pathex.expressions.nary_operators.concatenation.Concatenation.arguments"><code class="docutils literal notranslate"><span class="pre">Concatenation.arguments</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.difference.html">pathex.expressions.nary_operators.difference module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.nary_operators.difference.html#pathex.expressions.nary_operators.difference.Difference"><code class="docutils literal notranslate"><span class="pre">Difference</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.difference.html#pathex.expressions.nary_operators.difference.Difference.arguments"><code class="docutils literal notranslate"><span class="pre">Difference.arguments</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html">pathex.expressions.nary_operators.intersection module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html#pathex.expressions.nary_operators.intersection.Intersection"><code class="docutils literal notranslate"><span class="pre">Intersection</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html#pathex.expressions.nary_operators.intersection.Intersection.arguments"><code class="docutils literal notranslate"><span class="pre">Intersection.arguments</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html">pathex.expressions.nary_operators.nary_operator module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html#pathex.expressions.nary_operators.nary_operator.NAryOperator"><code class="docutils literal notranslate"><span class="pre">NAryOperator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html#pathex.expressions.nary_operators.nary_operator.NAryOperator.args_head"><code class="docutils literal notranslate"><span class="pre">NAryOperator.args_head</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html#pathex.expressions.nary_operators.nary_operator.NAryOperator.args_tail"><code class="docutils literal notranslate"><span class="pre">NAryOperator.args_tail</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html#pathex.expressions.nary_operators.nary_operator.NAryOperator.arguments"><code class="docutils literal notranslate"><span class="pre">NAryOperator.arguments</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.shuffle.html">pathex.expressions.nary_operators.shuffle module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.nary_operators.shuffle.html#pathex.expressions.nary_operators.shuffle.Shuffle"><code class="docutils literal notranslate"><span class="pre">Shuffle</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.shuffle.html#pathex.expressions.nary_operators.shuffle.Shuffle.arguments"><code class="docutils literal notranslate"><span class="pre">Shuffle.arguments</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.union.html">pathex.expressions.nary_operators.union module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.nary_operators.union.html#pathex.expressions.nary_operators.union.Union"><code class="docutils literal notranslate"><span class="pre">Union</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.union.html#pathex.expressions.nary_operators.union.Union.arguments"><code class="docutils literal notranslate"><span class="pre">Union.arguments</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -114,7 +154,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

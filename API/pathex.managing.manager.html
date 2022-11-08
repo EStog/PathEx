@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -72,10 +74,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.managing.html">pathex.managing package</a> &raquo;</li>
-      <li>pathex.managing.manager module</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.managing.html">pathex.managing package</a></li>
+      <li class="breadcrumb-item active">pathex.managing.manager module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.managing.manager.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,17 +88,17 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.managing.manager">
-<span id="pathex-managing-manager-module"></span><h1>pathex.managing.manager module<a class="headerlink" href="#module-pathex.managing.manager" title="Permalink to this headline"></a></h1>
+<span id="pathex-managing-manager-module"></span><h1>pathex.managing.manager module<a class="headerlink" href="#module-pathex.managing.manager" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.managing.manager.Manager">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decomposer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DecomposerMatch</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/manager.html#Manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.manager.Manager" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin" title="pathex.managing.mixins.ManagerMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.managing.mixins.ManagerMixin</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pathex.expressions.expression.html#pathex.expressions.expression.Expression" title="pathex.expressions.expression.Expression"><span class="pre">Expression</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">decomposer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html#pathex.machines.decomposers.decomposer.DecomposerMatch" title="pathex.machines.decomposers.decomposer.DecomposerMatch"><span class="pre">DecomposerMatch</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/managing/manager.html#Manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.manager.Manager" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin" title="pathex.managing.mixins.ManagerMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">ManagerMixin</span></code></a></p>
 <p>A generic abstract manager.</p>
 <dl class="field-list simple">
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.managing.manager.Manager.match">
-<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Hashable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></span><a class="reference internal" href="../_modules/pathex/managing/manager.html#Manager.match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.manager.Manager.match" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Hashable" title="(in Python v3.11)"><span class="pre">Hashable</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><span class="pre">object</span></a></span></span><a class="reference internal" href="../_modules/pathex/managing/manager.html#Manager.match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.managing.manager.Manager.match" title="Permalink to this definition"></a></dt>
 <dd><p>This method is used to notify to the manager the presence of a given label.</p>
 <p>The manager then see if this label is allowed by checking if the internal expression can generate the given label.
 If the label is allowed or not, a respective action is taken.</p>
@@ -122,7 +124,7 @@ If the label is allowed or not, a respective action is taken.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,11 +75,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.expressions.html">pathex.expressions package</a> &raquo;</li>
-          <li><a href="pathex.expressions.repetitions.html">pathex.expressions.repetitions package</a> &raquo;</li>
-      <li>pathex.expressions.repetitions.concatenation_repetition module</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.expressions.html">pathex.expressions package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.expressions.repetitions.html">pathex.expressions.repetitions package</a></li>
+      <li class="breadcrumb-item active">pathex.expressions.repetitions.concatenation_repetition module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.expressions.repetitions.concatenation_repetition.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,11 +90,11 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.expressions.repetitions.concatenation_repetition">
-<span id="pathex-expressions-repetitions-concatenation-repetition-module"></span><h1>pathex.expressions.repetitions.concatenation_repetition module<a class="headerlink" href="#module-pathex.expressions.repetitions.concatenation_repetition" title="Permalink to this headline"></a></h1>
+<span id="pathex-expressions-repetitions-concatenation-repetition-module"></span><h1>pathex.expressions.repetitions.concatenation_repetition module<a class="headerlink" href="#module-pathex.expressions.repetitions.concatenation_repetition" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConcatenationRepetition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/expressions/repetitions/concatenation_repetition.html#ConcatenationRepetition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="pathex.expressions.repetitions.repetition.html#pathex.expressions.repetitions.repetition.Repetition" title="pathex.expressions.repetitions.repetition.Repetition"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.expressions.repetitions.repetition.Repetition</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ConcatenationRepetition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><span class="pre">object</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/expressions/repetitions/concatenation_repetition.html#ConcatenationRepetition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="pathex.expressions.repetitions.repetition.html#pathex.expressions.repetitions.repetition.Repetition" title="pathex.expressions.repetitions.repetition.Repetition"><code class="xref py py-class docutils literal notranslate"><span class="pre">Repetition</span></code></a></p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathex.expressions.aliases</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathex.expressions.non_fundamentals</span> <span class="kn">import</span> <span class="n">optional</span>
@@ -128,7 +130,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition.argument">
-<span class="sig-name descname"><span class="pre">argument</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></em><a class="headerlink" href="#pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition.argument" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">argument</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><span class="pre">object</span></a></em><a class="headerlink" href="#pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition.argument" title="Permalink to this definition"></a></dt>
 <dd><p>The expression to be repeated</p>
 </dd></dl>
 
@@ -147,7 +149,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

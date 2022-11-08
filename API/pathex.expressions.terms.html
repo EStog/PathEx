@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,10 +75,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.expressions.html">pathex.expressions package</a> &raquo;</li>
-      <li>pathex.expressions.terms package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.expressions.html">pathex.expressions package</a></li>
+      <li class="breadcrumb-item active">pathex.expressions.terms package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.expressions.terms.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,16 +89,37 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.expressions.terms">
-<span id="pathex-expressions-terms-package"></span><h1>pathex.expressions.terms package<a class="headerlink" href="#module-pathex.expressions.terms" title="Permalink to this headline"></a></h1>
+<span id="pathex-expressions-terms-package"></span><h1>pathex.expressions.terms package<a class="headerlink" href="#module-pathex.expressions.terms" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.alphabet.html">pathex.expressions.terms.alphabet module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.empty_word.html">pathex.expressions.terms.empty_word module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.letter.html">pathex.expressions.terms.letter module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.letters_complement.html">pathex.expressions.terms.letters_complement module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.term.html">pathex.expressions.terms.term module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.alphabet.html">pathex.expressions.terms.alphabet module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.terms.alphabet.html#pathex.expressions.terms.alphabet.Alphabet"><code class="docutils literal notranslate"><span class="pre">Alphabet</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.empty_word.html">pathex.expressions.terms.empty_word module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.terms.empty_word.html#pathex.expressions.terms.empty_word.EmptyWord"><code class="docutils literal notranslate"><span class="pre">EmptyWord</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.letter.html">pathex.expressions.terms.letter module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.terms.letter.html#pathex.expressions.terms.letter.Letter"><code class="docutils literal notranslate"><span class="pre">Letter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.letter.html#pathex.expressions.terms.letter.Letter.value"><code class="docutils literal notranslate"><span class="pre">Letter.value</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.letters_complement.html">pathex.expressions.terms.letters_complement module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.terms.letters_complement.html#pathex.expressions.terms.letters_complement.LettersComplement"><code class="docutils literal notranslate"><span class="pre">LettersComplement</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.letters_complement.html#pathex.expressions.terms.letters_complement.LettersComplement.letters"><code class="docutils literal notranslate"><span class="pre">LettersComplement.letters</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.term.html">pathex.expressions.terms.term module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.terms.term.html#pathex.expressions.terms.term.Term"><code class="docutils literal notranslate"><span class="pre">Term</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -113,7 +136,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

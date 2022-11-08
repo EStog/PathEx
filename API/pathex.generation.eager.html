@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -72,10 +74,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.generation.html">pathex.generation package</a> &raquo;</li>
-      <li>pathex.generation.eager module</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.generation.html">pathex.generation package</a></li>
+      <li class="breadcrumb-item active">pathex.generation.eager module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.generation.eager.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,10 +88,10 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.generation.eager">
-<span id="pathex-generation-eager-module"></span><h1>pathex.generation.eager module<a class="headerlink" href="#module-pathex.generation.eager" title="Permalink to this headline"></a></h1>
+<span id="pathex-generation-eager-module"></span><h1>pathex.generation.eager module<a class="headerlink" href="#module-pathex.generation.eager" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pathex.generation.eager.words_generator">
-<span class="sig-name descname"><span class="pre">words_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression:</span> <span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">machine:</span> <span class="pre">pathex.machines.decomposers.decomposer.Decomposer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complete_words:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word_max_length:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial_words_type:</span> <span class="pre">type[pathex.adts.collection_wrapper.CollectionWrapper]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pathex.adts.containers.ordered_set.OrderedSetWrapper'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">Collection</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.10)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pathex/generation/eager.html#words_generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.generation.eager.words_generator" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">words_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression:</span> <span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">machine:</span> <span class="pre">~pathex.machines.decomposers.decomposer.Decomposer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complete_words:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word_max_length:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partial_words_type:</span> <span class="pre">type[pathex.adts.collection_wrapper.CollectionWrapper]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'pathex.adts.containers.ordered_set.OrderedSetWrapper'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generator" title="(in Python v3.11)"><span class="pre">Generator</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Collection" title="(in Python v3.11)"><span class="pre">Collection</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pathex/generation/eager.html#words_generator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.generation.eager.words_generator" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 </dl>
 </dd></dl>
@@ -107,7 +109,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

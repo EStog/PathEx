@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,10 +75,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.machines.html">pathex.machines package</a> &raquo;</li>
-      <li>pathex.machines.simplifier module</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.machines.html">pathex.machines package</a></li>
+      <li class="breadcrumb-item active">pathex.machines.simplifier module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.machines.simplifier.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,16 +89,28 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.machines.simplifier">
-<span id="pathex-machines-simplifier-module"></span><h1>pathex.machines.simplifier module<a class="headerlink" href="#module-pathex.machines.simplifier" title="Permalink to this headline"></a></h1>
+<span id="pathex-machines-simplifier-module"></span><h1>pathex.machines.simplifier module<a class="headerlink" href="#module-pathex.machines.simplifier" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.machines.simplifier.Simplifier">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Simplifier</span></span><a class="reference internal" href="../_modules/pathex/machines/simplifier.html#Simplifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.machines.simplifier.Simplifier" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="pathex.machines.machine.html#pathex.machines.machine.Machine" title="pathex.machines.machine.Machine"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.machines.machine.Machine</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="pathex.machines.machine.html#pathex.machines.machine.Machine" title="pathex.machines.machine.Machine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Machine</span></code></a></p>
 <dl class="field-list simple">
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pathex.machines.simplifier.Simplifier.transform">
-<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><span class="pre">object</span></a></span></span><a class="reference internal" href="../_modules/pathex/machines/simplifier.html#Simplifier.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.machines.simplifier.Simplifier.transform" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><span class="pre">object</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.11)"><span class="pre">object</span></a></span></span><a class="reference internal" href="../_modules/pathex/machines/simplifier.html#Simplifier.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.machines.simplifier.Simplifier.transform" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html#pathex.expressions.nary_operators.nary_operator.NAryOperator" title="pathex.expressions.nary_operators.nary_operator.NAryOperator"><span class="pre">NAryOperator</span></a></span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html#pathex.expressions.nary_operators.concatenation.Concatenation" title="pathex.expressions.nary_operators.concatenation.Concatenation"><span class="pre">Concatenation</span></a></span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pathex.expressions.nary_operators.union.html#pathex.expressions.nary_operators.union.Union" title="pathex.expressions.nary_operators.union.Union"><span class="pre">Union</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html#pathex.expressions.nary_operators.intersection.Intersection" title="pathex.expressions.nary_operators.intersection.Intersection"><span class="pre">Intersection</span></a></span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pathex.expressions.nary_operators.union.html#pathex.expressions.nary_operators.union.Union" title="pathex.expressions.nary_operators.union.Union"><span class="pre">Union</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html#pathex.expressions.nary_operators.intersection.Intersection" title="pathex.expressions.nary_operators.intersection.Intersection"><span class="pre">Intersection</span></a></span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pathex.expressions.repetitions.repetition.html#pathex.expressions.repetitions.repetition.Repetition" title="pathex.expressions.repetitions.repetition.Repetition"><span class="pre">Repetition</span></a></span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pathex.expressions.repetitions.repetition.html#pathex.expressions.repetitions.repetition.Repetition" title="pathex.expressions.repetitions.repetition.Repetition"><span class="pre">Repetition</span></a></span></em><span class="sig-paren">)</span></dt>
 <dd><dl class="field-list simple">
 </dl>
 </dd></dl>
@@ -116,7 +130,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

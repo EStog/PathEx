@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,10 +75,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.adts.html">pathex.adts package</a> &raquo;</li>
-      <li>pathex.adts.singleton module</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.adts.html">pathex.adts package</a></li>
+      <li class="breadcrumb-item active">pathex.adts.singleton module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.adts.singleton.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,9 +89,9 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.adts.singleton">
-<span id="pathex-adts-singleton-module"></span><h1>pathex.adts.singleton module<a class="headerlink" href="#module-pathex.adts.singleton" title="Permalink to this headline"></a></h1>
+<span id="pathex-adts-singleton-module"></span><h1>pathex.adts.singleton module<a class="headerlink" href="#module-pathex.adts.singleton" title="Permalink to this heading"></a></h1>
 <section id="singleton-decorator">
-<h2>Singleton decorator<a class="headerlink" href="#singleton-decorator" title="Permalink to this headline"></a></h2>
+<h2>Singleton decorator<a class="headerlink" href="#singleton-decorator" title="Permalink to this heading"></a></h2>
 <dl class="field-list simple">
 <dt class="field-odd">Module</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">pathex.adts.singleton</span></code></p>
@@ -101,9 +103,10 @@
 <p class="admonition-title">Caution</p>
 <p>The content of this module is not intended to be part of the exposed main features of PathEx, so it may change in the future. It is documented here only because it is part of the current internal design of the library.</p>
 </div>
+</section>
 <dl class="py function">
 <dt class="sig sig-object py" id="pathex.adts.singleton.singleton">
-<span class="sig-name descname"><span class="pre">singleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrapped_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type[~</span> <span class="pre">T]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">type[~T]</span></span></span><a class="reference internal" href="../_modules/pathex/adts/singleton.html#singleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.singleton.singleton" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">singleton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrapped_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.11)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.11)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pathex/adts/singleton.html#singleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.singleton.singleton" title="Permalink to this definition"></a></dt>
 <dd><p>Makes a class singleton</p>
 <p>Use it as a decorator:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
@@ -154,7 +157,6 @@
 </dd></dl>
 
 </section>
-</section>
 
 
            </div>
@@ -167,7 +169,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

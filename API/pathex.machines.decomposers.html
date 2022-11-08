@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,10 +75,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.machines.html">pathex.machines package</a> &raquo;</li>
-      <li>pathex.machines.decomposers package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.machines.html">pathex.machines package</a></li>
+      <li class="breadcrumb-item active">pathex.machines.decomposers package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.machines.decomposers.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,24 +89,56 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.machines.decomposers">
-<span id="pathex-machines-decomposers-package"></span><h1>pathex.machines.decomposers package<a class="headerlink" href="#module-pathex.machines.decomposers" title="Permalink to this headline"></a></h1>
+<span id="pathex-machines-decomposers-package"></span><h1>pathex.machines.decomposers package<a class="headerlink" href="#module-pathex.machines.decomposers" title="Permalink to this heading"></a></h1>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.visitors.html">pathex.machines.decomposers.visitors package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.visitors.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.concatenation_repetition_visitor.html">pathex.machines.decomposers.visitors.concatenation_repetition_visitor module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.concatenation_visitor.html">pathex.machines.decomposers.visitors.concatenation_visitor module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.decorators.html">pathex.machines.decomposers.visitors.decorators module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.difference_visitor.html">pathex.machines.decomposers.visitors.difference_visitor module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.intersection_visitor.html">pathex.machines.decomposers.visitors.intersection_visitor module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.letter_visitor.html">pathex.machines.decomposers.visitors.letter_visitor module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.concatenation_repetition_visitor.html">pathex.machines.decomposers.visitors.concatenation_repetition_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.concatenation_repetition_visitor.html#pathex.machines.decomposers.visitors.concatenation_repetition_visitor.concatenation_repetition_visitor"><code class="docutils literal notranslate"><span class="pre">concatenation_repetition_visitor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.concatenation_visitor.html">pathex.machines.decomposers.visitors.concatenation_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.concatenation_visitor.html#pathex.machines.decomposers.visitors.concatenation_visitor.concatenation_visitor"><code class="docutils literal notranslate"><span class="pre">concatenation_visitor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.decorators.html">pathex.machines.decomposers.visitors.decorators module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.decorators.html#pathex.machines.decomposers.visitors.decorators.matching_operator_visitor"><code class="docutils literal notranslate"><span class="pre">matching_operator_visitor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.decorators.html#pathex.machines.decomposers.visitors.decorators.nary_operator_visitor"><code class="docutils literal notranslate"><span class="pre">nary_operator_visitor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.decorators.html#pathex.machines.decomposers.visitors.decorators.repetition_visitor"><code class="docutils literal notranslate"><span class="pre">repetition_visitor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.difference_visitor.html">pathex.machines.decomposers.visitors.difference_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.difference_visitor.html#pathex.machines.decomposers.visitors.difference_visitor.difference_visitor"><code class="docutils literal notranslate"><span class="pre">difference_visitor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.intersection_visitor.html">pathex.machines.decomposers.visitors.intersection_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.intersection_visitor.html#pathex.machines.decomposers.visitors.intersection_visitor.intersection_visitor"><code class="docutils literal notranslate"><span class="pre">intersection_visitor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.letter_visitor.html">pathex.machines.decomposers.visitors.letter_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.letter_visitor.html#pathex.machines.decomposers.visitors.letter_visitor.letter_visitor"><code class="docutils literal notranslate"><span class="pre">letter_visitor()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.misc.html">pathex.machines.decomposers.visitors.misc module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.object_visitor.html">pathex.machines.decomposers.visitors.object_visitor module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.shuffle_repetition_visitor.html">pathex.machines.decomposers.visitors.shuffle_repetition_visitor module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.shuffle_visitor.html">pathex.machines.decomposers.visitors.shuffle_visitor module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.union_visitor.html">pathex.machines.decomposers.visitors.union_visitor module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.object_visitor.html">pathex.machines.decomposers.visitors.object_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.object_visitor.html#pathex.machines.decomposers.visitors.object_visitor.object_visitor"><code class="docutils literal notranslate"><span class="pre">object_visitor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.shuffle_repetition_visitor.html">pathex.machines.decomposers.visitors.shuffle_repetition_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.shuffle_repetition_visitor.html#pathex.machines.decomposers.visitors.shuffle_repetition_visitor.shuffle_repetition_visitor"><code class="docutils literal notranslate"><span class="pre">shuffle_repetition_visitor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.shuffle_visitor.html">pathex.machines.decomposers.visitors.shuffle_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.shuffle_visitor.html#pathex.machines.decomposers.visitors.shuffle_visitor.shuffle_visitor"><code class="docutils literal notranslate"><span class="pre">shuffle_visitor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.visitors.union_visitor.html">pathex.machines.decomposers.visitors.union_visitor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.decomposers.visitors.union_visitor.html#pathex.machines.decomposers.visitors.union_visitor.union_visitor"><code class="docutils literal notranslate"><span class="pre">union_visitor()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -113,16 +147,75 @@
 </div>
 </section>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html">pathex.machines.decomposers.decomposer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer.html">pathex.machines.decomposers.extended_decomposer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_alphabet.html">pathex.machines.decomposers.extended_decomposer_alphabet module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_compalphabet.html">pathex.machines.decomposers.extended_decomposer_compalphabet module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html">pathex.machines.decomposers.match_functions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html">pathex.machines.decomposers.mismatch_functions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.simple_decomposer.html">pathex.machines.decomposers.simple_decomposer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html">pathex.machines.decomposers.decomposer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html#pathex.machines.decomposers.decomposer.Decomposer"><code class="docutils literal notranslate"><span class="pre">Decomposer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html#pathex.machines.decomposers.decomposer.Decomposer.transform"><code class="docutils literal notranslate"><span class="pre">Decomposer.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html#pathex.machines.decomposers.decomposer.DecomposerMatch"><code class="docutils literal notranslate"><span class="pre">DecomposerMatch</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html#pathex.machines.decomposers.decomposer.DecomposerMatch.match"><code class="docutils literal notranslate"><span class="pre">DecomposerMatch.match()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html#pathex.machines.decomposers.decomposer.DecomposerMatchMismatch"><code class="docutils literal notranslate"><span class="pre">DecomposerMatchMismatch</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html#pathex.machines.decomposers.decomposer.DecomposerMismatch"><code class="docutils literal notranslate"><span class="pre">DecomposerMismatch</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.decomposer.html#pathex.machines.decomposers.decomposer.DecomposerMismatch.mismatch"><code class="docutils literal notranslate"><span class="pre">DecomposerMismatch.mismatch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer.html">pathex.machines.decomposers.extended_decomposer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer.html#pathex.machines.decomposers.extended_decomposer.ExtendedDecomposer"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer.html#pathex.machines.decomposers.extended_decomposer.ExtendedDecomposer.match"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposer.match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer.html#pathex.machines.decomposers.extended_decomposer.ExtendedDecomposer.mismatch"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposer.mismatch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_alphabet.html">pathex.machines.decomposers.extended_decomposer_alphabet module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_alphabet.html#pathex.machines.decomposers.extended_decomposer_alphabet.ExtendedDecomposerAlphabet"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposerAlphabet</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_alphabet.html#pathex.machines.decomposers.extended_decomposer_alphabet.ExtendedDecomposerAlphabet.match"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposerAlphabet.match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_alphabet.html#pathex.machines.decomposers.extended_decomposer_alphabet.ExtendedDecomposerAlphabet.mismatch"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposerAlphabet.mismatch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_compalphabet.html">pathex.machines.decomposers.extended_decomposer_compalphabet module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_compalphabet.html#pathex.machines.decomposers.extended_decomposer_compalphabet.ExtendedDecomposerCompalphabet"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposerCompalphabet</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_compalphabet.html#pathex.machines.decomposers.extended_decomposer_compalphabet.ExtendedDecomposerCompalphabet.match"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposerCompalphabet.match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.decomposers.extended_decomposer_compalphabet.html#pathex.machines.decomposers.extended_decomposer_compalphabet.ExtendedDecomposerCompalphabet.mismatch"><code class="docutils literal notranslate"><span class="pre">ExtendedDecomposerCompalphabet.mismatch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html">pathex.machines.decomposers.match_functions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.general_match_alphabet"><code class="docutils literal notranslate"><span class="pre">general_match_alphabet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.general_match_compalphabet"><code class="docutils literal notranslate"><span class="pre">general_match_compalphabet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.general_match_completters"><code class="docutils literal notranslate"><span class="pre">general_match_completters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.match_alphabet"><code class="docutils literal notranslate"><span class="pre">match_alphabet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.match_compalphabet"><code class="docutils literal notranslate"><span class="pre">match_compalphabet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.match_completters"><code class="docutils literal notranslate"><span class="pre">match_completters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.match_with_"><code class="docutils literal notranslate"><span class="pre">match_with_()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.match_functions.html#pathex.machines.decomposers.match_functions.simple_match"><code class="docutils literal notranslate"><span class="pre">simple_match()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html">pathex.machines.decomposers.mismatch_functions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html#pathex.machines.decomposers.mismatch_functions.general_mismatch_alphabet"><code class="docutils literal notranslate"><span class="pre">general_mismatch_alphabet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html#pathex.machines.decomposers.mismatch_functions.general_mismatch_compalphabet"><code class="docutils literal notranslate"><span class="pre">general_mismatch_compalphabet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html#pathex.machines.decomposers.mismatch_functions.general_mismatch_completters"><code class="docutils literal notranslate"><span class="pre">general_mismatch_completters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html#pathex.machines.decomposers.mismatch_functions.mismatch_alphabet"><code class="docutils literal notranslate"><span class="pre">mismatch_alphabet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html#pathex.machines.decomposers.mismatch_functions.mismatch_compalphabet"><code class="docutils literal notranslate"><span class="pre">mismatch_compalphabet()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html#pathex.machines.decomposers.mismatch_functions.mismatch_completters"><code class="docutils literal notranslate"><span class="pre">mismatch_completters()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html#pathex.machines.decomposers.mismatch_functions.mismatch_with_"><code class="docutils literal notranslate"><span class="pre">mismatch_with_()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.mismatch_functions.html#pathex.machines.decomposers.mismatch_functions.simple_mismatch"><code class="docutils literal notranslate"><span class="pre">simple_mismatch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.machines.decomposers.simple_decomposer.html">pathex.machines.decomposers.simple_decomposer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.machines.decomposers.simple_decomposer.html#pathex.machines.decomposers.simple_decomposer.SimpleDecomposer"><code class="docutils literal notranslate"><span class="pre">SimpleDecomposer</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -139,7 +232,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

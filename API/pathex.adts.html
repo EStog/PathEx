@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,9 +75,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-      <li>pathex.adts package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+      <li class="breadcrumb-item active">pathex.adts package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.adts.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,22 +88,33 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.adts">
-<span id="pathex-adts-package"></span><h1>pathex.adts package<a class="headerlink" href="#module-pathex.adts" title="Permalink to this headline"></a></h1>
+<span id="pathex-adts-package"></span><h1>pathex.adts package<a class="headerlink" href="#module-pathex.adts" title="Permalink to this heading"></a></h1>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pathex.adts.concurrency.html">pathex.adts.concurrency package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.adts.concurrency.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.adts.concurrency.counted_condition.html">pathex.adts.concurrency.counted_condition module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.concurrency.counted_condition.html">pathex.adts.concurrency.counted_condition module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.concurrency.counted_condition.html#pathex.adts.concurrency.counted_condition.CountedCondition"><code class="docutils literal notranslate"><span class="pre">CountedCondition</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pathex.adts.containers.html">pathex.adts.containers package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.adts.containers.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.onion_collection.html">pathex.adts.containers.onion_collection module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html">pathex.adts.containers.ordered_set module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.onion_collection.html">pathex.adts.containers.onion_collection module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.containers.onion_collection.html#pathex.adts.containers.onion_collection.EmptyOnionCollection"><code class="docutils literal notranslate"><span class="pre">EmptyOnionCollection</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.containers.onion_collection.html#pathex.adts.containers.onion_collection.NonemptyOnionCollection"><code class="docutils literal notranslate"><span class="pre">NonemptyOnionCollection</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.containers.onion_collection.html#pathex.adts.containers.onion_collection.OnionCollection"><code class="docutils literal notranslate"><span class="pre">OnionCollection</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html">pathex.adts.containers.ordered_set module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet"><code class="docutils literal notranslate"><span class="pre">OrderedSet</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -110,16 +123,30 @@
 </div>
 </section>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pathex.adts.collection_wrapper.html">pathex.adts.collection_wrapper module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.adts.collection_wrapper.html">pathex.adts.collection_wrapper module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.collection_wrapper.html#pathex.adts.collection_wrapper.CollectionWrapper"><code class="docutils literal notranslate"><span class="pre">CollectionWrapper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.collection_wrapper.html#pathex.adts.collection_wrapper.CollectionWrapper.extend"><code class="docutils literal notranslate"><span class="pre">CollectionWrapper.extend()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.collection_wrapper.html#pathex.adts.collection_wrapper.CollectionWrapper.pop"><code class="docutils literal notranslate"><span class="pre">CollectionWrapper.pop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.collection_wrapper.html#pathex.adts.collection_wrapper.CollectionWrapper.put"><code class="docutils literal notranslate"><span class="pre">CollectionWrapper.put()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.collection_wrapper.html#pathex.adts.collection_wrapper.CollectionWrapper.PopException"><code class="docutils literal notranslate"><span class="pre">CollectionWrapper.PopException</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="pathex.adts.singleton.html">pathex.adts.singleton module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.adts.singleton.html#singleton-decorator">Singleton decorator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.singleton.html#pathex.adts.singleton.singleton"><code class="docutils literal notranslate"><span class="pre">singleton()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pathex.adts.util.html">pathex.adts.util module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.adts.util.html#useful-functions-and-constants">Useful functions and constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.util.html#pathex.adts.util.SET_OF_STRS"><code class="docutils literal notranslate"><span class="pre">SET_OF_STRS</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.util.html#pathex.adts.util.SET_OF_TUPLES"><code class="docutils literal notranslate"><span class="pre">SET_OF_TUPLES</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.util.html#pathex.adts.util.get_head_tail"><code class="docutils literal notranslate"><span class="pre">get_head_tail()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.util.html#pathex.adts.util.take"><code class="docutils literal notranslate"><span class="pre">take()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -138,7 +165,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

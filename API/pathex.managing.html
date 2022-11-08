@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -72,9 +74,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-      <li>pathex.managing package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+      <li class="breadcrumb-item active">pathex.managing package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.managing.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -85,18 +87,75 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.managing">
-<span id="pathex-managing-package"></span><h1>pathex.managing package<a class="headerlink" href="#module-pathex.managing" title="Permalink to this headline"></a></h1>
+<span id="pathex-managing-package"></span><h1>pathex.managing package<a class="headerlink" href="#module-pathex.managing" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pathex.managing.concurrent.html">pathex.managing.concurrent module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.managing.manager.html">pathex.managing.manager module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.managing.mixins.html">pathex.managing.mixins module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.managing.processes.html">pathex.managing.processes module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.managing.synchronizer.html">pathex.managing.synchronizer module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.managing.tag.html">pathex.managing.tag module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.managing.trace_checker.html">pathex.managing.trace_checker module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.managing.concurrent.html">pathex.managing.concurrent module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.concurrent.html#pathex.managing.concurrent.Concurrent"><code class="docutils literal notranslate"><span class="pre">Concurrent</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.concurrent.html#pathex.managing.concurrent.Concurrent.region"><code class="docutils literal notranslate"><span class="pre">Concurrent.region()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.managing.manager.html">pathex.managing.manager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.manager.html#pathex.managing.manager.Manager"><code class="docutils literal notranslate"><span class="pre">Manager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.manager.html#pathex.managing.manager.Manager.match"><code class="docutils literal notranslate"><span class="pre">Manager.match()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.managing.mixins.html">pathex.managing.mixins module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.LogbookMixin"><code class="docutils literal notranslate"><span class="pre">LogbookMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.LogbookMixin.permits"><code class="docutils literal notranslate"><span class="pre">LogbookMixin.permits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.LogbookMixin.requests"><code class="docutils literal notranslate"><span class="pre">LogbookMixin.requests()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin"><code class="docutils literal notranslate"><span class="pre">ManagerMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin.match"><code class="docutils literal notranslate"><span class="pre">ManagerMixin.match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin.region"><code class="docutils literal notranslate"><span class="pre">ManagerMixin.region()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.managing.processes.html">pathex.managing.processes module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy"><code class="docutils literal notranslate"><span class="pre">SynchronizerProxy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.match"><code class="docutils literal notranslate"><span class="pre">SynchronizerProxy.match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.permits"><code class="docutils literal notranslate"><span class="pre">SynchronizerProxy.permits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy.requests"><code class="docutils literal notranslate"><span class="pre">SynchronizerProxy.requests()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.processes.html#pathex.managing.processes.get_mp_process_manager"><code class="docutils literal notranslate"><span class="pre">get_mp_process_manager()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.managing.synchronizer.html">pathex.managing.synchronizer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer"><code class="docutils literal notranslate"><span class="pre">Synchronizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.match"><code class="docutils literal notranslate"><span class="pre">Synchronizer.match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.permits"><code class="docutils literal notranslate"><span class="pre">Synchronizer.permits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer.requests"><code class="docutils literal notranslate"><span class="pre">Synchronizer.requests()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.managing.tag.html">pathex.managing.tag module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag"><code class="docutils literal notranslate"><span class="pre">Tag</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag.anonym"><code class="docutils literal notranslate"><span class="pre">Tag.anonym()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag.named"><code class="docutils literal notranslate"><span class="pre">Tag.named()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag.enter"><code class="docutils literal notranslate"><span class="pre">Tag.enter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag.exit"><code class="docutils literal notranslate"><span class="pre">Tag.exit</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag.name"><code class="docutils literal notranslate"><span class="pre">Tag.name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.managing.trace_checker.html">pathex.managing.trace_checker module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.managing.trace_checker.html#pathex.managing.trace_checker.TraceChecker"><code class="docutils literal notranslate"><span class="pre">TraceChecker</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.trace_checker.html#pathex.managing.trace_checker.TraceChecker.match"><code class="docutils literal notranslate"><span class="pre">TraceChecker.match()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -113,7 +172,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

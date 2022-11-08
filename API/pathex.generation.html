@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -72,9 +74,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-      <li>pathex.generation package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+      <li class="breadcrumb-item active">pathex.generation package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.generation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -85,15 +87,35 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.generation">
-<span id="pathex-generation-package"></span><h1>pathex.generation package<a class="headerlink" href="#module-pathex.generation" title="Permalink to this headline"></a></h1>
+<span id="pathex-generation-package"></span><h1>pathex.generation package<a class="headerlink" href="#module-pathex.generation" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pathex.generation.defaults.html">pathex.generation.defaults module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.generation.eager.html">pathex.generation.eager module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.generation.letters_generator.html">pathex.generation.letters_generator module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.generation.words_generator.html">pathex.generation.words_generator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.generation.eager.html">pathex.generation.eager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.generation.eager.html#pathex.generation.eager.words_generator"><code class="docutils literal notranslate"><span class="pre">words_generator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.generation.letters_generator.html">pathex.generation.letters_generator module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.generation.letters_generator.html#pathex.generation.letters_generator.IncompleteWord"><code class="docutils literal notranslate"><span class="pre">IncompleteWord</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.generation.letters_generator.html#pathex.generation.letters_generator.LettersGenerator"><code class="docutils literal notranslate"><span class="pre">LettersGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.letters_generator.html#pathex.generation.letters_generator.LettersGenerator.advance_once"><code class="docutils literal notranslate"><span class="pre">LettersGenerator.advance_once()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.letters_generator.html#pathex.generation.letters_generator.LettersGenerator.restart"><code class="docutils literal notranslate"><span class="pre">LettersGenerator.restart()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.letters_generator.html#pathex.generation.letters_generator.LettersGenerator.complete"><code class="docutils literal notranslate"><span class="pre">LettersGenerator.complete</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.letters_generator.html#pathex.generation.letters_generator.LettersGenerator.exhausted"><code class="docutils literal notranslate"><span class="pre">LettersGenerator.exhausted</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.generation.words_generator.html">pathex.generation.words_generator module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.generation.words_generator.html#pathex.generation.words_generator.WordsGenerator"><code class="docutils literal notranslate"><span class="pre">WordsGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.words_generator.html#pathex.generation.words_generator.WordsGenerator.get_language"><code class="docutils literal notranslate"><span class="pre">WordsGenerator.get_language()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.words_generator.html#pathex.generation.words_generator.WordsGenerator.register_partial_word"><code class="docutils literal notranslate"><span class="pre">WordsGenerator.register_partial_word()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -110,7 +132,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -69,8 +71,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>pathex package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">pathex package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -81,9 +83,9 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex">
-<span id="pathex-package"></span><h1>pathex package<a class="headerlink" href="#module-pathex" title="Permalink to this headline"></a></h1>
+<span id="pathex-package"></span><h1>pathex package<a class="headerlink" href="#module-pathex" title="Permalink to this heading"></a></h1>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pathex.adts.html">pathex.adts package</a><ul>
@@ -99,13 +101,21 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pathex.adts.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.adts.collection_wrapper.html">pathex.adts.collection_wrapper module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.collection_wrapper.html">pathex.adts.collection_wrapper module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.collection_wrapper.html#pathex.adts.collection_wrapper.CollectionWrapper"><code class="docutils literal notranslate"><span class="pre">CollectionWrapper</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pathex.adts.singleton.html">pathex.adts.singleton module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pathex.adts.singleton.html#singleton-decorator">Singleton decorator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.singleton.html#pathex.adts.singleton.singleton"><code class="docutils literal notranslate"><span class="pre">singleton()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="pathex.adts.util.html">pathex.adts.util module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pathex.adts.util.html#useful-functions-and-constants">Useful functions and constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.util.html#pathex.adts.util.SET_OF_STRS"><code class="docutils literal notranslate"><span class="pre">SET_OF_STRS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.util.html#pathex.adts.util.SET_OF_TUPLES"><code class="docutils literal notranslate"><span class="pre">SET_OF_TUPLES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.util.html#pathex.adts.util.get_head_tail"><code class="docutils literal notranslate"><span class="pre">get_head_tail()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.adts.util.html#pathex.adts.util.take"><code class="docutils literal notranslate"><span class="pre">take()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -129,12 +139,27 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pathex.expressions.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.aliases.html">pathex.expressions.aliases module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.expression.html">pathex.expressions.expression module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.expression.html#expressions-abstract-base-class">Expressions abstract base class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.aliases.html">pathex.expressions.aliases module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.C"><code class="docutils literal notranslate"><span class="pre">C</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.CR"><code class="docutils literal notranslate"><span class="pre">CR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.D"><code class="docutils literal notranslate"><span class="pre">D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.I"><code class="docutils literal notranslate"><span class="pre">I</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.L"><code class="docutils literal notranslate"><span class="pre">L</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.LC"><code class="docutils literal notranslate"><span class="pre">LC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.S"><code class="docutils literal notranslate"><span class="pre">S</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.SR"><code class="docutils literal notranslate"><span class="pre">SR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.U"><code class="docutils literal notranslate"><span class="pre">U</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.non_fundamentals.html">pathex.expressions.non_fundamentals module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.expression.html">pathex.expressions.expression module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.expression.html#expressions-abstract-base-class">Expressions abstract base class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.expression.html#pathex.expressions.expression.Expression"><code class="docutils literal notranslate"><span class="pre">Expression</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.non_fundamentals.html">pathex.expressions.non_fundamentals module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.non_fundamentals.html#pathex.expressions.non_fundamentals.optional"><code class="docutils literal notranslate"><span class="pre">optional()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -142,9 +167,19 @@
 <li class="toctree-l1"><a class="reference internal" href="pathex.generation.html">pathex.generation package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.generation.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pathex.generation.defaults.html">pathex.generation.defaults module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.generation.eager.html">pathex.generation.eager module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.generation.letters_generator.html">pathex.generation.letters_generator module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.generation.words_generator.html">pathex.generation.words_generator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.eager.html">pathex.generation.eager module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.generation.eager.html#pathex.generation.eager.words_generator"><code class="docutils literal notranslate"><span class="pre">words_generator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.letters_generator.html">pathex.generation.letters_generator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.generation.letters_generator.html#pathex.generation.letters_generator.IncompleteWord"><code class="docutils literal notranslate"><span class="pre">IncompleteWord</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.generation.letters_generator.html#pathex.generation.letters_generator.LettersGenerator"><code class="docutils literal notranslate"><span class="pre">LettersGenerator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.generation.words_generator.html">pathex.generation.words_generator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.generation.words_generator.html#pathex.generation.words_generator.WordsGenerator"><code class="docutils literal notranslate"><span class="pre">WordsGenerator</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -159,21 +194,50 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pathex.machines.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.machine.html">pathex.machines.machine module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.machines.simplifier.html">pathex.machines.simplifier module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.machine.html">pathex.machines.machine module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.machine.html#pathex.machines.machine.Machine"><code class="docutils literal notranslate"><span class="pre">Machine</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.machines.simplifier.html">pathex.machines.simplifier module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.machines.simplifier.html#pathex.machines.simplifier.Simplifier"><code class="docutils literal notranslate"><span class="pre">Simplifier</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pathex.managing.html">pathex.managing package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.managing.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.managing.concurrent.html">pathex.managing.concurrent module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.managing.manager.html">pathex.managing.manager module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.managing.mixins.html">pathex.managing.mixins module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.managing.processes.html">pathex.managing.processes module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.managing.synchronizer.html">pathex.managing.synchronizer module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.managing.tag.html">pathex.managing.tag module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.managing.trace_checker.html">pathex.managing.trace_checker module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.concurrent.html">pathex.managing.concurrent module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.concurrent.html#pathex.managing.concurrent.Concurrent"><code class="docutils literal notranslate"><span class="pre">Concurrent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.manager.html">pathex.managing.manager module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.manager.html#pathex.managing.manager.Manager"><code class="docutils literal notranslate"><span class="pre">Manager</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.mixins.html">pathex.managing.mixins module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.LogbookMixin"><code class="docutils literal notranslate"><span class="pre">LogbookMixin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.mixins.html#pathex.managing.mixins.ManagerMixin"><code class="docutils literal notranslate"><span class="pre">ManagerMixin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.processes.html">pathex.managing.processes module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.processes.html#pathex.managing.processes.SynchronizerProxy"><code class="docutils literal notranslate"><span class="pre">SynchronizerProxy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.processes.html#pathex.managing.processes.get_mp_process_manager"><code class="docutils literal notranslate"><span class="pre">get_mp_process_manager()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.synchronizer.html">pathex.managing.synchronizer module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.synchronizer.html#pathex.managing.synchronizer.Synchronizer"><code class="docutils literal notranslate"><span class="pre">Synchronizer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.tag.html">pathex.managing.tag module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.tag.html#pathex.managing.tag.Tag"><code class="docutils literal notranslate"><span class="pre">Tag</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.managing.trace_checker.html">pathex.managing.trace_checker module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.managing.trace_checker.html#pathex.managing.trace_checker.TraceChecker"><code class="docutils literal notranslate"><span class="pre">TraceChecker</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -194,7 +258,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

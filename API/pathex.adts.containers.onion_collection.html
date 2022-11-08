@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,11 +75,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.adts.html">pathex.adts package</a> &raquo;</li>
-          <li><a href="pathex.adts.containers.html">pathex.adts.containers package</a> &raquo;</li>
-      <li>pathex.adts.containers.onion_collection module</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.adts.html">pathex.adts package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.adts.containers.html">pathex.adts.containers package</a></li>
+      <li class="breadcrumb-item active">pathex.adts.containers.onion_collection module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.adts.containers.onion_collection.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,18 +90,18 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.adts.containers.onion_collection">
-<span id="pathex-adts-containers-onion-collection-module"></span><h1>pathex.adts.containers.onion_collection module<a class="headerlink" href="#module-pathex.adts.containers.onion_collection" title="Permalink to this headline"></a></h1>
+<span id="pathex-adts-containers-onion-collection-module"></span><h1>pathex.adts.containers.onion_collection module<a class="headerlink" href="#module-pathex.adts.containers.onion_collection" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.adts.containers.onion_collection.EmptyOnionCollection">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EmptyOnionCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">init_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">init_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/adts/containers/onion_collection.html#EmptyOnionCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.onion_collection.EmptyOnionCollection" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pathex.adts.containers.onion_collection.OnionCollection" title="pathex.adts.containers.onion_collection.OnionCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.adts.containers.onion_collection.OnionCollection</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">pathex.adts.containers.onion_collection._E</span></code>]</p>
+<dd><p>Bases: <a class="reference internal" href="#pathex.adts.containers.onion_collection.OnionCollection" title="pathex.adts.containers.onion_collection.OnionCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">OnionCollection</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">_E</span></code>]</p>
 <p>The instance of this class is an empty collection that can be used to construct new <a class="reference internal" href="#pathex.adts.containers.onion_collection.NonemptyOnionCollection" title="pathex.adts.containers.onion_collection.NonemptyOnionCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonemptyOnionCollection</span></code></a> objects.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.adts.containers.onion_collection.NonemptyOnionCollection">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NonemptyOnionCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pathex.adts.containers.onion_collection.OnionCollection" title="pathex.adts.containers.onion_collection.OnionCollection"><span class="pre">OnionCollection</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pathex.adts.containers.onion_collection._E</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathex.adts.containers.onion_collection._E</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/adts/containers/onion_collection.html#NonemptyOnionCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.onion_collection.NonemptyOnionCollection" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pathex.adts.containers.onion_collection.OnionCollection" title="pathex.adts.containers.onion_collection.OnionCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathex.adts.containers.onion_collection.OnionCollection</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">pathex.adts.containers.onion_collection._E</span></code>]</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NonemptyOnionCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pathex.adts.containers.onion_collection.OnionCollection" title="pathex.adts.containers.onion_collection.OnionCollection"><span class="pre">OnionCollection</span></a><span class="p"><span class="pre">[</span></span><span class="pre">_E</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_E</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pathex/adts/containers/onion_collection.html#NonemptyOnionCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.onion_collection.NonemptyOnionCollection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pathex.adts.containers.onion_collection.OnionCollection" title="pathex.adts.containers.onion_collection.OnionCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">OnionCollection</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">_E</span></code>]</p>
 <p>This class represents an immutable collection that can be extended by recursively constructing new collections of this type.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">NonemptyOnionCollection</span><span class="p">(</span><span class="n">EmptyOnionCollection</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
@@ -121,12 +123,12 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pathex.adts.containers.onion_collection.NonemptyOnionCollection.last">
-<span class="sig-name descname"><span class="pre">last</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pathex.adts.containers.onion_collection._E</span></em><a class="headerlink" href="#pathex.adts.containers.onion_collection.NonemptyOnionCollection.last" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">last</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_E</span></em><a class="headerlink" href="#pathex.adts.containers.onion_collection.NonemptyOnionCollection.last" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pathex.adts.containers.onion_collection.NonemptyOnionCollection.parent">
-<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#pathex.adts.containers.onion_collection.OnionCollection" title="pathex.adts.containers.onion_collection.OnionCollection"><span class="pre">OnionCollection</span></a><span class="p"><span class="pre">[</span></span><span class="pre">pathex.adts.containers.onion_collection._E</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pathex.adts.containers.onion_collection.NonemptyOnionCollection.parent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#pathex.adts.containers.onion_collection.OnionCollection" title="pathex.adts.containers.onion_collection.OnionCollection"><span class="pre">OnionCollection</span></a><span class="p"><span class="pre">[</span></span><span class="pre">_E</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pathex.adts.containers.onion_collection.NonemptyOnionCollection.parent" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -134,7 +136,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="pathex.adts.containers.onion_collection.OnionCollection">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OnionCollection</span></span><a class="reference internal" href="../_modules/pathex/adts/containers/onion_collection.html#OnionCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pathex.adts.containers.onion_collection.OnionCollection" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Collection" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.Collection</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Reversible" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.Reversible</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">pathex.adts.containers.onion_collection._E</span></code>]</p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Collection" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Collection</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Reversible" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Reversible</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">_E</span></code>]</p>
 <p>Abstract base class for collections thar are immutable, recursive, hashable, and reversible.</p>
 </dd></dl>
 
@@ -151,7 +153,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

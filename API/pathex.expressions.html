@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,9 +75,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-      <li>pathex.expressions package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+      <li class="breadcrumb-item active">pathex.expressions package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.expressions.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,39 +88,81 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.expressions">
-<span id="pathex-expressions-package"></span><h1>pathex.expressions package<a class="headerlink" href="#module-pathex.expressions" title="Permalink to this headline"></a></h1>
+<span id="pathex-expressions-package"></span><h1>pathex.expressions package<a class="headerlink" href="#module-pathex.expressions" title="Permalink to this heading"></a></h1>
 <section id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pathex.expressions.nary_operators.html">pathex.expressions.nary_operators package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.expressions.nary_operators.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html">pathex.expressions.nary_operators.concatenation module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.difference.html">pathex.expressions.nary_operators.difference module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html">pathex.expressions.nary_operators.intersection module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html">pathex.expressions.nary_operators.nary_operator module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.shuffle.html">pathex.expressions.nary_operators.shuffle module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.union.html">pathex.expressions.nary_operators.union module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html">pathex.expressions.nary_operators.concatenation module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.nary_operators.concatenation.html#pathex.expressions.nary_operators.concatenation.Concatenation"><code class="docutils literal notranslate"><span class="pre">Concatenation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.difference.html">pathex.expressions.nary_operators.difference module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.nary_operators.difference.html#pathex.expressions.nary_operators.difference.Difference"><code class="docutils literal notranslate"><span class="pre">Difference</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html">pathex.expressions.nary_operators.intersection module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.nary_operators.intersection.html#pathex.expressions.nary_operators.intersection.Intersection"><code class="docutils literal notranslate"><span class="pre">Intersection</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html">pathex.expressions.nary_operators.nary_operator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.nary_operators.nary_operator.html#pathex.expressions.nary_operators.nary_operator.NAryOperator"><code class="docutils literal notranslate"><span class="pre">NAryOperator</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.shuffle.html">pathex.expressions.nary_operators.shuffle module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.nary_operators.shuffle.html#pathex.expressions.nary_operators.shuffle.Shuffle"><code class="docutils literal notranslate"><span class="pre">Shuffle</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.nary_operators.union.html">pathex.expressions.nary_operators.union module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.nary_operators.union.html#pathex.expressions.nary_operators.union.Union"><code class="docutils literal notranslate"><span class="pre">Union</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pathex.expressions.repetitions.html">pathex.expressions.repetitions package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.expressions.repetitions.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.repetitions.concatenation_repetition.html">pathex.expressions.repetitions.concatenation_repetition module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.repetitions.repetition.html">pathex.expressions.repetitions.repetition module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.repetitions.shuffle_repetition.html">pathex.expressions.repetitions.shuffle_repetition module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.repetitions.concatenation_repetition.html">pathex.expressions.repetitions.concatenation_repetition module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.repetitions.concatenation_repetition.html#pathex.expressions.repetitions.concatenation_repetition.ConcatenationRepetition"><code class="docutils literal notranslate"><span class="pre">ConcatenationRepetition</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.repetitions.repetition.html">pathex.expressions.repetitions.repetition module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.repetitions.repetition.html#pathex.expressions.repetitions.repetition.Repetition"><code class="docutils literal notranslate"><span class="pre">Repetition</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.repetitions.shuffle_repetition.html">pathex.expressions.repetitions.shuffle_repetition module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.repetitions.shuffle_repetition.html#pathex.expressions.repetitions.shuffle_repetition.ShuffleRepetition"><code class="docutils literal notranslate"><span class="pre">ShuffleRepetition</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pathex.expressions.terms.html">pathex.expressions.terms package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pathex.expressions.terms.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.alphabet.html">pathex.expressions.terms.alphabet module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.empty_word.html">pathex.expressions.terms.empty_word module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.letter.html">pathex.expressions.terms.letter module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.letters_complement.html">pathex.expressions.terms.letters_complement module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.term.html">pathex.expressions.terms.term module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.alphabet.html">pathex.expressions.terms.alphabet module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.terms.alphabet.html#pathex.expressions.terms.alphabet.Alphabet"><code class="docutils literal notranslate"><span class="pre">Alphabet</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.empty_word.html">pathex.expressions.terms.empty_word module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.terms.empty_word.html#pathex.expressions.terms.empty_word.EmptyWord"><code class="docutils literal notranslate"><span class="pre">EmptyWord</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.letter.html">pathex.expressions.terms.letter module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.terms.letter.html#pathex.expressions.terms.letter.Letter"><code class="docutils literal notranslate"><span class="pre">Letter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.letters_complement.html">pathex.expressions.terms.letters_complement module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.terms.letters_complement.html#pathex.expressions.terms.letters_complement.LettersComplement"><code class="docutils literal notranslate"><span class="pre">LettersComplement</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.terms.term.html">pathex.expressions.terms.term module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pathex.expressions.terms.term.html#pathex.expressions.terms.term.Term"><code class="docutils literal notranslate"><span class="pre">Term</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -127,15 +171,35 @@
 </div>
 </section>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.aliases.html">pathex.expressions.aliases module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.expression.html">pathex.expressions.expression module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.expression.html#expressions-abstract-base-class">Expressions abstract base class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.aliases.html">pathex.expressions.aliases module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.C"><code class="docutils literal notranslate"><span class="pre">C</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.CR"><code class="docutils literal notranslate"><span class="pre">CR</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.D"><code class="docutils literal notranslate"><span class="pre">D</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.I"><code class="docutils literal notranslate"><span class="pre">I</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.L"><code class="docutils literal notranslate"><span class="pre">L</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.LC"><code class="docutils literal notranslate"><span class="pre">LC</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.S"><code class="docutils literal notranslate"><span class="pre">S</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.SR"><code class="docutils literal notranslate"><span class="pre">SR</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.aliases.html#pathex.expressions.aliases.U"><code class="docutils literal notranslate"><span class="pre">U</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.non_fundamentals.html">pathex.expressions.non_fundamentals module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.expression.html">pathex.expressions.expression module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.expression.html#expressions-abstract-base-class">Expressions abstract base class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.expression.html#pathex.expressions.expression.Expression"><code class="docutils literal notranslate"><span class="pre">Expression</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.expression.html#pathex.expressions.expression.Expression.get_eager_generator"><code class="docutils literal notranslate"><span class="pre">Expression.get_eager_generator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.expression.html#pathex.expressions.expression.Expression.get_generator"><code class="docutils literal notranslate"><span class="pre">Expression.get_generator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.expressions.expression.html#pathex.expressions.expression.Expression.get_language"><code class="docutils literal notranslate"><span class="pre">Expression.get_language()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.expressions.non_fundamentals.html">pathex.expressions.non_fundamentals module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.expressions.non_fundamentals.html#pathex.expressions.non_fundamentals.optional"><code class="docutils literal notranslate"><span class="pre">optional()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -152,7 +216,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -14,7 +14,9 @@
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -73,10 +75,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="pathex.html">pathex package</a> &raquo;</li>
-          <li><a href="pathex.adts.html">pathex.adts package</a> &raquo;</li>
-      <li>pathex.adts.containers package</li>
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="pathex.html">pathex package</a></li>
+          <li class="breadcrumb-item"><a href="pathex.adts.html">pathex.adts package</a></li>
+      <li class="breadcrumb-item active">pathex.adts.containers package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/API/pathex.adts.containers.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,13 +89,41 @@
            <div itemprop="articleBody">
              
   <section id="module-pathex.adts.containers">
-<span id="pathex-adts-containers-package"></span><h1>pathex.adts.containers package<a class="headerlink" href="#module-pathex.adts.containers" title="Permalink to this headline"></a></h1>
+<span id="pathex-adts-containers-package"></span><h1>pathex.adts.containers package<a class="headerlink" href="#module-pathex.adts.containers" title="Permalink to this heading"></a></h1>
 <section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pathex.adts.containers.onion_collection.html">pathex.adts.containers.onion_collection module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pathex.adts.containers.ordered_set.html">pathex.adts.containers.ordered_set module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.adts.containers.onion_collection.html">pathex.adts.containers.onion_collection module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.containers.onion_collection.html#pathex.adts.containers.onion_collection.EmptyOnionCollection"><code class="docutils literal notranslate"><span class="pre">EmptyOnionCollection</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.containers.onion_collection.html#pathex.adts.containers.onion_collection.NonemptyOnionCollection"><code class="docutils literal notranslate"><span class="pre">NonemptyOnionCollection</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.onion_collection.html#pathex.adts.containers.onion_collection.NonemptyOnionCollection.last"><code class="docutils literal notranslate"><span class="pre">NonemptyOnionCollection.last</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.onion_collection.html#pathex.adts.containers.onion_collection.NonemptyOnionCollection.parent"><code class="docutils literal notranslate"><span class="pre">NonemptyOnionCollection.parent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.containers.onion_collection.html#pathex.adts.containers.onion_collection.OnionCollection"><code class="docutils literal notranslate"><span class="pre">OnionCollection</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pathex.adts.containers.ordered_set.html">pathex.adts.containers.ordered_set module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet"><code class="docutils literal notranslate"><span class="pre">OrderedSet</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.__eq__"><code class="docutils literal notranslate"><span class="pre">OrderedSet.__eq__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.__new__"><code class="docutils literal notranslate"><span class="pre">OrderedSet.__new__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.add"><code class="docutils literal notranslate"><span class="pre">OrderedSet.add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.addleft"><code class="docutils literal notranslate"><span class="pre">OrderedSet.addleft()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.append"><code class="docutils literal notranslate"><span class="pre">OrderedSet.append()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.appendleft"><code class="docutils literal notranslate"><span class="pre">OrderedSet.appendleft()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.as_set"><code class="docutils literal notranslate"><span class="pre">OrderedSet.as_set()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.as_tuple"><code class="docutils literal notranslate"><span class="pre">OrderedSet.as_tuple()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.extend"><code class="docutils literal notranslate"><span class="pre">OrderedSet.extend()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.extendleft"><code class="docutils literal notranslate"><span class="pre">OrderedSet.extendleft()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.pop"><code class="docutils literal notranslate"><span class="pre">OrderedSet.pop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.popleft"><code class="docutils literal notranslate"><span class="pre">OrderedSet.popleft()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.update"><code class="docutils literal notranslate"><span class="pre">OrderedSet.update()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pathex.adts.containers.ordered_set.html#pathex.adts.containers.ordered_set.OrderedSet.updateleft"><code class="docutils literal notranslate"><span class="pre">OrderedSet.updateleft()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -110,7 +140,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2019-2021, Ernesto Soto Gómez.</p>
+    <p>&#169; Copyright 2019-2022, Ernesto Soto Gómez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
